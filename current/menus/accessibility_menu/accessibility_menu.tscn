@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=3 uid="uid://bul7fpmury427"]
+
+[ext_resource type="Script" path="res://current/menus/accessibility_menu/accessibility_menu.gd" id="1_7wl3y"]
+[ext_resource type="Script" path="res://current/menus/accessibility_menu/fov.gd" id="2_y7c2e"]
+
+[node name="DebugMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_7wl3y")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 2
+offset_left = 64.0
+offset_top = 64.0
+offset_right = 1088.0
+offset_bottom = 576.0
+color = Color(0, 0.145098, 0.129412, 0.788235)
+
+[node name="Fov_Slider" type="HSlider" parent="."]
+layout_mode = 0
+offset_left = 128.0
+offset_top = 128.0
+offset_right = 448.0
+offset_bottom = 192.0
+value = 80.0
+rounded = true
+script = ExtResource("2_y7c2e")
+
+[connection signal="value_changed" from="Fov_Slider" to="." method="_on_fov_slider_value_changed"]

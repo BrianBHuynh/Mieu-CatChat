@@ -1,0 +1,31 @@
+[gd_scene load_steps=2 format=3 uid="uid://cwhpiynu322rk"]
+
+[ext_resource type="Script" path="res://current/menus/escape_menu/escape_menu.gd" id="1_n3t1d"]
+
+[node name="DebugMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_n3t1d")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 2
+offset_left = 64.0
+offset_top = 64.0
+offset_right = 1088.0
+offset_bottom = 576.0
+color = Color(0, 0, 0, 0.643137)
+
+[node name="Debug" type="Button" parent="."]
+modulate = Color(0.0862745, 0, 1, 1)
+layout_mode = 0
+offset_left = 128.0
+offset_top = 128.0
+offset_right = 320.0
+offset_bottom = 192.0
+text = "Debug"
+
+[connection signal="pressed" from="Debug" to="." method="_on_debug_pressed"]
