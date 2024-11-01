@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://37vx6dgthk0f"
-path.s3tc="res://.godot/imported/toicat.png-cc4387afdb771918254d10d09a2a6aa7.s3tc.ctex"
+path.s3tc="res://.godot/imported/toicat.png-1002e8638748e347a12adb43164684c4.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://toicat.png"
-dest_files=["res://.godot/imported/toicat.png-cc4387afdb771918254d10d09a2a6aa7.s3tc.ctex"]
+source_file="res://current/assets/images/toicat.png"
+dest_files=["res://.godot/imported/toicat.png-1002e8638748e347a12adb43164684c4.s3tc.ctex"]
 
 [params]
 
