@@ -11,10 +11,7 @@ size = Vector3(50, 1, 5)
 [node name="Debug" type="Node3D"]
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 15)
-
-[node name="Character" parent="." instance=ExtResource("1_2tcc0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5, 7.5)
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 
@@ -23,3 +20,6 @@ shape = SubResource("BoxShape3D_6i420")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
 mesh = SubResource("BoxMesh_e5fkv")
+
+[node name="Character" parent="." instance=ExtResource("1_2tcc0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
