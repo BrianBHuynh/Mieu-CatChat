@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://c8j6f2jgesnse"
-path="res://.godot/imported/AtkinsonHyperlegible-Regular.ttf-e7739c6c4ebc94c9f61887a6611072df.fontdata"
+uid="uid://cwm7ik2i0ho6h"
+path="res://.godot/imported/RobotoMono-VariableFont_wght.ttf-a02142ae14aa289f4d47e5e86153e484.fontdata"
 
 [deps]
 
-source_file="res://fonts/AtkinsonHyperlegible-Regular.ttf"
-dest_files=["res://.godot/imported/AtkinsonHyperlegible-Regular.ttf-e7739c6c4ebc94c9f61887a6611072df.fontdata"]
+source_file="res://current/assets/fonts/RobotoMono-VariableFont_wght.ttf"
+dest_files=["res://.godot/imported/RobotoMono-VariableFont_wght.ttf-a02142ae14aa289f4d47e5e86153e484.fontdata"]
 
 [params]
 

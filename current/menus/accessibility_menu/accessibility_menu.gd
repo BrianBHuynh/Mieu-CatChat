@@ -7,7 +7,7 @@ func _ready() -> void:
 	camera3D = get_viewport().get_camera_3d()
 	$Fov_Slider.value = camera3D.fov
 	$Text_Size_Slider.value = Saves.data.get_or_add("settings", {}).get_or_add("font_size", 15.0)
-	fonts = Array(DirAccess.get_files_at("res://fonts/"))
+	fonts = Array(DirAccess.get_files_at("res://current/assets/fonts/"))
 
 
 func _on_fov_slider_value_changed(value: float) -> void:
@@ -19,7 +19,7 @@ func _font_changed() -> void:
 	if tempfont.ends_with(".import"):
 		tempfont = fonts.pop_front()
 	fonts.append(tempfont)
-	Saves.set_value("settings", "font", "fonts/" + tempfont)
+	Saves.set_value("settings", "font", "res://current/assets/fonts/" + tempfont)
 	SignalBus.settings_updated.emit()
 
 func _on_text_size_slider_value_changed(value: float) -> void:

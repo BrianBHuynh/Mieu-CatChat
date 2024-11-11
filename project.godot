@@ -32,12 +32,11 @@ gdscript/warnings/inferred_declaration=1
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
-window/size/mode=3
 window/stretch/mode="viewport"
 
 [gui]
 
-theme/custom_font="res://fonts/AtkinsonHyperlegible-Regular.ttf"
+theme/custom_font="res://current/assets/fonts/AtkinsonHyperlegible-Regular.ttf"
 
 [input]
 

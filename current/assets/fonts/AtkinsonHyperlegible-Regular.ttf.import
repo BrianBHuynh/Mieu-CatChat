@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://cmf2gjfuu2xbh"
-path="res://.godot/imported/OpenSans-VariableFont_wdth,wght.ttf-7cd8160bc9221b1f02276278a74ee648.fontdata"
+uid="uid://c8j6f2jgesnse"
+path="res://.godot/imported/AtkinsonHyperlegible-Regular.ttf-30da1d89fa3d7582ba98c5ebe345a57c.fontdata"
 
 [deps]
 
-source_file="res://fonts/OpenSans-VariableFont_wdth,wght.ttf"
-dest_files=["res://.godot/imported/OpenSans-VariableFont_wdth,wght.ttf-7cd8160bc9221b1f02276278a74ee648.fontdata"]
+source_file="res://current/assets/fonts/AtkinsonHyperlegible-Regular.ttf"
+dest_files=["res://.godot/imported/AtkinsonHyperlegible-Regular.ttf-30da1d89fa3d7582ba98c5ebe345a57c.fontdata"]
 
 [params]
 

@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://dsapumvlmtrg1"
-path="res://.godot/imported/PixelifySans-VariableFont_wght.ttf-b4586e9d511f20f639f726e445631446.fontdata"
+uid="uid://dg56s3n2ghj5t"
+path="res://.godot/imported/OpenDyslexic-Regular.otf-c13c15430b9f35f28d8faf5fc3da8c8d.fontdata"
 
 [deps]
 
-source_file="res://fonts/PixelifySans-VariableFont_wght.ttf"
-dest_files=["res://.godot/imported/PixelifySans-VariableFont_wght.ttf-b4586e9d511f20f639f726e445631446.fontdata"]
+source_file="res://current/assets/fonts/OpenDyslexic-Regular.otf"
+dest_files=["res://.godot/imported/OpenDyslexic-Regular.otf-c13c15430b9f35f28d8faf5fc3da8c8d.fontdata"]
 
 [params]
 

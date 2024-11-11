@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://dg56s3n2ghj5t"
-path="res://.godot/imported/OpenDyslexic-Regular.otf-5a46e2fd83f07bb307a3afd6fad36d72.fontdata"
+uid="uid://bvlnb816cefp7"
+path="res://.godot/imported/NotoSans-VariableFont_wdth,wght.ttf-9b64f05dc37d5d800a948c083e191ff0.fontdata"
 
 [deps]
 
-source_file="res://fonts/OpenDyslexic-Regular.otf"
-dest_files=["res://.godot/imported/OpenDyslexic-Regular.otf-5a46e2fd83f07bb307a3afd6fad36d72.fontdata"]
+source_file="res://current/assets/fonts/NotoSans-VariableFont_wdth,wght.ttf"
+dest_files=["res://.godot/imported/NotoSans-VariableFont_wdth,wght.ttf-9b64f05dc37d5d800a948c083e191ff0.fontdata"]
 
 [params]
 

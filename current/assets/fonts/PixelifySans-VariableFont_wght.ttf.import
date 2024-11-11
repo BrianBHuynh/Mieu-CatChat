@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://bvlnb816cefp7"
-path="res://.godot/imported/NotoSans-VariableFont_wdth,wght.ttf-0bcf7953375d8c940ed934269abfb5e3.fontdata"
+uid="uid://dsapumvlmtrg1"
+path="res://.godot/imported/PixelifySans-VariableFont_wght.ttf-354b86a272f63757d82c388478d16e83.fontdata"
 
 [deps]
 
-source_file="res://fonts/NotoSans-VariableFont_wdth,wght.ttf"
-dest_files=["res://.godot/imported/NotoSans-VariableFont_wdth,wght.ttf-0bcf7953375d8c940ed934269abfb5e3.fontdata"]
+source_file="res://current/assets/fonts/PixelifySans-VariableFont_wght.ttf"
+dest_files=["res://.godot/imported/PixelifySans-VariableFont_wght.ttf-354b86a272f63757d82c388478d16e83.fontdata"]
 
 [params]
 

@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://cwm7ik2i0ho6h"
-path="res://.godot/imported/RobotoMono-VariableFont_wght.ttf-c2ffee51c7f73b699c779fcb7cd714c9.fontdata"
+uid="uid://cmf2gjfuu2xbh"
+path="res://.godot/imported/OpenSans-VariableFont_wdth,wght.ttf-e8dce424e94e0c2e979044d4e0b53746.fontdata"
 
 [deps]
 
-source_file="res://fonts/RobotoMono-VariableFont_wght.ttf"
-dest_files=["res://.godot/imported/RobotoMono-VariableFont_wght.ttf-c2ffee51c7f73b699c779fcb7cd714c9.fontdata"]
+source_file="res://current/assets/fonts/OpenSans-VariableFont_wdth,wght.ttf"
+dest_files=["res://.godot/imported/OpenSans-VariableFont_wdth,wght.ttf-e8dce424e94e0c2e979044d4e0b53746.fontdata"]
 
 [params]
 

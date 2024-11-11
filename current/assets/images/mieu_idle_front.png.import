@@ -2,9 +2,9 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://37vx6dgthk0f"
-path.s3tc="res://.godot/imported/toicat.png-1002e8638748e347a12adb43164684c4.s3tc.ctex"
-path.etc2="res://.godot/imported/toicat.png-1002e8638748e347a12adb43164684c4.etc2.ctex"
+uid="uid://lhikvxbnengm"
+path.s3tc="res://.godot/imported/mieu_idle_front.png-b42882bc121f5687b8ecd1a3b915c500.s3tc.ctex"
+path.etc2="res://.godot/imported/mieu_idle_front.png-b42882bc121f5687b8ecd1a3b915c500.etc2.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
@@ -12,8 +12,8 @@ metadata={
 
 [deps]
 
-source_file="res://current/assets/images/toicat.png"
-dest_files=["res://.godot/imported/toicat.png-1002e8638748e347a12adb43164684c4.s3tc.ctex", "res://.godot/imported/toicat.png-1002e8638748e347a12adb43164684c4.etc2.ctex"]
+source_file="res://current/assets/images/mieu_idle_front.png"
+dest_files=["res://.godot/imported/mieu_idle_front.png-b42882bc121f5687b8ecd1a3b915c500.s3tc.ctex", "res://.godot/imported/mieu_idle_front.png-b42882bc121f5687b8ecd1a3b915c500.etc2.ctex"]
 
 [params]
 
