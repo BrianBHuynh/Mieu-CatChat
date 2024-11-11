@@ -1,0 +1,53 @@
+[gd_scene load_steps=4 format=3 uid="uid://cnetkktq6uiv4"]
+
+[ext_resource type="Script" path="res://current/menus/video_menu/video_menu.gd" id="1_pvidx"]
+[ext_resource type="Script" path="res://current/scripts/node/rich_text_label.gd" id="2_f175j"]
+[ext_resource type="Script" path="res://current/scripts/node/button.gd" id="3_3doog"]
+
+[node name="VideoMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_pvidx")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+modulate = Color(0.721569, 0, 0.72549, 0.352941)
+layout_mode = 0
+offset_left = 64.0
+offset_top = 64.0
+offset_right = 1856.0
+offset_bottom = 1024.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 128.0
+offset_right = 384.0
+offset_bottom = 192.0
+bbcode_enabled = true
+text = "[center]Scale Aspect[/center]"
+script = ExtResource("2_f175j")
+
+[node name="StretchAspect" type="OptionButton" parent="."]
+layout_mode = 0
+offset_left = 128.0
+offset_top = 192.0
+offset_right = 320.0
+offset_bottom = 256.0
+selected = 0
+item_count = 5
+popup/item_0/text = "Ignore"
+popup/item_1/text = "Keep"
+popup/item_1/id = 1
+popup/item_2/text = "Keep Width"
+popup/item_2/id = 2
+popup/item_3/text = "Keep Height"
+popup/item_3/id = 3
+popup/item_4/text = "Expand"
+popup/item_4/id = 4
+script = ExtResource("3_3doog")
+
+[connection signal="item_selected" from="StretchAspect" to="." method="_on_stretch_aspect_selected"]

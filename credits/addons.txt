@@ -1,0 +1,3 @@
+Addons:
+	GodotSteam (https://godotsteam.com/)
+	SteamWorksSDK (https://partner.steamgames.com/)

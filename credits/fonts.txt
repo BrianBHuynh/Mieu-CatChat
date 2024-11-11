@@ -1,0 +1,6 @@
+Open sans (https://fonts.google.com/specimen/Open+Sans)
+Open dyslexic (https://opendyslexic.org/)
+Atkinson Hyperlegible (https://fonts.google.com/specimen/Atkinson+Hyperlegible)
+Roboto Mono (https://fonts.google.com/specimen/Roboto+Mono?query=monospace)
+Noto Sans (https://fonts.google.com/noto/specimen/Noto+Sans?query=new+yo)
+Pixelfy sans (https://fonts.google.com/specimen/Pixelify+Sans?query=pixel)

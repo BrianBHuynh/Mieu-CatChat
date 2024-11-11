@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://ddau1wbdns8mp"]
+
+[node name="DebugMenu" type="Node2D"]

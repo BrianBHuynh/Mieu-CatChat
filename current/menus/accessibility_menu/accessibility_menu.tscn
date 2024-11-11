@@ -1,0 +1,90 @@
+[gd_scene load_steps=4 format=3 uid="uid://bul7fpmury427"]
+
+[ext_resource type="Script" path="res://current/menus/accessibility_menu/accessibility_menu.gd" id="1_7wl3y"]
+[ext_resource type="Script" path="res://current/scripts/node/rich_text_label.gd" id="2_4yg4i"]
+[ext_resource type="Script" path="res://current/scripts/node/button.gd" id="3_an561"]
+
+[node name="DebugMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_7wl3y")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 2
+offset_left = 64.0
+offset_top = 64.0
+offset_right = 1856.0
+offset_bottom = 1024.0
+color = Color(0, 0.145098, 0.129412, 0.788235)
+
+[node name="Fov_Slider" type="HSlider" parent="."]
+layout_mode = 0
+offset_left = 128.0
+offset_top = 256.0
+offset_right = 448.0
+offset_bottom = 320.0
+scale = Vector2(2, 1)
+min_value = 10.0
+max_value = 150.0
+value = 80.0
+rounded = true
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 128.0
+offset_top = 384.0
+offset_right = 832.0
+offset_bottom = 640.0
+text = "EXAMPLE TEXT
+example text"
+script = ExtResource("2_4yg4i")
+
+[node name="Font change" type="Button" parent="."]
+layout_mode = 0
+offset_left = 128.0
+offset_top = 640.0
+offset_right = 320.0
+offset_bottom = 832.0
+text = "Next font"
+script = ExtResource("3_an561")
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 128.0
+offset_top = 832.0
+offset_right = 640.0
+offset_bottom = 896.0
+bbcode_enabled = true
+text = "[center]Font Size[/center]
+
+Note: Extreme font sizes may look strange"
+script = ExtResource("2_4yg4i")
+
+[node name="Text_Size_Slider" type="HSlider" parent="."]
+layout_mode = 0
+offset_left = 128.0
+offset_top = 896.0
+offset_right = 288.0
+offset_bottom = 960.0
+scale = Vector2(2, 1)
+min_value = 5.0
+value = 15.0
+rounded = true
+
+[node name="RichTextLabel3" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 128.0
+offset_top = 128.0
+offset_right = 768.0
+offset_bottom = 256.0
+bbcode_enabled = true
+text = "[center]FOV[/center]"
+script = ExtResource("2_4yg4i")
+
+[connection signal="value_changed" from="Fov_Slider" to="." method="_on_fov_slider_value_changed"]
+[connection signal="pressed" from="Font change" to="." method="_font_changed"]
+[connection signal="value_changed" from="Text_Size_Slider" to="." method="_on_text_size_slider_value_changed"]
