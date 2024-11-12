@@ -12,6 +12,7 @@ config_version=5
 
 config/name="Mieu"
 run/main_scene="res://current/scenes/debug/debug.tscn"
+config/use_custom_user_dir=true
 config/features=PackedStringArray("4.3", "GL Compatibility")
 
 [autoload]

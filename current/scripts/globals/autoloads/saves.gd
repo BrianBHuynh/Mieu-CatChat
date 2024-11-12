@@ -7,6 +7,7 @@ func _ready() -> void:
 	make_dir("user://saves")
 	make_dir("user://backup")
 	make_dir("user://fallback")
+	make_dir("user://fonts")
 	var temp: Variant = await load_file("mieu")
 	if temp != null:
 		data = temp

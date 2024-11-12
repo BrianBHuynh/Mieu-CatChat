@@ -9,7 +9,6 @@ func load_finished() -> void:
 	set_stretch_aspect(Saves.data.get_or_add("settings", {}).get_or_add("stretch_aspect", 1))
 
 func set_stretch_aspect(aspect: int) -> void:
-	print(aspect)
 	match aspect:
 		0:
 			get_tree().root.content_scale_aspect = Window.CONTENT_SCALE_ASPECT_IGNORE
