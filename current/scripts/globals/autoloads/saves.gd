@@ -1,7 +1,9 @@
 extends Node
 
 var data: Dictionary = {}
-
+var encryption_key: String = OS.get_unique_id()
+var save_extension: String = ".CAT"
+var checksum_extension: String = ".COLLAR"
 
 func _ready() -> void:
 	make_dir("user://saves")
@@ -40,8 +42,8 @@ func save_file(content: Variant, location: String) -> void:
 	write_json(content_json, "user://fallback/", location)
 
 func write_json(content: Variant, dir: String, location: String) -> void:
-	OpenWrite(dir + location + ".lanhPACK").store_var(content, false)
-	OpenWrite(dir + location + ".lanhCERT").store_var(FileAccess.get_sha256(dir + location + ".lanhPACK"), false)
+	OpenWrite(dir + location + save_extension).store_var(content, false)
+	OpenWrite(dir + location + checksum_extension).store_var(FileAccess.get_sha256(dir + location + save_extension), false)
 
 func load_file(location: String) -> Variant:
 	var content: JSON = JSON.new()
@@ -55,14 +57,25 @@ func load_file(location: String) -> Variant:
 		print("File 1 and 2 have failed their checks, file 3 passed all checks")
 		return content.data
 	else:
-		push_warning("File damaged beyond repair!")
+		push_warning("File could not be loaded!")
 		return null
 
 func sanity_check(dir: String, location: String, content: JSON) -> bool:
-	return FileAccess.file_exists(dir + location + ".lanhPACK") and FileAccess.get_sha256(dir + location + ".lanhPACK") == FileAccess.open_encrypted_with_pass(dir + location + ".lanhCERT", FileAccess.READ, OS.get_unique_id()).get_var() and content.parse(FileAccess.open_encrypted_with_pass(dir + location + ".lanhPACK", FileAccess.READ, OS.get_unique_id()).get_var(false), false) == OK
+	var sanity: bool = false
+	if (
+		FileAccess.file_exists(dir + location + save_extension)
+		and FileAccess.file_exists(dir + location + checksum_extension)
+		and FileAccess.open_encrypted_with_pass(dir + location + checksum_extension, FileAccess.READ, encryption_key) != null 
+		and FileAccess.open_encrypted_with_pass(dir + location + save_extension, FileAccess.READ, encryption_key) != null
+	):
+		sanity = (
+		FileAccess.get_sha256(dir + location + save_extension) == FileAccess.open_encrypted_with_pass(dir + location + checksum_extension, FileAccess.READ, encryption_key).get_var() 
+		and content.parse(FileAccess.open_encrypted_with_pass(dir + location + save_extension, FileAccess.READ, encryption_key).get_var(false), false) == OK
+		)
+	return sanity
 
 func OpenWrite(path: String) -> FileAccess:
-	return FileAccess.open_encrypted_with_pass(path, FileAccess.WRITE, OS.get_unique_id())
+	return FileAccess.open_encrypted_with_pass(path, FileAccess.WRITE, encryption_key)
 
 func OpenRead(path: String) -> FileAccess:
-	return FileAccess.open_encrypted_with_pass(path, FileAccess.READ, OS.get_unique_id())
+	return FileAccess.open_encrypted_with_pass(path, FileAccess.READ, encryption_key)
