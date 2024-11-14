@@ -22,6 +22,8 @@ func _font_changed() -> void:
 	Saves.set_value("settings", "font", tempfont)
 	SignalBus.settings_updated.emit()
 
+#dubious
 func _on_text_size_slider_value_changed(value: float) -> void:
+	await get_tree().create_timer(1.0/60.0).timeout
 	Saves.set_value("settings", "font_size", value)
 	SignalBus.settings_updated.emit()

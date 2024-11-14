@@ -23,20 +23,20 @@ offset_bottom = 1024.0
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
 layout_mode = 0
-offset_left = 64.0
+offset_left = 128.0
 offset_top = 128.0
-offset_right = 384.0
-offset_bottom = 192.0
+offset_right = 896.0
+offset_bottom = 256.0
 bbcode_enabled = true
 text = "[center]Scale Aspect[/center]"
 script = ExtResource("2_f175j")
 
 [node name="StretchAspect" type="OptionButton" parent="."]
 layout_mode = 0
-offset_left = 128.0
-offset_top = 192.0
-offset_right = 320.0
-offset_bottom = 256.0
+offset_left = 384.0
+offset_top = 256.0
+offset_right = 640.0
+offset_bottom = 320.0
 selected = 0
 item_count = 5
 popup/item_0/text = "Ignore"
@@ -50,4 +50,44 @@ popup/item_4/text = "Expand"
 popup/item_4/id = 4
 script = ExtResource("3_3doog")
 
+[node name="RichTextLabel2" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 128.0
+offset_top = 320.0
+offset_right = 896.0
+offset_bottom = 448.0
+bbcode_enabled = true
+text = "[center]Window Mode[/center]
+"
+script = ExtResource("2_f175j")
+
+[node name="WindowMode" type="OptionButton" parent="."]
+layout_mode = 0
+offset_left = 384.0
+offset_top = 448.0
+offset_right = 640.0
+offset_bottom = 512.0
+selected = 0
+item_count = 4
+popup/item_0/text = "Windowed"
+popup/item_1/text = "Maximized"
+popup/item_1/id = 2
+popup/item_2/text = "Borderless Fullscreen"
+popup/item_2/id = 3
+popup/item_3/text = "Fullscreen"
+popup/item_3/id = 4
+script = ExtResource("3_3doog")
+
+[node name="Borderless" type="Button" parent="."]
+layout_mode = 0
+offset_left = 192.0
+offset_top = 576.0
+offset_right = 832.0
+offset_bottom = 704.0
+toggle_mode = true
+text = "Toggle Borderless (False)"
+script = ExtResource("3_3doog")
+
 [connection signal="item_selected" from="StretchAspect" to="." method="_on_stretch_aspect_selected"]
+[connection signal="item_selected" from="WindowMode" to="." method="_window_mode_changed"]
+[connection signal="toggled" from="Borderless" to="." method="_on_borderless_toggled"]
