@@ -92,4 +92,3 @@ script = ExtResource("2_4yg4i")
 
 [connection signal="value_changed" from="Fov_Slider" to="." method="_on_fov_slider_value_changed"]
 [connection signal="pressed" from="Font change" to="." method="_font_changed"]
-[connection signal="value_changed" from="Text_Size_Slider" to="." method="_on_text_size_slider_value_changed"]

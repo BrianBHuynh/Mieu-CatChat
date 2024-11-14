@@ -7,6 +7,7 @@ func _ready() -> void:
 	camera3D = get_viewport().get_camera_3d()
 	$Fov_Slider.value = camera3D.fov
 	$Text_Size_Slider.value = Saves.data.get_or_add("settings", {}).get_or_add("font_size", 15.0)
+	$Text_Size_Slider.value_changed.connect(_on_text_size_slider_value_changed)
 	var fonts_temp: PackedStringArray = DirAccess.get_files_at("user://fonts/")
 	for font: String in fonts_temp:
 		fonts.append("user://fonts/" + font)
@@ -22,8 +23,6 @@ func _font_changed() -> void:
 	Saves.set_value("settings", "font", tempfont)
 	SignalBus.settings_updated.emit()
 
-#dubious
 func _on_text_size_slider_value_changed(value: float) -> void:
-	await get_tree().create_timer(1.0/60.0).timeout
 	Saves.set_value("settings", "font_size", value)
 	SignalBus.settings_updated.emit()
