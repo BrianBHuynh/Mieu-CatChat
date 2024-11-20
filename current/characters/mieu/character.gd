@@ -7,7 +7,7 @@ var jump_speed: float = 2.5
 func _ready() -> void:
 	#hacky
 	GlobalVars.mieu = self
-	var temp: Variant = Saves.data.get_or_add("Player", {}).get_or_add("pos", str(position))
+	var temp: Variant = Saves.get_value("Player","pos", str(position))
 	temp = temp.erase(0, 1)
 	temp = temp.erase(temp.length()-1, 1)
 	temp = temp.split(", ", true, 0)

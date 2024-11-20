@@ -21,6 +21,9 @@ func set_value(dictionary: String, key: String, value: Variant) -> void:
 	data[dictionary][key] = value
 	data[dictionary][key] = value
 
+func get_value(dictionary: String, key: String, default_value: Variant) -> Variant:
+	return data.get_or_add(dictionary, {}).get_or_add(key, default_value)
+
 func save_game() -> void:
 	save_file(data, "mieu")
 

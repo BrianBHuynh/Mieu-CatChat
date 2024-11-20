@@ -16,27 +16,27 @@ script = ExtResource("1_pvidx")
 [node name="ColorRect" type="ColorRect" parent="."]
 modulate = Color(0.721569, 0, 0.72549, 0.352941)
 layout_mode = 0
-offset_left = 64.0
+offset_left = 56.0
 offset_top = 64.0
-offset_right = 1856.0
+offset_right = 1848.0
 offset_bottom = 1024.0
 
-[node name="RichTextLabel" type="RichTextLabel" parent="."]
+[node name="StretchAspectLabel" type="RichTextLabel" parent="."]
 layout_mode = 0
 offset_left = 128.0
 offset_top = 128.0
 offset_right = 896.0
 offset_bottom = 256.0
 bbcode_enabled = true
-text = "[center]Scale Aspect[/center]"
+text = "[center]Stretch Aspect[/center]"
 script = ExtResource("2_f175j")
 
 [node name="StretchAspect" type="OptionButton" parent="."]
 layout_mode = 0
 offset_left = 384.0
-offset_top = 256.0
+offset_top = 192.0
 offset_right = 640.0
-offset_bottom = 320.0
+offset_bottom = 256.0
 selected = 0
 item_count = 5
 popup/item_0/text = "Ignore"
@@ -50,7 +50,7 @@ popup/item_4/text = "Expand"
 popup/item_4/id = 4
 script = ExtResource("3_3doog")
 
-[node name="RichTextLabel2" type="RichTextLabel" parent="."]
+[node name="WindowModeLabel" type="RichTextLabel" parent="."]
 layout_mode = 0
 offset_left = 128.0
 offset_top = 320.0
@@ -64,9 +64,9 @@ script = ExtResource("2_f175j")
 [node name="WindowMode" type="OptionButton" parent="."]
 layout_mode = 0
 offset_left = 384.0
-offset_top = 448.0
+offset_top = 384.0
 offset_right = 640.0
-offset_bottom = 512.0
+offset_bottom = 448.0
 selected = 0
 item_count = 4
 popup/item_0/text = "Windowed"
@@ -81,12 +81,67 @@ script = ExtResource("3_3doog")
 [node name="Borderless" type="Button" parent="."]
 layout_mode = 0
 offset_left = 192.0
-offset_top = 576.0
+offset_top = 512.0
 offset_right = 832.0
-offset_bottom = 704.0
+offset_bottom = 640.0
 toggle_mode = true
 text = "Toggle Borderless (False)"
 script = ExtResource("3_3doog")
+
+[node name="Width" type="SpinBox" parent="."]
+layout_mode = 0
+offset_left = 320.0
+offset_top = 704.0
+offset_right = 448.0
+offset_bottom = 768.0
+min_value = 426.0
+max_value = 10000.0
+value = 1920.0
+alignment = 1
+
+[node name="Height" type="SpinBox" parent="."]
+layout_mode = 0
+offset_left = 576.0
+offset_top = 704.0
+offset_right = 704.0
+offset_bottom = 768.0
+min_value = 426.0
+max_value = 10000.0
+value = 1080.0
+alignment = 1
+
+[node name="RichTextLabel3" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 488.0
+offset_top = 736.0
+offset_right = 536.0
+offset_bottom = 768.0
+bbcode_enabled = true
+text = "[center]X[/center]"
+script = ExtResource("2_f175j")
+
+[node name="ResolutionScale" type="HSlider" parent="."]
+layout_mode = 0
+offset_left = 256.0
+offset_top = 896.0
+offset_right = 768.0
+offset_bottom = 960.0
+min_value = 0.1
+max_value = 2.0
+step = 0.01
+value = 1.0
+tick_count = 20
+ticks_on_borders = true
+
+[node name="ResolutionScaleLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 192.0
+offset_top = 832.0
+offset_right = 832.0
+offset_bottom = 896.0
+bbcode_enabled = true
+text = "[center]Resolution Scale: 1.0[/center]"
+script = ExtResource("2_f175j")
 
 [connection signal="item_selected" from="StretchAspect" to="." method="_on_stretch_aspect_selected"]
 [connection signal="item_selected" from="WindowMode" to="." method="_window_mode_changed"]
