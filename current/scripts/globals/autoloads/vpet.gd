@@ -15,5 +15,5 @@ func get_current_food() -> float:
 		return 0.0
 	return curfood
 
-func get_time_difference(time):
+func get_time_difference(time: float) -> float:
 	return Time.get_unix_time_from_system() - time
