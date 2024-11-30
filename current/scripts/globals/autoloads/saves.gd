@@ -21,6 +21,12 @@ func set_value(dictionary: String, key: String, value: Variant) -> void:
 	data[dictionary][key] = value
 	data[dictionary][key] = value
 
+func has(dictionary: String, key: String):
+	if data.has(dictionary) && data[dictionary].has(key):
+		return true
+	else:
+		return false
+
 func get_value(dictionary: String, key: String, default_value: Variant) -> Variant:
 	return data.get_or_add(dictionary, {}).get_or_add(key, default_value)
 
