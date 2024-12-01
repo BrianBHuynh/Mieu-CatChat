@@ -1,7 +1,7 @@
 extends Control
 
 func _on_save_pressed() -> void:
-	Saves.add_data("Player", "pos", GlobalVars.mieu.position)
+	Saves.set_value("Player", "pos", GlobalVars.mieu.position)
 	Multithreading.add_task(Callable(Saves,"save_game"))
 
 func _on_accessibility_pressed() -> void:

@@ -9,7 +9,7 @@ func _ready() -> void:
 	$ResolutionScale.value = get_window().scaling_3d_scale
 	$ResolutionScale.value_changed.connect(_on_resolutionscale_changed)
 	$ResolutionScaleLabel.text = "[center]Resolution scale: " + str($ResolutionScale.value) + "[/center]" 
-	match Saves.get_value("settings", "stretch_aspect", 1):
+	match Saves.get_or_add("settings", "stretch_aspect", 1):
 		0:
 			$StretchAspect.select(0)
 		1:
@@ -41,16 +41,16 @@ func _on_borderless_toggled(toggled_on: bool) -> void:
 
 
 func _on_width_changed(value: float) -> void:
-	Saves.add_data("settings", "width", value)
-	get_window().size = Vector2(Saves.get_value("settings", "width", 1920), Saves.get_value("settings", "height", 1080))
+	Saves.set_value("settings", "width", value)
+	get_window().size = Vector2(Saves.get_or_add("settings", "width", 1920), Saves.get_or_add("settings", "height", 1080))
 
 
 func _on_height_changed(value: float) -> void:
-	Saves.add_data("settings", "height", value)
-	get_window().size = Vector2(Saves.get_value("settings", "width", 1920), Saves.get_value("settings", "height", 1080))
+	Saves.set_value("settings", "height", value)
+	get_window().size = Vector2(Saves.get_or_add("settings", "width", 1920), Saves.get_or_add("settings", "height", 1080))
 
 func _on_resolutionscale_changed(value: float) -> void:
-	Saves.add_data("settings", "scaling_3d_scale", value)
+	Saves.set_value("settings", "scaling_3d_scale", value)
 	get_window().scaling_3d_scale = value
 	print(get_window().scaling_3d_scale)
 	$ResolutionScaleLabel.text = "[center]Resolution scale: " + str($ResolutionScale.value) + "[/center]" 

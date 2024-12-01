@@ -19,23 +19,20 @@ func set_value(dictionary: String, key: String, value: Variant) -> void:
 	if(not data.has(dictionary)):
 		data[dictionary] = {}
 	data[dictionary][key] = value
-	data[dictionary][key] = value
 
-func has(dictionary: String, key: String):
+func has(dictionary: String, key: String) -> bool:
 	if data.has(dictionary) && data[dictionary].has(key):
 		return true
 	else:
 		return false
 
-func get_value(dictionary: String, key: String, default_value: Variant) -> Variant:
+func get_or_add(dictionary: String, key: String, default_value: Variant) -> Variant:
+	if(not data.has(dictionary)):
+		data[dictionary] = {}
 	return data.get_or_add(dictionary, {}).get_or_add(key, default_value)
 
 func save_game() -> void:
 	save_file(data, "mieu")
-
-func add_data(dictionary: String, key: String, content: Variant)-> void:
-	if data.has(dictionary):
-		data[dictionary][key] = content
 
 func make_dir(dir: String) -> void:
 	if not DirAccess.dir_exists_absolute(dir):

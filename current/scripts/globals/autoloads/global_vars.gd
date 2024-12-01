@@ -6,11 +6,11 @@ func _ready() -> void:
 	SignalBus.load_finished.connect(load_finished)
 
 func load_finished() -> void:
-	set_stretch_aspect(Saves.get_value("settings", "stretch_aspect", 1))
-	set_window_mode(Saves.get_value("settings", "window_mode", 2))
-	set_borderless(Saves.get_value("settings", "borderless", false))
-	get_window().scaling_3d_scale = Saves.get_value("settings", "scaling_3d_scale", 1.0)
-	get_window().size = Vector2(Saves.get_value("settings", "width", 1920), Saves.get_value("settings", "height", 1080))
+	set_stretch_aspect(Saves.get_or_add("settings", "stretch_aspect", 1))
+	set_window_mode(Saves.get_or_add("settings", "window_mode", 2))
+	set_borderless(Saves.get_or_add("settings", "borderless", false))
+	get_window().scaling_3d_scale = Saves.get_or_add("settings", "scaling_3d_scale", 1.0)
+	get_window().size = Vector2(Saves.get_or_add("settings", "width", 1920), Saves.get_or_add("settings", "height", 1080))
 
 func set_resolution(width: int, height: int) -> void:
 	Saves.set_value("settings", "width", width)
