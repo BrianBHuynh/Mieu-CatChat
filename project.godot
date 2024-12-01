@@ -23,6 +23,7 @@ Vpet="*res://current/scripts/globals/autoloads/vpet.gd"
 Saves="*res://current/scripts/globals/autoloads/saves.gd"
 SignalBus="*res://current/scripts/globals/autoloads/signal_bus.gd"
 Multithreading="*res://current/scripts/globals/autoloads/multithreading.gd"
+Steamworks="*res://current/scripts/globals/autoloads/steam.gd"
 
 [debug]
 
