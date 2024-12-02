@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://cnetkktq6uiv4"]
+[gd_scene load_steps=5 format=3 uid="uid://cnetkktq6uiv4"]
 
 [ext_resource type="Script" path="res://current/menus/video_menu/video_menu.gd" id="1_pvidx"]
 [ext_resource type="Script" path="res://current/scripts/node/rich_text_label.gd" id="2_f175j"]
 [ext_resource type="Script" path="res://current/scripts/node/button.gd" id="3_3doog"]
+[ext_resource type="Texture2D" uid="uid://dv4n5etipadpk" path="res://current/assets/ui/btn_sized.png" id="4_qieow"]
 
 [node name="VideoMenu" type="Control"]
 layout_mode = 3
@@ -78,13 +79,6 @@ popup/item_3/text = "Fullscreen"
 popup/item_3/id = 4
 script = ExtResource("3_3doog")
 
-[node name="TextureButton" type="TextureButton" parent="."]
-layout_mode = 0
-offset_left = 192.0
-offset_top = 512.0
-offset_right = 232.0
-offset_bottom = 552.0
-
 [node name="Borderless" type="Button" parent="."]
 layout_mode = 0
 offset_left = 192.0
@@ -93,6 +87,9 @@ offset_right = 832.0
 offset_bottom = 640.0
 toggle_mode = true
 text = "Toggle Borderless (False)"
+icon = ExtResource("4_qieow")
+icon_alignment = 1
+expand_icon = true
 script = ExtResource("3_3doog")
 
 [node name="Width" type="SpinBox" parent="."]
