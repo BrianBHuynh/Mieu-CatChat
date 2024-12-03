@@ -10,6 +10,7 @@ offset_bottom = 40.0
 
 [node name="ColorRect" type="ColorRect" parent="."]
 modulate = Color(0.345098, 0.705882, 0.988235, 0.443137)
+layout_mode = 0
 offset_left = 64.0
 offset_top = 64.0
 offset_right = 1856.0
@@ -17,6 +18,7 @@ offset_bottom = 1024.0
 
 [node name="Button" type="Button" parent="."]
 texture_filter = 1
+layout_mode = 0
 offset_left = 128.0
 offset_top = 128.0
 offset_right = 384.0

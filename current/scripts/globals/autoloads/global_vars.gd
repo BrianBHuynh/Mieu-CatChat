@@ -34,15 +34,17 @@ func set_stretch_aspect(aspect: int) -> void:
 func set_window_mode(mode: int) -> void:
 	match mode:
 		0: 
-			get_tree().root.mode = Window.MODE_WINDOWED
+			get_window().set_mode(Window.MODE_WINDOWED)
+		1:
+			get_window().set_mode(Window.MODE_MINIMIZED)
 		2:
-			get_tree().root.mode = Window.MODE_MAXIMIZED
+			get_window().set_mode(Window.MODE_MAXIMIZED)
 		3:
-			get_tree().root.mode = Window.MODE_FULLSCREEN
+			get_window().set_mode(Window.MODE_FULLSCREEN)
 		4:
-			get_tree().root.mode = Window.MODE_EXCLUSIVE_FULLSCREEN
+			get_window().set_mode(Window.MODE_EXCLUSIVE_FULLSCREEN)
 	Saves.set_value("settings", "window_mode", mode)
 
 func set_borderless(toggled: bool) -> void:
-	get_tree().root.borderless = toggled
+	get_window().set_flag(Window.FLAG_BORDERLESS, toggled)
 	Saves.set_value("settings", "borderless", toggled)

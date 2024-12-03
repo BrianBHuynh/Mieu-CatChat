@@ -69,14 +69,16 @@ offset_top = 384.0
 offset_right = 640.0
 offset_bottom = 448.0
 selected = 0
-item_count = 4
+item_count = 5
 popup/item_0/text = "Windowed"
-popup/item_1/text = "Maximized"
-popup/item_1/id = 2
-popup/item_2/text = "Borderless Fullscreen"
-popup/item_2/id = 3
-popup/item_3/text = "Fullscreen"
-popup/item_3/id = 4
+popup/item_1/text = "Minimized"
+popup/item_1/id = 1
+popup/item_2/text = "Maximized"
+popup/item_2/id = 2
+popup/item_3/text = "Borderless Fullscreen"
+popup/item_3/id = 3
+popup/item_4/text = "Fullscreen"
+popup/item_4/id = 4
 script = ExtResource("3_3doog")
 
 [node name="Borderless" type="Button" parent="."]

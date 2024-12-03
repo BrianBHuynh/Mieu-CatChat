@@ -69,6 +69,7 @@ script = ExtResource("2_jovmg")
 [node name="Debug" type="Button" parent="."]
 modulate = Color(0.762964, 0.552664, 1, 1)
 texture_filter = 1
+layout_mode = 0
 offset_left = 128.0
 offset_top = 704.0
 offset_right = 384.0
