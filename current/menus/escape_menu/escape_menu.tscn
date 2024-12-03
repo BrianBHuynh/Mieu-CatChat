@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://cwhpiynu322rk"]
 
 [ext_resource type="Script" path="res://current/menus/escape_menu/escape_menu.gd" id="1_n3t1d"]
-[ext_resource type="Texture2D" uid="uid://ccred57rgga2g" path="res://current/assets/ui/btnMono.png" id="2_2r41x"]
 [ext_resource type="Script" path="res://current/scripts/node/button.gd" id="2_jovmg"]
+[ext_resource type="Texture2D" uid="uid://dv4n5etipadpk" path="res://current/assets/ui/btn_sized.png" id="2_t8lwk"]
 
 [node name="DebugMenu" type="Control"]
 layout_mode = 3
@@ -30,7 +30,8 @@ offset_top = 128.0
 offset_right = 384.0
 offset_bottom = 256.0
 text = "Accessibility"
-icon = ExtResource("2_2r41x")
+icon = ExtResource("2_t8lwk")
+flat = true
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("2_jovmg")
@@ -44,7 +45,8 @@ offset_top = 512.0
 offset_right = 384.0
 offset_bottom = 640.0
 text = "Video"
-icon = ExtResource("2_2r41x")
+icon = ExtResource("2_t8lwk")
+flat = true
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("2_jovmg")
@@ -58,7 +60,22 @@ offset_top = 320.0
 offset_right = 384.0
 offset_bottom = 448.0
 text = "Save"
-icon = ExtResource("2_2r41x")
+icon = ExtResource("2_t8lwk")
+flat = true
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("2_jovmg")
+
+[node name="Debug" type="Button" parent="."]
+modulate = Color(0.762964, 0.552664, 1, 1)
+texture_filter = 1
+offset_left = 128.0
+offset_top = 704.0
+offset_right = 384.0
+offset_bottom = 832.0
+text = "Debug"
+icon = ExtResource("2_t8lwk")
+flat = true
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("2_jovmg")
@@ -66,3 +83,4 @@ script = ExtResource("2_jovmg")
 [connection signal="pressed" from="Accessibility" to="." method="_on_accessibility_pressed"]
 [connection signal="pressed" from="Button" to="." method="_on_video_pressed"]
 [connection signal="pressed" from="Save" to="." method="_on_save_pressed"]
+[connection signal="pressed" from="Debug" to="." method="_on_debug_pressed"]

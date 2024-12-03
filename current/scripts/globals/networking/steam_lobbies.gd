@@ -21,7 +21,7 @@ func _ready() -> void:
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	pass
 
 func check_command_line() -> void:
@@ -34,7 +34,7 @@ func create_lobby(type: int) -> void:
 	if lobby_id == 0:
 		Steam.createLobby(type, lobby_members_max)
 
-func _on_lobby_created(connect: int, this_lobby_id: int) -> void:
+func _on_lobby_created(_connected: int, this_lobby_id: int) -> void:
 	lobby_id = this_lobby_id
 	print("Created a lobby: %s" % lobby_id)
 	Steam.setLobbyJoinable(lobby_id, true)
