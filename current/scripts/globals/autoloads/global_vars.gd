@@ -36,20 +36,16 @@ func set_window_mode(mode: int) -> void:
 	match mode:
 		0: 
 			#Dubious, create an issue for this when figuring out why it's happening.
-			var temp = get_window().get_size()
+			var temp: Vector2 = get_window().get_size()
 			get_window().set_mode(Window.MODE_WINDOWED)
-			print(get_window().get_size())
 			get_window().set_size(temp)
 		1:
 			get_window().set_mode(Window.MODE_MINIMIZED)
 		2:
 			#Dubious, wait for https://github.com/godotengine/godot/issues/99952 to remove
-			if(Saves.get_or_add("settings", "borderless", true) == true):
-				get_window().set_flag(Window.FLAG_BORDERLESS, false)
-				get_window().set_mode(Window.MODE_MAXIMIZED)
-				get_window().set_flag(Window.FLAG_BORDERLESS, true)
-			else:
-				get_window().set_mode(Window.MODE_MAXIMIZED)
+			get_window().set_flag(Window.FLAG_BORDERLESS, false)
+			get_window().set_mode(Window.MODE_MAXIMIZED)
+			get_window().set_flag(Window.FLAG_BORDERLESS, true)
 		3:
 			get_window().set_mode(Window.MODE_FULLSCREEN)
 		4:

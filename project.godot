@@ -25,6 +25,7 @@ SignalBus="*res://current/scripts/globals/autoloads/signal_bus.gd"
 Multithreading="*res://current/scripts/globals/autoloads/multithreading.gd"
 Steamworks="*res://current/scripts/globals/networking/steam.gd"
 Steamlobbies="*res://current/scripts/globals/networking/steam_lobbies.gd"
+SteamP2P="*res://current/scripts/globals/networking/steam_p2p.gd"
 
 [debug]
 

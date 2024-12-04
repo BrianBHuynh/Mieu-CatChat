@@ -21,6 +21,21 @@ offset_right = 1856.0
 offset_bottom = 1024.0
 color = Color(0, 0, 0, 0.643137)
 
+[node name="Multiplayer" type="Button" parent="."]
+modulate = Color(0.0862745, 0, 1, 1)
+texture_filter = 1
+layout_mode = 0
+offset_left = 448.0
+offset_top = 128.0
+offset_right = 704.0
+offset_bottom = 256.0
+text = "Accessibility"
+icon = ExtResource("2_t8lwk")
+flat = true
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("2_jovmg")
+
 [node name="Accessibility" type="Button" parent="."]
 modulate = Color(0.0862745, 0, 1, 1)
 texture_filter = 1
@@ -81,6 +96,7 @@ icon_alignment = 1
 expand_icon = true
 script = ExtResource("2_jovmg")
 
+[connection signal="pressed" from="Multiplayer" to="." method="_on_multiplayer_pressed"]
 [connection signal="pressed" from="Accessibility" to="." method="_on_accessibility_pressed"]
 [connection signal="pressed" from="Button" to="." method="_on_video_pressed"]
 [connection signal="pressed" from="Save" to="." method="_on_save_pressed"]

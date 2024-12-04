@@ -1,0 +1,50 @@
+[gd_scene load_steps=3 format=3 uid="uid://ds23emrqlb05u"]
+
+[ext_resource type="Script" path="res://current/menus/multiplayer_menu/multiplayer_menu.gd" id="1_j81e8"]
+[ext_resource type="Texture2D" uid="uid://dv4n5etipadpk" path="res://current/assets/ui/btn_sized.png" id="2_8p1pj"]
+
+[node name="MultiplayerMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_j81e8")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+modulate = Color(1, 0.545098, 0.227451, 0.509804)
+layout_mode = 0
+offset_left = 64.0
+offset_top = 64.0
+offset_right = 1856.0
+offset_bottom = 1024.0
+
+[node name="CreateLobbyBtn" type="Button" parent="."]
+texture_filter = 1
+layout_mode = 0
+offset_left = 128.0
+offset_top = 128.0
+offset_right = 320.0
+offset_bottom = 256.0
+text = "Create lobby"
+icon = ExtResource("2_8p1pj")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="ListLobbyBtn" type="Button" parent="."]
+texture_filter = 1
+layout_mode = 0
+offset_left = 128.0
+offset_top = 320.0
+offset_right = 320.0
+offset_bottom = 448.0
+text = "List Lobbies"
+icon = ExtResource("2_8p1pj")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[connection signal="pressed" from="CreateLobbyBtn" to="." method="_on_create_lobby_btn_pressed"]
+[connection signal="pressed" from="ListLobbyBtn" to="." method="_on_list_lobby_btn_pressed"]

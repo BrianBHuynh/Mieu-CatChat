@@ -128,7 +128,7 @@ bbcode_enabled = true
 text = "[center]X[/center]"
 script = ExtResource("2_f175j")
 
-[node name="ResolutionScale" type="HSlider" parent="."]
+[node name="RenderingScale" type="HSlider" parent="."]
 layout_mode = 0
 offset_left = 256.0
 offset_top = 576.0
@@ -141,14 +141,14 @@ value = 1.0
 tick_count = 20
 ticks_on_borders = true
 
-[node name="ResolutionScaleLabel" type="RichTextLabel" parent="."]
+[node name="RenderingScaleLabel" type="RichTextLabel" parent="."]
 layout_mode = 0
 offset_left = 192.0
 offset_top = 512.0
 offset_right = 832.0
 offset_bottom = 576.0
 bbcode_enabled = true
-text = "[center]Resolution Scale: 1.0[/center]"
+text = "[center]Rendering Scale: 1.0[/center]"
 script = ExtResource("2_f175j")
 
 [connection signal="item_selected" from="StretchAspect" to="." method="_on_stretch_aspect_selected"]
