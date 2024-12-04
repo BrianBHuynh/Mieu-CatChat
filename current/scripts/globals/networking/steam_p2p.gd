@@ -28,6 +28,8 @@ func _on_p2p_session_request(remote_id: int) -> void:
 
 func read_p2p_packet() -> void:
 	var packet_size: int = Steam.getAvailableP2PPacketSize(0)
+	if packet_size != 0:
+		print(packet_size)
 	if packet_size > 0:
 		var this_packet: Dictionary = Steam.readP2PPacket(packet_size, 0)
 		if this_packet.is_empty() or this_packet == null:
@@ -38,6 +40,7 @@ func read_p2p_packet() -> void:
 		print("Packet: %s" % readable_data)
 
 func send_p2p_packet(this_target: int, packet_data: Dictionary) -> void:
+	print("SENDING")
 	var send_type: int = Steam.P2P_SEND_RELIABLE
 	var channel: int = 0
 	var this_data: PackedByteArray

@@ -33,6 +33,18 @@ flat = true
 icon_alignment = 1
 expand_icon = true
 
+[node name="SendTestDataBtn" type="Button" parent="."]
+texture_filter = 1
+offset_left = 128.0
+offset_top = 512.0
+offset_right = 320.0
+offset_bottom = 640.0
+text = "Test sending"
+icon = ExtResource("2_8p1pj")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
 [node name="ListLobbyBtn" type="Button" parent="."]
 texture_filter = 1
 layout_mode = 0
@@ -47,4 +59,5 @@ icon_alignment = 1
 expand_icon = true
 
 [connection signal="pressed" from="CreateLobbyBtn" to="." method="_on_create_lobby_btn_pressed"]
+[connection signal="pressed" from="SendTestDataBtn" to="." method="_on_send_test_data_btn_pressed"]
 [connection signal="pressed" from="ListLobbyBtn" to="." method="_on_list_lobby_btn_pressed"]
