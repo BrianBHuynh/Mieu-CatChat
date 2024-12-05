@@ -22,4 +22,4 @@ func _on_list_lobby_btn_pressed() -> void:
 
 
 func _on_send_test_data_btn_pressed() -> void:
-	Multithreading.add_task(Callable(SteamP2P.send_p2p_packet).bind(0, {"name" : "hello"}))
+	Multithreading.add_task(Callable(SteamP2P.sendMessageToUser).bind(0, {"name" : "hello"}))

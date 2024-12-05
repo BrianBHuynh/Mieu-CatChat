@@ -18,6 +18,8 @@ func _ready() -> void:
 	Steam.lobby_match_list.connect(_on_lobby_match_list)
 	#Steam.lobby_message.connect(_on_lobby_message)
 	Steam.persona_state_change.connect(_on_persona_change)
+	
+	Steam.network_messages_session_request.connect(_on_connection_requested)
 	check_command_line()
 
 
@@ -35,14 +37,18 @@ func create_lobby(type: int, max_players: int) -> void:
 	if lobby_id == 0:
 		Steam.createLobby(type, max_players)
 
+func create_lobby_socket(port: int, options: int, config: Dictionary) -> void:
+	var socket = Steam.createListenSocketP2P(0, {})
+
+func _on_connection_requested(uid: int):
+	Steam.acceptSessionWithUser(uid)
+
 func _on_lobby_created(_connected: int, this_lobby_id: int) -> void:
 	lobby_id = this_lobby_id
 	print("Created a lobby: %s" % lobby_id)
 	Steam.setLobbyJoinable(lobby_id, true)
 	Steam.setLobbyData(lobby_id, "name", Steamworks.steam_username + "'s Lobby")
 	Steam.setLobbyData(lobby_id, "mode", "GodotSteam test")
-	var set_relay: bool = Steam.allowP2PPacketRelay(true)
-	print("Allowing Steam to be relay backup: %s" % set_relay)
 
 func _on_open_lobby_list_pressed() -> void:
 	Steam.addRequestLobbyListDistanceFilter(Steam.LOBBY_DISTANCE_FILTER_WORLDWIDE)
@@ -107,7 +113,7 @@ func _on_persona_change(this_steam_id: int, _flag: int) -> void:
 
 func make_p2p_handshake() -> void:
 	print("Sending P2P handshake to the lobby")
-	SteamP2P.send_p2p_packet(0, {"message": "handshake", "from": Steamworks.steam_id})
+	SteamP2P.sendMessageToUser(0, {"message": "handshake", "from": Steamworks.steam_id})
 
 func _on_lobby_chat_update(_this_lobby_id: int, change_id: int, _making_change_id: int, chat_state: int) -> void:
 	var changer_name: String = Steam.getFriendPersonaName(change_id)
