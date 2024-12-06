@@ -17,4 +17,3 @@ func clear_tasks() -> void:
 		if WorkerThreadPool.is_task_completed(task):
 			WorkerThreadPool.wait_for_task_completion(task)
 			tasks_queue.erase(task)
-			print("Task cleared " + str(task))

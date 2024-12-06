@@ -47,7 +47,7 @@ func _on_lobby_created(_connected: int, this_lobby_id: int) -> void:
 	lobby_id = this_lobby_id
 	print("Created a lobby: %s" % lobby_id)
 	Steam.setLobbyJoinable(lobby_id, true)
-	Steam.setLobbyData(lobby_id, "name", Steamworks.steam_username + "'s Lobby")
+	Steam.setLobbyData(lobby_id, "name", SteamWorks.steam_username + "'s Lobby")
 	Steam.setLobbyData(lobby_id, "mode", "GodotSteam test")
 
 func _on_open_lobby_list_pressed() -> void:
@@ -113,7 +113,7 @@ func _on_persona_change(this_steam_id: int, _flag: int) -> void:
 
 func make_p2p_handshake() -> void:
 	print("Sending P2P handshake to the lobby")
-	SteamP2P.sendMessageToUser(0, {"message": "handshake", "from": Steamworks.steam_id})
+	SteamP2P.sendMessageToUser(0, {"type": "Handshake", "message": "handshake", "from": SteamWorks.steam_id})
 
 func _on_lobby_chat_update(_this_lobby_id: int, change_id: int, _making_change_id: int, chat_state: int) -> void:
 	var changer_name: String = Steam.getFriendPersonaName(change_id)
@@ -142,6 +142,6 @@ func leave_lobby() -> void:
 		Steam.leaveLobby(lobby_id)
 	lobby_id = 0
 	for this_member in lobby_members:
-		if this_member['steam_id'] != Steamworks.steam_id:
+		if this_member['steam_id'] != SteamWorks.steam_id:
 			Steam.closeP2PSessionWithUser(this_member['steam_id'])
 	lobby_members.clear()

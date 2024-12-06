@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://cr4rywm07luw3"]
 
-[ext_resource type="PackedScene" uid="uid://bliphh5kps0ly" path="res://current/characters/mieu/character.tscn" id="1_0uogh"]
+[ext_resource type="PackedScene" uid="uid://bliphh5kps0ly" path="res://current/characters/mieu/mieu.tscn" id="1_0uogh"]
 [ext_resource type="Script" path="res://current/scripts/node/camera_3d.gd" id="2_fcsic"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6i420"]

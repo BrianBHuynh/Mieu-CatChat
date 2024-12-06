@@ -12,7 +12,7 @@ func _process(delta: float) -> void:
 
 
 func _on_create_lobby_btn_pressed() -> void:
-	Steamlobbies.create_lobby(2, 250)
+	SteamLobbies.create_lobby(2, 250)
 
 
 func _on_list_lobby_btn_pressed() -> void:
@@ -22,4 +22,4 @@ func _on_list_lobby_btn_pressed() -> void:
 
 
 func _on_send_test_data_btn_pressed() -> void:
-	Multithreading.add_task(Callable(SteamP2P.sendMessageToUser).bind(0, {"name" : "hello"}))
+	Multithreading.add_task(Callable(SteamP2P.sendMessageToUser).bind(0, {"type": "data", "x": GlobalVars.mieu.position.x, "y": GlobalVars.mieu.position.y}))

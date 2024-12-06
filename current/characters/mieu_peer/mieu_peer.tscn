@@ -1,0 +1,83 @@
+[gd_scene load_steps=13 format=3 uid="uid://dfgfhjqob8c86"]
+
+[ext_resource type="Texture2D" uid="uid://37vx6dgthk0f" path="res://current/assets/images/mieu.png" id="2_mt2fa"]
+[ext_resource type="Texture2D" uid="uid://lhikvxbnengm" path="res://current/assets/images/mieu_idle_front.png" id="3_l2y6d"]
+[ext_resource type="Script" path="res://current/characters/mieu_peer/mieu_peer.gd" id="3_n7imm"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_crgfb"]
+atlas = ExtResource("2_mt2fa")
+region = Rect2(1200, 0, 1200, 1400)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_huocu"]
+atlas = ExtResource("3_l2y6d")
+region = Rect2(0, 0, 480, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_30k44"]
+atlas = ExtResource("3_l2y6d")
+region = Rect2(480, 0, 480, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m5rtk"]
+atlas = ExtResource("3_l2y6d")
+region = Rect2(960, 0, 480, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h41k1"]
+atlas = ExtResource("3_l2y6d")
+region = Rect2(1440, 0, 480, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ye6ii"]
+atlas = ExtResource("3_l2y6d")
+region = Rect2(1920, 0, 480, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dyx0m"]
+atlas = ExtResource("3_l2y6d")
+region = Rect2(2400, 0, 480, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yresj"]
+atlas = ExtResource("3_l2y6d")
+region = Rect2(2880, 0, 480, 480)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hmhyg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_crgfb")
+}],
+"loop": true,
+"name": &"back",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_huocu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_30k44")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m5rtk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h41k1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ye6ii")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dyx0m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yresj")
+}],
+"loop": true,
+"name": &"front",
+"speed": 7.0
+}]
+
+[node name="Sprite" type="AnimatedSprite3D"]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+billboard = 1
+texture_filter = 0
+sprite_frames = SubResource("SpriteFrames_hmhyg")
+animation = &"front"
+autoplay = "front"
+script = ExtResource("3_n7imm")

@@ -35,6 +35,7 @@ expand_icon = true
 
 [node name="SendTestDataBtn" type="Button" parent="."]
 texture_filter = 1
+layout_mode = 0
 offset_left = 128.0
 offset_top = 512.0
 offset_right = 320.0
