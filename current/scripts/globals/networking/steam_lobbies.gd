@@ -18,8 +18,6 @@ func _ready() -> void:
 	Steam.lobby_match_list.connect(_on_lobby_match_list)
 	#Steam.lobby_message.connect(_on_lobby_message)
 	Steam.persona_state_change.connect(_on_persona_change)
-	
-	Steam.network_messages_session_request.connect(_on_connection_requested)
 	check_command_line()
 
 
@@ -39,9 +37,6 @@ func create_lobby(type: int, max_players: int) -> void:
 
 func create_lobby_socket(port: int, options: int, config: Dictionary) -> void:
 	var socket = Steam.createListenSocketP2P(0, {})
-
-func _on_connection_requested(uid: int):
-	Steam.acceptSessionWithUser(uid)
 
 func _on_lobby_created(_connected: int, this_lobby_id: int) -> void:
 	lobby_id = this_lobby_id

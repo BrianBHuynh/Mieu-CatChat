@@ -5,7 +5,7 @@ var kitties: Dictionary = {}
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	Steam.network_messages_session_request.connect(_on_p2p_session_request)
+	Steam.network_messages_session_request.connect(_on_network_messages_session_request)
 	Steam.network_messages_session_failed.connect(_on_p2p_session_connect_fail)
 	SteamLobbies.check_command_line()
 
@@ -21,7 +21,7 @@ func read_all_p2p_packets(read_count: int = 0) -> void:
 		read_p2p_packet()
 		read_all_p2p_packets(read_count + 1)
 
-func _on_p2p_session_request(remote_id: int) -> void:
+func _on_network_messages_session_request(remote_id: int) -> void:
 	var this_requester: String = Steam.getFriendPersonaName(remote_id)
 	print("%s is requesting a P2P session" % this_requester)
 	Steam.acceptSessionWithUser(remote_id)
@@ -33,24 +33,28 @@ func read_p2p_packet() -> void:
 		#print(messages.size())
 		pass
 	if messages.size() > 0:
-		for message in messages:
-			message.payload = bytes_to_var(message.payload)
-			if message["payload"]["type"] == "data":
-				if kitties.has(message.identity):
-					kitties[message.identity].global_position = Vector3(message.payload.x, message.payload.y, message.payload.z)
-				else:
-					var file = load("res://current/characters/mieu_peer/mieu_peer.tscn")
-					var kit = file.instantiate()
-					get_parent().add_child(kit)
-					kit.sign_adoption(message["identity"])
-					kitties[message["identity"]] = kit
-					print("creating")
+		for message: Dictionary in messages:
+			if message.is_empty() or message == null:
+				print("WARNING: read an empty packet with non-zero size!")
+			else:
+				message.payload = bytes_to_var(message.payload.decompress_dynamic(-1, FileAccess.COMPRESSION_BROTLI))
+				if message["payload"]["type"] == "data":
+					if kitties.has(message.identity):
+						kitties[message.identity].global_position = Vector3(message.payload.x, message.payload.y, message.payload.z)
+					else:
+						var file = load("res://current/characters/mieu_peer/mieu_peer.tscn")
+						var kit = file.instantiate()
+						get_parent().add_child(kit)
+						kit.sign_adoption(message["identity"])
+						kitties[message["identity"]] = kit
+						print("creating")
 
 func sendMessageToUser(this_target: int, packet_data: Dictionary) -> void:
-	var send_type: int = Steam.P2P_SEND_RELIABLE
+	var send_type: int = Steam.NETWORKING_SEND_RELIABLE_NO_NAGLE
 	var channel: int = 0
 	var this_data: PackedByteArray
 	this_data.append_array(var_to_bytes(packet_data))
+	this_data = this_data.compress(FileAccess.COMPRESSION_BROTLI)
 	if this_target == 0:
 		if SteamLobbies.lobby_members.size() > 1:
 			for this_member in SteamLobbies.lobby_members:
@@ -60,10 +64,11 @@ func sendMessageToUser(this_target: int, packet_data: Dictionary) -> void:
 		Steam.sendMessageToUser(this_target, this_data, send_type, channel)
 
 func sendMessageToUserFast(this_target: int, packet_data: Dictionary) -> void:
-	var send_type: int = Steam.P2P_SEND_UNRELIABLE
+	var send_type: int = Steam.NETWORKING_SEND_URELIABLE_NO_NAGLE
 	var channel: int = 0
 	var this_data: PackedByteArray
 	this_data.append_array(var_to_bytes(packet_data))
+	this_data = this_data.compress(FileAccess.COMPRESSION_BROTLI)
 	if this_target == 0:
 		if SteamLobbies.lobby_members.size() > 1:
 			for this_member in SteamLobbies.lobby_members:

@@ -9,3 +9,6 @@ func _process(delta: float):
 func sign_adoption(identity: int):
 	id = identity
 	player_name = Steam.getPlayerNickname(id)
+
+func move_to(new_position: Vector3):
+	Tween.new().tween_property(self, "global_position", new_position, .05)
