@@ -6,8 +6,9 @@ var steam_username: String = ""
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	Steam.steamInit()
-	Steam.initRelayNetworkAccess()
-	Steam.initAuthentication()
+	Multithreading.add_task(Steam.initRelayNetworkAccess)
+	Multithreading.add_task(Steam.initAuthentication)
+	
 	if Steam.isSteamRunning():
 		print("Steam is running")
 		print(Steam.getFriendPersonaName(Steam.getSteamID()))
