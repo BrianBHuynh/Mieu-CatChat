@@ -1,5 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://ddau1wbdns8mp"]
+[gd_scene load_steps=3 format=3 uid="uid://ddau1wbdns8mp"]
 
+[ext_resource type="Script" path="res://current/scripts/node/rich_text_label.gd" id="1_a66ng"]
 [ext_resource type="Texture2D" uid="uid://dv4n5etipadpk" path="res://current/assets/ui/btn_sized.png" id="2_xge1m"]
 
 [node name="Control" type="Control"]
@@ -11,20 +12,46 @@ offset_bottom = 40.0
 [node name="ColorRect" type="ColorRect" parent="."]
 modulate = Color(0.345098, 0.705882, 0.988235, 0.443137)
 layout_mode = 0
-offset_left = 64.0
+offset_left = 320.0
 offset_top = 64.0
-offset_right = 1856.0
+offset_right = 1600.0
 offset_bottom = 1024.0
 
-[node name="Button" type="Button" parent="."]
-texture_filter = 1
-layout_mode = 0
-offset_left = 128.0
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+clip_contents = true
+layout_mode = 2
+offset_left = 384.0
 offset_top = 128.0
-offset_right = 384.0
-offset_bottom = 256.0
+offset_right = 1536.0
+offset_bottom = 960.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/ScrollContainer"]
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/ScrollContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
 text = "Change camera mode"
-icon = ExtResource("2_xge1m")
-flat = true
-icon_alignment = 1
-expand_icon = true
+fit_content = true
+script = ExtResource("1_a66ng")
+
+[node name="TextureButton" type="TextureButton" parent="VBoxContainer/ScrollContainer/HBoxContainer"]
+texture_filter = 1
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+texture_normal = ExtResource("2_xge1m")
+stretch_mode = 5

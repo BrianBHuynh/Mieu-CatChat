@@ -37,13 +37,13 @@ func read_p2p_packet() -> void:
 			if message.is_empty() or message == null:
 				print("WARNING: read an empty packet with non-zero size!")
 			else:
-				message.payload = bytes_to_var(message.payload.decompress_dynamic(-1, FileAccess.COMPRESSION_BROTLI))
+				message.payload = bytes_to_var(message.payload.decompress_dynamic(-1, FileAccess.COMPRESSION_GZIP))
 				if message["payload"]["type"] == "data":
 					if kitties.has(message.identity):
 						kitties[message.identity].global_position = Vector3(message.payload.x, message.payload.y, message.payload.z)
 					else:
-						var file = load("res://current/characters/mieu_peer/mieu_peer.tscn")
-						var kit = file.instantiate()
+						var file: Resource = load("res://current/characters/mieu_peer/mieu_peer.tscn")
+						var kit: Sprite3D = file.instantiate()
 						get_parent().add_child(kit)
 						kit.sign_adoption(message["identity"])
 						kitties[message["identity"]] = kit
@@ -54,10 +54,10 @@ func sendMessageToUser(this_target: int, packet_data: Dictionary) -> void:
 	var channel: int = 0
 	var this_data: PackedByteArray
 	this_data.append_array(var_to_bytes(packet_data))
-	this_data = this_data.compress(FileAccess.COMPRESSION_BROTLI)
+	this_data = this_data.compress(FileAccess.COMPRESSION_GZIP)
 	if this_target == 0:
 		if SteamLobbies.lobby_members.size() > 1:
-			for this_member in SteamLobbies.lobby_members:
+			for this_member: Dictionary in SteamLobbies.lobby_members:
 				if this_member['steam_id'] != SteamWorks.steam_id:
 					Steam.sendMessageToUser(this_member['steam_id'], this_data, send_type, channel)
 	else:
@@ -68,28 +68,14 @@ func sendMessageToUserFast(this_target: int, packet_data: Dictionary) -> void:
 	var channel: int = 0
 	var this_data: PackedByteArray
 	this_data.append_array(var_to_bytes(packet_data))
-	this_data = this_data.compress(FileAccess.COMPRESSION_BROTLI)
+	this_data = this_data.compress(FileAccess.COMPRESSION_GZIP)
 	if this_target == 0:
 		if SteamLobbies.lobby_members.size() > 1:
-			for this_member in SteamLobbies.lobby_members:
+			for this_member: Dictionary in SteamLobbies.lobby_members:
 				if this_member['steam_id'] != SteamWorks.steam_id:
 					Steam.sendMessageToUser(this_member['steam_id'], this_data, send_type, channel)
 	else:
 		Steam.sendMessageToUser(this_target, this_data, send_type, channel)
 
-func _on_p2p_session_connect_fail(steam_id: int, session_error: int, state: int, debug_msg: String) -> void:
-	match session_error:
-		0:
-			print("WARNING: Session failure with %s: no error given" % steam_id)
-		1:
-			print("WARNING: Session failure with %s: target user not running the same game" % steam_id)
-		2:
-			print("WARNING: Session failure with %s: local user doesn't own app / game" % steam_id)
-		3:
-			print("WARNING: Session failure with %s: target user isn't connected to Steam" % steam_id)
-		4:
-			print("WARNING: Session failure with %s: connection timed out" % steam_id)
-		5:
-			print("WARNING: Session failure with %s: unused" % steam_id)
-		_:
-			print("WARNING: Session failure with %s: unknown error %s" % [steam_id, session_error])
+func _on_p2p_session_connect_fail(_steam_id: int, _session_error: int, _state: int, debug_msg: String) -> void:
+	print(debug_msg)

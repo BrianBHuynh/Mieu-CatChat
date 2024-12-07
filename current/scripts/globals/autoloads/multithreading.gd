@@ -5,7 +5,7 @@ var tasks_queue: Array
 func _ready() -> void:
 	SignalBus.clear_tasks.connect(clear_tasks)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if not tasks_queue.is_empty():
 		clear_tasks()
 

@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://ds23emrqlb05u"]
+[gd_scene load_steps=5 format=3 uid="uid://ds23emrqlb05u"]
 
 [ext_resource type="Script" path="res://current/menus/multiplayer_menu/multiplayer_menu.gd" id="1_j81e8"]
 [ext_resource type="Texture2D" uid="uid://dv4n5etipadpk" path="res://current/assets/ui/btn_sized.png" id="2_8p1pj"]
+[ext_resource type="Script" path="res://current/scripts/node/rich_text_label.gd" id="2_plucq"]
+[ext_resource type="Script" path="res://current/menus/multiplayer_menu/lobbies_list.gd" id="4_3onyp"]
 
 [node name="MultiplayerMenu" type="Control"]
 layout_mode = 3
@@ -15,50 +17,86 @@ script = ExtResource("1_j81e8")
 [node name="ColorRect" type="ColorRect" parent="."]
 modulate = Color(1, 0.545098, 0.227451, 0.509804)
 layout_mode = 0
-offset_left = 64.0
+offset_left = 320.0
 offset_top = 64.0
-offset_right = 1856.0
+offset_right = 1592.0
 offset_bottom = 1024.0
 
-[node name="CreateLobbyBtn" type="Button" parent="."]
-texture_filter = 1
-layout_mode = 0
-offset_left = 128.0
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 2
+offset_left = 384.0
 offset_top = 128.0
-offset_right = 320.0
-offset_bottom = 256.0
-text = "Create lobby"
-icon = ExtResource("2_8p1pj")
-flat = true
-icon_alignment = 1
-expand_icon = true
+offset_right = 1536.0
+offset_bottom = 960.0
+size_flags_horizontal = 3
 
-[node name="SendTestDataBtn" type="Button" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer"]
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Button Text" type="VBoxContainer" parent="ScrollContainer/HBoxContainer"]
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CreateLobbyText" type="RichTextLabel" parent="ScrollContainer/HBoxContainer/Button Text"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Create a lobby"
+fit_content = true
+script = ExtResource("2_plucq")
+
+[node name="RefreshLobbiesText" type="RichTextLabel" parent="ScrollContainer/HBoxContainer/Button Text"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Refresh Lobbies"
+script = ExtResource("2_plucq")
+
+[node name="SendTestDataText" type="RichTextLabel" parent="ScrollContainer/HBoxContainer/Button Text"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Ping Lobbies"
+fit_content = true
+script = ExtResource("2_plucq")
+
+[node name="Buttons" type="VBoxContainer" parent="ScrollContainer/HBoxContainer"]
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="CreateLobby" type="TextureButton" parent="ScrollContainer/HBoxContainer/Buttons"]
 texture_filter = 1
-layout_mode = 0
-offset_left = 128.0
-offset_top = 512.0
-offset_right = 320.0
-offset_bottom = 640.0
-text = "Test sending"
-icon = ExtResource("2_8p1pj")
-flat = true
-icon_alignment = 1
-expand_icon = true
+clip_contents = true
+layout_mode = 2
+size_flags_vertical = 3
+texture_normal = ExtResource("2_8p1pj")
+stretch_mode = 5
 
-[node name="ListLobbyBtn" type="Button" parent="."]
+[node name="RefreshLobbies" type="TextureButton" parent="ScrollContainer/HBoxContainer/Buttons"]
 texture_filter = 1
-layout_mode = 0
-offset_left = 128.0
-offset_top = 320.0
-offset_right = 320.0
-offset_bottom = 448.0
-text = "List Lobbies"
-icon = ExtResource("2_8p1pj")
-flat = true
-icon_alignment = 1
-expand_icon = true
+clip_contents = true
+layout_mode = 2
+size_flags_vertical = 3
+texture_normal = ExtResource("2_8p1pj")
+stretch_mode = 5
 
-[connection signal="pressed" from="CreateLobbyBtn" to="." method="_on_create_lobby_btn_pressed"]
-[connection signal="pressed" from="SendTestDataBtn" to="." method="_on_send_test_data_btn_pressed"]
-[connection signal="pressed" from="ListLobbyBtn" to="." method="_on_list_lobby_btn_pressed"]
+[node name="SendTestData" type="TextureButton" parent="ScrollContainer/HBoxContainer/Buttons"]
+clip_contents = true
+layout_mode = 2
+size_flags_vertical = 3
+texture_normal = ExtResource("2_8p1pj")
+stretch_mode = 5
+
+[node name="LobbiesList" type="VBoxContainer" parent="ScrollContainer/HBoxContainer"]
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+script = ExtResource("4_3onyp")
+
+[connection signal="pressed" from="ScrollContainer/HBoxContainer/Buttons/CreateLobby" to="." method="_on_create_lobby_btn_pressed"]
+[connection signal="pressed" from="ScrollContainer/HBoxContainer/Buttons/RefreshLobbies" to="." method="_on_refresh_lobby_btn_pressed"]
+[connection signal="pressed" from="ScrollContainer/HBoxContainer/Buttons/SendTestData" to="." method="_on_send_test_data_btn_pressed"]

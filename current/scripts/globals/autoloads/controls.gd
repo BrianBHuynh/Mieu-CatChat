@@ -3,6 +3,7 @@ extends Node
 var menu_open: bool = false
 var menu: Resource = load("res://current/menus/escape_menu/escape_menu.tscn")
 var cur_menu: Control
+var lobbies: VBoxContainer
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

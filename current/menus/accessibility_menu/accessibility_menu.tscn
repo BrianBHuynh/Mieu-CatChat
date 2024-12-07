@@ -1,8 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://bul7fpmury427"]
+[gd_scene load_steps=4 format=3 uid="uid://bul7fpmury427"]
 
 [ext_resource type="Script" path="res://current/menus/accessibility_menu/accessibility_menu.gd" id="1_7wl3y"]
 [ext_resource type="Script" path="res://current/scripts/node/rich_text_label.gd" id="2_4yg4i"]
-[ext_resource type="Script" path="res://current/scripts/node/button.gd" id="3_an561"]
 [ext_resource type="Texture2D" uid="uid://dv4n5etipadpk" path="res://current/assets/ui/btn_sized.png" id="3_pvipk"]
 
 [node name="DebugMenu" type="Control"]
@@ -15,81 +14,122 @@ grow_vertical = 2
 script = ExtResource("1_7wl3y")
 
 [node name="ColorRect" type="ColorRect" parent="."]
+clip_contents = true
+custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
-offset_left = 64.0
+offset_left = 320.0
 offset_top = 64.0
-offset_right = 1856.0
+offset_right = 1600.0
 offset_bottom = 1024.0
+size_flags_vertical = 3
 color = Color(0, 0.145098, 0.129412, 0.788235)
 
-[node name="Fov_Slider" type="HSlider" parent="."]
-layout_mode = 0
-offset_left = 128.0
-offset_top = 256.0
-offset_right = 608.0
-offset_bottom = 384.0
-scale = Vector2(2, 1)
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 2
+offset_left = 384.0
+offset_top = 128.0
+offset_right = 1536.0
+offset_bottom = 960.0
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="Fov" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
+alignment = 1
+
+[node name="Fov Text" type="RichTextLabel" parent="ScrollContainer/VBoxContainer/Fov"]
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "[center]FOV[/center]"
+fit_content = true
+script = ExtResource("2_4yg4i")
+
+[node name="Fov_Slider" type="HSlider" parent="ScrollContainer/VBoxContainer/Fov"]
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
 min_value = 10.0
 max_value = 150.0
 value = 80.0
 rounded = true
 
-[node name="RichTextLabel" type="RichTextLabel" parent="."]
-layout_mode = 0
-offset_left = 128.0
-offset_top = 384.0
-offset_right = 1088.0
-offset_bottom = 576.0
-text = "EXAMPLE TEXT
-example text"
-script = ExtResource("2_4yg4i")
+[node name="Text Size Warning" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+clip_contents = true
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 4.0
 
-[node name="Font change" type="Button" parent="."]
-texture_filter = 1
-layout_mode = 0
-offset_left = 128.0
-offset_top = 576.0
-offset_right = 448.0
-offset_bottom = 768.0
-text = "Next font"
-icon = ExtResource("3_pvipk")
-flat = true
-icon_alignment = 1
-expand_icon = true
-script = ExtResource("3_an561")
-
-[node name="RichTextLabel2" type="RichTextLabel" parent="."]
-layout_mode = 0
-offset_left = 128.0
-offset_top = 768.0
-offset_right = 1088.0
-offset_bottom = 896.0
+[node name="Font Size Warning" type="RichTextLabel" parent="ScrollContainer/VBoxContainer/Text Size Warning"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
 bbcode_enabled = true
-text = "[center]Font Size[/center]
+text = "[center]Font Size
 
-Note: Extreme font sizes may look strange"
+Note: Extreme font sizes may look strange[/center]"
+fit_content = true
 script = ExtResource("2_4yg4i")
 
-[node name="Text_Size_Slider" type="HSlider" parent="."]
-layout_mode = 0
-offset_left = 128.0
-offset_top = 896.0
-offset_right = 608.0
-offset_bottom = 960.0
-scale = Vector2(2, 1)
+[node name="Text Size" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
+alignment = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="ScrollContainer/VBoxContainer/Text Size"]
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "[center]EXAMPLE TEXT
+example text[/center]"
+fit_content = true
+script = ExtResource("2_4yg4i")
+
+[node name="Text_Size_Slider" type="HSlider" parent="ScrollContainer/VBoxContainer/Text Size"]
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+size_flags_stretch_ratio = 2.0
 min_value = 5.0
 value = 15.0
 rounded = true
 
-[node name="RichTextLabel3" type="RichTextLabel" parent="."]
-layout_mode = 0
-offset_left = 128.0
-offset_top = 128.0
-offset_right = 1088.0
-offset_bottom = 256.0
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+clip_contents = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="ScrollContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
 bbcode_enabled = true
-text = "[center]FOV[/center]"
+text = "[center]Change Font[/center]"
+fit_content = true
 script = ExtResource("2_4yg4i")
 
-[connection signal="value_changed" from="Fov_Slider" to="." method="_on_fov_slider_value_changed"]
-[connection signal="pressed" from="Font change" to="." method="_font_changed"]
+[node name="TextureButton" type="TextureButton" parent="ScrollContainer/VBoxContainer/HBoxContainer"]
+texture_filter = 1
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+texture_normal = ExtResource("3_pvipk")
+stretch_mode = 5
+
+[connection signal="value_changed" from="ScrollContainer/VBoxContainer/Fov/Fov_Slider" to="." method="_on_fov_slider_value_changed"]
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/HBoxContainer/TextureButton" to="." method="_font_changed"]

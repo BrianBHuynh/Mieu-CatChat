@@ -1,7 +1,7 @@
 extends Node
 #Currently heavily based on code from https://godotsteam.com/tutorials/lobbies/
 
-var lobby_data
+#var lobby_data
 var lobby_id: int = 0
 var lobby_members: Array = []
 var lobby_members_max: int = 10
@@ -35,9 +35,6 @@ func create_lobby(type: int, max_players: int) -> void:
 	if lobby_id == 0:
 		Steam.createLobby(type, max_players)
 
-func create_lobby_socket(port: int, options: int, config: Dictionary) -> void:
-	var socket = Steam.createListenSocketP2P(0, {})
-
 func _on_lobby_created(_connected: int, this_lobby_id: int) -> void:
 	lobby_id = this_lobby_id
 	print("Created a lobby: %s" % lobby_id)
@@ -51,7 +48,7 @@ func _on_open_lobby_list_pressed() -> void:
 	Steam.requestLobbyList()
 
 func _on_lobby_match_list(these_lobbies: Array) -> void:
-	for this_lobby in these_lobbies:
+	for this_lobby: int in these_lobbies:
 		var lobby_name: String = Steam.getLobbyData(this_lobby, "name")
 		var lobby_mode: String = Steam.getLobbyData(this_lobby, "mode")
 		var lobby_num_members: int = Steam.getNumLobbyMembers(this_lobby)
@@ -60,7 +57,7 @@ func _on_lobby_match_list(these_lobbies: Array) -> void:
 		lobby_button.set_size(Vector2(800, 50))
 		lobby_button.set_name("lobby_%s" % this_lobby)
 		lobby_button.connect("pressed", Callable(self, "join_lobby").bind(this_lobby))
-		Controls.cur_menu.add_child(lobby_button)
+		Controls.lobbies.add_child(lobby_button)
 
 func join_lobby(this_lobby_id: int) -> void:
 	print("Attempting to join lobby %s" % lobby_id)
@@ -96,10 +93,10 @@ func _on_lobby_join_requested(this_lobby_id: int, friend_id: int) -> void:
 func get_lobby_members() -> void:
 	lobby_members.clear()
 	var num_of_members: int = Steam.getNumLobbyMembers(lobby_id)
-	for this_member in range(0, num_of_members):
+	for this_member: int in range(0, num_of_members):
 		var member_steam_id: int = Steam.getLobbyMemberByIndex(lobby_id, this_member)
 		var member_steam_name: String = Steam.getFriendPersonaName(member_steam_id)
-		lobby_members.append({"steam_id":member_steam_id, "steam_name":member_steam_name})
+		lobby_members.append({"steam_id": member_steam_id, "steam_name": member_steam_name})
 	
 func _on_persona_change(this_steam_id: int, _flag: int) -> void:
 	if lobby_id > 0:
@@ -136,7 +133,7 @@ func leave_lobby() -> void:
 	if lobby_id != 0:
 		Steam.leaveLobby(lobby_id)
 	lobby_id = 0
-	for this_member in lobby_members:
+	for this_member: Dictionary in lobby_members:
 		if this_member['steam_id'] != SteamWorks.steam_id:
 			Steam.closeP2PSessionWithUser(this_member['steam_id'])
 	lobby_members.clear()

@@ -7,7 +7,7 @@ func _ready() -> void:
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	pass
 
 
@@ -15,7 +15,7 @@ func _on_create_lobby_btn_pressed() -> void:
 	SteamLobbies.create_lobby(2, 250)
 
 
-func _on_list_lobby_btn_pressed() -> void:
+func _on_refresh_lobby_btn_pressed() -> void:
 	Steam.addRequestLobbyListDistanceFilter(Steam.LOBBY_DISTANCE_FILTER_WORLDWIDE)
 	print("Requesting a lobby list")
 	Steam.requestLobbyList()

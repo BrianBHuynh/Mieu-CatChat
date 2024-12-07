@@ -4,11 +4,14 @@ var id
 var player_name
 
 func _process(delta: float):
-	print(global_position.distance_squared_to(GlobalVars.mieu.global_position))
+	pass
 
 func sign_adoption(identity: int):
 	id = identity
 	player_name = Steam.getPlayerNickname(id)
 
 func move_to(new_position: Vector3):
-	Tween.new().tween_property(self, "global_position", new_position, .05)
+	if Saves.get_or_add("settings", "networking_tween", false):
+		Tween.new().tween_property(self, "global_position", new_position, Saves.get_or_add("settings", "networking_tween_val", .05))
+	else:
+		global_position = new_position
