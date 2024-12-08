@@ -38,16 +38,21 @@ func read_p2p_packet() -> void:
 				print("WARNING: read an empty packet with non-zero size!")
 			else:
 				message.payload = bytes_to_var(message.payload.decompress_dynamic(-1, FileAccess.COMPRESSION_GZIP))
-				if message["payload"]["type"] == "data":
-					if kitties.has(message.identity):
-						kitties[message.identity].global_position = Vector3(message.payload.x, message.payload.y, message.payload.z)
-					else:
-						var file: Resource = load("res://current/characters/mieu_peer/mieu_peer.tscn")
-						var kit: Sprite3D = file.instantiate()
-						get_parent().add_child(kit)
-						kit.sign_adoption(message["identity"])
-						kitties[message["identity"]] = kit
-						print("creating")
+				match message["payload"]["type"]:
+					"data":
+						if kitties.has(message.identity):
+							kitties[message.identity].global_position = Vector3(message.payload.x, message.payload.y, message.payload.z)
+						else:
+							var file: Resource = load("res://current/characters/mieu_peer/mieu_peer.tscn")
+							var kit: Sprite3D = file.instantiate()
+							get_parent().add_child(kit)
+							kit.sign_adoption(message["identity"])
+							kitties[message["identity"]] = kit
+							print("creating")
+					"ping":
+						sendMessageToUser(message.identity, {"type": "pong", "send_time": message["payload"]["send_time"]})
+					"pong":
+						print(Steam.getPlayerNickname(message.identity) + " ping = " + str((Time.get_unix_time_from_system() - message["payload"]["send_time"])/2.0) + " seconds")
 
 func sendMessageToUser(this_target: int, packet_data: Dictionary) -> void:
 	var send_type: int = Steam.NETWORKING_SEND_RELIABLE_NO_NAGLE

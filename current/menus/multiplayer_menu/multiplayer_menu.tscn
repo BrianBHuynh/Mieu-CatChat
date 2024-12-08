@@ -19,7 +19,7 @@ modulate = Color(1, 0.545098, 0.227451, 0.509804)
 layout_mode = 0
 offset_left = 320.0
 offset_top = 64.0
-offset_right = 1592.0
+offset_right = 1600.0
 offset_bottom = 1024.0
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
@@ -98,5 +98,5 @@ size_flags_stretch_ratio = 2.0
 script = ExtResource("4_3onyp")
 
 [connection signal="pressed" from="ScrollContainer/HBoxContainer/Buttons/CreateLobby" to="." method="_on_create_lobby_btn_pressed"]
-[connection signal="pressed" from="ScrollContainer/HBoxContainer/Buttons/RefreshLobbies" to="." method="_on_refresh_lobby_btn_pressed"]
+[connection signal="pressed" from="ScrollContainer/HBoxContainer/Buttons/RefreshLobbies" to="." method="refresh_lobbies"]
 [connection signal="pressed" from="ScrollContainer/HBoxContainer/Buttons/SendTestData" to="." method="_on_send_test_data_btn_pressed"]

@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://cwhpiynu322rk"]
 
 [ext_resource type="Script" path="res://current/menus/escape_menu/escape_menu.gd" id="1_n3t1d"]
-[ext_resource type="Script" path="res://current/scripts/node/button.gd" id="2_jovmg"]
+[ext_resource type="Script" path="res://current/scripts/node/rich_text_label.gd" id="2_leq0j"]
 [ext_resource type="Texture2D" uid="uid://dv4n5etipadpk" path="res://current/assets/ui/btn_sized.png" id="2_t8lwk"]
 
 [node name="DebugMenu" type="Control"]
@@ -34,75 +34,114 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Multiplayer" type="Button" parent="ScrollContainer/VBoxContainer"]
-modulate = Color(2.69532e-06, 0.564525, 0.877788, 1)
-texture_filter = 1
+[node name="Multiplayer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
 clip_contents = true
 layout_mode = 2
 size_flags_vertical = 3
-text = "Multiplayer"
-icon = ExtResource("2_t8lwk")
-flat = true
-clip_text = true
-icon_alignment = 1
-expand_icon = true
-script = ExtResource("2_jovmg")
 
-[node name="Accessibility" type="Button" parent="ScrollContainer/VBoxContainer"]
-modulate = Color(0.78146, 0.476793, 9.62615e-07, 1)
+[node name="MultiplayerLabel" type="RichTextLabel" parent="ScrollContainer/VBoxContainer/Multiplayer"]
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "[center]Multiplayer:[/center]"
+fit_content = true
+script = ExtResource("2_leq0j")
+
+[node name="MultiplayerBtn" type="TextureButton" parent="ScrollContainer/VBoxContainer/Multiplayer"]
+modulate = Color(0, 1, 1, 1)
 texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+texture_normal = ExtResource("2_t8lwk")
+stretch_mode = 5
+
+[node name="Accessibility" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
 clip_contents = true
 layout_mode = 2
 size_flags_vertical = 3
-text = "Accessibility"
-icon = ExtResource("2_t8lwk")
-flat = true
-icon_alignment = 1
-expand_icon = true
-script = ExtResource("2_jovmg")
 
-[node name="Button" type="Button" parent="ScrollContainer/VBoxContainer"]
-modulate = Color(0.87773, 0.748847, 0, 1)
+[node name="AccessibilityLabel" type="RichTextLabel" parent="ScrollContainer/VBoxContainer/Accessibility"]
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "[center]Accessibility[/center]"
+fit_content = true
+script = ExtResource("2_leq0j")
+
+[node name="AccessibilityBtn" type="TextureButton" parent="ScrollContainer/VBoxContainer/Accessibility"]
+modulate = Color(1, 0, 1, 1)
 texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+texture_normal = ExtResource("2_t8lwk")
+stretch_mode = 5
+
+[node name="Video" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
 clip_contents = true
 layout_mode = 2
 size_flags_vertical = 3
-text = "Video"
-icon = ExtResource("2_t8lwk")
-flat = true
-clip_text = true
-icon_alignment = 1
-expand_icon = true
-script = ExtResource("2_jovmg")
 
-[node name="Save" type="Button" parent="ScrollContainer/VBoxContainer"]
-modulate = Color(6.06447e-06, 0.785401, 0.594757, 1)
+[node name="VideoLabel" type="RichTextLabel" parent="ScrollContainer/VBoxContainer/Video"]
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "[center]Video:[/center]"
+fit_content = true
+script = ExtResource("2_leq0j")
+
+[node name="VideoBtn" type="TextureButton" parent="ScrollContainer/VBoxContainer/Video"]
+modulate = Color(1, 1, 0, 1)
 texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+texture_normal = ExtResource("2_t8lwk")
+stretch_mode = 5
+
+[node name="Debug" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
 clip_contents = true
 layout_mode = 2
 size_flags_vertical = 3
-text = "Save"
-icon = ExtResource("2_t8lwk")
-flat = true
-icon_alignment = 1
-expand_icon = true
-script = ExtResource("2_jovmg")
 
-[node name="Debug" type="Button" parent="ScrollContainer/VBoxContainer"]
-modulate = Color(0.762964, 0.552664, 1, 1)
+[node name="DebugLabel" type="RichTextLabel" parent="ScrollContainer/VBoxContainer/Debug"]
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "[center]Debug:[/center]"
+fit_content = true
+script = ExtResource("2_leq0j")
+
+[node name="DebugBtn" type="TextureButton" parent="ScrollContainer/VBoxContainer/Debug"]
+modulate = Color(1, 0, 0, 1)
 texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+texture_normal = ExtResource("2_t8lwk")
+stretch_mode = 5
+
+[node name="Save" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
 clip_contents = true
 layout_mode = 2
 size_flags_vertical = 3
-text = "Debug"
-icon = ExtResource("2_t8lwk")
-flat = true
-icon_alignment = 1
-expand_icon = true
-script = ExtResource("2_jovmg")
 
-[connection signal="pressed" from="ScrollContainer/VBoxContainer/Multiplayer" to="." method="_on_multiplayer_pressed"]
-[connection signal="pressed" from="ScrollContainer/VBoxContainer/Accessibility" to="." method="_on_accessibility_pressed"]
-[connection signal="pressed" from="ScrollContainer/VBoxContainer/Button" to="." method="_on_video_pressed"]
-[connection signal="pressed" from="ScrollContainer/VBoxContainer/Save" to="." method="_on_save_pressed"]
-[connection signal="pressed" from="ScrollContainer/VBoxContainer/Debug" to="." method="_on_debug_pressed"]
+[node name="SaveLabel" type="RichTextLabel" parent="ScrollContainer/VBoxContainer/Save"]
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "[center]Save:[/center]"
+fit_content = true
+script = ExtResource("2_leq0j")
+
+[node name="SaveBtn" type="TextureButton" parent="ScrollContainer/VBoxContainer/Save"]
+modulate = Color(0, 0, 1, 1)
+texture_filter = 1
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+texture_normal = ExtResource("2_t8lwk")
+stretch_mode = 5
+
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/Multiplayer/MultiplayerBtn" to="." method="_on_multiplayer_pressed"]
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/Accessibility/AccessibilityBtn" to="." method="_on_accessibility_pressed"]
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/Video/VideoBtn" to="." method="_on_video_pressed"]
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/Debug/DebugBtn" to="." method="_on_debug_pressed"]
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/Save/SaveBtn" to="." method="_on_save_pressed"]
