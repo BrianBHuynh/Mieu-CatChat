@@ -10,29 +10,33 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	pass
 
-func add_chat_message(message: Dictionary) -> void:
-	var interactable_message: Button = Button.new()
-	if message["payload"]["private"]:
-		interactable_message.set_text("(whisper)" + SteamLobbies.lobby_members[message.identity]["steam_name"] + ": " + message["payload"]["text"])
-	else:
-		var text = SteamLobbies.lobby_members[message.identity]["steam_name"] + ": " + message["payload"]["text"]
-		interactable_message.set_text(SteamLobbies.lobby_members[message.identity]["steam_name"] + ": " + message["payload"]["text"])
-	interactable_message.set_script(load("res://current/scripts/node/chat_message.gd"))
-	interactable_message.clip_contents = true
-	$ScrollContainer/VBoxContainer.add_child(interactable_message)
-	chat_messages.append(interactable_message)
+func process_chat_message(message: Dictionary) -> void:
+	add_chat_message(message.identity, SteamWorks.steam_id, message["payload"]["text"], message["payload"]["private"])
 
-func sent_chat_message(message: String, private: bool) -> void:
-	var interactable_message: Button = Button.new()
+func sent_chat_message(message: String, private: bool, target: int) -> void:
+	add_chat_message(SteamWorks.steam_id, target, message, private)
+
+func add_chat_message(sender: int, target: int, content: String, private: bool):
+	var hbox: HBoxContainer = HBoxContainer.new()
+	hbox.clip_contents = true
+	var message_text: RichTextLabel = RichTextLabel.new()
 	if private:
-		interactable_message.set_text("(whisper)" + SteamWorks.steam_username + ": " + message)
+		message_text.set_text("(whisper)" + Steam.getFriendPersonaName(sender) + ": " + content)
 	else:
-		interactable_message.set_text(SteamWorks.steam_username + ": " + message)
-	interactable_message.set_script(load("res://current/scripts/node/chat_message.gd"))
-	interactable_message.clip_text = true
-	$ScrollContainer/VBoxContainer.add_child(interactable_message)
-	chat_messages.append(interactable_message)
-
+		message_text.set_text(Steam.getFriendPersonaName(sender) + ": " + content)
+	message_text.set_script(load("res://current/scripts/node/chat_message.gd"))
+	message_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	message_text.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	message_text.fit_content = true
+	hbox.add_child(message_text)
+	
+	var interact_button: Button = Button.new()
+	interact_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	interact_button.size_flags_stretch_ratio = .1
+	interact_button.pressed.connect(_delete_chat.bind(hbox))
+	hbox.add_child(interact_button)
+	$ScrollContainer/VBoxContainer.add_child(hbox)
+	chat_messages.append({"sender": sender, "target": target, "content": content, "private": private, "chat": hbox})
 #Current button sizing problems are solved in this commit which is already commited into the main repo, should be fixed in 4.4 https://github.com/godotengine/godot/commit/0f98b3244805d61ef9edcfa4671ab77c1c5167a7
 func release_input_focus() -> void:
 	$TextBox.release_focus()
@@ -53,3 +57,6 @@ func _on_text_box_text_changed() -> void:
 	if $TextBox.text.contains('\n'):
 		$TextBox.text = $TextBox.text.erase($TextBox.text.length()-1, 1)
 		_on_send_pressed()
+
+func _delete_chat(chat: HBoxContainer) -> void:
+	chat.queue_free()

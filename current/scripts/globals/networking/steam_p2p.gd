@@ -54,7 +54,7 @@ func read_p2p_packet() -> void:
 					"pong":
 						print(Steam.getPlayerNickname(message.identity) + " ping = " + str((Time.get_unix_time_from_system() - message["payload"]["send_time"])/2.0) + " seconds")
 					"chat":
-						Controls.chat_box.add_chat_message(message)
+						Controls.chat_box.process_chat_message(message)
 
 func sendMessageToUser(this_target: int, packet_data: Dictionary) -> void:
 	var send_type: int = Steam.NETWORKING_SEND_RELIABLE_NO_NAGLE
@@ -95,7 +95,7 @@ func send_chat_message(this_target: int, message: String, private: bool) -> void
 			for this_member: int in SteamLobbies.lobby_members:
 				if this_member != SteamWorks.steam_id:
 					Steam.sendMessageToUser(this_member, this_data, send_type, channel)
-	Controls.chat_box.sent_chat_message(message, private)
+	Controls.chat_box.sent_chat_message(message, private, this_target)
 
 func _on_p2p_session_connect_fail(_steam_id: int, _session_error: int, _state: int, debug_msg: String) -> void:
 	print(debug_msg)
