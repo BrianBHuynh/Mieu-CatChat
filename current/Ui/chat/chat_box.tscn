@@ -1,0 +1,43 @@
+[gd_scene load_steps=2 format=3 uid="uid://w7p53meqohhf"]
+
+[ext_resource type="Script" path="res://current/Ui/chat/chat_box.gd" id="1_8tdu3"]
+
+[node name="ChatBox" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8tdu3")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 0
+offset_right = 448.0
+offset_bottom = 704.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 2
+
+[node name="Send" type="Button" parent="."]
+modulate = Color(0.301961, 1, 1, 1)
+layout_mode = 0
+offset_left = 384.0
+offset_top = 704.0
+offset_right = 448.0
+offset_bottom = 768.0
+text = "Send"
+
+[node name="TextBox" type="TextEdit" parent="."]
+layout_mode = 2
+offset_top = 704.0
+offset_right = 384.0
+offset_bottom = 768.0
+placeholder_text = "Message..."
+
+[connection signal="pressed" from="Send" to="." method="_on_send_pressed"]
+[connection signal="text_changed" from="TextBox" to="." method="_on_text_box_text_changed"]

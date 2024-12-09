@@ -44,7 +44,7 @@ func read_p2p_packet() -> void:
 							kitties[message.identity].global_position = Vector3(message.payload.x, message.payload.y, message.payload.z)
 						else:
 							var file: Resource = load("res://current/characters/mieu_peer/mieu_peer.tscn")
-							var kit: Sprite3D = file.instantiate()
+							var kit: AnimatedSprite3D = file.instantiate()
 							get_parent().add_child(kit)
 							kit.sign_adoption(message["identity"])
 							kitties[message["identity"]] = kit
@@ -53,6 +53,8 @@ func read_p2p_packet() -> void:
 						sendMessageToUser(message.identity, {"type": "pong", "send_time": message["payload"]["send_time"]})
 					"pong":
 						print(Steam.getPlayerNickname(message.identity) + " ping = " + str((Time.get_unix_time_from_system() - message["payload"]["send_time"])/2.0) + " seconds")
+					"chat":
+						Controls.chat_box.add_chat_message(message)
 
 func sendMessageToUser(this_target: int, packet_data: Dictionary) -> void:
 	var send_type: int = Steam.NETWORKING_SEND_RELIABLE_NO_NAGLE
@@ -62,9 +64,9 @@ func sendMessageToUser(this_target: int, packet_data: Dictionary) -> void:
 	this_data = this_data.compress(FileAccess.COMPRESSION_GZIP)
 	if this_target == 0:
 		if SteamLobbies.lobby_members.size() > 1:
-			for this_member: Dictionary in SteamLobbies.lobby_members:
-				if this_member['steam_id'] != SteamWorks.steam_id:
-					Steam.sendMessageToUser(this_member['steam_id'], this_data, send_type, channel)
+			for this_member: int in SteamLobbies.lobby_members:
+				if this_member != SteamWorks.steam_id:
+					Steam.sendMessageToUser(this_member, this_data, send_type, channel)
 	else:
 		Steam.sendMessageToUser(this_target, this_data, send_type, channel)
 
@@ -76,11 +78,24 @@ func sendMessageToUserFast(this_target: int, packet_data: Dictionary) -> void:
 	this_data = this_data.compress(FileAccess.COMPRESSION_GZIP)
 	if this_target == 0:
 		if SteamLobbies.lobby_members.size() > 1:
-			for this_member: Dictionary in SteamLobbies.lobby_members:
-				if this_member['steam_id'] != SteamWorks.steam_id:
-					Steam.sendMessageToUser(this_member['steam_id'], this_data, send_type, channel)
+			for this_member: int in SteamLobbies.lobby_members:
+				if this_member != SteamWorks.steam_id:
+					Steam.sendMessageToUser(this_member, this_data, send_type, channel)
 	else:
 		Steam.sendMessageToUser(this_target, this_data, send_type, channel)
+
+func send_chat_message(this_target: int, message: String, private: bool) -> void:
+	var send_type: int = Steam.NETWORKING_SEND_RELIABLE
+	var channel: int = 0
+	var this_data: PackedByteArray
+	this_data.append_array(var_to_bytes({"type": "chat", "text": message, "private": private}))
+	this_data = this_data.compress(FileAccess.COMPRESSION_GZIP)
+	if this_target == 0:
+		if SteamLobbies.lobby_members.size() > 1:
+			for this_member: int in SteamLobbies.lobby_members:
+				if this_member != SteamWorks.steam_id:
+					Steam.sendMessageToUser(this_member, this_data, send_type, channel)
+	Controls.chat_box.sent_chat_message(message, private)
 
 func _on_p2p_session_connect_fail(_steam_id: int, _session_error: int, _state: int, debug_msg: String) -> void:
 	print(debug_msg)

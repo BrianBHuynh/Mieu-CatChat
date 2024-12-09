@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://cwhpiynu322rk"]
 
-[ext_resource type="Script" path="res://current/menus/escape_menu/escape_menu.gd" id="1_n3t1d"]
-[ext_resource type="Script" path="res://current/scripts/node/rich_text_label.gd" id="2_leq0j"]
+[ext_resource type="Script" uid="uid://b320vkksgx8es" path="res://current/menus/escape_menu/escape_menu.gd" id="1_n3t1d"]
+[ext_resource type="Script" uid="uid://bhyb47b27e03q" path="res://current/scripts/node/rich_text_label.gd" id="2_leq0j"]
 [ext_resource type="Texture2D" uid="uid://dv4n5etipadpk" path="res://current/assets/ui/btn_sized.png" id="2_t8lwk"]
 
 [node name="DebugMenu" type="Control"]

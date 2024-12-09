@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://ds23emrqlb05u"]
 
-[ext_resource type="Script" path="res://current/menus/multiplayer_menu/multiplayer_menu.gd" id="1_j81e8"]
+[ext_resource type="Script" uid="uid://dgnpg0wbot52v" path="res://current/menus/multiplayer_menu/multiplayer_menu.gd" id="1_j81e8"]
 [ext_resource type="Texture2D" uid="uid://dv4n5etipadpk" path="res://current/assets/ui/btn_sized.png" id="2_8p1pj"]
-[ext_resource type="Script" path="res://current/scripts/node/rich_text_label.gd" id="2_plucq"]
-[ext_resource type="Script" path="res://current/menus/multiplayer_menu/lobbies_list.gd" id="4_3onyp"]
+[ext_resource type="Script" uid="uid://bhyb47b27e03q" path="res://current/scripts/node/rich_text_label.gd" id="2_plucq"]
+[ext_resource type="Script" uid="uid://dsodckdj8cxr7" path="res://current/menus/multiplayer_menu/lobbies_list.gd" id="4_3onyp"]
 
 [node name="MultiplayerMenu" type="Control"]
 layout_mode = 3

@@ -6,8 +6,10 @@ var fonts: Array = ["res://current/assets/fonts/AtkinsonHyperlegible-Regular.ttf
 func _ready() -> void:
 	camera3D = get_viewport().get_camera_3d()
 	$ScrollContainer/VBoxContainer/Fov/Fov_Slider.value = camera3D.fov
-	$"ScrollContainer/VBoxContainer/Text Size/Text_Size_Slider".value = Saves.get_or_add("settings", "font_size", 15.0)
-	$"ScrollContainer/VBoxContainer/Text Size/Text_Size_Slider".value_changed.connect(_on_text_size_slider_value_changed)
+	$ScrollContainer/VBoxContainer/TextSize/Text_Size_Slider.value = Saves.get_or_add("settings", "font_size", 15.0)
+	$ScrollContainer/VBoxContainer/TextSize/Text_Size_Slider.value_changed.connect(_on_text_size_slider_value_changed)
+	$ScrollContainer/VBoxContainer/ChatTextSize/Text_Size_Slider.value = Saves.get_or_add("settings", "chat_font_size", 15.0)
+	$ScrollContainer/VBoxContainer/ChatTextSize/Text_Size_Slider.value_changed.connect(_on_chat_text_size_slider_value_changed)
 	var fonts_temp: PackedStringArray = DirAccess.get_files_at("user://fonts/")
 	for font: String in fonts_temp:
 		fonts.append("user://fonts/" + font)
@@ -25,4 +27,8 @@ func _font_changed() -> void:
 
 func _on_text_size_slider_value_changed(value: float) -> void:
 	Saves.set_value("settings", "font_size", value)
+	SignalBus.settings_updated.emit()
+
+func _on_chat_text_size_slider_value_changed(value: float) -> void:
+	Saves.set_value("settings", "chat_font_size", value)
 	SignalBus.settings_updated.emit()

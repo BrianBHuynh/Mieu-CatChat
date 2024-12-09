@@ -19,7 +19,7 @@ func _physics_process(delta: float) -> void:
 		velocity += get_gravity() * delta
 	
 	# Handle jump.
-	if Input.is_action_pressed("jump") and is_on_floor():
+	if Input.is_action_pressed("jump") and is_on_floor() and !Controls.chat_box.is_text_box_focused():
 		velocity.y = jump_speed
 	
 	# Get the input direction and handle the movement/deceleration.
@@ -30,7 +30,7 @@ func _physics_process(delta: float) -> void:
 	elif Input.is_action_pressed("move_right"):
 		input_dir = Vector3(1, 0, 0)
 	var direction: Vector3 = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	if direction:
+	if direction and !Controls.chat_box.is_text_box_focused():
 		if is_on_floor():
 			velocity.y = jump_speed
 		velocity.x = move_toward(velocity.x, direction.x * move_speed, move_speed)

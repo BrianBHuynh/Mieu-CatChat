@@ -1,16 +1,16 @@
 extends AnimatedSprite3D
 
-var id
-var player_name
+var id: int
+var player_name: String
 
-func _process(delta: float):
+func _process(_delta: float) -> void:
 	pass
 
-func sign_adoption(identity: int):
+func sign_adoption(identity: int) -> void:
 	id = identity
 	player_name = Steam.getPlayerNickname(id)
 
-func move_to(new_position: Vector3):
+func move_to(new_position: Vector3) -> void:
 	if Saves.get_or_add("settings", "networking_tween", false):
 		Tween.new().tween_property(self, "global_position", new_position, Saves.get_or_add("settings", "networking_tween_val", .05))
 	else:

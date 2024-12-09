@@ -3,7 +3,7 @@ extends Node
 
 #var lobby_data
 var lobby_id: int = 0
-var lobby_members: Array = []
+var lobby_members: Dictionary = {}
 var lobby_members_max: int = 10
 var lobby_vote_kick: bool = false
 
@@ -32,6 +32,7 @@ func check_command_line() -> void:
 		#join_lobby(int(command_line[1]))
 
 func create_lobby(type: int, max_players: int) -> void:
+	print(lobby_id)
 	if lobby_id == 0:
 		Steam.createLobby(type, max_players)
 
@@ -48,6 +49,9 @@ func _on_open_lobby_list_pressed() -> void:
 	Steam.requestLobbyList()
 
 func _on_lobby_match_list(these_lobbies: Array) -> void:
+	var lobby_buttons: Array = Controls.lobbies.get_children()
+	for button: Button in lobby_buttons:
+		button.queue_free()
 	for this_lobby: int in these_lobbies:
 		var lobby_name: String = Steam.getLobbyData(this_lobby, "name")
 		var lobby_mode: String = Steam.getLobbyData(this_lobby, "mode")
@@ -96,7 +100,7 @@ func get_lobby_members() -> void:
 	for this_member: int in range(0, num_of_members):
 		var member_steam_id: int = Steam.getLobbyMemberByIndex(lobby_id, this_member)
 		var member_steam_name: String = Steam.getFriendPersonaName(member_steam_id)
-		lobby_members.append({"steam_id": member_steam_id, "steam_name": member_steam_name})
+		lobby_members[member_steam_id] = {"steam_name": member_steam_name}
 	
 func _on_persona_change(this_steam_id: int, _flag: int) -> void:
 	if lobby_id > 0:

@@ -1,6 +1,6 @@
 [gd_scene load_steps=14 format=3 uid="uid://bliphh5kps0ly"]
 
-[ext_resource type="Script" path="res://current/characters/mieu/mieu.gd" id="1_8tw0y"]
+[ext_resource type="Script" uid="uid://bueisj5cm57i2" path="res://current/characters/mieu/mieu.gd" id="1_8tw0y"]
 [ext_resource type="Texture2D" uid="uid://37vx6dgthk0f" path="res://current/assets/images/mieu.png" id="1_w3le2"]
 [ext_resource type="Texture2D" uid="uid://lhikvxbnengm" path="res://current/assets/images/mieu_idle_front.png" id="3_h4j0g"]
 

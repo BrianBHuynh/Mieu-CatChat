@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://cr4rywm07luw3"]
+[gd_scene load_steps=6 format=3 uid="uid://cr4rywm07luw3"]
 
 [ext_resource type="PackedScene" uid="uid://bliphh5kps0ly" path="res://current/characters/mieu/mieu.tscn" id="1_0uogh"]
-[ext_resource type="Script" path="res://current/scripts/node/camera_3d.gd" id="2_fcsic"]
+[ext_resource type="PackedScene" uid="uid://w7p53meqohhf" path="res://current/Ui/chat/chat_box.tscn" id="1_1pw0d"]
+[ext_resource type="Script" uid="uid://ce0uc5ml5qode" path="res://current/scripts/node/camera_3d.gd" id="2_fcsic"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6i420"]
 size = Vector3(50, 1, 5)
@@ -10,6 +11,8 @@ size = Vector3(50, 1, 5)
 size = Vector3(50, 1, 5)
 
 [node name="Debug" type="Node3D"]
+
+[node name="ChatBox" parent="." instance=ExtResource("1_1pw0d")]
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 

@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://bul7fpmury427"]
 
 [ext_resource type="Script" path="res://current/menus/accessibility_menu/accessibility_menu.gd" id="1_7wl3y"]
-[ext_resource type="Script" path="res://current/scripts/node/rich_text_label.gd" id="2_4yg4i"]
+[ext_resource type="Script" uid="uid://bhyb47b27e03q" path="res://current/scripts/node/rich_text_label.gd" id="2_4yg4i"]
 [ext_resource type="Texture2D" uid="uid://dv4n5etipadpk" path="res://current/assets/ui/btn_sized.png" id="3_pvipk"]
 
 [node name="DebugMenu" type="Control"]
@@ -37,13 +37,11 @@ clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-alignment = 1
 
 [node name="Fov" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
 clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
 alignment = 1
 
@@ -65,16 +63,9 @@ max_value = 150.0
 value = 80.0
 rounded = true
 
-[node name="Text Size Warning" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
-clip_contents = true
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 4.0
-
-[node name="Font Size Warning" type="RichTextLabel" parent="ScrollContainer/VBoxContainer/Text Size Warning"]
+[node name="Font Size Warning" type="RichTextLabel" parent="ScrollContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_stretch_ratio = 2.0
 bbcode_enabled = true
 text = "[center]Font Size
 
@@ -82,15 +73,14 @@ Note: Extreme font sizes may look strange[/center]"
 fit_content = true
 script = ExtResource("2_4yg4i")
 
-[node name="Text Size" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+[node name="TextSize" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
 clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
 alignment = 1
 
-[node name="RichTextLabel" type="RichTextLabel" parent="ScrollContainer/VBoxContainer/Text Size"]
+[node name="RichTextLabel" type="RichTextLabel" parent="ScrollContainer/VBoxContainer/TextSize"]
 layout_mode = 2
 size_flags_horizontal = 3
 bbcode_enabled = true
@@ -99,7 +89,32 @@ example text[/center]"
 fit_content = true
 script = ExtResource("2_4yg4i")
 
-[node name="Text_Size_Slider" type="HSlider" parent="ScrollContainer/VBoxContainer/Text Size"]
+[node name="Text_Size_Slider" type="HSlider" parent="ScrollContainer/VBoxContainer/TextSize"]
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+size_flags_stretch_ratio = 2.0
+min_value = 5.0
+value = 15.0
+rounded = true
+
+[node name="ChatTextSize" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+alignment = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="ScrollContainer/VBoxContainer/ChatTextSize"]
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "[center]Chat font size:[/center]"
+fit_content = true
+script = ExtResource("2_4yg4i")
+
+[node name="Text_Size_Slider" type="HSlider" parent="ScrollContainer/VBoxContainer/ChatTextSize"]
 clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -112,7 +127,6 @@ rounded = true
 [node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
 clip_contents = true
 layout_mode = 2
-size_flags_vertical = 3
 
 [node name="RichTextLabel" type="RichTextLabel" parent="ScrollContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
