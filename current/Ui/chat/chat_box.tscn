@@ -39,5 +39,23 @@ offset_right = 384.0
 offset_bottom = 768.0
 placeholder_text = "Message..."
 
+[node name="ColorRect" type="ColorRect" parent="."]
+modulate = Color(1, 1, 1, 0.407843)
+layout_mode = 0
+offset_top = 768.0
+offset_right = 104.0
+offset_bottom = 800.0
+
+[node name="CheckBox" type="CheckBox" parent="."]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+offset_top = 768.0
+offset_right = 105.0
+offset_bottom = 797.0
+text = "Auto Scroll"
+icon_alignment = 1
+expand_icon = true
+
 [connection signal="pressed" from="Send" to="." method="_on_send_pressed"]
 [connection signal="text_changed" from="TextBox" to="." method="_on_text_box_text_changed"]
+[connection signal="toggled" from="CheckBox" to="." method="_on_auto_scroll_box_toggled"]
