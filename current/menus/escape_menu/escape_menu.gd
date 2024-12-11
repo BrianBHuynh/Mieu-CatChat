@@ -25,7 +25,7 @@ func _on_debug_pressed() -> void:
 
 
 func _on_multiplayer_pressed() -> void:
-	var new_menu: Control = load("res://current/menus/multiplayer_menu/multiplayer_menu.tscn").instantiate()
+	var new_menu: Control = load("res://current/menus/chat_menus/multiplayer_menu/multiplayer_menu.tscn").instantiate()
 	get_tree().root.add_child(new_menu)
 	Controls.cur_menu = new_menu
 	self.queue_free()

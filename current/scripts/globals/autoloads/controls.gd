@@ -24,3 +24,9 @@ func _process(_delta: float) -> void:
 		chat_box.release_focus()
 	elif Input.is_action_just_pressed("chat"):
 		chat_box.open_text_input()
+
+func show_system_message(message: String):
+	chat_box.show_system_message(message)
+
+func sent_chat_message(message: String, private: bool, target: int):
+	chat_box.sent_chat_message(message, private, target)

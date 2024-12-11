@@ -36,6 +36,8 @@ func read_p2p_packet() -> void:
 		for message: Dictionary in messages:
 			if message.is_empty() or message == null:
 				print("WARNING: read an empty packet with non-zero size!")
+			elif SteamLobbies.blocked_players.has(message.identity) or SteamLobbies.banned_players.has(message.identity):
+				print("Message from blocked or banned player")
 			else:
 				message.payload = bytes_to_var(message.payload.decompress_dynamic(-1, FileAccess.COMPRESSION_GZIP))
 				match message["payload"]["type"]:
@@ -52,9 +54,12 @@ func read_p2p_packet() -> void:
 					"ping":
 						sendMessageToUser(message.identity, {"type": "pong", "send_time": message["payload"]["send_time"]})
 					"pong":
-						print(Steam.getPlayerNickname(message.identity) + " ping = " + str((Time.get_unix_time_from_system() - message["payload"]["send_time"])/2.0) + " seconds")
+						Controls.show_system_message(Steam.getPlayerNickname(message.identity) + " ping = " + str((Time.get_unix_time_from_system() - message["payload"]["send_time"])/2.0) + " seconds")
 					"chat":
 						Controls.chat_box.process_chat_message(message)
+					"lobby_data":
+						if message.identity == Steam.getLobbyOwner(SteamLobbies.lobby_id):
+							SteamLobbies.banned_players = message["payload"]["lobby_data"]["banned_players"]
 
 func sendMessageToUser(this_target: int, packet_data: Dictionary) -> void:
 	var send_type: int = Steam.NETWORKING_SEND_RELIABLE_NO_NAGLE
@@ -95,7 +100,20 @@ func send_chat_message(this_target: int, message: String, private: bool) -> void
 			for this_member: int in SteamLobbies.lobby_members:
 				if this_member != SteamWorks.steam_id:
 					Steam.sendMessageToUser(this_member, this_data, send_type, channel)
-	Controls.chat_box.sent_chat_message(message, private, this_target)
+	Controls.sent_chat_message(message, private, this_target)
+
+func send_lobby_data(this_target: int) -> void:
+	if SteamLobbies.is_host():
+		var send_type: int = Steam.NETWORKING_SEND_RELIABLE
+		var channel: int = 0
+		var this_data: PackedByteArray
+		this_data.append_array(var_to_bytes({"type": "lobby_data", "lobby_data": {"banned_players": SteamLobbies.banned_players}}))
+		this_data = this_data.compress(FileAccess.COMPRESSION_GZIP)
+		if this_target == 0:
+			if SteamLobbies.lobby_members.size() > 1:
+				for this_member: int in SteamLobbies.lobby_members:
+					if this_member != SteamWorks.steam_id and not SteamLobbies.banned_players.has(this_member):
+						Steam.sendMessageToUser(this_member, this_data, send_type, channel)
 
 func _on_p2p_session_connect_fail(_steam_id: int, _session_error: int, _state: int, debug_msg: String) -> void:
 	print(debug_msg)
