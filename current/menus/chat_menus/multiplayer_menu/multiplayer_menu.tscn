@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://ds23emrqlb05u"]
+[gd_scene load_steps=6 format=3 uid="uid://ds23emrqlb05u"]
 
 [ext_resource type="Script" path="res://current/menus/chat_menus/multiplayer_menu/multiplayer_menu.gd" id="1_j81e8"]
 [ext_resource type="Texture2D" uid="uid://dv4n5etipadpk" path="res://current/assets/ui/btn_sized.png" id="2_8p1pj"]
 [ext_resource type="Script" uid="uid://bhyb47b27e03q" path="res://current/scripts/node/rich_text_label.gd" id="2_plucq"]
 [ext_resource type="Script" path="res://current/menus/chat_menus/multiplayer_menu/lobbies_list.gd" id="4_3onyp"]
+[ext_resource type="Texture2D" uid="uid://dws4hl3nqf84c" path="res://current/assets/ui/settingMono.png" id="5_mc3xq"]
 
 [node name="MultiplayerMenu" type="Control"]
 layout_mode = 3
@@ -97,6 +98,16 @@ size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0
 script = ExtResource("4_3onyp")
 
+[node name="MultiplayerSettings" type="TextureButton" parent="."]
+texture_filter = 1
+layout_mode = 0
+offset_left = 320.0
+offset_top = 960.0
+offset_right = 384.0
+offset_bottom = 1024.0
+texture_normal = ExtResource("5_mc3xq")
+
 [connection signal="pressed" from="ScrollContainer/HBoxContainer/Buttons/CreateLobby" to="." method="_on_create_lobby_btn_pressed"]
 [connection signal="pressed" from="ScrollContainer/HBoxContainer/Buttons/RefreshLobbies" to="." method="refresh_lobbies"]
 [connection signal="pressed" from="ScrollContainer/HBoxContainer/Buttons/SendTestData" to="." method="_on_send_test_data_btn_pressed"]
+[connection signal="pressed" from="MultiplayerSettings" to="." method="_on_multiplayer_settings_pressed"]

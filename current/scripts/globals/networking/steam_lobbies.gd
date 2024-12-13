@@ -6,7 +6,6 @@ var lobby_id: int = 0
 var lobby_members: Dictionary = {}
 var lobby_members_max: int = 10
 var lobby_vote_kick: bool = false
-var host: int = 0
 var banned_players: Array[int] = Saves.get_or_add("networking", "persist_banned", Array([], TYPE_INT, "", null))
 var blocked_players: Array[int] = Saves.get_or_add("networking", "persist_blocked", Array([], TYPE_INT, "", null))
 
@@ -26,6 +25,9 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	pass
+
+func host() -> int:
+	return Steam.getLobbyOwner(lobby_id)
 
 func check_command_line() -> void:
 	var command_line: Array = OS.get_cmdline_args()
@@ -94,7 +96,6 @@ func _on_lobby_joined(this_lobby_id: int, _permissions: int, _locked: bool, resp
 func _on_lobby_join_requested(this_lobby_id: int, friend_id: int) -> void:
 	var owner_name: String = Steam.getFriendPersonaName(friend_id)
 	Controls.show_system_message("Joining %s's lobby..." % owner_name)
-	host = friend_id
 	join_lobby(this_lobby_id)
 
 func get_lobby_members() -> void:
@@ -147,13 +148,25 @@ func leave_lobby() -> void:
 			Steam.closeP2PSessionWithUser(this_member['steam_id'])
 	lobby_members.clear()
 
-func ban_player(steam_id: int) -> void:
+func ban_player_persist(steam_id: int) -> void:
 	if is_host():
 		if not banned_players.has(steam_id):
 			banned_players.append(steam_id)
 		if not Saves.get_or_add("networking", "persist_banned", Array([], TYPE_INT, "", null)).has(steam_id):
 			Saves.get_or_add("networking", "persist_banned", Array([], TYPE_INT, "", null)).append(steam_id)
 		SteamP2P.send_lobby_data(0)
+		
+		if lobby_members.has(steam_id) and SteamP2P.kitties.has(steam_id):
+			SteamP2P.kitties[steam_id].queue_free()
+
+func ban_player_temp(steam_id: int) -> void:
+	if is_host():
+		if not banned_players.has(steam_id):
+			banned_players.append(steam_id)
+		SteamP2P.send_lobby_data(0)
+		
+		if lobby_members.has(steam_id) and SteamP2P.kitties.has(steam_id):
+			SteamP2P.kitties[steam_id].queue_free()
 
 func block_player(steam_id: int) -> void:
 	if not Saves.get_or_add("networking", "persist_blocked", Array([], TYPE_INT, "", null)).has(steam_id):

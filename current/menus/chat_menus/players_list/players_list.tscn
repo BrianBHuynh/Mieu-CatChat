@@ -1,0 +1,71 @@
+[gd_scene load_steps=3 format=3 uid="uid://d1famvjayyjsn"]
+
+[ext_resource type="Script" path="res://current/menus/chat_menus/players_list/players_list.gd" id="1_p3l0c"]
+[ext_resource type="Script" uid="uid://bhyb47b27e03q" path="res://current/scripts/node/rich_text_label.gd" id="2_lm1xg"]
+
+[node name="Players" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_p3l0c")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 256.0
+offset_top = 64.0
+offset_right = 1664.0
+offset_bottom = 1024.0
+color = Color(0.793558, 0.455552, 0.183554, 1)
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 0
+offset_left = 320.0
+offset_top = 64.0
+offset_right = 1600.0
+offset_bottom = 1024.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+clip_contents = true
+layout_mode = 2
+
+[node name="Name" type="RichTextLabel" parent="ScrollContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Name"
+fit_content = true
+script = ExtResource("2_lm1xg")
+
+[node name="Temp Ban" type="RichTextLabel" parent="ScrollContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.1
+text = "Temp Ban
+"
+fit_content = true
+script = ExtResource("2_lm1xg")
+
+[node name="Perma Ban" type="RichTextLabel" parent="ScrollContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.1
+text = "Perma Ban
+"
+fit_content = true
+script = ExtResource("2_lm1xg")
+
+[node name="Perma Ban2" type="RichTextLabel" parent="ScrollContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.1
+text = "Block"
+fit_content = true
+script = ExtResource("2_lm1xg")
