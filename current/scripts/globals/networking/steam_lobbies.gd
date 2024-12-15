@@ -146,6 +146,9 @@ func leave_lobby() -> void:
 	for this_member: Dictionary in lobby_members:
 		if this_member['steam_id'] != SteamWorks.steam_id:
 			Steam.closeP2PSessionWithUser(this_member['steam_id'])
+	for cat_id: int in SteamP2P.kitties:
+		SteamP2P.kitties[cat_id].queue_free()
+	SteamP2P.kitties.clear()
 	lobby_members.clear()
 
 func ban_player_persist(steam_id: int) -> void:
@@ -168,9 +171,16 @@ func ban_player_temp(steam_id: int) -> void:
 		if lobby_members.has(steam_id) and SteamP2P.kitties.has(steam_id):
 			SteamP2P.kitties[steam_id].queue_free()
 
+func kick(steam_id: int, reason: String) -> void:
+	if is_host():
+		SteamP2P.send_kick(steam_id, reason)
+
 func block_player(steam_id: int) -> void:
 	if not Saves.get_or_add("networking", "persist_blocked", Array([], TYPE_INT, "", null)).has(steam_id):
 		Saves.get_or_add("networking", "persist_blocked", Array([], TYPE_INT, "", null)).append(steam_id)
 
 func is_host() -> bool:
 	return Steam.getLobbyOwner(SteamLobbies.lobby_id) == SteamWorks.steam_id
+
+func get_host_name() -> String:
+	return lobby_members[host()]["steam_name"]

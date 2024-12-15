@@ -26,6 +26,7 @@ Multithreading="*res://current/scripts/globals/autoloads/multithreading.gd"
 SteamWorks="*res://current/scripts/globals/networking/steam.gd"
 SteamLobbies="*res://current/scripts/globals/networking/steam_lobbies.gd"
 SteamP2P="*res://current/scripts/globals/networking/steam_p2p.gd"
+ChatFilter="*res://current/scripts/globals/networking/chat_filter.gd"
 
 [debug]
 

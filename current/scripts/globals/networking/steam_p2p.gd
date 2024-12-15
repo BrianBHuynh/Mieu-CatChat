@@ -67,16 +67,22 @@ func read_p2p_packet() -> void:
 									kitties.erase(player_id)
 					"ban":
 						if message.identity == Steam.getLobbyOwner(SteamLobbies.lobby_id):
-							for cat_id: int in kitties:
-								kitties[cat_id].queue_free()
-							kitties.clear()
 							SteamLobbies.leave_lobby()
+							Controls.show_system_message("You were banned from the lobby")
+					"kick":
+						if message.identity == Steam.getLobbyOwner(SteamLobbies.lobby_id):
+							SteamLobbies.leave_lobby()
+							Controls.show_system_message("You were kicked from the lobby")
+							Controls.show_system_message("Reason provided: " + message["payload"][""])
+					"kick_announce":
+						if message.identity == Steam.getLobbyOwner(SteamLobbies.lobby_id):
+							Controls.show_system_message("The lobby owner " + SteamLobbies.get_host_name() + "has kicked " + message["payload"][SteamLobbies.lobby_members["kicked_player"]])
 
-func sendMessageToUser(this_target: int, packet_data: Dictionary) -> void:
+func sendMessageToUser(this_target: int, payload: Dictionary) -> void:
 	var send_type: int = Steam.NETWORKING_SEND_RELIABLE_NO_NAGLE
 	var channel: int = 0
 	var this_data: PackedByteArray
-	this_data.append_array(var_to_bytes(packet_data))
+	this_data.append_array(var_to_bytes(payload))
 	this_data = this_data.compress(FileAccess.COMPRESSION_GZIP)
 	if this_target == 0:
 		if SteamLobbies.lobby_members.size() > 1:
@@ -129,6 +135,12 @@ func send_lobby_data(this_target: int) -> void:
 						this_data.clear()
 						this_data.append_array(var_to_bytes({"type": "ban", "reason": "No reason provided"}))
 						Steam.sendMessageToUser(this_member, this_data, send_type, channel)
+
+func send_kick(this_target: int, reason: String) -> void:
+	if SteamLobbies.is_host():
+		var this_data: PackedByteArray
+		this_data.append_array(var_to_bytes({"type": "kick", "reason": reason}))
+		sendMessageToUser(this_target, {"type": "kick_announce", "kicked_player": this_target})
 
 func _on_p2p_session_connect_fail(_steam_id: int, _session_error: int, _state: int, debug_msg: String) -> void:
 	print(debug_msg)

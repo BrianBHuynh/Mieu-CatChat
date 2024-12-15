@@ -1,0 +1,101 @@
+[gd_scene load_steps=4 format=3 uid="uid://50ntgxjwc53q"]
+
+[ext_resource type="Script" path="res://current/menus/chat_menus/chat_filter/chat_filter_menu.gd" id="1_blk3d"]
+[ext_resource type="Script" uid="uid://bhyb47b27e03q" path="res://current/scripts/node/rich_text_label.gd" id="2_f6a7s"]
+[ext_resource type="Texture2D" uid="uid://dv4n5etipadpk" path="res://current/assets/ui/btn_sized.png" id="3_mdwmk"]
+
+[node name="ChatFilter" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_blk3d")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 256.0
+offset_top = 64.0
+offset_right = 1664.0
+offset_bottom = 1024.0
+color = Color(0.407843, 0.882353, 0.207843, 0.588235)
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 0
+offset_left = 320.0
+offset_top = 128.0
+offset_right = 1600.0
+offset_bottom = 960.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+clip_contents = true
+layout_mode = 2
+
+[node name="FilteredText" type="RichTextLabel" parent="ScrollContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Filtered text"
+fit_content = true
+script = ExtResource("2_f6a7s")
+
+[node name="ReplacementText" type="RichTextLabel" parent="ScrollContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Replacement text"
+fit_content = true
+script = ExtResource("2_f6a7s")
+
+[node name="BanUser" type="RichTextLabel" parent="ScrollContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.2
+text = "Ban User"
+fit_content = true
+script = ExtResource("2_f6a7s")
+
+[node name="BlockUser" type="RichTextLabel" parent="ScrollContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.2
+text = "Block User"
+fit_content = true
+script = ExtResource("2_f6a7s")
+
+[node name="DeleteMessage" type="RichTextLabel" parent="ScrollContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.2
+text = "Delete Message"
+fit_content = true
+script = ExtResource("2_f6a7s")
+
+[node name="TextEdit" type="TextEdit" parent="ScrollContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="SaveFilterButton" type="TextureButton" parent="."]
+texture_filter = 1
+layout_mode = 2
+offset_left = 1536.0
+offset_top = 960.0
+offset_right = 1664.0
+offset_bottom = 1024.0
+texture_normal = ExtResource("3_mdwmk")
+stretch_mode = 5
+
+[node name="SaveFilterText" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 1408.0
+offset_top = 960.0
+offset_right = 1536.0
+offset_bottom = 1024.0
+text = "Save Filter:"
+script = ExtResource("2_f6a7s")
+
+[connection signal="pressed" from="SaveFilterButton" to="." method="_on_save_filter_button_pressed"]
