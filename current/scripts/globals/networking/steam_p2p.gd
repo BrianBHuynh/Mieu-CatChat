@@ -22,22 +22,24 @@ func read_all_p2p_packets(read_count: int = 0) -> void:
 		read_all_p2p_packets(read_count + 1)
 
 func _on_network_messages_session_request(remote_id: int) -> void:
-	var this_requester: String = Steam.getFriendPersonaName(remote_id)
-	print("%s is requesting a P2P session" % this_requester)
-	Steam.acceptSessionWithUser(remote_id)
-	SteamLobbies.make_p2p_handshake()
+	if not SteamLobbies.blocked_players.has(remote_id) or not SteamLobbies.banned_players.has(remote_id):
+		var this_requester: String = Steam.getFriendPersonaName(remote_id)
+		print("%s is requesting a P2P session" % this_requester)
+		Steam.acceptSessionWithUser(remote_id)
+		SteamLobbies.make_p2p_handshake()
 
 func read_p2p_packet() -> void:
 	var messages: Array = Steam.receiveMessagesOnChannel(0, 100)
 	if messages.size() != 0:
 		#print(messages.size())
 		pass
-	if messages.size() > 0:
+	else:
 		for message: Dictionary in messages:
 			if message.is_empty() or message == null:
 				print("WARNING: read an empty packet with non-zero size!")
 			elif SteamLobbies.blocked_players.has(message.identity) or SteamLobbies.banned_players.has(message.identity):
 				print("Message from blocked or banned player")
+				Steam.closeSessionWithUser(message.identity)
 			else:
 				message.payload = bytes_to_var(message.payload.decompress_dynamic(-1, FileAccess.COMPRESSION_GZIP))
 				match message["payload"]["type"]:
