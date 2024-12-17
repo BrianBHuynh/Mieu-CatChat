@@ -69,3 +69,12 @@ size_flags_stretch_ratio = 0.1
 text = "Block"
 fit_content = true
 script = ExtResource("2_lm1xg")
+
+[node name="Filter" type="Button" parent="."]
+layout_mode = 2
+offset_left = 1600.0
+offset_top = 960.0
+offset_right = 1664.0
+offset_bottom = 1024.0
+
+[connection signal="pressed" from="Filter" to="." method="_on_filter_pressed"]

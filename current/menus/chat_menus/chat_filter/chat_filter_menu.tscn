@@ -37,6 +37,7 @@ size_flags_vertical = 3
 [node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
 clip_contents = true
 layout_mode = 2
+alignment = 1
 
 [node name="FilteredText" type="RichTextLabel" parent="ScrollContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
@@ -68,6 +69,14 @@ text = "Block User"
 fit_content = true
 script = ExtResource("2_f6a7s")
 
+[node name="KickUser" type="RichTextLabel" parent="ScrollContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.2
+text = "Kick User"
+fit_content = true
+script = ExtResource("2_f6a7s")
+
 [node name="DeleteMessage" type="RichTextLabel" parent="ScrollContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -75,9 +84,6 @@ size_flags_stretch_ratio = 0.2
 text = "Delete Message"
 fit_content = true
 script = ExtResource("2_f6a7s")
-
-[node name="TextEdit" type="TextEdit" parent="ScrollContainer/VBoxContainer/HBoxContainer"]
-layout_mode = 2
 
 [node name="SaveFilterButton" type="TextureButton" parent="."]
 texture_filter = 1

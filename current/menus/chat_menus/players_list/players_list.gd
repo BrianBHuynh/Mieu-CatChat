@@ -44,3 +44,10 @@ func populate_player_list() -> void:
 			hbox.add_child(block_button)
 		
 		$ScrollContainer/VBoxContainer.add_child(hbox)
+
+
+func _on_filter_pressed() -> void:
+	var new_menu: Control = load("res://current/menus/chat_menus/chat_filter/chat_filter_menu.tscn").instantiate()
+	get_tree().root.add_child(new_menu)
+	Controls.cur_menu = new_menu
+	self.queue_free()

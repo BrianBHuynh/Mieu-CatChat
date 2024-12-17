@@ -59,7 +59,7 @@ func read_p2p_packet() -> void:
 					"pong":
 						Controls.show_system_message(Steam.getPlayerNickname(message.identity) + " ping = " + str((Time.get_unix_time_from_system() - message["payload"]["send_time"])/2.0) + " seconds")
 					"chat":
-						Controls.chat_box.process_chat_message(message)
+						Controls.chat_box.process_chat_message(ChatFilter.filter(message))
 					"lobby_data":
 						if message.identity == Steam.getLobbyOwner(SteamLobbies.lobby_id):
 							SteamLobbies.banned_players = message["payload"]["lobby_data"]["banned_players"]
