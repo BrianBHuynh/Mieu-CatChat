@@ -104,4 +104,13 @@ offset_bottom = 1024.0
 text = "Save Filter:"
 script = ExtResource("2_f6a7s")
 
+[node name="AddEntry" type="Button" parent="."]
+layout_mode = 0
+offset_left = 1600.0
+offset_top = 168.0
+offset_right = 1664.0
+offset_bottom = 208.0
+text = "+"
+
 [connection signal="pressed" from="SaveFilterButton" to="." method="_on_save_filter_button_pressed"]
+[connection signal="pressed" from="AddEntry" to="." method="_on_add_entry_pressed"]
