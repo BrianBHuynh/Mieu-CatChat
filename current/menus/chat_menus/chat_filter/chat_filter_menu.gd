@@ -34,39 +34,12 @@ func create_empty_entry() -> void:
 	hbox.alignment = BoxContainer.ALIGNMENT_CENTER
 	hbox.clip_contents = true
 	
-	var FilteredText: TextEdit = TextEdit.new()
-	FilteredText.placeholder_text = "Filtered word here"
-	FilteredText.clip_contents = true
-	FilteredText.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	FilteredText.size_flags_stretch_ratio = 1.0
-	hbox.add_child(FilteredText)
-	
-	var ReplacementText: TextEdit = TextEdit.new()
-	ReplacementText.placeholder_text = "Word to replace it with"
-	ReplacementText.clip_contents = true
-	ReplacementText.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	ReplacementText.size_flags_stretch_ratio = 1.0
-	hbox.add_child(ReplacementText)
-	
-	var BanUser: CheckBox = CheckBox.new()
-	BanUser.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	BanUser.size_flags_stretch_ratio = .2
-	hbox.add_child(BanUser)
-	
-	var BlockUser: CheckBox = CheckBox.new()
-	BlockUser.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	BlockUser.size_flags_stretch_ratio = .2
-	hbox.add_child(BlockUser)
-	
-	var KickUser: CheckBox = CheckBox.new()
-	KickUser.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	KickUser.size_flags_stretch_ratio = .2
-	hbox.add_child(KickUser)
-	
-	var DeleteMessage: CheckBox = CheckBox.new()
-	DeleteMessage.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	DeleteMessage.size_flags_stretch_ratio = .2
-	hbox.add_child(DeleteMessage)
+	hbox.add_child(create_blank_text_edit("Filtered word here", ""))
+	hbox.add_child(create_blank_text_edit("Word to replace it with", ""))
+	hbox.add_child(create_blank_check_button())
+	hbox.add_child(create_blank_check_button())
+	hbox.add_child(create_blank_check_button())
+	hbox.add_child(create_blank_check_button())
 	
 	$ScrollContainer/VBoxContainer.add_child(hbox)
 	$ScrollContainer/VBoxContainer.move_child(hbox, 1)
@@ -77,46 +50,13 @@ func populate_from_file() -> void:
 		var hbox: HBoxContainer = HBoxContainer.new()
 		hbox.alignment = BoxContainer.ALIGNMENT_CENTER
 		hbox.clip_contents = true
-		
-		var FilteredText: TextEdit = TextEdit.new()
-		FilteredText.placeholder_text = "Filtered word here"
-		FilteredText.text = word
-		FilteredText.clip_contents = true
-		FilteredText.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		FilteredText.size_flags_stretch_ratio = 1.0
-		hbox.add_child(FilteredText)
-		
-		var ReplacementText: TextEdit = TextEdit.new()
-		ReplacementText.placeholder_text = "Word to replace it with"
-		ReplacementText.text = filtered_words[word]["replacement_word"]
-		ReplacementText.clip_contents = true
-		ReplacementText.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		ReplacementText.size_flags_stretch_ratio = 1.0
-		hbox.add_child(ReplacementText)
-		
-		var BanUser: CheckBox = CheckBox.new()
-		BanUser.button_pressed = filtered_words[word]["ban"]
-		BanUser.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		BanUser.size_flags_stretch_ratio = .2
-		hbox.add_child(BanUser)
-		
-		var BlockUser: CheckBox = CheckBox.new()
-		BlockUser.button_pressed = filtered_words[word]["block"]
-		BlockUser.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		BlockUser.size_flags_stretch_ratio = .2
-		hbox.add_child(BlockUser)
-		
-		var KickUser: CheckBox = CheckBox.new()
-		KickUser.button_pressed = filtered_words[word]["kick"]
-		KickUser.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		KickUser.size_flags_stretch_ratio = .2
-		hbox.add_child(KickUser)
-		
-		var DeleteMessage: CheckBox = CheckBox.new()
-		DeleteMessage.button_pressed = filtered_words[word]["delete"]
-		DeleteMessage.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		DeleteMessage.size_flags_stretch_ratio = .2
-		hbox.add_child(DeleteMessage)
+
+		hbox.add_child(create_blank_text_edit("", word))
+		hbox.add_child(create_text_edit(word, "replacement_word", filtered_words))
+		hbox.add_child(create_check_button(word, "ban", filtered_words))
+		hbox.add_child(create_check_button(word, "block", filtered_words))
+		hbox.add_child(create_check_button(word, "kick", filtered_words))
+		hbox.add_child(create_check_button(word, "delete", filtered_words))
 		
 		$ScrollContainer/VBoxContainer.add_child(hbox)
 
@@ -130,3 +70,33 @@ func clear_entries() -> void:
 
 func _on_add_entry_pressed() -> void:
 	create_empty_entry()
+
+func create_text_edit(word: String, key: String, filter: Dictionary) -> TextEdit:
+	var text_edit: TextEdit = TextEdit.new()
+	text_edit.text = filter[word][key]
+	text_edit.clip_contents = true
+	text_edit.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	text_edit.size_flags_stretch_ratio = 1.0
+	return text_edit
+
+func create_check_button(word: String, key: String, filter: Dictionary) -> Button:
+	var button: CheckBox = CheckBox.new()
+	button.button_pressed = filter[word][key]
+	button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	button.size_flags_stretch_ratio = .2
+	return button
+
+func create_blank_check_button() -> Button:
+	var button: CheckBox = CheckBox.new()
+	button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	button.size_flags_stretch_ratio = .2
+	return button
+
+func create_blank_text_edit(placeholder_text: String, text: String) -> TextEdit:
+	var text_edit: TextEdit = TextEdit.new()
+	text_edit.placeholder_text = placeholder_text
+	text_edit.text = text
+	text_edit.clip_contents = true
+	text_edit.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	text_edit.size_flags_stretch_ratio = 1.0
+	return text_edit

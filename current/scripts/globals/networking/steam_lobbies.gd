@@ -6,8 +6,8 @@ var lobby_id: int = 0
 var lobby_members: Dictionary = {}
 var lobby_members_max: int = 10
 var lobby_vote_kick: bool = false
-var banned_players: Array[int] = Saves.get_or_add("networking", "persist_banned", Array([], TYPE_INT, "", null))
-var blocked_players: Array[int] = Saves.get_or_add("networking", "persist_blocked", Array([], TYPE_INT, "", null))
+var banned_players: Dictionary = Saves.get_or_add("networking", "persist_banned", {})
+var blocked_players: Dictionary = Saves.get_or_add("networking", "persist_blocked", {})
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -145,7 +145,7 @@ func leave_lobby() -> void:
 	lobby_id = 0
 	for this_member: Dictionary in lobby_members:
 		if this_member['steam_id'] != SteamWorks.steam_id:
-			Steam.closeP2PSessionWithUser(this_member['steam_id'])
+			Steam.closeSessionWithUser(this_member['steam_id'])
 	for cat_id: int in SteamP2P.kitties:
 		SteamP2P.kitties[cat_id].queue_free()
 	SteamP2P.kitties.clear()
@@ -154,9 +154,9 @@ func leave_lobby() -> void:
 func ban_player_persist(steam_id: int) -> void:
 	if is_host():
 		if not banned_players.has(steam_id):
-			banned_players.append(steam_id)
-		if not Saves.get_or_add("networking", "persist_banned", Array([], TYPE_INT, "", null)).has(steam_id):
-			Saves.get_or_add("networking", "persist_banned", Array([], TYPE_INT, "", null)).append(steam_id)
+			banned_players[steam_id] = lobby_members[steam_id]["steam_name"]
+		if not Saves.get_or_add("networking", "persist_banned", {}).has(steam_id):
+			Saves.get_or_add("networking", "persist_banned", {})[steam_id] = lobby_members[steam_id]["steam_name"]
 		SteamP2P.send_lobby_data(0)
 		
 		if lobby_members.has(steam_id) and SteamP2P.kitties.has(steam_id):
@@ -165,7 +165,7 @@ func ban_player_persist(steam_id: int) -> void:
 func ban_player_temp(steam_id: int) -> void:
 	if is_host():
 		if not banned_players.has(steam_id):
-			banned_players.append(steam_id)
+			banned_players[steam_id] = lobby_members[steam_id]["steam_name"]
 		SteamP2P.send_lobby_data(0)
 		
 		if lobby_members.has(steam_id) and SteamP2P.kitties.has(steam_id):
@@ -176,8 +176,8 @@ func kick(steam_id: int, reason: String) -> void:
 		SteamP2P.send_kick(steam_id, reason)
 
 func block_player(steam_id: int) -> void:
-	if not Saves.get_or_add("networking", "persist_blocked", Array([], TYPE_INT, "", null)).has(steam_id):
-		Saves.get_or_add("networking", "persist_blocked", Array([], TYPE_INT, "", null)).append(steam_id)
+	if not Saves.get_or_add("networking", "persist_blocked", {}).has(steam_id):
+		Saves.get_or_add("networking", "persist_blocked", {})[steam_id] = lobby_members[steam_id]["steam_name"]
 
 func is_host() -> bool:
 	return Steam.getLobbyOwner(SteamLobbies.lobby_id) == SteamWorks.steam_id

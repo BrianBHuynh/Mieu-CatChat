@@ -54,19 +54,17 @@ func read_p2p_packet() -> void:
 							kitties[message["identity"]] = kit
 							print("creating")
 							kitties[message.identity].global_position = Vector3(message.payload.x, message.payload.y, message.payload.z)
-					"ping":
-						sendMessageToUser(message.identity, {"type": "pong", "send_time": message["payload"]["send_time"]})
-					"pong":
-						Controls.show_system_message(Steam.getPlayerNickname(message.identity) + " ping = " + str((Time.get_unix_time_from_system() - message["payload"]["send_time"])/2.0) + " seconds")
 					"chat":
 						Controls.chat_box.process_chat_message(ChatFilter.filter(message))
 					"lobby_data":
 						if message.identity == Steam.getLobbyOwner(SteamLobbies.lobby_id):
 							SteamLobbies.banned_players = message["payload"]["lobby_data"]["banned_players"]
 							for player_id: int in SteamLobbies.banned_players:
-								if SteamLobbies.lobby_members.has(player_id) and kitties.has(player_id):
+								if SteamLobbies.lobby_members.has(player_id) or kitties.has(player_id):
 									kitties[player_id].queue_free()
 									kitties.erase(player_id)
+									Steam.closeSessionWithUser(player_id)
+									SteamLobbies.lobby_members.erase(player_id)
 					"ban":
 						if message.identity == Steam.getLobbyOwner(SteamLobbies.lobby_id):
 							SteamLobbies.leave_lobby()
@@ -131,12 +129,13 @@ func send_lobby_data(this_target: int) -> void:
 		if this_target == 0:
 			if SteamLobbies.lobby_members.size() > 1:
 				for this_member: int in SteamLobbies.lobby_members:
-					if this_member != SteamWorks.steam_id and not SteamLobbies.banned_players.has(this_member):
-						Steam.sendMessageToUser(this_member, this_data, send_type, channel)
-					elif this_member != SteamWorks.steam_id and SteamLobbies.banned_players.has(this_member):
-						this_data.clear()
-						this_data.append_array(var_to_bytes({"type": "ban", "reason": "No reason provided"}))
-						Steam.sendMessageToUser(this_member, this_data, send_type, channel)
+					if this_member != SteamWorks.steam_id:
+						if not SteamLobbies.banned_players.has(this_member):
+							Steam.sendMessageToUser(this_member, this_data, send_type, channel)
+						else:
+							this_data.clear()
+							this_data.append_array(var_to_bytes({"type": "ban", "reason": "No reason provided"}))
+							Steam.sendMessageToUser(this_member, this_data, send_type, channel)
 
 func send_kick(this_target: int, reason: String) -> void:
 	if SteamLobbies.is_host():
