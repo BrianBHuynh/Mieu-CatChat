@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://d1famvjayyjsn"]
 
 [ext_resource type="Script" path="res://current/menus/chat_menus/players_list/players_list.gd" id="1_p3l0c"]
-[ext_resource type="Script" uid="uid://bhyb47b27e03q" path="res://current/scripts/node/rich_text_label.gd" id="2_lm1xg"]
+[ext_resource type="Script" path="res://current/scripts/node/rich_text_label.gd" id="2_lm1xg"]
 
 [node name="Players" type="Control"]
 layout_mode = 3

@@ -25,23 +25,9 @@ func populate_player_list() -> void:
 		hbox.add_child(player_info)
 		
 		if player_id != SteamLobbies.host() and SteamLobbies.is_host():
-			var temp_ban_button: Button = Button.new()
-			temp_ban_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-			temp_ban_button.size_flags_stretch_ratio = .1
-			temp_ban_button.pressed.connect(SteamLobbies.ban_player_temp.bind(player_id))
-			hbox.add_child(temp_ban_button)
-			
-			var perma_ban_button: Button = Button.new()
-			perma_ban_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-			perma_ban_button.size_flags_stretch_ratio = .1
-			perma_ban_button.pressed.connect(SteamLobbies.ban_player_persist.bind(player_id))
-			hbox.add_child(perma_ban_button)
-			
-			var block_button: Button = Button.new()
-			block_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-			block_button.size_flags_stretch_ratio = .1
-			block_button.pressed.connect(SteamLobbies.block_player.bind(player_id))
-			hbox.add_child(block_button)
+			hbox.add_child(create_button(SteamLobbies.ban_player_temp.bind(player_id)))
+			hbox.add_child(create_button(SteamLobbies.ban_player_persist.bind(player_id)))
+			hbox.add_child(create_button(SteamLobbies.block_player.bind(player_id)))
 		
 		$ScrollContainer/VBoxContainer.add_child(hbox)
 
@@ -51,3 +37,10 @@ func _on_filter_pressed() -> void:
 	get_tree().root.add_child(new_menu)
 	Controls.cur_menu = new_menu
 	self.queue_free()
+
+func create_button(callable: Callable) -> Button:
+	var button: Button = Button.new()
+	button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	button.size_flags_stretch_ratio = .1
+	button.pressed.connect(callable)
+	return button
