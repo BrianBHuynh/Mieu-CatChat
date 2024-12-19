@@ -32,7 +32,6 @@ func set_stretch_aspect(aspect: int) -> void:
 	Saves.set_value("settings", "stretch_aspect", aspect)
 
 func set_window_mode(mode: int) -> void:
-	print(mode)
 	match mode:
 		0: 
 			#Dubious, create an issue for this when figuring out why it's happening.
