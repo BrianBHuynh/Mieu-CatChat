@@ -12,13 +12,13 @@ func _ready() -> void:
 	make_dir("user://backup")
 	make_dir("user://fallback")
 	make_dir("user://fonts")
-	var data_temp = load_file_encrypted("mieu")
+	var data_temp: Variant = load_file_encrypted("mieu")
 	if data_temp != null:
 		data = data_temp
-	var settings_temp = load_file("settings")
+	var settings_temp: Variant = load_file("settings")
 	if settings_temp != null:
 		settings = settings_temp
-	var player_data_temp = load_file("player_data")
+	var player_data_temp: Variant = load_file("player_data")
 	if player_data_temp != null:
 		player_data = player_data_temp
 	SignalBus.load_finished.emit()
@@ -61,12 +61,12 @@ func save_file_encrypted(content: Variant, location: String) -> void:
 	write_json_encrypted(content_json, "user://fallback/", location)
 
 func write_json_encrypted(content: Variant, dir: String, location: String) -> void:
-	open_write_encrypted(dir + location + save_extension).store_var(content, false)
-	open_write_encrypted(dir + location + checksum_extension).store_var(FileAccess.get_sha256(dir + location + save_extension), false)
+	open_write_encrypted(dir + location + save_extension).store_line(content)
+	open_write_encrypted(dir + location + checksum_extension).store_line(FileAccess.get_sha256(dir + location + save_extension))
 
 func write_json(content: Variant, dir: String, location: String) -> void:
-	open_write(dir + location + save_extension).store_var(content, false)
-	open_write(dir + location + checksum_extension).store_var(FileAccess.get_sha256(dir + location + save_extension), false)
+	open_write(dir + location + save_extension).store_line(content)
+	open_write(dir + location + checksum_extension).store_line(FileAccess.get_sha256(dir + location + save_extension))
 
 func load_file_encrypted(location: String) -> Variant:
 	var content: JSON = JSON.new()
@@ -107,8 +107,8 @@ func sanity_check_encrypted(dir: String, location: String, content: JSON) -> boo
 		and open_read_encrypted(dir + location + save_extension) != null
 	):
 		sanity = (
-		FileAccess.get_sha256(dir + location + save_extension) == open_read_encrypted(dir + location + checksum_extension).get_var(false)
-		and content.parse(open_read_encrypted(dir + location + save_extension).get_var(false), false) == OK
+		FileAccess.get_sha256(dir + location + save_extension) == open_read_encrypted(dir + location + checksum_extension).get_line()
+		and content.parse(open_read_encrypted(dir + location + save_extension).get_line()) == OK
 		)
 	return sanity
 
@@ -121,8 +121,8 @@ func sanity_check(dir: String, location: String, content: JSON) -> bool:
 		and open_read(dir + location + save_extension) != null
 	):
 		sanity = (
-		FileAccess.get_sha256(dir + location + save_extension) == open_read(dir + location + checksum_extension).get_var(false) 
-		and content.parse(open_read(dir + location + save_extension).get_var(false), false) == OK
+		FileAccess.get_sha256(dir + location + save_extension) == open_read(dir + location + checksum_extension).get_line() 
+		and content.parse(open_read(dir + location + save_extension).get_line()) == OK
 		)
 	return sanity
 
