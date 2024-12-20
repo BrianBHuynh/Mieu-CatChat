@@ -33,10 +33,7 @@ func populate_player_list() -> void:
 
 
 func _on_filter_pressed() -> void:
-	var new_menu: Control = load("res://current/menus/chat_menus/chat_filter/chat_filter_menu.tscn").instantiate()
-	get_tree().root.add_child(new_menu)
-	Controls.cur_menu = new_menu
-	self.queue_free()
+	Controls.open_menu("res://current/menus/chat_menus/chat_filter/chat_filter_menu.tscn")
 
 func create_button(callable: Callable) -> Button:
 	var button: Button = Button.new()

@@ -30,3 +30,11 @@ func show_system_message(message: String) -> void:
 
 func sent_chat_message(message: String, private: bool, target: int) -> void:
 	chat_box.sent_chat_message(message, private, target)
+
+func open_menu(menu_path: String) -> void:
+	var old_menu: Control = cur_menu
+	var new_menu: Control = load(menu_path).instantiate()
+	get_tree().root.add_child(new_menu)
+	cur_menu = new_menu
+	if old_menu != null:
+		old_menu.queue_free()

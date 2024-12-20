@@ -26,7 +26,4 @@ func _on_send_test_data_btn_pressed() -> void:
 
 
 func _on_multiplayer_settings_pressed() -> void:
-	var new_menu: Control = load("res://current/menus/chat_menus/players_list/players_list.tscn").instantiate()
-	get_tree().root.add_child(new_menu)
-	Controls.cur_menu = new_menu
-	self.queue_free()
+	Controls.open_menu("res://current/menus/chat_menus/players_list/players_list.tscn")
