@@ -27,7 +27,6 @@ func _on_save_filter_button_pressed() -> void:
 				new_dict["delete"] = Fields.pop_front().button_pressed
 				filtered_words[FilteredText] = new_dict
 	Saves.set_value("networking", "chat_filter", filtered_words)
-	print(Saves.get_or_add("networking", "chat_filter", {}))
 
 func create_empty_entry() -> void:
 	var hbox: HBoxContainer = HBoxContainer.new()

@@ -5,6 +5,8 @@ var menu: Resource = load("res://current/menus/escape_menu/escape_menu.tscn")
 var cur_menu: Control
 var lobbies: VBoxContainer
 var chat_box: Control
+const DEFAULT_FONT_SIZE: float = 30.0
+const DEFAULT_CHAT_FONT_SIZE: float = 20.0
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:

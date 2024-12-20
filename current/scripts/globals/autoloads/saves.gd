@@ -2,10 +2,10 @@ extends Node
 
 var data: Dictionary = {}
 var settings: Dictionary = {}
-var player_data: Dictionary = {}
+var networking: Dictionary = {}
 var encryption_key: String = OS.get_unique_id()
-var save_extension: String = ".CAT"
-var checksum_extension: String = ".COLLAR"
+const save_extension: String = ".MIEU"
+const checksum_extension: String = ".COLLAR"
 
 func _ready() -> void:
 	make_dir("user://saves")
@@ -18,15 +18,21 @@ func _ready() -> void:
 	var settings_temp: Variant = load_file("settings")
 	if settings_temp != null:
 		settings = settings_temp
-	var player_data_temp: Variant = load_file("player_data")
-	if player_data_temp != null:
-		player_data = player_data_temp
+	var networking_temp: Variant = load_file("networking")
+	if networking_temp != null:
+		networking = networking_temp
 	SignalBus.load_finished.emit()
 
 func set_value(dictionary: String, key: String, value: Variant) -> void:
-	if(not data.has(dictionary)):
-		data[dictionary] = {}
-	data[dictionary][key] = value
+	match dictionary:
+		"settings":
+			settings[key] = value
+		"networking":
+			networking[key] = value
+		_:
+			if(not data.has(dictionary)):
+				data[dictionary] = {}
+			data[dictionary][key] = value
 
 func has(dictionary: String, key: String) -> bool:
 	if data.has(dictionary) && data[dictionary].has(key):
@@ -35,14 +41,20 @@ func has(dictionary: String, key: String) -> bool:
 		return false
 
 func get_or_add(dictionary: String, key: String, default_value: Variant) -> Variant:
-	if(not data.has(dictionary)):
-		data[dictionary] = {}
-	return data.get_or_add(dictionary, {}).get_or_add(key, default_value)
+	match dictionary:
+		"settings":
+			return settings.get_or_add(key, default_value)
+		"networking":
+			return networking.get_or_add(key, default_value)
+		_:
+			if(not data.has(dictionary)):
+				data[dictionary] = {}
+			return data.get_or_add(dictionary, {}).get_or_add(key, default_value)
 
 func save_game() -> void:
 	Multithreading.add_task(save_file_encrypted.bind(data, "mieu"))
 	Multithreading.add_task(save_file.bind(settings, "settings"))
-	Multithreading.add_task(save_file.bind(player_data, "player_data"))
+	Multithreading.add_task(save_file.bind(networking, "networking"))
 
 func make_dir(dir: String) -> void:
 	if not DirAccess.dir_exists_absolute(dir):

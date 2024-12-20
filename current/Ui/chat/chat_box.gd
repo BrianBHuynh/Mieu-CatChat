@@ -79,7 +79,3 @@ func _delete_chat(chat: HBoxContainer) -> void:
 
 func _on_auto_scroll_box_toggled(toggled_on: bool) -> void:
 	Saves.set_value("settings", "auto_scroll", toggled_on)
-
-
-func _on_button_pressed() -> void:
-	SteamLobbies.block_player(15)

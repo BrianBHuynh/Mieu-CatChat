@@ -18,3 +18,5 @@ func _on_debug_pressed() -> void:
 func _on_multiplayer_pressed() -> void:
 	if Steam.isSteamRunning():
 		Controls.open_menu("res://current/menus/chat_menus/multiplayer_menu/multiplayer_menu.tscn")
+	else:
+		Controls.show_system_message("Steam is not currently open!")

@@ -10,4 +10,4 @@ func _ready() -> void:
 func update_font() -> void:
 	var font_path: String = Saves.get_or_add("settings", "font", "res://current/assets/fonts/AtkinsonHyperlegible-Regular.ttf")
 	set("theme_override_fonts/font", Helper.get_font(font_path))
-	set("theme_override_font_sizes/font_size", Saves.get_or_add("settings", "font_size", 15.0))
+	set("theme_override_font_sizes/font_size", Saves.get_or_add("settings", "font_size", Controls.DEFAULT_FONT_SIZE))
