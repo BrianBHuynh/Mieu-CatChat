@@ -9,6 +9,7 @@ func _process(_delta: float) -> void:
 func sign_adoption(identity: int) -> void:
 	id = identity
 	player_name = Steam.getPlayerNickname(id)
+	$Label3D.text = player_name
 
 func move_to(new_position: Vector3) -> void:
 	if Saves.get_or_add("networking", "networking_tween_enabled", false):

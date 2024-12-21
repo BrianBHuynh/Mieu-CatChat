@@ -17,4 +17,6 @@ func _ready() -> void:
 		running = true
 	else:
 		push_warning("Steam is not running right now!")
+		await get_tree().create_timer(1).timeout
+		Controls.show_system_message("Steam is not running right now, online features may not work correctly!")
 		running = false

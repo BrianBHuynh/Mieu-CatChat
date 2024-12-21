@@ -1,8 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://dfgfhjqob8c86"]
+[gd_scene load_steps=14 format=3 uid="uid://dfgfhjqob8c86"]
 
 [ext_resource type="Texture2D" uid="uid://37vx6dgthk0f" path="res://current/assets/images/mieu.png" id="2_mt2fa"]
 [ext_resource type="Texture2D" uid="uid://lhikvxbnengm" path="res://current/assets/images/mieu_idle_front.png" id="3_l2y6d"]
 [ext_resource type="Script" path="res://current/characters/mieu_peer/mieu_peer.gd" id="3_n7imm"]
+[ext_resource type="Script" path="res://current/scripts/node/text_label3D.gd" id="4_1qrr7"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_crgfb"]
 atlas = ExtResource("2_mt2fa")
@@ -81,3 +82,7 @@ sprite_frames = SubResource("SpriteFrames_hmhyg")
 animation = &"front"
 autoplay = "front"
 script = ExtResource("3_n7imm")
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.60782, 0)
+script = ExtResource("4_1qrr7")

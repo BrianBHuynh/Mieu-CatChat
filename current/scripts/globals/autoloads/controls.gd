@@ -28,7 +28,8 @@ func _process(_delta: float) -> void:
 		chat_box.open_text_input()
 
 func show_system_message(message: String) -> void:
-	chat_box.show_system_message(message)
+	if chat_box != null:
+		chat_box.show_system_message(message)
 
 func sent_chat_message(message: String, private: bool, target: int) -> void:
 	chat_box.sent_chat_message(message, private, target)
