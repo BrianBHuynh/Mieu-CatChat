@@ -5,13 +5,7 @@ var move_speed: float = 7.5
 var jump_speed: float = 2.5
 
 func _ready() -> void:
-	#hacky
-	GlobalVars.mieu = self
-	var temp: Variant = Saves.get_or_add("Player","pos", str(position))
-	temp = temp.erase(0, 1)
-	temp = temp.erase(temp.length()-1, 1)
-	temp = temp.split(", ", true, 0)
-	position = Vector3(temp[0].to_float(), temp[1].to_float(), temp[2].to_float())
+	position = Vector3(Saves.get_or_add("Player","pos_x", position.x), Saves.get_or_add("Player","pos_y", position.y), Saves.get_or_add("Player","pos_z", position.z))
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -19,7 +13,7 @@ func _physics_process(delta: float) -> void:
 		velocity += get_gravity() * delta
 	
 	# Handle jump.
-	if Input.is_action_pressed("jump") and is_on_floor() and !Controls.chat_box.is_text_box_focused():
+	if Input.is_action_pressed("jump") and is_on_floor() and !Ui.chat_box.is_text_box_focused():
 		velocity.y = jump_speed
 	
 	# Get the input direction and handle the movement/deceleration.
@@ -30,7 +24,7 @@ func _physics_process(delta: float) -> void:
 	elif Input.is_action_pressed("move_right"):
 		input_dir = Vector3(1, 0, 0)
 	var direction: Vector3 = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	if direction and !Controls.chat_box.is_text_box_focused():
+	if direction and !Ui.chat_box.is_text_box_focused():
 		if is_on_floor():
 			velocity.y = jump_speed
 		velocity.x = move_toward(velocity.x, direction.x * move_speed, move_speed)

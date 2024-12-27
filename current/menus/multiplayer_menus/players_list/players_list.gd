@@ -2,12 +2,10 @@ extends Control
 var player_list: Array = []
 
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	populate_player_list()
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	pass
 
@@ -33,7 +31,7 @@ func populate_player_list() -> void:
 
 
 func _on_filter_pressed() -> void:
-	Controls.open_menu("res://current/menus/chat_menus/chat_filter/chat_filter_menu.tscn")
+	Ui.open_menu("res://current/menus/multiplayer_menus/chat_filter/chat_filter_menu.tscn")
 
 func create_button(callable: Callable) -> Button:
 	var button: Button = Button.new()

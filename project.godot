@@ -15,10 +15,11 @@ run/main_scene="res://current/scenes/debug/debug.tscn"
 config/use_custom_user_dir=true
 config/features=PackedStringArray("4.3", "GL Compatibility")
 boot_splash/image="res://current/assets/images/mieu_splash.png"
+config/icon="res://current/assets/images/mieu_splash.png"
 
 [autoload]
 
-Controls="*res://current/scripts/globals/autoloads/controls.gd"
+Ui="*res://current/scripts/globals/autoloads/Ui.gd"
 GlobalVars="*res://current/scripts/globals/autoloads/global_vars.gd"
 Vpet="*res://current/scripts/globals/autoloads/vpet.gd"
 Saves="*res://current/scripts/globals/autoloads/saves.gd"
@@ -41,6 +42,8 @@ window/size/viewport_width=1920
 window/size/viewport_height=1080
 window/size/mode=3
 window/stretch/mode="viewport"
+mouse_cursor/custom_image="res://current/assets/ui/cursorMono.png"
+mouse_cursor/tooltip_position_offset=Vector2(0, 0)
 
 [gui]
 

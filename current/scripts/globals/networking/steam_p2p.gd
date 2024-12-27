@@ -1,16 +1,15 @@
 extends Node
 const PACKET_READ_LIMIT: int = 32
 var kitties: Dictionary = {}
+
 #Currently heavily based on code from https://godotsteam.com/tutorials/p2p/
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	Steam.network_messages_session_request.connect(_on_network_messages_session_request)
 	Steam.network_messages_session_failed.connect(_on_p2p_session_connect_fail)
 	SteamLobbies.check_command_line()
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	Steam.run_callbacks()
 	if SteamLobbies.lobby_id > 0:
@@ -30,8 +29,7 @@ func _on_network_messages_session_request(remote_id: int) -> void:
 
 func read_p2p_packet() -> void:
 	var messages: Array = Steam.receiveMessagesOnChannel(0, 100)
-	if messages.size() != 0:
-		#print(messages.size())
+	if messages.size() == 0:
 		pass
 	else:
 		for message: Dictionary in messages:
@@ -55,7 +53,7 @@ func read_p2p_packet() -> void:
 							print("creating")
 							kitties[message.identity].global_position = Vector3(message.payload.x, message.payload.y, message.payload.z)
 					"chat":
-						Controls.chat_box.process_chat_message(ChatFilter.filter(message))
+						Ui.chat_box.process_chat_message(ChatFilter.filter(message))
 					"lobby_data":
 						if message.identity == Steam.getLobbyOwner(SteamLobbies.lobby_id):
 							SteamLobbies.banned_players = message["payload"]["lobby_data"]["banned_players"]
@@ -68,15 +66,15 @@ func read_p2p_packet() -> void:
 					"ban":
 						if message.identity == Steam.getLobbyOwner(SteamLobbies.lobby_id):
 							SteamLobbies.leave_lobby()
-							Controls.show_system_message("You were banned from the lobby")
+							Ui.show_system_message("You were banned from the lobby")
 					"kick":
 						if message.identity == Steam.getLobbyOwner(SteamLobbies.lobby_id):
 							SteamLobbies.leave_lobby()
-							Controls.show_system_message("You were kicked from the lobby")
-							Controls.show_system_message("Reason provided: " + message["payload"][""])
+							Ui.show_system_message("You were kicked from the lobby")
+							Ui.show_system_message("Reason provided: " + message["payload"][""])
 					"kick_announce":
 						if message.identity == Steam.getLobbyOwner(SteamLobbies.lobby_id):
-							Controls.show_system_message("The lobby owner " + SteamLobbies.get_host_name() + "has kicked " + message["payload"][SteamLobbies.lobby_members["kicked_player"]])
+							Ui.show_system_message("The lobby owner " + SteamLobbies.get_host_name() + "has kicked " + message["payload"][SteamLobbies.lobby_members["kicked_player"]])
 
 func sendMessageToUser(this_target: int, payload: Dictionary) -> void:
 	var send_type: int = Steam.NETWORKING_SEND_RELIABLE_NO_NAGLE
@@ -117,7 +115,7 @@ func send_chat_message(this_target: int, message: String, private: bool) -> void
 			for this_member: int in SteamLobbies.lobby_members:
 				if this_member != SteamWorks.steam_id:
 					Steam.sendMessageToUser(this_member, this_data, send_type, channel)
-	Controls.sent_chat_message(message, private, this_target)
+	Ui.sent_chat_message(message, private, this_target)
 
 func send_lobby_data(this_target: int) -> void:
 	if SteamLobbies.is_host():

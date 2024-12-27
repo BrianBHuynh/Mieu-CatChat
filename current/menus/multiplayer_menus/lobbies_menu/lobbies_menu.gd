@@ -1,12 +1,10 @@
 extends Control
 
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	refresh_lobbies()
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	pass
 
@@ -26,4 +24,4 @@ func _on_send_test_data_btn_pressed() -> void:
 
 
 func _on_multiplayer_settings_pressed() -> void:
-	Controls.open_menu("res://current/menus/chat_menus/players_list/players_list.tscn")
+	Ui.open_menu("res://current/menus/multiplayer_menus/players_list/players_list.tscn")

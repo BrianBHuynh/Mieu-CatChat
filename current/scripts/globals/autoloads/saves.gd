@@ -111,18 +111,17 @@ func load_file(location: String) -> Variant:
 		return null
 
 func sanity_check_encrypted(dir: String, location: String, content: JSON) -> bool:
-	var sanity: bool = false
 	if (
 		FileAccess.file_exists(dir + location + save_extension)
 		and FileAccess.file_exists(dir + location + checksum_extension)
 		and open_read_encrypted(dir + location + checksum_extension) != null 
 		and open_read_encrypted(dir + location + save_extension) != null
 	):
-		sanity = (
+		return (
 		FileAccess.get_sha256(dir + location + save_extension) == open_read_encrypted(dir + location + checksum_extension).get_line()
 		and content.parse(open_read_encrypted(dir + location + save_extension).get_as_text()) == OK
 		)
-	return sanity
+	return false
 
 func sanity_check(dir: String, location: String, content: JSON) -> bool:
 	var sanity: bool = false

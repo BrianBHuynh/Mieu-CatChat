@@ -1,13 +1,11 @@
 extends Control
 var chat_messages: Array = []
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	Controls.chat_box = self
+	Ui.chat_box = self
 	$CheckBox.set_pressed_no_signal(Saves.get_or_add("settings", "auto_scroll", true))
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	pass
 

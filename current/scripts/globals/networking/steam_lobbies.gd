@@ -9,7 +9,6 @@ var lobby_vote_kick: bool = false
 var banned_players: Dictionary = Saves.get_or_add("networking", "persist_banned", {})
 var blocked_players: Dictionary = Saves.get_or_add("networking", "persist_blocked", {})
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	Steam.join_requested.connect(_on_lobby_join_requested)
 	Steam.lobby_chat_update.connect(_on_lobby_chat_update)
@@ -22,11 +21,11 @@ func _ready() -> void:
 	Steam.persona_state_change.connect(_on_persona_change)
 	check_command_line()
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	pass
 
 func host() -> int:
+	#Make way to add a timer for being kicked / crashing lobby owners
 	return Steam.getLobbyOwner(lobby_id)
 
 func check_command_line() -> void:
@@ -42,7 +41,7 @@ func create_lobby(type: int, max_players: int) -> void:
 
 func _on_lobby_created(_connected: int, this_lobby_id: int) -> void:
 	lobby_id = this_lobby_id
-	Controls.show_system_message("Created a lobby: %s" % lobby_id)
+	Ui.show_system_message("Created a lobby: %s" % lobby_id)
 	Steam.setLobbyJoinable(lobby_id, true)
 	Steam.setLobbyData(lobby_id, "name", SteamWorks.steam_username + "'s Lobby")
 	Steam.setLobbyData(lobby_id, "mode", "GodotSteam test")
@@ -53,7 +52,7 @@ func _on_open_lobby_list_pressed() -> void:
 	Steam.requestLobbyList()
 
 func _on_lobby_match_list(these_lobbies: Array) -> void:
-	var lobby_buttons: Array = Controls.lobbies.get_children()
+	var lobby_buttons: Array = Ui.lobbies.get_children()
 	for button: Button in lobby_buttons:
 		button.queue_free()
 	for this_lobby: int in these_lobbies:
@@ -65,7 +64,7 @@ func _on_lobby_match_list(these_lobbies: Array) -> void:
 		lobby_button.set_size(Vector2(800, 50))
 		lobby_button.set_name("lobby_%s" % this_lobby)
 		lobby_button.connect("pressed", Callable(self, "join_lobby").bind(this_lobby))
-		Controls.lobbies.add_child(lobby_button)
+		Ui.lobbies.add_child(lobby_button)
 
 func join_lobby(this_lobby_id: int) -> void:
 	print("Attempting to join lobby %s" % lobby_id)
@@ -90,12 +89,12 @@ func _on_lobby_joined(this_lobby_id: int, _permissions: int, _locked: bool, resp
 			Steam.CHAT_ROOM_ENTER_RESPONSE_COMMUNITY_BAN: fail_reason = "This lobby is community locked."
 			Steam.CHAT_ROOM_ENTER_RESPONSE_MEMBER_BLOCKED_YOU: fail_reason = "A user in the lobby has blocked you from joining."
 			Steam.CHAT_ROOM_ENTER_RESPONSE_YOU_BLOCKED_MEMBER: fail_reason = "A user you have blocked is in the lobby."
-		Controls.show_system_message("Failed to join this chat room: %s" % fail_reason)
+		Ui.show_system_message("Failed to join this chat room: %s" % fail_reason)
 		_on_open_lobby_list_pressed()
 
 func _on_lobby_join_requested(this_lobby_id: int, friend_id: int) -> void:
 	var owner_name: String = Steam.getFriendPersonaName(friend_id)
-	Controls.show_system_message("Joining %s's lobby..." % owner_name)
+	Ui.show_system_message("Joining %s's lobby..." % owner_name)
 	join_lobby(this_lobby_id)
 
 func get_lobby_members() -> void:
@@ -118,25 +117,25 @@ func make_p2p_handshake() -> void:
 func _on_lobby_chat_update(_this_lobby_id: int, change_id: int, _making_change_id: int, chat_state: int) -> void:
 	var changer_name: String = Steam.getFriendPersonaName(change_id)
 	if chat_state == Steam.CHAT_MEMBER_STATE_CHANGE_ENTERED:
-		Controls.show_system_message("%s has joined the lobby." % changer_name)
+		Ui.show_system_message("%s has joined the lobby." % changer_name)
 		SteamP2P.send_lobby_data(change_id)
 	elif chat_state == Steam.CHAT_MEMBER_STATE_CHANGE_LEFT:
-		Controls.show_system_message("%s has left the lobby." % changer_name)
+		Ui.show_system_message("%s has left the lobby." % changer_name)
 		if SteamP2P.kitties.has(change_id) and SteamP2P.kitties.get(change_id).is_inside_tree():
 				get_parent().remove_child(SteamP2P.kitties.get(change_id))
 				SteamP2P.kitties.erase(change_id)
 	elif chat_state == Steam.CHAT_MEMBER_STATE_CHANGE_KICKED:
-		Controls.show_system_message("%s has been kicked from the lobby." % changer_name)
+		Ui.show_system_message("%s has been kicked from the lobby." % changer_name)
 		if SteamP2P.kitties.has(change_id) and SteamP2P.kitties.get(change_id).is_inside_tree():
 				get_parent().remove_child(SteamP2P.kitties.get(change_id))
 				SteamP2P.kitties.erase(change_id)
 	elif chat_state == Steam.CHAT_MEMBER_STATE_CHANGE_BANNED:
-		Controls.show_system_message("%s has been banned from the lobby." % changer_name)
+		Ui.show_system_message("%s has been banned from the lobby." % changer_name)
 		if SteamP2P.kitties.has(change_id) and SteamP2P.kitties.get(change_id).is_inside_tree():
 				get_parent().remove_child(SteamP2P.kitties.get(change_id))
 				SteamP2P.kitties.erase(change_id)
 	else:
-		Controls.show_system_message("%s did... something." % changer_name)
+		Ui.show_system_message("%s did... something." % changer_name)
 	get_lobby_members()
 
 func leave_lobby() -> void:

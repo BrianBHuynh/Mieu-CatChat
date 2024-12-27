@@ -8,7 +8,6 @@ var chat_box: Control
 const DEFAULT_FONT_SIZE: float = 30.0
 const DEFAULT_CHAT_FONT_SIZE: float = 20.0
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("pause"):
 		chat_box.release_input_focus()

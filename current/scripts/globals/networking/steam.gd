@@ -3,7 +3,6 @@ var running: bool = false
 var steam_id: int = 0
 var steam_username: String = ""
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	Steam.steamInit()
 	
@@ -18,5 +17,5 @@ func _ready() -> void:
 	else:
 		push_warning("Steam is not running right now!")
 		await get_tree().create_timer(1).timeout
-		Controls.show_system_message("Steam is not running right now, online features may not work correctly!")
+		Ui.show_system_message("Steam is not running right now, online features may not work correctly!")
 		running = false

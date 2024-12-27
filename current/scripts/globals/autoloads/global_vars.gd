@@ -34,7 +34,7 @@ func set_stretch_aspect(aspect: int) -> void:
 func set_window_mode(mode: int) -> void:
 	match mode:
 		0: 
-			#Dubious, create an issue for this when figuring out why it's happening.
+			#Dubious check below
 			var temp: Vector2 = get_window().get_size()
 			get_window().set_mode(Window.MODE_WINDOWED)
 			get_window().set_size(temp)

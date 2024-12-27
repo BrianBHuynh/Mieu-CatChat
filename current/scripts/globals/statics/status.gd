@@ -2,61 +2,57 @@ extends Node
 class_name Status
 
 static func init_stat(stat_name: String, stat_value: float, stat_rate: float, stat_max: float, stat_min: float) -> void:
-	Saves.get_or_add("status", stat_name, stat_value)
-	Saves.get_or_add("status", stat_name + "_rate", stat_rate)
-	Saves.get_or_add("status", stat_name + "_max", stat_max)
-	Saves.get_or_add("status", stat_name + "_min", stat_min)
-	Saves.get_or_add("status", stat_name + "_time", Time.get_unix_time_from_system())
+	var temp_dict: Dictionary = {}
+	temp_dict["value"] = stat_value
+	temp_dict["rate"] = stat_rate
+	temp_dict["max"] = stat_max
+	temp_dict["min"] = stat_min
+	temp_dict["time"] = Time.get_unix_time_from_system()
+	Saves.get_or_add("status", stat_name, temp_dict)
 
 static func get_stat(stat_name: String) -> float:
-	var cur_stat: float = Saves.get_or_add("status", stat_name, 100.0)
-	var time_changed: float = Saves.get_or_add("status", stat_name + "_time", Time.get_unix_time_from_system())
-	var rate_of_change: float = Saves.get_or_add("status", stat_name + "_rate", 1.0)
-	var val_max: float = Saves.get_or_add("status", stat_name + "_max", 100.0)
-	var val_min: float = Saves.get_or_add("status", stat_name + "_min", 0.0)
-	cur_stat = cur_stat + (get_time_difference_minutes(time_changed)*rate_of_change)
-	if cur_stat <= val_min:
-		Saves.set_value("vpet", stat_name, val_min)
-		Saves.set_value("vpet", stat_name + "_time", Time.get_unix_time_from_system())
-		return val_min
-	elif cur_stat >= val_max:
-		Saves.set_value("vpet", stat_name, val_max)
-		Saves.set_value("vpet", stat_name + "_time", Time.get_unix_time_from_system())
-		return val_max
+	var temp_dict: Dictionary = Saves.get_or_add("status", stat_name, {})
+	if temp_dict.size() == 0:
+		return 0.0
+	var cur_stat: float = temp_dict.value + (get_time_difference_minutes(temp_dict["time"])*temp_dict["rate"])
+	if cur_stat <= temp_dict["min"]:
+		return temp_dict["min"]
+	elif cur_stat >= temp_dict["max"]:
+		return temp_dict["max"]
 	else:
 		return cur_stat
 
 static func set_stat(stat_name: String, value: float) -> float:
-	var val_max: float = Saves.get_or_add("status", stat_name + "_max", 100.0)
-	var val_min: float = Saves.get_or_add("status", stat_name + "_min", 0.0)
-	if value <= val_min:
-		Saves.set_value("vpet", stat_name, val_min)
-		Saves.set_value("vpet", stat_name + "_time", Time.get_unix_time_from_system())
-		return val_min
-	elif value >= val_max:
-		Saves.set_value("vpet", stat_name, val_max)
-		Saves.set_value("vpet", stat_name + "_time", Time.get_unix_time_from_system())
-		return val_max
+	var temp_dict: Dictionary = Saves.get_or_add("status", stat_name, {})
+	if temp_dict.size() == 0:
+		return 0.0
 	else:
-		Saves.set_value("vpet", stat_name, value)
-		Saves.set_value("vpet", stat_name + "_time", Time.get_unix_time_from_system())
-		return value
+		temp_dict["time"] = Time.get_unix_time_from_system()
+		if value <= temp_dict["min"]:
+			temp_dict["value"] = temp_dict["min"]
+		elif value >= temp_dict["max"]:
+			temp_dict["value"] = temp_dict["max"] 
+		else:
+			temp_dict["value"] = value
+		Saves.set_value("status", stat_name, temp_dict)
+		return temp_dict["value"]
 
 static func change_stat(stat_name: String, change: float) -> float:
-	var cur_stat: float = get_stat(stat_name)
-	return set_stat(stat_name, cur_stat + change)
+	return set_stat(stat_name, get_stat(stat_name) + change)
 
 static func param_exist(stat_name: String, param: String) -> bool:
-	return Saves.has("vpet", stat_name + "_" + param)
+	return Saves.get_or_add("status", stat_name, {}).has(param)
 
-static func get_param(stat_name: String, param: String) -> bool:
+static func get_param(stat_name: String, param: String) -> float:
 	if param_exist(stat_name, param):
-		return Saves.get_or_add("vpet", stat_name + "_" + param,  0.0)
+		return Saves.get_or_add("status", stat_name,  {})[param]
 	else:
 		return 0.0
 
-static func set_param(stat_name: String, param: String, value: float) -> void:
-	Saves.set_value("vpet", stat_name + "_" + param, value)
+static func set_param(stat_name: String, parameter: String, value: float) -> void:
+	var temp_dict: Dictionary = Saves.get_or_add("status", stat_name, {})
+	temp_dict[parameter] = value
+	Saves.set_value("status", stat_name, temp_dict)
 
 static func get_time_difference_seconds(time: float) -> float:
 	return Time.get_unix_time_from_system() - time
