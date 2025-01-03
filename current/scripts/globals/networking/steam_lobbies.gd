@@ -1,7 +1,7 @@
 extends Node
 #Currently heavily based on code from https://godotsteam.com/tutorials/lobbies/
-
 #var lobby_data
+
 var lobby_id: int = 0
 var lobby_members: Dictionary = {}
 var lobby_members_max: int = 10
@@ -21,30 +21,29 @@ func _ready() -> void:
 	Steam.persona_state_change.connect(_on_persona_change)
 	check_command_line()
 
-func _process(_delta: float) -> void:
-	pass
-
 func host() -> int:
 	#Make way to add a timer for being kicked / crashing lobby owners
 	return Steam.getLobbyOwner(lobby_id)
 
 func check_command_line() -> void:
+	#Not fully implemented, test later.
 	var command_line: Array = OS.get_cmdline_args()
 	if command_line.size() > 0 && command_line[0] == "+connect_lobby" && command_line[1] > 0:
 		print("Command line lobby ID: %s" % command_line[1])
-		#join_lobby(int(command_line[1]))
+		join_lobby(int(command_line[1]))
 
 func create_lobby(type: int, max_players: int) -> void:
-	print(lobby_id)
 	if lobby_id == 0:
 		Steam.createLobby(type, max_players)
+	else:
+		Ui.show_system_message("You are currently already in a lobby!")
 
 func _on_lobby_created(_connected: int, this_lobby_id: int) -> void:
 	lobby_id = this_lobby_id
 	Ui.show_system_message("Created a lobby: %s" % lobby_id)
 	Steam.setLobbyJoinable(lobby_id, true)
 	Steam.setLobbyData(lobby_id, "name", SteamWorks.steam_username + "'s Lobby")
-	Steam.setLobbyData(lobby_id, "mode", "GodotSteam test")
+	Steam.setLobbyData(lobby_id, "mode", "Multiplayer Lobby")
 
 func _on_open_lobby_list_pressed() -> void:
 	Steam.addRequestLobbyListDistanceFilter(Steam.LOBBY_DISTANCE_FILTER_WORLDWIDE)
@@ -157,7 +156,6 @@ func ban_player_persist(steam_id: int) -> void:
 		if not Saves.get_or_add("networking", "persist_banned", {}).has(steam_id):
 			Saves.get_or_add("networking", "persist_banned", {})[steam_id] = lobby_members[steam_id]["steam_name"]
 		SteamP2P.send_lobby_data(0)
-		
 		if lobby_members.has(steam_id) and SteamP2P.kitties.has(steam_id):
 			SteamP2P.kitties[steam_id].queue_free()
 

@@ -1,6 +1,9 @@
 extends Node
 
 var mieu: CharacterBody3D
+var move_speed: float = 7.5
+var jump_speed: float = 2.5
+var frame: float = 0.01666666666
 
 func _ready() -> void:
 	SignalBus.load_finished.connect(load_finished)
@@ -10,7 +13,7 @@ func load_finished() -> void:
 	set_window_mode(Saves.get_or_add("settings", "window_mode", 2))
 	set_borderless(Saves.get_or_add("settings", "borderless", false))
 	get_window().scaling_3d_scale = Saves.get_or_add("settings", "scaling_3d_scale", 1.0)
-	get_window().size = Vector2(Saves.get_or_add("settings", "width", 1920), Saves.get_or_add("settings", "height", 1080))
+	get_window().size = Vector2(Saves.get_or_add("settings", "width", DisplayServer.screen_get_size().x), Saves.get_or_add("settings", "height", DisplayServer.screen_get_size().y))
 
 func set_resolution(width: int, height: int) -> void:
 	Saves.set_value("settings", "width", width)

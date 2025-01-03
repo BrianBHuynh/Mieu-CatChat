@@ -1,10 +1,8 @@
 extends CharacterBody3D
 
 
-var move_speed: float = 7.5
-var jump_speed: float = 2.5
-
 func _ready() -> void:
+	GlobalVars.mieu = self
 	position = Vector3(Saves.get_or_add("Player","pos_x", position.x), Saves.get_or_add("Player","pos_y", position.y), Saves.get_or_add("Player","pos_z", position.z))
 
 func _physics_process(delta: float) -> void:
@@ -14,7 +12,7 @@ func _physics_process(delta: float) -> void:
 	
 	# Handle jump.
 	if Input.is_action_pressed("jump") and is_on_floor() and !Ui.chat_box.is_text_box_focused():
-		velocity.y = jump_speed
+		velocity.y = GlobalVars.jump_speed
 	
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
@@ -26,13 +24,13 @@ func _physics_process(delta: float) -> void:
 	var direction: Vector3 = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	if direction and !Ui.chat_box.is_text_box_focused():
 		if is_on_floor():
-			velocity.y = jump_speed
-		velocity.x = move_toward(velocity.x, direction.x * move_speed, move_speed)
-		velocity.z = move_toward(velocity.z, direction.z * move_speed, move_speed)
+			velocity.y = GlobalVars.jump_speed
+		velocity.x = move_toward(velocity.x, direction.x * GlobalVars.move_speed, GlobalVars.move_speed)
+		velocity.z = move_toward(velocity.z, direction.z * GlobalVars.move_speed, GlobalVars.move_speed)
 	else:
 		if is_on_floor():
-			velocity.x = move_toward(velocity.x, 0, move_speed)
-			velocity.z = move_toward(velocity.z, 0, move_speed)
+			velocity.x = move_toward(velocity.x, 0, GlobalVars.move_speed)
+			velocity.z = move_toward(velocity.z, 0, GlobalVars.move_speed)
 		else:
 			if not Input.is_action_pressed("jump"):
 				velocity.y = move_toward(velocity.y, -2.5, .5)

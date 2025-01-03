@@ -5,10 +5,6 @@ func _ready() -> void:
 	Ui.chat_box = self
 	$CheckBox.set_pressed_no_signal(Saves.get_or_add("settings", "auto_scroll", true))
 
-
-func _process(_delta: float) -> void:
-	pass
-
 func process_chat_message(message: Dictionary) -> void:
 	add_chat_message(message.identity, SteamWorks.steam_id, message["payload"]["text"], message["payload"]["private"])
 
@@ -23,6 +19,7 @@ func add_chat_message(sender: int, target: int, content: String, private: bool) 
 		message_text.set_text("(whisper)" + Steam.getFriendPersonaName(sender) + ": " + content)
 	else:
 		message_text.set_text(Steam.getFriendPersonaName(sender) + ": " + content)
+	print(message_text.text)
 	message_text.set_script(load("res://current/scripts/node/chat_message.gd"))
 	message_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	message_text.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -43,6 +40,7 @@ func add_chat_message(sender: int, target: int, content: String, private: bool) 
 func show_system_message(sys_message: String) -> void:
 	var message_text: RichTextLabel = RichTextLabel.new()
 	message_text.text = sys_message
+	print(message_text.text)
 	message_text.set_script(load("res://current/scripts/node/chat_message.gd"))
 	message_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	message_text.size_flags_horizontal = Control.SIZE_EXPAND_FILL

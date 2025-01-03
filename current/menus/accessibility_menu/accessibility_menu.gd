@@ -13,7 +13,6 @@ func _ready() -> void:
 	for font: String in fonts_temp:
 		fonts.append("user://fonts/" + font)
 
-
 func _on_fov_slider_value_changed(value: float) -> void:
 	camera3D.fov = value
 	Saves.set_value("settings", "fov", value)

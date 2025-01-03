@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://bliphh5kps0ly" path="res://current/characters/mieu/mieu.tscn" id="1_0uogh"]
 [ext_resource type="PackedScene" uid="uid://w7p53meqohhf" path="res://current/ui/chat/chat_box.tscn" id="1_1pw0d"]
-[ext_resource type="Script" uid="uid://ce0uc5ml5qode" path="res://current/scripts/node/camera_3d.gd" id="2_fcsic"]
+[ext_resource type="Script" path="res://current/scripts/node/camera_3d.gd" id="2_fcsic"]
 [ext_resource type="PackedScene" uid="uid://cbajq0dylq2p2" path="res://current/ui/vpet_gui/vpet_gui.tscn" id="4_o35hi"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6i420"]

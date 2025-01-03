@@ -3,10 +3,6 @@ extends Control
 func _ready() -> void:
 	populate_from_file()
 
-func _process(_delta: float) -> void:
-	pass
-
-
 func _on_save_filter_button_pressed() -> void:
 	var filtered_words: Dictionary = {}
 	var first: bool = true
@@ -30,14 +26,12 @@ func create_empty_entry() -> void:
 	var hbox: HBoxContainer = HBoxContainer.new()
 	hbox.alignment = BoxContainer.ALIGNMENT_CENTER
 	hbox.clip_contents = true
-	
 	hbox.add_child(create_blank_text_edit("Filtered word here", ""))
 	hbox.add_child(create_blank_text_edit("Word to replace it with", ""))
 	hbox.add_child(create_blank_check_button())
 	hbox.add_child(create_blank_check_button())
 	hbox.add_child(create_blank_check_button())
 	hbox.add_child(create_blank_check_button())
-	
 	$ScrollContainer/VBoxContainer.add_child(hbox)
 	$ScrollContainer/VBoxContainer.move_child(hbox, 1)
 
@@ -47,14 +41,12 @@ func populate_from_file() -> void:
 		var hbox: HBoxContainer = HBoxContainer.new()
 		hbox.alignment = BoxContainer.ALIGNMENT_CENTER
 		hbox.clip_contents = true
-
 		hbox.add_child(create_blank_text_edit("", word))
 		hbox.add_child(create_text_edit(word, "replacement_word", filtered_words))
 		hbox.add_child(create_check_button(word, "ban", filtered_words))
 		hbox.add_child(create_check_button(word, "block", filtered_words))
 		hbox.add_child(create_check_button(word, "kick", filtered_words))
 		hbox.add_child(create_check_button(word, "delete", filtered_words))
-		
 		$ScrollContainer/VBoxContainer.add_child(hbox)
 
 func clear_entries() -> void:

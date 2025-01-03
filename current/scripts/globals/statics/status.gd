@@ -14,7 +14,7 @@ static func get_stat(stat_name: String) -> float:
 	var temp_dict: Dictionary = Saves.get_or_add("status", stat_name, {})
 	if temp_dict.size() == 0:
 		return 0.0
-	var cur_stat: float = temp_dict.value + (get_time_difference_minutes(temp_dict["time"])*temp_dict["rate"])
+	var cur_stat: float = temp_dict.value + (get_time_difference_seconds(temp_dict["time"])*temp_dict["rate"])
 	if cur_stat <= temp_dict["min"]:
 		return temp_dict["min"]
 	elif cur_stat >= temp_dict["max"]:

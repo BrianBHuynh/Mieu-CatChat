@@ -5,17 +5,14 @@ var steam_username: String = ""
 
 func _ready() -> void:
 	Steam.steamInit()
-	
 	if Steam.isSteamRunning():
 		Multithreading.add_task(Steam.initRelayNetworkAccess)
 		Multithreading.add_task(Steam.initAuthentication)
-		print("Steam is running")
-		print(Steam.getFriendPersonaName(Steam.getSteamID()))
+		Ui.show_system_message("Steam is running!")
+		Ui.show_system_message("User: " + Steam.getFriendPersonaName(Steam.getSteamID()))
 		steam_id = Steam.getSteamID()
 		steam_username = Steam.getFriendPersonaName(Steam.getSteamID())
 		running = true
 	else:
-		push_warning("Steam is not running right now!")
-		await get_tree().create_timer(1).timeout
 		Ui.show_system_message("Steam is not running right now, online features may not work correctly!")
 		running = false

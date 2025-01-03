@@ -1,14 +1,13 @@
 extends Node
+
 const PACKET_READ_LIMIT: int = 32
 var kitties: Dictionary = {}
-
 #Currently heavily based on code from https://godotsteam.com/tutorials/p2p/
 
 func _ready() -> void:
 	Steam.network_messages_session_request.connect(_on_network_messages_session_request)
 	Steam.network_messages_session_failed.connect(_on_p2p_session_connect_fail)
 	SteamLobbies.check_command_line()
-
 
 func _process(_delta: float) -> void:
 	Steam.run_callbacks()
@@ -142,4 +141,4 @@ func send_kick(this_target: int, reason: String) -> void:
 		sendMessageToUser(this_target, {"type": "kick_announce", "kicked_player": this_target})
 
 func _on_p2p_session_connect_fail(_steam_id: int, _session_error: int, _state: int, debug_msg: String) -> void:
-	print(debug_msg)
+	Ui.show_system_message("P2p session connection failed! Reason: " + debug_msg)

@@ -5,10 +5,6 @@ var player_list: Array = []
 func _ready() -> void:
 	populate_player_list()
 
-
-func _process(_delta: float) -> void:
-	pass
-
 func populate_player_list() -> void:
 	SteamLobbies.get_lobby_members()
 	for player_id: int in SteamLobbies.lobby_members:
@@ -21,14 +17,11 @@ func populate_player_list() -> void:
 		player_info.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		player_info.fit_content = true
 		hbox.add_child(player_info)
-		
 		if player_id != SteamLobbies.host() and SteamLobbies.is_host():
 			hbox.add_child(create_button(SteamLobbies.ban_player_temp.bind(player_id)))
 			hbox.add_child(create_button(SteamLobbies.ban_player_persist.bind(player_id)))
 			hbox.add_child(create_button(SteamLobbies.block_player.bind(player_id)))
-		
 		$ScrollContainer/VBoxContainer.add_child(hbox)
-
 
 func _on_filter_pressed() -> void:
 	Ui.open_menu("res://current/menus/multiplayer_menus/chat_filter/chat_filter_menu.tscn")

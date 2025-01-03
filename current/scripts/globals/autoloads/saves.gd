@@ -12,15 +12,19 @@ func _ready() -> void:
 	make_dir("user://backup")
 	make_dir("user://fallback")
 	make_dir("user://fonts")
+	
 	var data_temp: Variant = load_file_encrypted("mieu")
 	if data_temp != null:
 		data = data_temp
+	
 	var settings_temp: Variant = load_file("settings")
 	if settings_temp != null:
 		settings = settings_temp
+	
 	var networking_temp: Variant = load_file("networking")
 	if networking_temp != null:
 		networking = networking_temp
+	
 	SignalBus.load_finished.emit()
 
 func set_value(dictionary: String, key: String, value: Variant) -> void:
@@ -47,8 +51,6 @@ func get_or_add(dictionary: String, key: String, default_value: Variant) -> Vari
 		"networking":
 			return networking.get_or_add(key, default_value)
 		_:
-			if(not data.has(dictionary)):
-				data[dictionary] = {}
 			return data.get_or_add(dictionary, {}).get_or_add(key, default_value)
 
 func save_game() -> void:
