@@ -16,12 +16,18 @@ func _physics_process(delta: float) -> void:
 	
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
-	var input_dir: Vector3
-	if Input.is_action_pressed("move_left") and not Input.is_action_just_pressed("move_right"):
+	var input_dir: Vector3 = Vector3(0, 0, 0)
+	if Input.is_action_pressed("move_left") and not Input.is_action_pressed("move_right"):
 		input_dir = Vector3(-1, 0, 0)
-	elif Input.is_action_pressed("move_right"):
+	elif Input.is_action_pressed("move_right") and not Input.is_action_pressed("move_left"):
 		input_dir = Vector3(1, 0, 0)
-	var direction: Vector3 = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	
+	if Input.is_action_pressed("move_forwards") and not Input.is_action_pressed("move_backwards"):
+		input_dir = input_dir + Vector3(0, 0, -1)
+	elif Input.is_action_pressed("move_backwards") and not Input.is_action_pressed("move_forwards"):
+		input_dir = input_dir + Vector3(0, 0, 1)
+	
+	var direction: Vector3 = transform.basis * input_dir.normalized()
 	if direction and !Ui.chat_box.is_text_box_focused():
 		if is_on_floor():
 			velocity.y = GlobalVars.jump_speed
@@ -38,3 +44,9 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	if SteamLobbies.lobby_id != 0:
 			Multithreading.add_task(Callable(SteamP2P.sendMessageToUserFast).bind(0, {"type": "data", "x": GlobalVars.mieu.global_position.x, "y": GlobalVars.mieu.global_position.y, "z": GlobalVars.mieu.global_position.z}))
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouseMotion and !Ui.menu_open and !Ui.chat_box.is_text_box_focused():
+		rotate_y(deg_to_rad(-event.relative.x))
+		$CameraOrigin.rotate_x(deg_to_rad(-event.relative.y))
+		$CameraOrigin/SpringArm3D/Camera3D.look_at($Sprite.global_position)
