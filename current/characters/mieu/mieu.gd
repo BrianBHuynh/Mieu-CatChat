@@ -5,6 +5,7 @@ func _ready() -> void:
 	GlobalVars.mieu = self
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	position = Vector3(Saves.get_or_add("Player","pos_x", position.x), Saves.get_or_add("Player","pos_y", position.y), Saves.get_or_add("Player","pos_z", position.z))
+	rotation = Vector3(Saves.get_or_add("Player", "rot_x", rotation.x), Saves.get_or_add("Player", "rot_y", rotation.y), Saves.get_or_add("Player", "rot_z", rotation.z))
 	$CameraOrigin/SpringArm3D.set_length(Saves.get_or_add("settings", "camera_distance", 1.0))
 	await get_tree().process_frame
 	$CameraOrigin/SpringArm3D/Camera3D.look_at($CameraOrigin.global_position)
@@ -65,4 +66,6 @@ func _input(event: InputEvent) -> void:
 				if $CameraOrigin/SpringArm3D.get_length() <= 0:
 					$CameraOrigin/SpringArm3D.set_length(0.0)
 					$Sprite.hide()
-			Saves.set_value("settings", "camera_distance", $CameraOrigin/SpringArm3D.get_length())
+
+func get_spring_arm_length() -> float:
+	return $CameraOrigin/SpringArm3D.get_length()
