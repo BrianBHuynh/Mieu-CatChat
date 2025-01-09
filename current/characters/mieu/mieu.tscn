@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bliphh5kps0ly"]
+[gd_scene load_steps=15 format=3 uid="uid://bliphh5kps0ly"]
 
 [ext_resource type="Script" path="res://current/characters/mieu/mieu.gd" id="1_8tw0y"]
 [ext_resource type="Texture2D" uid="uid://37vx6dgthk0f" path="res://current/assets/images/mieu.png" id="1_w3le2"]
@@ -77,6 +77,10 @@ animations = [{
 height = 0.5
 radius = 0.4
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_yjjpd"]
+margin = 0.1
+radius = 0.2
+
 [node name="Character" type="CharacterBody3D"]
 script = ExtResource("1_8tw0y")
 
@@ -95,6 +99,8 @@ shape = SubResource("CylinderShape3D_ptrfh")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
 
 [node name="SpringArm3D" type="SpringArm3D" parent="CameraOrigin"]
+shape = SubResource("SphereShape3D_yjjpd")
+margin = 0.001
 
 [node name="Camera3D" type="Camera3D" parent="CameraOrigin/SpringArm3D"]
-transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, -1.763)
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, -2)
