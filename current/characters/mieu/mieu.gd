@@ -49,15 +49,18 @@ func _input(event: InputEvent) -> void:
 			rotate_y(deg_to_rad(-event.relative.x))
 			$CameraOrigin.rotate_x(deg_to_rad(-event.relative.y))
 			$CameraOrigin.rotation.x = clamp($CameraOrigin.rotation.x, deg_to_rad(-85), deg_to_rad(40))
-			$CameraOrigin/SpringArm3D/Camera3D.look_at($CameraOrigin.global_position)
+			if $CameraOrigin/SpringArm3D.get_length() != 0.0:
+				$CameraOrigin/SpringArm3D/Camera3D.look_at($CameraOrigin.global_position)
 		elif event is InputEventMouseButton:
 			var length: float = $CameraOrigin/SpringArm3D.get_length()
 			if event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 				$CameraOrigin/SpringArm3D.set_length(length+.1)
+				$Sprite.show()
 				if $CameraOrigin/SpringArm3D.get_length() >= 25.0:
 					$CameraOrigin/SpringArm3D.set_length(25.0)
 			if event.button_index == MOUSE_BUTTON_WHEEL_UP:
 				$CameraOrigin/SpringArm3D.set_length(length-.1)
 				if $CameraOrigin/SpringArm3D.get_length() <= 0:
 					$CameraOrigin/SpringArm3D.set_length(0.0)
+					$Sprite.hide()
 			Saves.set_value("settings", "camera_distance", $CameraOrigin/SpringArm3D.get_length())
