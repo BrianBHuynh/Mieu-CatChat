@@ -20,3 +20,6 @@ func _on_multiplayer_pressed() -> void:
 		Ui.open_menu("res://current/menus/multiplayer_menus/lobbies_menu/lobbies_menu.tscn")
 	else:
 		Ui.show_system_message("Steam is not currently open!")
+
+func _on_reset_pos_pressed() -> void:
+	GlobalVars.mieu.global_position = Vector3(0, 1, 0)

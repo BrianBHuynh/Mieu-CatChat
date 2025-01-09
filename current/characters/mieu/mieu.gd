@@ -6,6 +6,8 @@ func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	position = Vector3(Saves.get_or_add("Player","pos_x", position.x), Saves.get_or_add("Player","pos_y", position.y), Saves.get_or_add("Player","pos_z", position.z))
 	$CameraOrigin/SpringArm3D.set_length(Saves.get_or_add("settings", "camera_distance", 1.0))
+	await get_tree().process_frame
+	$CameraOrigin/SpringArm3D/Camera3D.look_at($CameraOrigin.global_position)
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -49,7 +51,7 @@ func _input(event: InputEvent) -> void:
 			rotate_y(deg_to_rad(-event.relative.x))
 			$CameraOrigin.rotate_x(deg_to_rad(-event.relative.y))
 			$CameraOrigin.rotation.x = clamp($CameraOrigin.rotation.x, deg_to_rad(-85), deg_to_rad(40))
-			if $CameraOrigin/SpringArm3D.get_length() != 0.0:
+			if !is_zero_approx($CameraOrigin/SpringArm3D.get_length()):
 				$CameraOrigin/SpringArm3D/Camera3D.look_at($CameraOrigin.global_position)
 		elif event is InputEventMouseButton:
 			var length: float = $CameraOrigin/SpringArm3D.get_length()

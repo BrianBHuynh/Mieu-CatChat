@@ -140,8 +140,29 @@ size_flags_horizontal = 3
 texture_normal = ExtResource("2_t8lwk")
 stretch_mode = 5
 
+[node name="ResetPos" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+clip_contents = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ResetLabel" type="RichTextLabel" parent="ScrollContainer/VBoxContainer/ResetPos"]
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "[center]Reset:[/center]"
+script = ExtResource("2_leq0j")
+
+[node name="ResetBtn" type="TextureButton" parent="ScrollContainer/VBoxContainer/ResetPos"]
+modulate = Color(0, 0.733333, 0, 0.980392)
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+texture_normal = ExtResource("2_t8lwk")
+stretch_mode = 5
+
 [connection signal="pressed" from="ScrollContainer/VBoxContainer/Multiplayer/MultiplayerBtn" to="." method="_on_multiplayer_pressed"]
 [connection signal="pressed" from="ScrollContainer/VBoxContainer/Accessibility/AccessibilityBtn" to="." method="_on_accessibility_pressed"]
 [connection signal="pressed" from="ScrollContainer/VBoxContainer/Video/VideoBtn" to="." method="_on_video_pressed"]
 [connection signal="pressed" from="ScrollContainer/VBoxContainer/Debug/DebugBtn" to="." method="_on_debug_pressed"]
 [connection signal="pressed" from="ScrollContainer/VBoxContainer/Save/SaveBtn" to="." method="_on_save_pressed"]
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/ResetPos/ResetBtn" to="." method="_on_reset_pos_pressed"]
