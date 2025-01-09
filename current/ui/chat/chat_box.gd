@@ -18,7 +18,10 @@ func add_chat_message(sender: int, target: int, content: String, private: bool) 
 	if private:
 		message_text.set_text("(whisper)" + Steam.getFriendPersonaName(sender) + ": " + content)
 	else:
-		message_text.set_text(Steam.getFriendPersonaName(sender) + ": " + content)
+		if SteamWorks.running == true:
+			message_text.set_text(Steam.getFriendPersonaName(sender) + ": " + content)
+		else:
+			message_text.set_text("You" + ": " + content)
 	print(message_text.text)
 	message_text.set_script(load("res://current/scripts/node/chat_message.gd"))
 	message_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -60,6 +63,7 @@ func is_text_box_focused() -> bool:
 
 func _on_send_pressed() -> void:
 	release_input_focus()
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	if !$TextBox.text == "":
 		SteamP2P.send_chat_message(0, $TextBox.text, false)
 	$TextBox.clear()

@@ -12,19 +12,23 @@ func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("pause"):
 		chat_box.release_input_focus()
 		if not menu_open:
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 			var new_menu: Control = menu.instantiate()
 			get_tree().root.add_child(new_menu)
 			cur_menu = new_menu
 			menu_open = true
 		else:
+			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 			get_tree().root.remove_child(cur_menu)
 			cur_menu.queue_free()
 			cur_menu = null
 			menu_open = false
 	elif Input.is_action_just_pressed("send_message"):
 		chat_box.release_focus()
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	elif Input.is_action_just_pressed("chat"):
 		chat_box.open_text_input()
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
 func show_system_message(message: String) -> void:
 	if chat_box != null:
