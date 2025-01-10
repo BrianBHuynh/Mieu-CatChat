@@ -22,8 +22,9 @@ func read_all_p2p_packets(read_count: int = 0) -> void:
 func _on_network_messages_session_request(remote_id: int) -> void:
 	if not SteamLobbies.blocked_players.has(remote_id) or not SteamLobbies.banned_players.has(remote_id):
 		var this_requester: String = Steam.getFriendPersonaName(remote_id)
-		print("%s is requesting a P2P session" % this_requester)
+		Ui.show_system_message(this_requester + " is requesting a P2P session")
 		Steam.acceptSessionWithUser(remote_id)
+		WorldsTracker.send_world(remote_id)
 		SteamLobbies.make_p2p_handshake()
 
 func read_p2p_packet() -> void:
@@ -74,6 +75,8 @@ func read_p2p_packet() -> void:
 					"kick_announce":
 						if message.identity == Steam.getLobbyOwner(SteamLobbies.lobby_id):
 							Ui.show_system_message("The lobby owner " + SteamLobbies.get_host_name() + "has kicked " + message["payload"][SteamLobbies.lobby_members["kicked_player"]])
+					"world_info":
+						WorldsTracker.add_to_world(message["payload"]["world"], message.identity)
 
 func sendMessageToUser(this_target: int, payload: Dictionary) -> void:
 	var send_type: int = Steam.NETWORKING_SEND_RELIABLE_NO_NAGLE
@@ -97,9 +100,14 @@ func sendMessageToUserFast(this_target: int, packet_data: Dictionary) -> void:
 	this_data = this_data.compress(FileAccess.COMPRESSION_GZIP)
 	if this_target == 0:
 		if SteamLobbies.lobby_members.size() > 1:
-			for this_member: int in SteamLobbies.lobby_members:
-				if this_member != SteamWorks.steam_id:
-					Steam.sendMessageToUser(this_member, this_data, send_type, channel)
+			if packet_data["type"] == "data":
+				for this_member: int in SteamLobbies.lobby_members:
+					if this_member != SteamWorks.steam_id and WorldsTracker.has(WorldsTracker.current_world, this_member):
+						Steam.sendMessageToUser(this_member, this_data, send_type, channel)
+			else:
+				for this_member: int in SteamLobbies.lobby_members:
+					if this_member != SteamWorks.steam_id:
+						Steam.sendMessageToUser(this_member, this_data, send_type, channel)
 	else:
 		Steam.sendMessageToUser(this_target, this_data, send_type, channel)
 

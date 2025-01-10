@@ -75,6 +75,7 @@ func _on_lobby_joined(this_lobby_id: int, _permissions: int, _locked: bool, resp
 		lobby_id = this_lobby_id
 		get_lobby_members()
 		make_p2p_handshake()
+		WorldsTracker.send_world(0)
 	else:
 		var fail_reason: String
 		match response:
@@ -123,6 +124,7 @@ func _on_lobby_chat_update(_this_lobby_id: int, change_id: int, _making_change_i
 		if SteamP2P.kitties.has(change_id) and SteamP2P.kitties.get(change_id).is_inside_tree():
 				get_parent().remove_child(SteamP2P.kitties.get(change_id))
 				SteamP2P.kitties.erase(change_id)
+		WorldsTracker.remove_from_worlds(change_id)
 	elif chat_state == Steam.CHAT_MEMBER_STATE_CHANGE_KICKED:
 		Ui.show_system_message("%s has been kicked from the lobby." % changer_name)
 		if SteamP2P.kitties.has(change_id) and SteamP2P.kitties.get(change_id).is_inside_tree():
@@ -148,6 +150,7 @@ func leave_lobby() -> void:
 		SteamP2P.kitties[cat_id].queue_free()
 	SteamP2P.kitties.clear()
 	lobby_members.clear()
+	WorldsTracker.clear_worlds()
 
 func ban_player_persist(steam_id: int) -> void:
 	if is_host():
@@ -164,7 +167,6 @@ func ban_player_temp(steam_id: int) -> void:
 		if not banned_players.has(steam_id):
 			banned_players[steam_id] = lobby_members[steam_id]["steam_name"]
 		SteamP2P.send_lobby_data(0)
-		
 		if lobby_members.has(steam_id) and SteamP2P.kitties.has(steam_id):
 			SteamP2P.kitties[steam_id].queue_free()
 
