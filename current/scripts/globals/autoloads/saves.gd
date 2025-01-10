@@ -12,15 +12,12 @@ func _ready() -> void:
 	make_dir("user://backup")
 	make_dir("user://fallback")
 	make_dir("user://fonts")
-	
 	var data_temp: Variant = load_file_encrypted("mieu")
 	if data_temp != null:
 		data = data_temp
-	
 	var settings_temp: Variant = load_file("settings")
 	if settings_temp != null:
 		settings = settings_temp
-	
 	var networking_temp: Variant = load_file("networking")
 	if networking_temp != null:
 		networking = networking_temp
@@ -54,9 +51,19 @@ func get_or_add(dictionary: String, key: String, default_value: Variant) -> Vari
 			return data.get_or_add(dictionary, {}).get_or_add(key, default_value)
 
 func save_game() -> void:
+	store_player_state()
 	Multithreading.add_task(save_file_encrypted.bind(data, "mieu"))
 	Multithreading.add_task(save_file.bind(settings, "settings"))
 	Multithreading.add_task(save_file.bind(networking, "networking"))
+
+func store_player_state() -> void:
+	Saves.set_value("Player", "pos_x", GlobalVars.mieu.position.x)
+	Saves.set_value("Player", "pos_y", GlobalVars.mieu.position.y)
+	Saves.set_value("Player", "pos_z", GlobalVars.mieu.position.z)
+	Saves.set_value("Player", "rot_x", GlobalVars.mieu.rotation.x)
+	Saves.set_value("Player", "rot_y", GlobalVars.mieu.rotation.y)
+	Saves.set_value("Player", "rot_z", GlobalVars.mieu.rotation.z)
+	Saves.set_value("settings", "camera_distance", GlobalVars.mieu.get_spring_arm_length())
 
 func make_dir(dir: String) -> void:
 	if not DirAccess.dir_exists_absolute(dir):

@@ -1,13 +1,6 @@
 extends Control
 
 func _on_save_pressed() -> void:
-	Saves.set_value("Player", "pos_x", GlobalVars.mieu.position.x)
-	Saves.set_value("Player", "pos_y", GlobalVars.mieu.position.y)
-	Saves.set_value("Player", "pos_z", GlobalVars.mieu.position.z)
-	Saves.set_value("Player", "rot_x", GlobalVars.mieu.rotation.x)
-	Saves.set_value("Player", "rot_y", GlobalVars.mieu.rotation.y)
-	Saves.set_value("Player", "rot_z", GlobalVars.mieu.rotation.z)
-	Saves.set_value("settings", "camera_distance", GlobalVars.mieu.get_spring_arm_length())
 	Saves.save_game()
 
 func _on_accessibility_pressed() -> void:
