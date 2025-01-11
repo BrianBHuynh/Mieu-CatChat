@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://ddau1wbdns8mp"]
+[gd_scene load_steps=4 format=3 uid="uid://ddau1wbdns8mp"]
 
 [ext_resource type="Script" path="res://current/scripts/node/rich_text_label.gd" id="1_a66ng"]
+[ext_resource type="Script" path="res://current/menus/debug_menu/debug_menu.gd" id="1_ngo7l"]
 [ext_resource type="Texture2D" uid="uid://dv4n5etipadpk" path="res://current/assets/ui/btn_sized.png" id="2_xge1m"]
 
 [node name="Control" type="Control"]
@@ -8,6 +9,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+script = ExtResource("1_ngo7l")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 0
@@ -55,3 +57,14 @@ layout_mode = 2
 size_flags_horizontal = 3
 texture_normal = ExtResource("2_xge1m")
 stretch_mode = 5
+
+[node name="TextureButton2" type="TextureButton" parent="VBoxContainer/ScrollContainer/HBoxContainer"]
+modulate = Color(0, 1, 1, 1)
+texture_filter = 1
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+texture_normal = ExtResource("2_xge1m")
+stretch_mode = 5
+
+[connection signal="pressed" from="VBoxContainer/ScrollContainer/HBoxContainer/TextureButton2" to="." method="_on_debug_scene_change_pressed"]

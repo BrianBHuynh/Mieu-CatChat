@@ -10,6 +10,8 @@ func add_to_world(world: String, pid: int) -> void:
 	for world_array: String in worlds:
 		worlds[world_array].erase(pid)
 	worlds[world].append(pid)
+	if world != current_world:
+		SteamP2P.remove_kitty(pid)
 
 func remove_from_worlds(pid: int) -> void:
 	for world: String in worlds:

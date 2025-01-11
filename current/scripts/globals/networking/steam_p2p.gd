@@ -159,5 +159,6 @@ func remove_kitties() -> void:
 	kitties.clear()
 
 func remove_kitty(pid: int) -> void:
-	kitties[pid].queue_free()
-	kitties.erase(pid)
+	if kitties.has(pid):
+		kitties[pid].queue_free()
+		kitties.erase(pid)
