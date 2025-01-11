@@ -49,8 +49,8 @@ func _physics_process(delta: float) -> void:
 func _input(event: InputEvent) -> void:
 	if !Ui.menu_open and !Ui.chat_box.is_text_box_focused():
 		if event is InputEventMouseMotion:
-			rotate_y(deg_to_rad(-event.relative.x))
-			$CameraOrigin.rotate_x(deg_to_rad(-event.relative.y))
+			rotate_y(deg_to_rad(-event.relative.x*Saves.get_or_add("settings", "mouse_sense", .5)))
+			$CameraOrigin.rotate_x(deg_to_rad(-event.relative.y*Saves.get_or_add("settings", "mouse_sense", .5)))
 			$CameraOrigin.rotation.x = clamp($CameraOrigin.rotation.x, deg_to_rad(-85), deg_to_rad(40))
 			if !is_zero_approx($CameraOrigin/SpringArm3D.get_length()):
 				$CameraOrigin/SpringArm3D/Camera3D.look_at($CameraOrigin.global_position)

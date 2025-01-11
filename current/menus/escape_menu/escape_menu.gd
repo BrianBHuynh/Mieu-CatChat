@@ -20,3 +20,7 @@ func _on_multiplayer_pressed() -> void:
 
 func _on_reset_pos_pressed() -> void:
 	GlobalVars.mieu.global_position = Vector3(0, 1, 0)
+
+
+func _on_input_btn_pressed() -> void:
+	Ui.open_menu("res://current/menus/input_menu/input_menu.tscn")
