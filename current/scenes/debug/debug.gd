@@ -5,3 +5,5 @@ extends Node3D
 func _ready() -> void:
 	await get_tree().process_frame
 	WorldsTracker.update_world("debug")
+	Saves.set_value("settings", "world_path", "res://current/scenes/debug/debug.tscn")
+	GlobalVars.initialize_pos()

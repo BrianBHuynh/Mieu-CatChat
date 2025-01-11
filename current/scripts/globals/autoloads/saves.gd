@@ -23,6 +23,13 @@ func _ready() -> void:
 		networking = networking_temp
 	
 	SignalBus.load_finished.emit()
+	await get_tree().process_frame
+	get_tree().change_scene_to_packed(load(get_or_add("settings", "world_path", "res://current/scenes/debug/debug.tscn")))
+	while true:
+		#Auto Saves every 5 minutes
+		await get_tree().create_timer(300).timeout
+		if get_or_add("settings", "auto_save", true):
+			save_game()
 
 func set_value(dictionary: String, key: String, value: Variant) -> void:
 	match dictionary:

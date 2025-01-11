@@ -4,6 +4,7 @@ var mieu: CharacterBody3D
 var move_speed: float = 7.5
 var jump_speed: float = 2.5
 var frame: float = 0.01666666666
+var first_world_started: bool = false
 
 func _ready() -> void:
 	SignalBus.load_finished.connect(load_finished)
@@ -57,3 +58,10 @@ func set_window_mode(mode: int) -> void:
 func set_borderless(toggled: bool) -> void:
 	get_window().set_flag(Window.FLAG_BORDERLESS, toggled)
 	Saves.set_value("settings", "borderless", toggled)
+
+func initialize_pos() -> void:
+	if first_world_started == false and mieu:
+		await get_tree().process_frame
+		mieu.position = Vector3(Saves.get_or_add("Player","pos_x", mieu.position.x), Saves.get_or_add("Player","pos_y", mieu.position.y), Saves.get_or_add("Player","pos_z", mieu.position.z))
+		mieu.rotation = Vector3(Saves.get_or_add("Player", "rot_x", mieu.rotation.x), Saves.get_or_add("Player", "rot_y", mieu.rotation.y), Saves.get_or_add("Player", "rot_z", mieu.rotation.z))
+		first_world_started = true
