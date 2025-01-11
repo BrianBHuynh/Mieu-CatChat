@@ -146,9 +146,7 @@ func leave_lobby() -> void:
 	for this_member: Dictionary in lobby_members:
 		if this_member['steam_id'] != SteamWorks.steam_id:
 			Steam.closeSessionWithUser(this_member['steam_id'])
-	for cat_id: int in SteamP2P.kitties:
-		SteamP2P.kitties[cat_id].queue_free()
-	SteamP2P.kitties.clear()
+	SteamP2P.remove_kitties()
 	lobby_members.clear()
 	WorldsTracker.clear_worlds()
 
@@ -160,7 +158,7 @@ func ban_player_persist(steam_id: int) -> void:
 			Saves.get_or_add("networking", "persist_banned", {})[steam_id] = lobby_members[steam_id]["steam_name"]
 		SteamP2P.send_lobby_data(0)
 		if lobby_members.has(steam_id) and SteamP2P.kitties.has(steam_id):
-			SteamP2P.kitties[steam_id].queue_free()
+			SteamP2P.remove_kitty(steam_id)
 
 func ban_player_temp(steam_id: int) -> void:
 	if is_host():
@@ -168,7 +166,7 @@ func ban_player_temp(steam_id: int) -> void:
 			banned_players[steam_id] = lobby_members[steam_id]["steam_name"]
 		SteamP2P.send_lobby_data(0)
 		if lobby_members.has(steam_id) and SteamP2P.kitties.has(steam_id):
-			SteamP2P.kitties[steam_id].queue_free()
+			SteamP2P.remove_kitty(steam_id)
 
 func kick(steam_id: int, reason: String) -> void:
 	if is_host():

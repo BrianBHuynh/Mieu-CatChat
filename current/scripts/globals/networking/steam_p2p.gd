@@ -43,8 +43,11 @@ func read_p2p_packet() -> void:
 				match message["payload"]["type"]:
 					"data":
 						if kitties.has(message.identity):
-							kitties[message.identity].global_position = Vector3(message.payload.x, message.payload.y, message.payload.z)
-						else:
+							if WorldsTracker.has(WorldsTracker.current_world, message.identity):
+								kitties[message.identity].global_position = Vector3(message.payload.x, message.payload.y, message.payload.z)
+							else:
+								remove_kitty(message.identity)
+						elif WorldsTracker.has(WorldsTracker.current_world, message.identity):
 							var file: Resource = load("res://current/characters/mieu_peer/mieu_peer.tscn")
 							var kit: AnimatedSprite3D = file.instantiate()
 							get_parent().add_child(kit)
@@ -59,8 +62,7 @@ func read_p2p_packet() -> void:
 							SteamLobbies.banned_players = message["payload"]["lobby_data"]["banned_players"]
 							for player_id: int in SteamLobbies.banned_players:
 								if SteamLobbies.lobby_members.has(player_id) or kitties.has(player_id):
-									kitties[player_id].queue_free()
-									kitties.erase(player_id)
+									remove_kitty(player_id)
 									Steam.closeSessionWithUser(player_id)
 									SteamLobbies.lobby_members.erase(player_id)
 					"ban":
@@ -150,3 +152,12 @@ func send_kick(this_target: int, reason: String) -> void:
 
 func _on_p2p_session_connect_fail(_steam_id: int, _session_error: int, _state: int, debug_msg: String) -> void:
 	Ui.show_system_message("P2p session connection failed! Reason: " + debug_msg)
+
+func remove_kitties() -> void:
+	for cat_id: int in SteamP2P.kitties:
+		kitties[cat_id].queue_free()
+	kitties.clear()
+
+func remove_kitty(pid: int) -> void:
+	kitties[pid].queue_free()
+	kitties.erase(pid)
