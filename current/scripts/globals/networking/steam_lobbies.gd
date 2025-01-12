@@ -6,8 +6,8 @@ var lobby_id: int = 0
 var lobby_members: Dictionary = {}
 var lobby_members_max: int = 10
 var lobby_vote_kick: bool = false
-var banned_players: Dictionary = Saves.get_or_add("networking", "persist_banned", {})
-var blocked_players: Dictionary = Saves.get_or_add("networking", "persist_blocked", {})
+var banned_players: Dictionary = {}
+var blocked_players: Dictionary = {}
 
 func _ready() -> void:
 	Steam.join_requested.connect(_on_lobby_join_requested)
@@ -20,6 +20,12 @@ func _ready() -> void:
 	#Steam.lobby_message.connect(_on_lobby_message)
 	Steam.persona_state_change.connect(_on_persona_change)
 	check_command_line()
+	load_finished()
+	SignalBus.load_finished.connect(load_finished)
+
+func load_finished() -> void:
+	banned_players = Saves.get_or_return("networking", "persist_banned", {})
+	blocked_players = Saves.get_or_return("networking", "persist_blocked", {})
 
 func host() -> int:
 	#Make way to add a timer for being kicked / crashing lobby owners

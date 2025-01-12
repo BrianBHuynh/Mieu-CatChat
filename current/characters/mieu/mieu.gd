@@ -4,7 +4,7 @@ extends CharacterBody3D
 func _ready() -> void:
 	GlobalVars.mieu = self
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	$CameraOrigin/SpringArm3D.set_length(Saves.get_or_add("settings", "camera_distance", 1.0))
+	$CameraOrigin/SpringArm3D.set_length(Saves.get_or_return("settings", "camera_distance", 1.0))
 	await get_tree().process_frame
 	if $CameraOrigin/SpringArm3D/Camera3D.is_inside_tree():
 		$CameraOrigin/SpringArm3D/Camera3D.look_at($CameraOrigin.global_position)

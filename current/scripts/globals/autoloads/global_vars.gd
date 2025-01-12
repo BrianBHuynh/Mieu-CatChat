@@ -7,14 +7,15 @@ var frame: float = 0.01666666666
 var first_world_started: bool = false
 
 func _ready() -> void:
+	load_finished()
 	SignalBus.load_finished.connect(load_finished)
 
 func load_finished() -> void:
-	set_stretch_aspect(Saves.get_or_add("settings", "stretch_aspect", 1))
-	set_window_mode(Saves.get_or_add("settings", "window_mode", 2))
-	set_borderless(Saves.get_or_add("settings", "borderless", false))
-	get_window().scaling_3d_scale = Saves.get_or_add("settings", "scaling_3d_scale", 1.0)
-	get_window().size = Vector2(Saves.get_or_add("settings", "width", DisplayServer.screen_get_size().x), Saves.get_or_add("settings", "height", DisplayServer.screen_get_size().y))
+	set_stretch_aspect(Saves.get_or_return("settings", "stretch_aspect", 1))
+	set_window_mode(Saves.get_or_return("settings", "window_mode", 2))
+	set_borderless(Saves.get_or_return("settings", "borderless", false))
+	get_window().scaling_3d_scale = Saves.get_or_return("settings", "scaling_3d_scale", 1.0)
+	get_window().size = Vector2(Saves.get_or_return("settings", "width", DisplayServer.screen_get_size().x), Saves.get_or_add("settings", "height", DisplayServer.screen_get_size().y))
 
 func set_resolution(width: int, height: int) -> void:
 	Saves.set_value("settings", "width", width)

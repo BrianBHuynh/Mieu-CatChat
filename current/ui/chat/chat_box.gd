@@ -3,7 +3,11 @@ var chat_messages: Array = []
 
 func _ready() -> void:
 	Ui.chat_box = self
-	$CheckBox.set_pressed_no_signal(Saves.get_or_add("settings", "auto_scroll", true))
+	$CheckBox.set_pressed_no_signal(Saves.get_or_return("settings", "auto_scroll", true))
+	SignalBus.load_finished.connect(load_finished)
+
+func load_finished() -> void:
+	$CheckBox.set_pressed_no_signal(Saves.get_or_return("settings", "auto_scroll", true))
 
 func process_chat_message(message: Dictionary) -> void:
 	add_chat_message(message.identity, SteamWorks.steam_id, message["payload"]["text"], message["payload"]["private"])

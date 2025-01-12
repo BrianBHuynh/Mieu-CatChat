@@ -24,7 +24,7 @@ func _ready() -> void:
 	
 	SignalBus.load_finished.emit()
 	await get_tree().process_frame
-	get_tree().change_scene_to_packed(load(get_or_add("settings", "world_path", "res://current/scenes/debug/debug.tscn")))
+	get_tree().change_scene_to_packed(load(get_or_return("settings", "world_path", "res://current/scenes/debug/debug.tscn")))
 	while true:
 		#Auto Saves every 5 minutes
 		await get_tree().create_timer(300).timeout
@@ -56,6 +56,15 @@ func get_or_add(dictionary: String, key: String, default_value: Variant) -> Vari
 			return networking.get_or_add(key, default_value)
 		_:
 			return data.get_or_add(dictionary, {}).get_or_add(key, default_value)
+
+func get_or_return(dictionary: String, key: String, default_value: Variant) -> Variant:
+	match dictionary:
+		"settings":
+			return settings.get(key, default_value)
+		"networking":
+			return networking.get(key, default_value)
+		_:
+			return data.get(dictionary, {}).get(key, default_value)
 
 func save_game() -> void:
 	store_player_state()

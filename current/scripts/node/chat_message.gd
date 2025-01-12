@@ -8,6 +8,6 @@ func _ready() -> void:
 
 func update_font() -> void:
 	await get_tree().create_timer(1.0/60.0).timeout
-	var font_path: String = Saves.get_or_add("settings", "font", "res://current/assets/fonts/AtkinsonHyperlegible-Regular.ttf")
+	var font_path: String = Saves.get_or_return("settings", "font", "res://current/assets/fonts/AtkinsonHyperlegible-Regular.ttf")
 	set("theme_override_fonts/normal_font", Helper.get_font(font_path))
-	set("theme_override_font_sizes/normal_font_size", Saves.get_or_add("settings", "chat_font_size", Ui.DEFAULT_CHAT_FONT_SIZE))
+	set("theme_override_font_sizes/normal_font_size", Saves.get_or_return("settings", "chat_font_size", Ui.DEFAULT_CHAT_FONT_SIZE))
