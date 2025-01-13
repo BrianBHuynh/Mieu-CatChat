@@ -5,4 +5,4 @@ func _on_check_button_toggled(toggled_on: bool) -> void:
 
 
 func _on_debug_scene_change_pressed() -> void:
-	get_tree().change_scene_to_packed(load("res://current/scenes/debug second/debug.tscn"))
+	WorldsTracker.update_world("res://current/scenes/debug second/debug.tscn")

@@ -7,7 +7,7 @@ func _ready() -> void:
 	SignalBus.settings_updated.connect(update_font)
 
 
-func update_font():
+func update_font() -> void:
 	await get_tree().create_timer(1.0/60.0).timeout
 	var font_path: String = Saves.get_or_return("settings", "font", "res://current/assets/fonts/AtkinsonHyperlegible-Regular.ttf")
 	font = load(font_path)

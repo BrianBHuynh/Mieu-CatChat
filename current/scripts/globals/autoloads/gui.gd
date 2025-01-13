@@ -1,7 +1,7 @@
 extends Node
 
 var menu_open: bool = false
-var menu: Resource = load("res://current/menus/escape_menu/escape_menu.tscn")
+var pause_menu: Resource = load("res://current/menus/escape_menu/escape_menu.tscn")
 var cur_menu: Control
 var lobbies: VBoxContainer
 var chat_box: Control
@@ -11,18 +11,19 @@ const DEFAULT_CHAT_FONT_SIZE: float = 20.0
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("pause"):
 		chat_box.release_input_focus()
-		if not menu_open:
-			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-			var new_menu: Control = menu.instantiate()
-			get_tree().root.add_child(new_menu)
-			cur_menu = new_menu
-			menu_open = true
-		else:
-			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-			get_tree().root.remove_child(cur_menu)
-			cur_menu.queue_free()
-			cur_menu = null
-			menu_open = false
+		if Saves.save_loaded:
+			if not menu_open:
+				Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+				var new_menu: Control = pause_menu.instantiate()
+				get_tree().root.add_child(new_menu)
+				cur_menu = new_menu
+				menu_open = true
+			else:
+				Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+				get_tree().root.remove_child(cur_menu)
+				cur_menu.queue_free()
+				cur_menu = null
+				menu_open = false
 	elif Input.is_action_just_pressed("send_message"):
 		chat_box.release_focus()
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED

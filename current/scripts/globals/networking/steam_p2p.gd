@@ -43,18 +43,33 @@ func read_p2p_packet() -> void:
 				match message["payload"]["type"]:
 					"data":
 						if kitties.has(message.identity):
-							if WorldsTracker.has(WorldsTracker.current_world, message.identity):
-								kitties[message.identity].global_position = Vector3(message.payload.x, message.payload.y, message.payload.z)
+							if WorldsTracker.has(WorldsTracker.current_world, message.identity) and WorldsTracker.dimensions == message.payload["dimensions"]:
+								if message.payload["dimensions"] == 3 and kitties[message.identity] == AnimatedSprite3D:
+									kitties[message.identity].global_position = Vector3(message.payload.x, message.payload.y, message.payload.z)
+								elif message.payload["dimensions"] == 2 and kitties[message.identity] == AnimatedSprite2D:
+									kitties[message.identity].global_position = Vector2(message.payload.x, message.payload.y)
+								else:
+									Ui.show_system_message("Error reading locational data")
+									remove_kitty(message.identity)
 							else:
 								remove_kitty(message.identity)
 						elif WorldsTracker.has(WorldsTracker.current_world, message.identity):
-							var file: Resource = load("res://current/characters/mieu_peer/mieu_peer.tscn")
-							var kit: AnimatedSprite3D = file.instantiate()
-							get_parent().add_child(kit)
-							kit.sign_adoption(message["identity"])
-							kitties[message["identity"]] = kit
-							print("creating")
-							kitties[message.identity].global_position = Vector3(message.payload.x, message.payload.y, message.payload.z)
+							if WorldsTracker.dimensions == 3 and message.payload["dimensions"] == 3:
+								var file: Resource = load("res://current/characters/3D/mieu_peer/mieu_peer.tscn")
+								var kit: AnimatedSprite3D = file.instantiate()
+								get_parent().add_child(kit)
+								kit.sign_adoption(message["identity"])
+								kitties[message["identity"]] = kit
+								print("creating")
+								kitties[message.identity].global_position = Vector3(message.payload.x, message.payload.y, message.payload.z)
+							elif WorldsTracker.dimensions == 2 and message.payload["dimensions"] == 2:
+								var file: Resource = load("res://current/characters/2D/mieu_peer/mieu_peer.tscn")
+								var kit: AnimatedSprite2D = file.instantiate()
+								get_parent().add_child(kit)
+								kit.sign_adoption(message["identity"])
+								kitties[message["identity"]] = kit
+								print("creating")
+								kitties[message.identity].global_position = Vector2(message.payload.x, message.payload.y)
 					"chat":
 						Ui.chat_box.process_chat_message(ChatFilter.filter(message))
 					"lobby_data":

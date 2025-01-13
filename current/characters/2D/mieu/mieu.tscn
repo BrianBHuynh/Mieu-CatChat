@@ -1,0 +1,80 @@
+[gd_scene load_steps=12 format=3 uid="uid://cj7jy8rdyeuvj"]
+
+[ext_resource type="Script" path="res://current/characters/2D/mieu/mieu.gd" id="1_xoutb"]
+[ext_resource type="Texture2D" uid="uid://lhikvxbnengm" path="res://current/assets/images/mieu_idle_front.png" id="2_dd5pl"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_flex7"]
+atlas = ExtResource("2_dd5pl")
+region = Rect2(0, 0, 480, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o70wn"]
+atlas = ExtResource("2_dd5pl")
+region = Rect2(480, 0, 480, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4kd80"]
+atlas = ExtResource("2_dd5pl")
+region = Rect2(960, 0, 480, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lo8ej"]
+atlas = ExtResource("2_dd5pl")
+region = Rect2(1440, 0, 480, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gy6dc"]
+atlas = ExtResource("2_dd5pl")
+region = Rect2(1920, 0, 480, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tced4"]
+atlas = ExtResource("2_dd5pl")
+region = Rect2(2400, 0, 480, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cmh0j"]
+atlas = ExtResource("2_dd5pl")
+region = Rect2(2880, 0, 480, 480)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_h658l"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_flex7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o70wn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4kd80")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lo8ej")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gy6dc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tced4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cmh0j")
+}],
+"loop": true,
+"name": &"front",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cn27v"]
+radius = 20.0
+height = 250.0
+
+[node name="Mieu" type="CharacterBody2D"]
+script = ExtResource("1_xoutb")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -121)
+sprite_frames = SubResource("SpriteFrames_h658l")
+animation = &"front"
+autoplay = "front"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -1)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_cn27v")
+script = ExtResource("1_xoutb")

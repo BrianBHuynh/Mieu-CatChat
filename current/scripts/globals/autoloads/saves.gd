@@ -4,6 +4,7 @@ var data: Dictionary = {}
 var settings: Dictionary = {}
 var networking: Dictionary = {}
 var encryption_key: String = OS.get_unique_id()
+var save_loaded: bool = false
 const save_extension: String = ".MIEU"
 const checksum_extension: String = ".COLLAR"
 
@@ -23,8 +24,9 @@ func _ready() -> void:
 		networking = networking_temp
 	
 	SignalBus.load_finished.emit()
+	save_loaded = true
 	await get_tree().process_frame
-	get_tree().change_scene_to_packed(load(get_or_return("settings", "world_path", "res://current/scenes/debug/debug.tscn")))
+	WorldsTracker.update_world(get_or_return("settings", "world_path", "res://current/scenes/debug/debug.tscn"))
 	while true:
 		#Auto Saves every 5 minutes
 		await get_tree().create_timer(300).timeout
