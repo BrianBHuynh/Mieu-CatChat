@@ -23,5 +23,5 @@ static func get_font(font_path: String) -> Font:
 		temp_font.load_bitmap_font(Saves.get_or_add("settings", "font", "res://current/assets/fonts/AtkinsonHyperlegible-Regular.ttf"))
 		return temp_font
 	else:
-		push_warning("Invalid font format!")
+		Ui.show_system_warning("Invalid font format at: " + font_path)
 		return load("res://current/assets/fonts/AtkinsonHyperlegible-Regular.ttf")

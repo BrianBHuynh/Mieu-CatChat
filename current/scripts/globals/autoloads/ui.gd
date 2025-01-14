@@ -7,6 +7,7 @@ var lobbies: VBoxContainer
 var chat_box: Control
 const DEFAULT_FONT_SIZE: float = 30.0
 const DEFAULT_CHAT_FONT_SIZE: float = 20.0
+var chat_messages: Array = []
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("pause"):
@@ -19,11 +20,7 @@ func _process(_delta: float) -> void:
 				cur_menu = new_menu
 				menu_open = true
 			else:
-				Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-				get_tree().root.remove_child(cur_menu)
-				cur_menu.queue_free()
-				cur_menu = null
-				menu_open = false
+				close_menu()
 	elif Input.is_action_just_pressed("send_message"):
 		chat_box.release_focus()
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -49,3 +46,11 @@ func open_menu(menu_path: String) -> void:
 	cur_menu = new_menu
 	if old_menu != null:
 		old_menu.queue_free()
+
+func close_menu() -> void:
+	if cur_menu:
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		get_tree().root.remove_child(cur_menu)
+		cur_menu.queue_free()
+		cur_menu = null
+		menu_open = false

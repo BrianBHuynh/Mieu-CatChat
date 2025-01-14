@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Mieu"
-run/main_scene="res://current/scenes/debug/debug.tscn"
+run/main_scene="res://current/scenes/3D/debug/3D_test_1/3D_test_1.tscn"
 config/use_custom_user_dir=true
 config/features=PackedStringArray("4.3", "GL Compatibility")
 boot_splash/image="res://current/assets/images/mieu_splash.png"
@@ -19,7 +19,7 @@ config/icon="res://current/assets/images/mieu_splash.png"
 
 [autoload]
 
-Ui="*res://current/scripts/globals/autoloads/gui.gd"
+Ui="*res://current/scripts/globals/autoloads/ui.gd"
 GlobalVars="*res://current/scripts/globals/autoloads/global_vars.gd"
 Vpet="*res://current/scripts/globals/autoloads/vpet.gd"
 Saves="*res://current/scripts/globals/autoloads/saves.gd"

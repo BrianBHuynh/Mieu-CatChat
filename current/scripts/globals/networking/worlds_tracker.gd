@@ -26,13 +26,14 @@ func has(world: String, pid: int) -> bool:
 		return worlds[world].has(pid)
 
 func update_world(world_path: String) -> void:
+	Ui.close_menu()
+	current_world = get_tree().current_scene.world
+	dimensions = get_tree().current_scene.dimensions
 	get_tree().change_scene_to_file(world_path)
 	while !get_tree().current_scene:
 		await get_tree().process_frame
 	Saves.set_value("settings", "world_path", world_path)
 	initialize_pos()
-	current_world = get_tree().current_scene.world
-	dimensions = get_tree().current_scene.dimensions
 	send_world(0)
 	Ui.show_system_message("Current world: " + current_world)
 	Ui.show_system_message("2D or 3D: " + str(dimensions))

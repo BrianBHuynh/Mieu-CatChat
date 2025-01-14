@@ -31,12 +31,12 @@ func _physics_process(delta: float) -> void:
 	if input_dir and !Ui.chat_box.is_text_box_focused():
 		if is_on_floor():
 			velocity.y = GlobalVars.jump_speed
-		velocity.x = move_toward(velocity.x, input_dir.x * GlobalVars.move_speed, GlobalVars.move_speed)
-		velocity.z = move_toward(velocity.z, input_dir.z * GlobalVars.move_speed, GlobalVars.move_speed)
+		velocity.x = move_toward(velocity.x, input_dir.x * GlobalVars.move_speed_3D, GlobalVars.move_speed_3D)
+		velocity.z = move_toward(velocity.z, input_dir.z * GlobalVars.move_speed_3D, GlobalVars.move_speed_3D)
 	else:
 		if is_on_floor():
-			velocity.x = move_toward(velocity.x, 0, GlobalVars.move_speed)
-			velocity.z = move_toward(velocity.z, 0, GlobalVars.move_speed)
+			velocity.x = move_toward(velocity.x, 0, GlobalVars.move_speed_3D)
+			velocity.z = move_toward(velocity.z, 0, GlobalVars.move_speed_3D)
 		else:
 			if not Input.is_action_pressed("jump"):
 				velocity.y = move_toward(velocity.y, -2.5, .5)
@@ -48,8 +48,8 @@ func _physics_process(delta: float) -> void:
 func _input(event: InputEvent) -> void:
 	if !Ui.menu_open and !Ui.chat_box.is_text_box_focused():
 		if event is InputEventMouseMotion:
-			rotate_y(deg_to_rad(-event.relative.x*Saves.get_or_return("settings", "mouse_sense", .25)))
-			$CameraOrigin.rotate_x(deg_to_rad(-event.relative.y*Saves.get_or_return("settings", "mouse_sense", .25)))
+			rotate_y(deg_to_rad(-event.relative.x*Saves.get_or_return("settings", "mouse_sense", .20)))
+			$CameraOrigin.rotate_x(deg_to_rad(-event.relative.y*Saves.get_or_return("settings", "mouse_sense", .20)))
 			$CameraOrigin.rotation.x = clamp($CameraOrigin.rotation.x, deg_to_rad(-85), deg_to_rad(40))
 			if !is_zero_approx($CameraOrigin/SpringArm3D.get_length()):
 				$CameraOrigin/SpringArm3D/Camera3D.look_at($CameraOrigin.global_position)

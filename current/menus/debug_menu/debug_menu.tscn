@@ -50,7 +50,7 @@ text = "Change camera mode"
 fit_content = true
 script = ExtResource("1_a66ng")
 
-[node name="TextureButton" type="TextureButton" parent="VBoxContainer/ScrollContainer/HBoxContainer"]
+[node name="Debug_2D" type="TextureButton" parent="VBoxContainer/ScrollContainer/HBoxContainer"]
 texture_filter = 1
 clip_contents = true
 layout_mode = 2
@@ -58,7 +58,7 @@ size_flags_horizontal = 3
 texture_normal = ExtResource("2_xge1m")
 stretch_mode = 5
 
-[node name="TextureButton2" type="TextureButton" parent="VBoxContainer/ScrollContainer/HBoxContainer"]
+[node name="Debug_3D" type="TextureButton" parent="VBoxContainer/ScrollContainer/HBoxContainer"]
 modulate = Color(0, 1, 1, 1)
 texture_filter = 1
 clip_contents = true
@@ -67,4 +67,5 @@ size_flags_horizontal = 3
 texture_normal = ExtResource("2_xge1m")
 stretch_mode = 5
 
-[connection signal="pressed" from="VBoxContainer/ScrollContainer/HBoxContainer/TextureButton2" to="." method="_on_debug_scene_change_pressed"]
+[connection signal="pressed" from="VBoxContainer/ScrollContainer/HBoxContainer/Debug_2D" to="." method="_on_debug_2d_pressed"]
+[connection signal="pressed" from="VBoxContainer/ScrollContainer/HBoxContainer/Debug_3D" to="." method="_on_debug_3d_pressed"]

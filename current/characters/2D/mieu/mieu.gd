@@ -1,11 +1,10 @@
 extends CharacterBody2D
 
 
-const SPEED = 300.0
-const JUMP_VELOCITY = -400.0
+func _read() -> void:
+	GlobalVars.mieu = self
 
-
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 
 	var input_dir: Vector2 = Vector2(0, 0)
 	if Input.is_action_pressed("move_left") and not Input.is_action_pressed("move_right"):
@@ -19,9 +18,11 @@ func _physics_process(delta: float) -> void:
 	input_dir = input_dir.normalized()
 	
 	if input_dir and !Ui.chat_box.is_text_box_focused():
-		velocity.x = move_toward(velocity.y, input_dir.y * GlobalVars.move_speed, GlobalVars.move_speed)
-		velocity.y = move_toward(velocity.x, input_dir.x * GlobalVars.move_speed, GlobalVars.move_speed)
+		velocity.x =  move_toward(velocity.x, GlobalVars.move_speed_2D * input_dir.x, GlobalVars.move_speed_2D)
+		velocity.y = move_toward(velocity.y, GlobalVars.move_speed_2D * input_dir.y, GlobalVars.move_speed_2D)
 	else:
-		velocity.x = move_toward(velocity.x, 0, GlobalVars.move_speed)
-		velocity.y = move_toward(velocity.y, 0, GlobalVars.move_speed)
+		velocity.x = move_toward(velocity.x, 0, GlobalVars.move_speed_2D)
+		velocity.y = move_toward(velocity.y, 0, GlobalVars.move_speed_2D)
 	move_and_slide()
+	if SteamLobbies.lobby_id != 0:
+			Multithreading.add_task(Callable(SteamP2P.sendMessageToUserFast).bind(0, {"type": "data", "dimensions": 2,"x": global_position.x, "y": global_position.y}))

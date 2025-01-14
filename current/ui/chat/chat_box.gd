@@ -1,10 +1,12 @@
 extends Control
-var chat_messages: Array = []
 
 func _ready() -> void:
 	Ui.chat_box = self
 	$CheckBox.set_pressed_no_signal(Saves.get_or_return("settings", "auto_scroll", true))
 	SignalBus.load_finished.connect(load_finished)
+	var messages_old: Array = Ui.chat_messages.duplicate()
+	for message: Dictionary in messages_old:
+		add_chat_message(message["sender"], message["target"], message["content"], message["private"])
 
 func load_finished() -> void:
 	$CheckBox.set_pressed_no_signal(Saves.get_or_return("settings", "auto_scroll", true))
@@ -39,7 +41,7 @@ func add_chat_message(sender: int, target: int, content: String, private: bool) 
 	interact_button.pressed.connect(_delete_chat.bind(hbox))
 	hbox.add_child(interact_button)
 	$ScrollContainer/VBoxContainer.add_child(hbox)
-	chat_messages.append({"sender": sender, "target": target, "content": content, "private": private, "chat": hbox})
+	Ui.chat_messages.append({"sender": sender, "target": target, "content": content, "private": private, "chat": hbox})
 	if Saves.get_or_add("settings", "auto_scroll", true):
 		await get_tree().create_timer(.05).timeout
 		create_tween().tween_property($ScrollContainer.get_v_scroll_bar(), "value", $ScrollContainer.get_v_scroll_bar().max_value, 1.0)
@@ -54,6 +56,23 @@ func show_system_message(sys_message: String) -> void:
 	message_text.add_theme_color_override("default_color", Color.DARK_BLUE)
 	message_text.fit_content = true
 	$ScrollContainer/VBoxContainer.add_child(message_text)
+	if Saves.get_or_add("settings", "auto_scroll", true) and WorldsTracker.first_world_started:
+		await get_tree().create_timer(.05).timeout
+		create_tween().tween_property($ScrollContainer.get_v_scroll_bar(), "value", $ScrollContainer.get_v_scroll_bar().max_value, 1.0)
+
+func show_system_warning(sys_message: String) -> void:
+	var message_text: RichTextLabel = RichTextLabel.new()
+	message_text.text = sys_message
+	push_warning(message_text.text)
+	message_text.set_script(load("res://current/scripts/node/chat_message.gd"))
+	message_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	message_text.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	message_text.add_theme_color_override("default_color", Color.DARK_RED)
+	message_text.fit_content = true
+	$ScrollContainer/VBoxContainer.add_child(message_text)
+	if Saves.get_or_add("settings", "auto_scroll", true) and WorldsTracker.first_world_started:
+		await get_tree().create_timer(.05).timeout
+		create_tween().tween_property($ScrollContainer.get_v_scroll_bar(), "value", $ScrollContainer.get_v_scroll_bar().max_value, 1.0)
 
 #Current button sizing problems are solved in this commit which is already commited into the main repo, should be fixed in 4.4 https://github.com/godotengine/godot/commit/0f98b3244805d61ef9edcfa4671ab77c1c5167a7
 func release_input_focus() -> void:

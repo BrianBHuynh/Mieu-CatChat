@@ -1,0 +1,16 @@
+[gd_scene load_steps=5 format=3 uid="uid://bdllfrs3wcm24"]
+
+[ext_resource type="Script" path="res://current/scenes/2D/debug/2D_test_1/2D_test_1.gd" id="1_guu7g"]
+[ext_resource type="PackedScene" uid="uid://cj7jy8rdyeuvj" path="res://current/characters/2D/mieu/mieu.tscn" id="2_7bh0q"]
+[ext_resource type="PackedScene" uid="uid://cbajq0dylq2p2" path="res://current/ui/vpet_gui/vpet_gui.tscn" id="2_h7gx6"]
+[ext_resource type="PackedScene" uid="uid://w7p53meqohhf" path="res://current/ui/chat/chat_box.tscn" id="3_7hwlv"]
+
+[node name="Debug" type="Node2D"]
+script = ExtResource("1_guu7g")
+
+[node name="Mieu" parent="." instance=ExtResource("2_7bh0q")]
+position = Vector2(923, 690)
+
+[node name="VpetGui" parent="." instance=ExtResource("2_h7gx6")]
+
+[node name="ChatBox" parent="." instance=ExtResource("3_7hwlv")]

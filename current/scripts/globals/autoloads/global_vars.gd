@@ -1,7 +1,8 @@
 extends Node
 
 var mieu: Variant
-var move_speed: float = 7.5
+var move_speed_3D: float = 7.5
+var move_speed_2D: float = 500.0
 var jump_speed: float = 2.5
 var frame: float = 0.01666666666
 var first_world_started: bool = false

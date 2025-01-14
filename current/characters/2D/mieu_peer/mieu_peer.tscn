@@ -1,0 +1,74 @@
+[gd_scene load_steps=11 format=3 uid="uid://ccppo6wmem00o"]
+
+[ext_resource type="Texture2D" uid="uid://lhikvxbnengm" path="res://current/assets/images/mieu_idle_front.png" id="1_6gnlj"]
+[ext_resource type="Script" path="res://current/characters/2D/mieu_peer/mieu_peer.gd" id="2_gb511"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1k7s1"]
+atlas = ExtResource("1_6gnlj")
+region = Rect2(0, 0, 480, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4hvuc"]
+atlas = ExtResource("1_6gnlj")
+region = Rect2(480, 0, 480, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jh0jc"]
+atlas = ExtResource("1_6gnlj")
+region = Rect2(960, 0, 480, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5wwru"]
+atlas = ExtResource("1_6gnlj")
+region = Rect2(1440, 0, 480, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2nxcv"]
+atlas = ExtResource("1_6gnlj")
+region = Rect2(1920, 0, 480, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5vnjf"]
+atlas = ExtResource("1_6gnlj")
+region = Rect2(2400, 0, 480, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bxlbq"]
+atlas = ExtResource("1_6gnlj")
+region = Rect2(2880, 0, 480, 480)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_25e44"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1k7s1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4hvuc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jh0jc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5wwru")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2nxcv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5vnjf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bxlbq")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="MieuPeer" type="AnimatedSprite2D"]
+position = Vector2(0, -90)
+scale = Vector2(0.75, 0.75)
+sprite_frames = SubResource("SpriteFrames_25e44")
+autoplay = "default"
+script = ExtResource("2_gb511")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+offset_left = -200.0
+offset_top = -200.0
+offset_right = 200.0
+offset_bottom = -125.0

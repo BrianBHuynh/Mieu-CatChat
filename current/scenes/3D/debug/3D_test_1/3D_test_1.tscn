@@ -1,0 +1,35 @@
+[gd_scene load_steps=8 format=3 uid="uid://cr4rywm07luw3"]
+
+[ext_resource type="Script" path="res://current/scenes/3D/debug/3D_test_1/3D_test_1.gd" id="1_c6185"]
+[ext_resource type="PackedScene" uid="uid://cbajq0dylq2p2" path="res://current/ui/vpet_gui/vpet_gui.tscn" id="2_l3gao"]
+[ext_resource type="PackedScene" uid="uid://w7p53meqohhf" path="res://current/ui/chat/chat_box.tscn" id="3_ycnw3"]
+[ext_resource type="PackedScene" uid="uid://bliphh5kps0ly" path="res://current/characters/3D/mieu/mieu.tscn" id="4_1oncb"]
+[ext_resource type="Script" path="res://current/scripts/node/camera_3d.gd" id="5_cefjs"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6i420"]
+size = Vector3(50, 1, 5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_e5fkv"]
+size = Vector3(50, 1, 5)
+
+[node name="Debug" type="Node3D"]
+script = ExtResource("1_c6185")
+
+[node name="VpetGui" parent="." instance=ExtResource("2_l3gao")]
+
+[node name="ChatBox" parent="." instance=ExtResource("3_ycnw3")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_6i420")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+mesh = SubResource("BoxMesh_e5fkv")
+
+[node name="Character" parent="." instance=ExtResource("4_1oncb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 2.5)
+script = ExtResource("5_cefjs")

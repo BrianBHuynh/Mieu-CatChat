@@ -26,7 +26,7 @@ func _ready() -> void:
 	SignalBus.load_finished.emit()
 	save_loaded = true
 	await get_tree().process_frame
-	WorldsTracker.update_world(get_or_return("settings", "world_path", "res://current/scenes/debug/debug.tscn"))
+	WorldsTracker.update_world(get_or_return("settings", "world_path", "res://current/scenes/3D/debug/3D_test_1/3D_test_1.tscn"))
 	while true:
 		#Auto Saves every 5 minutes
 		await get_tree().create_timer(300).timeout
@@ -71,6 +71,7 @@ func get_or_return(dictionary: String, key: String, default_value: Variant) -> V
 func save_game() -> void:
 	store_player_state()
 	Multithreading.add_task(save_file_encrypted.bind(data, "mieu"))
+	Multithreading.add_task(save_file.bind(data, "mieu.readable"))
 	Multithreading.add_task(save_file.bind(settings, "settings"))
 	Multithreading.add_task(save_file.bind(networking, "networking"))
 
@@ -119,7 +120,7 @@ func load_file_encrypted(location: String) -> Variant:
 		print("File 1 and 2 have failed their checks, file 3 passed all checks")
 		return content.data
 	else:
-		push_warning("File could not be loaded!")
+		Ui.show_system_warning("File could not be loaded! Starting new save.")
 		return null
 
 func load_file(location: String) -> Variant:
@@ -134,7 +135,7 @@ func load_file(location: String) -> Variant:
 		print("File 1 and 2 have failed their checks, file 3 passed all checks")
 		return content.data
 	else:
-		push_warning("File could not be loaded!")
+		Ui.show_system_warning("File could not be loaded!")
 		return null
 
 func sanity_check_encrypted(dir: String, location: String, content: JSON) -> bool:

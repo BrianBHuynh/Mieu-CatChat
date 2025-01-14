@@ -60,9 +60,9 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cn27v"]
-radius = 20.0
-height = 228.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_e3ni3"]
+radius = 11.0
+height = 170.0
 
 [node name="Mieu" type="CharacterBody2D"]
 motion_mode = 1
@@ -70,12 +70,12 @@ slide_on_ceiling = false
 script = ExtResource("1_xoutb")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, -121)
+position = Vector2(0, -90)
+scale = Vector2(0.75, 0.75)
 sprite_frames = SubResource("SpriteFrames_h658l")
 animation = &"front"
 autoplay = "front"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -1)
 rotation = 1.5708
-shape = SubResource("CapsuleShape2D_cn27v")
+shape = SubResource("CapsuleShape2D_e3ni3")

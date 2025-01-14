@@ -44,10 +44,10 @@ func read_p2p_packet() -> void:
 					"data":
 						if kitties.has(message.identity):
 							if WorldsTracker.has(WorldsTracker.current_world, message.identity) and WorldsTracker.dimensions == message.payload["dimensions"]:
-								if message.payload["dimensions"] == 3 and kitties[message.identity] == AnimatedSprite3D:
-									kitties[message.identity].global_position = Vector3(message.payload.x, message.payload.y, message.payload.z)
-								elif message.payload["dimensions"] == 2 and kitties[message.identity] == AnimatedSprite2D:
-									kitties[message.identity].global_position = Vector2(message.payload.x, message.payload.y)
+								if message.payload["dimensions"] == 3 and kitties[message.identity] is AnimatedSprite3D:
+									kitties[message.identity].move_to(Vector3(message.payload.x, message.payload.y, message.payload.z))
+								elif message.payload["dimensions"] == 2 and kitties[message.identity] is AnimatedSprite2D:
+									kitties[message.identity].move_to(Vector2(message.payload.x, message.payload.y))
 								else:
 									Ui.show_system_message("Error reading locational data")
 									remove_kitty(message.identity)
