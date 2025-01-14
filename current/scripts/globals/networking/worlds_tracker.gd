@@ -27,9 +27,16 @@ func has(world: String, pid: int) -> bool:
 
 func update_world(world_path: String) -> void:
 	Ui.close_menu()
-	current_world = get_tree().current_scene.world
-	dimensions = get_tree().current_scene.dimensions
-	get_tree().change_scene_to_file(world_path)
+	var world_packed: PackedScene = load(world_path)
+	current_world = world_packed.get_state().get_node_name(0)
+	match world_packed.get_state().get_node_type(0):
+		"Node2D":
+			dimensions = 2
+		"Node3D":
+			dimensions = 3
+		_:
+			Ui.show_system_warning("Invalid world type, world type is: " + world_packed.get_state().get_node_type(0))
+	get_tree().change_scene_to_packed(world_packed)
 	while !get_tree().current_scene:
 		await get_tree().process_frame
 	Saves.set_value("settings", "world_path", world_path)
@@ -41,8 +48,14 @@ func update_world(world_path: String) -> void:
 func initialize_pos() -> void:
 	if first_world_started == false and GlobalVars.mieu:
 		await get_tree().process_frame
-		GlobalVars.mieu.position = Vector3(Saves.get_or_add("Player","pos_x", GlobalVars.mieu.position.x), Saves.get_or_add("Player","pos_y", GlobalVars.mieu.position.y), Saves.get_or_add("Player","pos_z", GlobalVars.mieu.position.z))
-		GlobalVars.mieu.rotation = Vector3(Saves.get_or_add("Player", "rot_x", GlobalVars.mieu.rotation.x), Saves.get_or_add("Player", "rot_y", GlobalVars.mieu.rotation.y), Saves.get_or_add("Player", "rot_z", GlobalVars.mieu.rotation.z))
+		match dimensions: 
+			3:
+				GlobalVars.mieu.position = Vector3(Saves.get_or_add("Player","pos_x", GlobalVars.mieu.position.x), Saves.get_or_add("Player","pos_y", GlobalVars.mieu.position.y), Saves.get_or_add("Player","pos_z", GlobalVars.mieu.position.z))
+				GlobalVars.mieu.rotation = Vector3(Saves.get_or_add("Player", "rot_x", GlobalVars.mieu.rotation.x), Saves.get_or_add("Player", "rot_y", GlobalVars.mieu.rotation.y), Saves.get_or_add("Player", "rot_z", GlobalVars.mieu.rotation.z))
+			2:
+				GlobalVars.mieu.position = Vector2(Saves.get_or_add("Player","pos_x", GlobalVars.mieu.position.x), Saves.get_or_add("Player","pos_y", GlobalVars.mieu.position.y))
+			_:
+				pass
 		first_world_started = true
 
 func send_world(pid: int) -> void:

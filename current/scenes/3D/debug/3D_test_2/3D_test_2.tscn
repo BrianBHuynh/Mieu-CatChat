@@ -1,6 +1,5 @@
-[gd_scene load_steps=8 format=3 uid="uid://bu6now1p5l5gr"]
+[gd_scene load_steps=7 format=3 uid="uid://bu6now1p5l5gr"]
 
-[ext_resource type="Script" path="res://current/scenes/3D/debug/3D_test_2/3D_test_2.gd" id="1_78ukl"]
 [ext_resource type="PackedScene" uid="uid://cbajq0dylq2p2" path="res://current/ui/vpet_gui/vpet_gui.tscn" id="2_qjp8k"]
 [ext_resource type="PackedScene" uid="uid://w7p53meqohhf" path="res://current/ui/chat/chat_box.tscn" id="3_3110v"]
 [ext_resource type="PackedScene" uid="uid://bliphh5kps0ly" path="res://current/characters/3D/mieu/mieu.tscn" id="4_jttnf"]
@@ -12,8 +11,7 @@ size = Vector3(50, 1, 5)
 [sub_resource type="BoxMesh" id="BoxMesh_e5fkv"]
 size = Vector3(50, 1, 5)
 
-[node name="Debug" type="Node3D"]
-script = ExtResource("1_78ukl")
+[node name="3D_test_2" type="Node3D"]
 
 [node name="VpetGui" parent="." instance=ExtResource("2_qjp8k")]
 

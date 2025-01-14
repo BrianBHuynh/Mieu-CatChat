@@ -36,6 +36,14 @@ func show_system_message(message: String) -> void:
 			await get_tree().process_frame
 		chat_box.show_system_message(message)
 
+func show_system_warning(message: String) -> void:
+	if chat_box != null:
+		chat_box.show_system_warning(message)
+	else:
+		while chat_box == null:
+			await get_tree().process_frame
+		chat_box.show_system_warning(message)
+
 func sent_chat_message(message: String, private: bool, target: int) -> void:
 	chat_box.sent_chat_message(message, private, target)
 
