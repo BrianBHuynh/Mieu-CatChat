@@ -62,9 +62,11 @@ animations = [{
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cn27v"]
 radius = 20.0
-height = 250.0
+height = 228.0
 
 [node name="Mieu" type="CharacterBody2D"]
+motion_mode = 1
+slide_on_ceiling = false
 script = ExtResource("1_xoutb")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -77,4 +79,3 @@ autoplay = "front"
 position = Vector2(0, -1)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_cn27v")
-script = ExtResource("1_xoutb")

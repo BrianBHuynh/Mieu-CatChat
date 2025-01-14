@@ -27,12 +27,12 @@ func _physics_process(delta: float) -> void:
 		input_dir = input_dir + Vector3(0, 0, -1)
 	elif Input.is_action_pressed("move_backwards") and not Input.is_action_pressed("move_forwards"):
 		input_dir = input_dir + Vector3(0, 0, 1)
-	var direction: Vector3 = transform.basis * input_dir.normalized()
-	if direction and !Ui.chat_box.is_text_box_focused():
+	input_dir = transform.basis * input_dir.normalized()
+	if input_dir and !Ui.chat_box.is_text_box_focused():
 		if is_on_floor():
 			velocity.y = GlobalVars.jump_speed
-		velocity.x = move_toward(velocity.x, direction.x * GlobalVars.move_speed, GlobalVars.move_speed)
-		velocity.z = move_toward(velocity.z, direction.z * GlobalVars.move_speed, GlobalVars.move_speed)
+		velocity.x = move_toward(velocity.x, input_dir.x * GlobalVars.move_speed, GlobalVars.move_speed)
+		velocity.z = move_toward(velocity.z, input_dir.z * GlobalVars.move_speed, GlobalVars.move_speed)
 	else:
 		if is_on_floor():
 			velocity.x = move_toward(velocity.x, 0, GlobalVars.move_speed)
