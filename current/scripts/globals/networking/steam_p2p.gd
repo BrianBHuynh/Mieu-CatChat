@@ -54,7 +54,7 @@ func read_p2p_packet() -> void:
 							else:
 								remove_kitty(message.identity)
 						elif WorldsTracker.has(WorldsTracker.current_world, message.identity):
-							if WorldsTracker.dimensions == 3 and message.payload["dimensions"] == 3:
+							if WorldsTracker.dimensions == 3 and message.payload["dimensions"] == 3 and get_tree().current_scene is Node3D:
 								var file: Resource = load("res://current/characters/3D/mieu_peer/mieu_peer.tscn")
 								var kit: AnimatedSprite3D = file.instantiate()
 								get_parent().add_child(kit)
@@ -62,10 +62,10 @@ func read_p2p_packet() -> void:
 								kitties[message["identity"]] = kit
 								print("creating")
 								kitties[message.identity].global_position = Vector3(message.payload.x, message.payload.y, message.payload.z)
-							elif WorldsTracker.dimensions == 2 and message.payload["dimensions"] == 2:
+							elif WorldsTracker.dimensions == 2 and message.payload["dimensions"] == 2 and get_tree().current_scene is Node2D:
 								var file: Resource = load("res://current/characters/2D/mieu_peer/mieu_peer.tscn")
 								var kit: AnimatedSprite2D = file.instantiate()
-								get_parent().add_child(kit)
+								get_tree().current_scene.Middleground.add_child(kit)
 								kit.sign_adoption(message["identity"])
 								kitties[message["identity"]] = kit
 								print("creating")

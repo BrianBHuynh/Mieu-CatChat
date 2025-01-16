@@ -6,9 +6,24 @@
 
 [node name="2D_test_1" type="Node2D"]
 
-[node name="Mieu" parent="." instance=ExtResource("2_7bh0q")]
+[node name="Background" type="Node2D" parent="."]
+
+[node name="Middleground" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="Mieu" parent="Middleground" instance=ExtResource("2_7bh0q")]
 position = Vector2(923, 690)
 
-[node name="VpetGui" parent="." instance=ExtResource("2_h7gx6")]
+[node name="Foreground" type="Node2D" parent="."]
 
-[node name="ChatBox" parent="." instance=ExtResource("3_7hwlv")]
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="VpetGui" parent="Control" instance=ExtResource("2_h7gx6")]
+layout_mode = 1
+
+[node name="ChatBox" parent="Control" instance=ExtResource("3_7hwlv")]
+layout_mode = 1
