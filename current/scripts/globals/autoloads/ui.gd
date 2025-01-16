@@ -5,9 +5,9 @@ var pause_menu: Resource = load("res://current/menus/escape_menu/escape_menu.tsc
 var cur_menu: Control
 var lobbies: VBoxContainer
 var chat_box: Control
+var chat_log: Array = []
 const DEFAULT_FONT_SIZE: float = 30.0
 const DEFAULT_CHAT_FONT_SIZE: float = 20.0
-var chat_messages: Array = []
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("pause"):

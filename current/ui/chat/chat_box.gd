@@ -4,9 +4,14 @@ func _ready() -> void:
 	Ui.chat_box = self
 	$CheckBox.set_pressed_no_signal(Saves.get_or_return("settings", "auto_scroll", true))
 	SignalBus.load_finished.connect(load_finished)
-	var messages_old: Array = Ui.chat_messages.duplicate()
-	for message: Dictionary in messages_old:
-		add_chat_message(message["sender"], message["target"], message["content"], message["private"])
+	for message: Dictionary in Ui.chat_log:
+		match message["type"]:
+			"chat_message":
+				add_chat_message(message["sender"], message["target"], message["content"], message["private"], false)
+			"system_message":
+				show_system_message(message["content"], false)
+			"system_warning":
+				show_system_message(message["warning"], false)
 
 func load_finished() -> void:
 	$CheckBox.set_pressed_no_signal(Saves.get_or_return("settings", "auto_scroll", true))
@@ -17,7 +22,7 @@ func process_chat_message(message: Dictionary) -> void:
 func sent_chat_message(message: String, private: bool, target: int) -> void:
 	add_chat_message(SteamWorks.steam_id, target, message, private)
 
-func add_chat_message(sender: int, target: int, content: String, private: bool) -> void:
+func add_chat_message(sender: int, target: int, content: String, private: bool, save: bool = true) -> void:
 	var hbox: HBoxContainer = HBoxContainer.new()
 	hbox.clip_contents = true
 	var message_text: RichTextLabel = RichTextLabel.new()
@@ -41,14 +46,15 @@ func add_chat_message(sender: int, target: int, content: String, private: bool) 
 	interact_button.pressed.connect(_delete_chat.bind(hbox))
 	hbox.add_child(interact_button)
 	$ScrollContainer/VBoxContainer.add_child(hbox)
-	Ui.chat_messages.append({"sender": sender, "target": target, "content": content, "private": private, "chat": hbox})
+	if save:
+		Ui.chat_log.append({"type": "chat_message", "sender": sender, "target": target, "content": content, "private": private})
 	if Saves.get_or_add("settings", "auto_scroll", true):
 		await get_tree().create_timer(.05).timeout
 		create_tween().tween_property($ScrollContainer.get_v_scroll_bar(), "value", $ScrollContainer.get_v_scroll_bar().max_value, 1.0)
 
-func show_system_message(sys_message: String) -> void:
+func show_system_message(content: String, save: bool = true) -> void:
 	var message_text: RichTextLabel = RichTextLabel.new()
-	message_text.text = sys_message
+	message_text.text = content
 	print(message_text.text)
 	message_text.set_script(load("res://current/scripts/node/chat_message.gd"))
 	message_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -56,13 +62,15 @@ func show_system_message(sys_message: String) -> void:
 	message_text.add_theme_color_override("default_color", Color.DARK_BLUE)
 	message_text.fit_content = true
 	$ScrollContainer/VBoxContainer.add_child(message_text)
+	if save:
+		Ui.chat_log.append({"type": "system_message", "content": content})
 	if Saves.get_or_add("settings", "auto_scroll", true) and WorldsTracker.first_world_started:
 		await get_tree().create_timer(.05).timeout
 		create_tween().tween_property($ScrollContainer.get_v_scroll_bar(), "value", $ScrollContainer.get_v_scroll_bar().max_value, 1.0)
 
-func show_system_warning(sys_message: String) -> void:
+func show_system_warning(content: String, save: bool = true) -> void:
 	var message_text: RichTextLabel = RichTextLabel.new()
-	message_text.text = sys_message
+	message_text.text = content
 	push_warning(message_text.text)
 	message_text.set_script(load("res://current/scripts/node/chat_message.gd"))
 	message_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -70,6 +78,8 @@ func show_system_warning(sys_message: String) -> void:
 	message_text.add_theme_color_override("default_color", Color.DARK_RED)
 	message_text.fit_content = true
 	$ScrollContainer/VBoxContainer.add_child(message_text)
+	if save:
+		Ui.chat_log.append({"type": "system_warning", "content": content})
 	if Saves.get_or_add("settings", "auto_scroll", true) and WorldsTracker.first_world_started:
 		await get_tree().create_timer(.05).timeout
 		create_tween().tween_property($ScrollContainer.get_v_scroll_bar(), "value", $ScrollContainer.get_v_scroll_bar().max_value, 1.0)
