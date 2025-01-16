@@ -62,3 +62,6 @@ func close_menu() -> void:
 		cur_menu.queue_free()
 		cur_menu = null
 		menu_open = false
+
+func process_chat_message(message: Dictionary) -> void:
+	chat_box.process_chat_message(message)

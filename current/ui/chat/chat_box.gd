@@ -98,7 +98,7 @@ func _on_send_pressed() -> void:
 	release_input_focus()
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	if !$TextBox.text == "":
-		SteamP2P.send_chat_message(0, $TextBox.text, false)
+		SteamP2P.send_chat_message($TextBox.text)
 	$TextBox.clear()
 
 func _on_text_box_text_changed() -> void:

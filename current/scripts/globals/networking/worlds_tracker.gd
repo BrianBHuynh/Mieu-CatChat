@@ -41,7 +41,7 @@ func update_world(world_path: String) -> void:
 		await get_tree().process_frame
 	Saves.set_value("settings", "world_path", world_path)
 	initialize_pos()
-	send_world(0)
+	send_world()
 	Ui.show_system_message("Current world: " + current_world)
 	Ui.show_system_message("2D or 3D: " + str(dimensions))
 
@@ -58,8 +58,8 @@ func initialize_pos() -> void:
 				pass
 		first_world_started = true
 
-func send_world(pid: int) -> void:
-	SteamP2P.sendMessageToUser(pid, {"type": "world_info", "world": current_world})
+func send_world(pid: int = 0) -> void:
+	SteamP2P.sendMessageToUser({"type": "world_info", "world": current_world}, pid)
 
 func clear_worlds() -> void:
 	worlds = {}

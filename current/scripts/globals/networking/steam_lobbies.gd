@@ -81,7 +81,7 @@ func _on_lobby_joined(this_lobby_id: int, _permissions: int, _locked: bool, resp
 		lobby_id = this_lobby_id
 		get_lobby_members()
 		make_p2p_handshake()
-		WorldsTracker.send_world(0)
+		WorldsTracker.send_world()
 	else:
 		var fail_reason: String
 		match response:
@@ -118,13 +118,13 @@ func _on_persona_change(this_steam_id: int, _flag: int) -> void:
 
 func make_p2p_handshake() -> void:
 	print("Sending P2P handshake to the lobby")
-	SteamP2P.sendMessageToUser(0, {"type": "Handshake", "message": "handshake", "from": SteamWorks.steam_id})
+	SteamP2P.sendMessageToUser({"type": "Handshake", "message": "handshake", "from": SteamWorks.steam_id})
 
 func _on_lobby_chat_update(_this_lobby_id: int, change_id: int, _making_change_id: int, chat_state: int) -> void:
 	var changer_name: String = Steam.getFriendPersonaName(change_id)
 	if chat_state == Steam.CHAT_MEMBER_STATE_CHANGE_ENTERED:
 		Ui.show_system_message("%s has joined the lobby." % changer_name)
-		SteamP2P.send_lobby_data(change_id)
+		SteamP2P.send_lobby_data("lobby_join", change_id)
 	elif chat_state == Steam.CHAT_MEMBER_STATE_CHANGE_LEFT:
 		Ui.show_system_message("%s has left the lobby." % changer_name)
 		if SteamP2P.kitties.has(change_id) and SteamP2P.kitties.get(change_id).is_inside_tree():
@@ -162,7 +162,7 @@ func ban_player_persist(steam_id: int) -> void:
 			banned_players[steam_id] = lobby_members[steam_id]["steam_name"]
 		if not Saves.get_or_add("networking", "persist_banned", {}).has(steam_id):
 			Saves.get_or_add("networking", "persist_banned", {})[steam_id] = lobby_members[steam_id]["steam_name"]
-		SteamP2P.send_lobby_data(0)
+		SteamP2P.send_lobby_data()
 		if lobby_members.has(steam_id) and SteamP2P.kitties.has(steam_id):
 			SteamP2P.remove_kitty(steam_id)
 
@@ -170,13 +170,13 @@ func ban_player_temp(steam_id: int) -> void:
 	if is_host():
 		if not banned_players.has(steam_id):
 			banned_players[steam_id] = lobby_members[steam_id]["steam_name"]
-		SteamP2P.send_lobby_data(0)
+		SteamP2P.send_lobby_data()
 		if lobby_members.has(steam_id) and SteamP2P.kitties.has(steam_id):
 			SteamP2P.remove_kitty(steam_id)
 
 func kick(steam_id: int, reason: String) -> void:
 	if is_host():
-		SteamP2P.send_kick(steam_id, reason)
+		SteamP2P.send_kick(reason, steam_id)
 
 func block_player(steam_id: int) -> void:
 	if not Saves.get_or_add("networking", "persist_blocked", {}).has(steam_id):
