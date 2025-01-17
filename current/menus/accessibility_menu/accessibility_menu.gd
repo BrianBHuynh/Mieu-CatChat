@@ -4,7 +4,8 @@ var fonts: Array = ["res://current/assets/fonts/AtkinsonHyperlegible-Regular.ttf
 
 func _ready() -> void:
 	camera3D = get_viewport().get_camera_3d()
-	$ScrollContainer/VBoxContainer/Fov/Fov_Slider.value = camera3D.fov
+	if WorldsTracker.dimensions == 3:
+		$ScrollContainer/VBoxContainer/Fov/Fov_Slider.value = camera3D.fov
 	$ScrollContainer/VBoxContainer/TextSize/Text_Size_Slider.value = Saves.get_or_add("settings", "font_size", Ui.DEFAULT_FONT_SIZE)
 	$ScrollContainer/VBoxContainer/TextSize/Text_Size_Slider.value_changed.connect(_on_text_size_slider_value_changed)
 	$ScrollContainer/VBoxContainer/ChatTextSize/Text_Size_Slider.value = Saves.get_or_add("settings", "chat_font_size", Ui.DEFAULT_CHAT_FONT_SIZE)

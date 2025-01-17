@@ -25,4 +25,4 @@ func _physics_process(_delta: float) -> void:
 		velocity.y = move_toward(velocity.y, 0, GlobalVars.move_speed_2D)
 	move_and_slide()
 	if SteamLobbies.lobby_id != 0:
-			Multithreading.add_task(Callable(SteamP2P.sendMessageToUserFast).bind(0, {"type": "data", "dimensions": 2,"x": global_position.x, "y": global_position.y}))
+			Multithreading.add_task(Callable(SteamP2P.sendMessageToUserFast).bind({"type": "data", "dimensions": 2,"x": global_position.x, "y": global_position.y}))
