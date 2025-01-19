@@ -28,21 +28,21 @@ func _process(_delta: float) -> void:
 		chat_box.open_text_input()
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
-func show_system_message(message: String) -> void:
+func show_system_message(message: String, color: Color = Color.DARK_BLUE) -> void:
 	if chat_box != null:
-		chat_box.show_system_message(message)
+		chat_box.show_system_message(message, color)
 	else:
 		while chat_box == null:
 			await get_tree().process_frame
-		chat_box.show_system_message(message)
+		chat_box.show_system_message(message, color)
 
-func show_system_warning(message: String) -> void:
+func show_system_warning(message: String, color: Color = Color.DARK_BLUE) -> void:
 	if chat_box != null:
-		chat_box.show_system_warning(message)
+		chat_box.show_system_warning(message, color)
 	else:
 		while chat_box == null:
 			await get_tree().process_frame
-		chat_box.show_system_warning(message)
+		chat_box.show_system_warning(message, color)
 
 func sent_chat_message(message: String, private: bool, target: int) -> void:
 	chat_box.sent_chat_message(message, private, target)

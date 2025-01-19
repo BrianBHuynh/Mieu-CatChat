@@ -9,9 +9,9 @@ func _ready() -> void:
 			"chat_message":
 				add_chat_message(message["sender"], message["target"], message["content"], message["private"], false)
 			"system_message":
-				show_system_message(message["content"], false)
+				show_system_message(message["content"], message["color"], false)
 			"system_warning":
-				show_system_message(message["warning"], false)
+				show_system_message(message["warning"], message["color"], false)
 
 func load_finished() -> void:
 	$CheckBox.set_pressed_no_signal(Saves.get_or_return("settings", "auto_scroll", true))
@@ -52,34 +52,34 @@ func add_chat_message(sender: int, target: int, content: String, private: bool, 
 		await get_tree().create_timer(.05).timeout
 		create_tween().tween_property($ScrollContainer.get_v_scroll_bar(), "value", $ScrollContainer.get_v_scroll_bar().max_value, 1.0)
 
-func show_system_message(content: String, save: bool = true) -> void:
+func show_system_message(content: String, color: Color = Color.DARK_BLUE, save: bool = true) -> void:
 	var message_text: RichTextLabel = RichTextLabel.new()
-	message_text.text = content
+	message_text.text = "SYSTEM: " + content
 	print(message_text.text)
 	message_text.set_script(load("res://current/scripts/node/chat_message.gd"))
 	message_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	message_text.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	message_text.add_theme_color_override("default_color", Color.DARK_BLUE)
+	message_text.add_theme_color_override("default_color", color)
 	message_text.fit_content = true
 	$ScrollContainer/VBoxContainer.add_child(message_text)
 	if save:
-		Ui.chat_log.append({"type": "system_message", "content": content})
+		Ui.chat_log.append({"type": "system_message", "content": content, "color": color})
 	if Saves.get_or_add("settings", "auto_scroll", true) and WorldsTracker.first_world_started:
 		await get_tree().create_timer(.05).timeout
 		create_tween().tween_property($ScrollContainer.get_v_scroll_bar(), "value", $ScrollContainer.get_v_scroll_bar().max_value, 1.0)
 
-func show_system_warning(content: String, save: bool = true) -> void:
+func show_system_warning(content: String, color: Color = Color.DARK_RED, save: bool = true) -> void:
 	var message_text: RichTextLabel = RichTextLabel.new()
-	message_text.text = content
+	message_text.text = "SYSTEM_WARNING: " + content
 	push_warning(message_text.text)
 	message_text.set_script(load("res://current/scripts/node/chat_message.gd"))
 	message_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	message_text.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	message_text.add_theme_color_override("default_color", Color.DARK_RED)
+	message_text.add_theme_color_override("default_color", color)
 	message_text.fit_content = true
 	$ScrollContainer/VBoxContainer.add_child(message_text)
 	if save:
-		Ui.chat_log.append({"type": "system_warning", "content": content})
+		Ui.chat_log.append({"type": "system_warning", "content": content, "color": color})
 	if Saves.get_or_add("settings", "auto_scroll", true) and WorldsTracker.first_world_started:
 		await get_tree().create_timer(.05).timeout
 		create_tween().tween_property($ScrollContainer.get_v_scroll_bar(), "value", $ScrollContainer.get_v_scroll_bar().max_value, 1.0)

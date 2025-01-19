@@ -56,7 +56,7 @@ func read_p2p_messages() -> void:
 								get_parent().add_child(kit)
 								kit.sign_adoption(message["identity"])
 								kitties[message["identity"]] = kit
-								print("creating")
+								Ui.show_system_message("creating", Color.GREEN)
 								kitties[message.identity].global_position = Vector3(message.payload.x, message.payload.y, message.payload.z)
 							elif WorldsTracker.dimensions == 2 and message.payload["dimensions"] == 2 and get_tree().current_scene is Node2D:
 								var file: Resource = load("res://current/characters/2D/mieu_peer/mieu_peer.tscn")
@@ -64,7 +64,7 @@ func read_p2p_messages() -> void:
 								get_tree().current_scene.Middleground.add_child(kit)
 								kit.sign_adoption(message["identity"])
 								kitties[message["identity"]] = kit
-								print("creating")
+								Ui.show_system_message("creating", Color.GREEN)
 								kitties[message.identity].global_position = Vector2(message.payload.x, message.payload.y)
 					"chat":
 						Ui.process_chat_message(ChatFilter.filter(message))
