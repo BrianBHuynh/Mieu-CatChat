@@ -95,7 +95,7 @@ func _on_lobby_joined(this_lobby_id: int, _permissions: int, _locked: bool, resp
 			Steam.CHAT_ROOM_ENTER_RESPONSE_COMMUNITY_BAN: fail_reason = "This lobby is community locked."
 			Steam.CHAT_ROOM_ENTER_RESPONSE_MEMBER_BLOCKED_YOU: fail_reason = "A user in the lobby has blocked you from joining."
 			Steam.CHAT_ROOM_ENTER_RESPONSE_YOU_BLOCKED_MEMBER: fail_reason = "A user you have blocked is in the lobby."
-		Ui.show_system_message("Failed to join this chat room: %s" % fail_reason)
+		Ui.show_system_warning("Failed to join this chat room: %s" % fail_reason)
 		_on_open_lobby_list_pressed()
 
 func _on_lobby_join_requested(this_lobby_id: int, friend_id: int) -> void:
@@ -187,3 +187,6 @@ func is_host() -> bool:
 
 func get_host_name() -> String:
 	return lobby_members[host()]["steam_name"]
+
+func is_allowed(pid: int) -> bool:
+	return !banned_players.has(pid) and !blocked_players.has(pid)

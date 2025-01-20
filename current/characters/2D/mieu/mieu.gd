@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 
-func _read() -> void:
+func _ready() -> void:
 	GlobalVars.mieu = self
 
 func _physics_process(_delta: float) -> void:

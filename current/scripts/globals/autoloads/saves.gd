@@ -76,13 +76,19 @@ func save_game() -> void:
 	Multithreading.add_task(save_file.bind(networking, "networking"))
 
 func store_player_state() -> void:
-	Saves.set_value("Player", "pos_x", GlobalVars.mieu.position.x)
-	Saves.set_value("Player", "pos_y", GlobalVars.mieu.position.y)
-	Saves.set_value("Player", "pos_z", GlobalVars.mieu.position.z)
-	Saves.set_value("Player", "rot_x", GlobalVars.mieu.rotation.x)
-	Saves.set_value("Player", "rot_y", GlobalVars.mieu.rotation.y)
-	Saves.set_value("Player", "rot_z", GlobalVars.mieu.rotation.z)
-	Saves.set_value("settings", "camera_distance", GlobalVars.mieu.get_spring_arm_length())
+	while !is_instance_valid(GlobalVars.mieu):
+		await get_tree().process_frame
+	if GlobalVars.mieu is CharacterBody2D:
+		Saves.set_value("Player", "pos_x", GlobalVars.mieu.position.x)
+		Saves.set_value("Player", "pos_y", GlobalVars.mieu.position.y)
+	elif GlobalVars.mieu is CharacterBody3D:
+		Saves.set_value("Player", "pos_x", GlobalVars.mieu.position.x)
+		Saves.set_value("Player", "pos_y", GlobalVars.mieu.position.y)
+		Saves.set_value("Player", "pos_z", GlobalVars.mieu.position.z)
+		Saves.set_value("Player", "rot_x", GlobalVars.mieu.rotation.x)
+		Saves.set_value("Player", "rot_y", GlobalVars.mieu.rotation.y)
+		Saves.set_value("Player", "rot_z", GlobalVars.mieu.rotation.z)
+		Saves.set_value("settings", "camera_distance", GlobalVars.mieu.get_spring_arm_length())
 
 func make_dir(dir: String) -> void:
 	if not DirAccess.dir_exists_absolute(dir):

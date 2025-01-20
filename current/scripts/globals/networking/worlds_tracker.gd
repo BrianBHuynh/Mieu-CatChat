@@ -3,6 +3,7 @@ extends Node
 
 var worlds: Dictionary = {}
 var current_world: String = "default"
+var middleground: Node2D
 var dimensions: int = 0
 var first_world_started: bool = false
 
@@ -39,6 +40,8 @@ func update_world(world_path: String) -> void:
 	get_tree().change_scene_to_packed(world_packed)
 	while !get_tree().current_scene:
 		await get_tree().process_frame
+	if dimensions == 2:
+		middleground = get_node("/root/" + current_world + "/Middleground")
 	Saves.set_value("settings", "world_path", world_path)
 	initialize_pos()
 	send_world()
@@ -46,8 +49,7 @@ func update_world(world_path: String) -> void:
 	Ui.show_system_message("2D or 3D: " + str(dimensions))
 
 func initialize_pos() -> void:
-	if first_world_started == false and GlobalVars.mieu:
-		await get_tree().process_frame
+	if first_world_started == false and is_instance_valid(GlobalVars.mieu):
 		match dimensions: 
 			3:
 				GlobalVars.mieu.position = Vector3(Saves.get_or_add("Player","pos_x", GlobalVars.mieu.position.x), Saves.get_or_add("Player","pos_y", GlobalVars.mieu.position.y), Saves.get_or_add("Player","pos_z", GlobalVars.mieu.position.z))
