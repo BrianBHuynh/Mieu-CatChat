@@ -162,23 +162,20 @@ func send_lobby_data(reason: String = "No reason provided", this_target: int = 0
 					if SteamLobbies.is_allowed(this_member):
 						Steam.sendMessageToUser(this_member, this_data, send_type, channel)
 					else:
-						this_data.clear()
-						this_data.append_array(var_to_bytes({"type": "ban", "reason": reason}))
-						Steam.sendMessageToUser(this_member, this_data, send_type, channel)
+						var ban_message: PackedByteArray = var_to_bytes({"type": "ban", "reason": reason})
+						Steam.sendMessageToUser(this_member, ban_message, send_type, channel)
 		else:
 			if this_target != SteamWorks.steam_id:
 				if not SteamLobbies.banned_players.has(this_target):
 					Steam.sendMessageToUser(this_target, this_data, send_type, channel)
 				else:
-					this_data.clear()
-					this_data.append_array(var_to_bytes({"type": "ban", "reason": reason}))
-					Steam.sendMessageToUser(this_target, this_data, send_type, channel)
+					var ban_message: PackedByteArray = var_to_bytes({"type": "ban", "reason": reason})
+					Steam.sendMessageToUser(this_target, ban_message, send_type, channel)
 
 func send_kick(reason: String, this_target: int = 0) -> void:
 	if SteamLobbies.is_host() and SteamLobbies.lobby_members.size() > 1:
-		var this_data: PackedByteArray
-		this_data.append_array(var_to_bytes({"type": "kick", "reason": reason}))
-		sendMessageToUser({"type": "kick_announce", "kicked_player": this_target}, this_target)
+		sendMessageToUser({"type": "kick", "reason": reason}, this_target)
+		sendMessageToUser({"type": "kick_announce", "kicked_player": this_target}, 0)
 
 func _on_p2p_session_connect_fail(_steam_id: int, _session_error: int, _state: int, debug_msg: String) -> void:
 	#Ui.show_system_message("P2p session connection failed! Reason: " + debug_msg)
