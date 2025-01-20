@@ -30,6 +30,7 @@ SteamLobbies="*res://current/scripts/globals/networking/steam_lobbies.gd"
 SteamP2P="*res://current/scripts/globals/networking/steam_p2p.gd"
 ChatFilter="*res://current/scripts/globals/networking/chat_filter.gd"
 WorldsTracker="*res://current/scripts/globals/networking/worlds_tracker.gd"
+Moderation="*res://current/scripts/globals/networking/moderation.gd"
 
 [debug]
 

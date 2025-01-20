@@ -8,13 +8,12 @@ func filter(message: Dictionary) -> Dictionary:
 			message["payload"]["text"] = message["payload"]["text"].replace(word, chat_filter[word]["replacement_word"])
 			
 			if chat_filter[word]["ban"]:
-				SteamLobbies.ban_player_persist(message.identity)
+				Moderation.ban_player_persist(message.identity)
 			elif chat_filter[word]["block"]:
-				SteamLobbies.block_player(message.identity)
+				Moderation.block_player(message.identity)
 			elif chat_filter[word]["kick"]:
-				SteamLobbies.kick(message.identity, "Host chat rules violation")
+				Moderation.kick(message.identity, "Host chat rules violation")
 			
 			if chat_filter[word]["delete"]:
 				message["payload"]["text"] = "Deleted by filter"
-				break
 	return message
