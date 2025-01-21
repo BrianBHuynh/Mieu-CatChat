@@ -30,7 +30,7 @@ func read_p2p_messages() -> void:
 		for message: Dictionary in messages:
 			if message.is_empty() or message == null:
 				print("WARNING: read an empty packet with non-zero size!")
-			elif Moderation.is_allowed(message.identity):
+			elif !Moderation.is_allowed(message.identity):
 				print("Message from blocked or banned player")
 				Steam.closeSessionWithUser(message.identity)
 				remove_kitty(message.identity)
