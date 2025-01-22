@@ -11,7 +11,7 @@ func load_finished() -> void:
 	banned_players = Saves.get_or_return("networking", "persist_banned", {})
 
 func is_allowed(pid: int) -> bool:
-	return !(banned_players.has(pid) and Saves.get_or_return("networking", "blocked", {}).has(pid))
+	return !(banned_players.has(pid) or Saves.get_or_return("networking", "blocked", {}).has(pid))
 
 func ban_player_persist(steam_id: int) -> void:
 	if SteamLobbies.is_host():

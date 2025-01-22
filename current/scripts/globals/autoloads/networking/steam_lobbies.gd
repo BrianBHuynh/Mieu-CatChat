@@ -52,6 +52,7 @@ func _on_lobby_match_list(these_lobbies: Array) -> void:
 	var lobby_buttons: Array = Ui.lobbies.get_children()
 	for button: Button in lobby_buttons:
 		button.queue_free()
+		lobby_buttons.erase(button)
 	for this_lobby: int in these_lobbies:
 		var lobby_name: String = Steam.getLobbyData(this_lobby, "name")
 		var lobby_mode: String = Steam.getLobbyData(this_lobby, "mode")

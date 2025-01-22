@@ -19,15 +19,16 @@ func _physics_process(delta: float) -> void:
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var input_dir: Vector3 = Vector3(0, 0, 0)
-	if Input.is_action_pressed("move_left") and not Input.is_action_pressed("move_right"):
-		input_dir = Vector3(-1, 0, 0)
-	elif Input.is_action_pressed("move_right") and not Input.is_action_pressed("move_left"):
-		input_dir = Vector3(1, 0, 0)
-	if Input.is_action_pressed("move_forwards") and not Input.is_action_pressed("move_backwards"):
-		input_dir = input_dir + Vector3(0, 0, -1)
-	elif Input.is_action_pressed("move_backwards") and not Input.is_action_pressed("move_forwards"):
-		input_dir = input_dir + Vector3(0, 0, 1)
-	input_dir = transform.basis * input_dir.normalized()
+	if not Ui.menu_open:
+		if Input.is_action_pressed("move_left") and not Input.is_action_pressed("move_right"):
+			input_dir = Vector3(-1, 0, 0)
+		elif Input.is_action_pressed("move_right") and not Input.is_action_pressed("move_left"):
+			input_dir = Vector3(1, 0, 0)
+		if Input.is_action_pressed("move_forwards") and not Input.is_action_pressed("move_backwards"):
+			input_dir = input_dir + Vector3(0, 0, -1)
+		elif Input.is_action_pressed("move_backwards") and not Input.is_action_pressed("move_forwards"):
+			input_dir = input_dir + Vector3(0, 0, 1)
+		input_dir = transform.basis * input_dir.normalized()
 	if input_dir and !Ui.chat_box.is_text_box_focused():
 		if is_on_floor():
 			velocity.y = GlobalVars.jump_speed

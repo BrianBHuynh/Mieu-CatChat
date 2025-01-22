@@ -24,7 +24,7 @@ func _process(_delta: float) -> void:
 	elif Input.is_action_just_pressed("send_message"):
 		chat_box.release_focus()
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	elif Input.is_action_just_pressed("chat"):
+	elif Input.is_action_just_pressed("chat") and menu_open == false:
 		chat_box.open_text_input()
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 

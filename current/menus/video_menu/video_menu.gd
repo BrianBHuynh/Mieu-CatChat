@@ -1,8 +1,12 @@
 extends Control
 
+
+var camera3D: Camera3D
+
 func _ready() -> void:
 	$HBoxContainer/ScrollContainer/VBoxContainer/Resolution/Width.value = get_window().size.x
 	$HBoxContainer/ScrollContainer/VBoxContainer/Resolution/Height.value = get_window().size.y
+	$HBoxContainer/ScrollContainer/VBoxContainer/RenderingScale.value = get_window().scaling_3d_scale
 	
 	$HBoxContainer/ScrollContainer/VBoxContainer/WindowMode.select(Saves.get_or_add("settings", "window_mode", 2))
 	$HBoxContainer/ScrollContainer/VBoxContainer/WindowMode.connect("item_selected", _window_mode_changed)
@@ -18,7 +22,7 @@ func _ready() -> void:
 	$HBoxContainer/ScrollContainer/VBoxContainer/RenderingScale.value = get_window().scaling_3d_scale
 	$HBoxContainer/ScrollContainer/VBoxContainer/RenderingScale.value_changed.connect(_on_rendering_scale_changed)
 	
-	$HBoxContainer/ScrollContainer/VBoxContainer/RenderingScaleLabel.text = "[center]Resolution scale: " + str($HBoxContainer/ScrollContainer/VBoxContainer/RenderingScale.value) + "[/center]"
+	$HBoxContainer/ScrollContainer/VBoxContainer/RenderingScaleLabel.text = "[center]3D Rendering scale: " + str($HBoxContainer/ScrollContainer/VBoxContainer/RenderingScale.value) + "[/center]"
 	 
 	match Saves.get_or_add("settings", "stretch_aspect", 1):
 		0:
@@ -60,4 +64,4 @@ func _on_window_size_changed(value: float) -> void:
 func _on_rendering_scale_changed(value: float) -> void:
 	Saves.set_value("settings", "scaling_3d_scale", value)
 	get_window().scaling_3d_scale = value
-	$HBoxContainer/ScrollContainer/VBoxContainer/RenderingScaleLabel.text = "[center]Rendering scale: " + str($HBoxContainer/ScrollContainer/VBoxContainer/RenderingScale.value) + "[/center]" 
+	$HBoxContainer/ScrollContainer/VBoxContainer/RenderingScaleLabel.text = "[center]3D Rendering scale: " + str($HBoxContainer/ScrollContainer/VBoxContainer/RenderingScale.value) + "[/center]" 

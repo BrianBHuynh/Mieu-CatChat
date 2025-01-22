@@ -136,7 +136,7 @@ alignment = 1
 [node name="RenderingScaleLabel" type="RichTextLabel" parent="HBoxContainer/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 bbcode_enabled = true
-text = "[center]Rendering Scale: 1.0[/center]"
+text = "[center]3D Rendering Scale: 1.0[/center]"
 fit_content = true
 script = ExtResource("2_f175j")
 

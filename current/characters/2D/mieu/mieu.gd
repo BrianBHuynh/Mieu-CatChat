@@ -7,14 +7,15 @@ func _ready() -> void:
 func _physics_process(_delta: float) -> void:
 
 	var input_dir: Vector2 = Vector2(0, 0)
-	if Input.is_action_pressed("move_left") and not Input.is_action_pressed("move_right"):
-		input_dir = Vector2(-1, 0)
-	elif Input.is_action_pressed("move_right") and not Input.is_action_pressed("move_left"):
-		input_dir = Vector2(1, 0)
-	if Input.is_action_pressed("move_forwards") and not Input.is_action_pressed("move_backwards"):
-		input_dir = input_dir + Vector2(0, -1)
-	elif Input.is_action_pressed("move_backwards") and not Input.is_action_pressed("move_forwards"):
-		input_dir = input_dir + Vector2(0, 1)
+	if not Ui.menu_open:
+		if Input.is_action_pressed("move_left") and not Input.is_action_pressed("move_right"):
+			input_dir = Vector2(-1, 0)
+		elif Input.is_action_pressed("move_right") and not Input.is_action_pressed("move_left"):
+			input_dir = Vector2(1, 0)
+		if Input.is_action_pressed("move_forwards") and not Input.is_action_pressed("move_backwards"):
+			input_dir = input_dir + Vector2(0, -1)
+		elif Input.is_action_pressed("move_backwards") and not Input.is_action_pressed("move_forwards"):
+			input_dir = input_dir + Vector2(0, 1)
 	input_dir = input_dir.normalized()
 	
 	if input_dir and !Ui.chat_box.is_text_box_focused():
