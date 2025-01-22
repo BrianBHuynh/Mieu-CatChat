@@ -23,7 +23,8 @@ func _process(_delta: float) -> void:
 				close_menu()
 	elif Input.is_action_just_pressed("send_message"):
 		chat_box.release_focus()
-		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		if WorldsTracker.dimensions == 3:
+			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	elif Input.is_action_just_pressed("chat") and menu_open == false:
 		chat_box.open_text_input()
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
@@ -57,7 +58,8 @@ func open_menu(menu_path: String) -> void:
 
 func close_menu() -> void:
 	if cur_menu:
-		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		if WorldsTracker.dimensions == 3:
+			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 		get_tree().root.remove_child(cur_menu)
 		cur_menu.queue_free()
 		cur_menu = null

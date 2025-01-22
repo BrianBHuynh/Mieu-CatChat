@@ -96,7 +96,8 @@ func is_text_box_focused() -> bool:
 
 func _on_send_pressed() -> void:
 	release_input_focus()
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	if WorldsTracker.dimensions == 3:
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	if !$TextBox.text == "":
 		SteamP2P.send_chat_message($TextBox.text)
 	$TextBox.clear()
