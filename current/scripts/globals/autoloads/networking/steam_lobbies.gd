@@ -114,29 +114,30 @@ func make_p2p_handshake() -> void:
 	SteamP2P.sendMessageToUser({"type": "Handshake", "message": "handshake", "from": SteamWorks.steam_id})
 
 func _on_lobby_chat_update(_this_lobby_id: int, change_id: int, _making_change_id: int, chat_state: int) -> void:
-	var changer_name: String = Steam.getFriendPersonaName(change_id)
-	if chat_state == Steam.CHAT_MEMBER_STATE_CHANGE_ENTERED:
-		Ui.show_system_message("%s has joined the lobby." % changer_name)
-		SteamP2P.send_lobby_data("lobby_join", change_id)
-	elif chat_state == Steam.CHAT_MEMBER_STATE_CHANGE_LEFT:
-		Ui.show_system_message("%s has left the lobby." % changer_name)
-		if SteamP2P.kitties.has(change_id) and SteamP2P.kitties.get(change_id).is_inside_tree():
-				get_parent().remove_child(SteamP2P.kitties.get(change_id))
-				SteamP2P.kitties.erase(change_id)
-		WorldsTracker.remove_from_worlds(change_id)
-	elif chat_state == Steam.CHAT_MEMBER_STATE_CHANGE_KICKED:
-		Ui.show_system_message("%s has been kicked from the lobby." % changer_name)
-		if SteamP2P.kitties.has(change_id) and SteamP2P.kitties.get(change_id).is_inside_tree():
-				get_parent().remove_child(SteamP2P.kitties.get(change_id))
-				SteamP2P.kitties.erase(change_id)
-	elif chat_state == Steam.CHAT_MEMBER_STATE_CHANGE_BANNED:
-		Ui.show_system_message("%s has been banned from the lobby." % changer_name)
-		if SteamP2P.kitties.has(change_id) and SteamP2P.kitties.get(change_id).is_inside_tree():
-				get_parent().remove_child(SteamP2P.kitties.get(change_id))
-				SteamP2P.kitties.erase(change_id)
-	else:
-		Ui.show_system_message("%s did... something." % changer_name)
-	get_lobby_members()
+	if Moderation.is_allowed(change_id):
+		var changer_name: String = Steam.getFriendPersonaName(change_id)
+		if chat_state == Steam.CHAT_MEMBER_STATE_CHANGE_ENTERED:
+			Ui.show_system_message("%s has joined the lobby." % changer_name)
+			SteamP2P.send_lobby_data(change_id, "lobby_join")
+		elif chat_state == Steam.CHAT_MEMBER_STATE_CHANGE_LEFT:
+			Ui.show_system_message("%s has left the lobby." % changer_name)
+			if SteamP2P.kitties.has(change_id) and SteamP2P.kitties.get(change_id).is_inside_tree():
+					get_parent().remove_child(SteamP2P.kitties.get(change_id))
+					SteamP2P.kitties.erase(change_id)
+			WorldsTracker.remove_from_worlds(change_id)
+		elif chat_state == Steam.CHAT_MEMBER_STATE_CHANGE_KICKED:
+			Ui.show_system_message("%s has been kicked from the lobby." % changer_name)
+			if SteamP2P.kitties.has(change_id) and SteamP2P.kitties.get(change_id).is_inside_tree():
+					get_parent().remove_child(SteamP2P.kitties.get(change_id))
+					SteamP2P.kitties.erase(change_id)
+		elif chat_state == Steam.CHAT_MEMBER_STATE_CHANGE_BANNED:
+			Ui.show_system_message("%s has been banned from the lobby." % changer_name)
+			if SteamP2P.kitties.has(change_id) and SteamP2P.kitties.get(change_id).is_inside_tree():
+					get_parent().remove_child(SteamP2P.kitties.get(change_id))
+					SteamP2P.kitties.erase(change_id)
+		else:
+			Ui.show_system_message("%s did... something." % changer_name)
+		get_lobby_members()
 
 func leave_lobby() -> void:
 	if lobby_id != 0:

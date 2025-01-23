@@ -153,7 +153,7 @@ func send_chat_message(message: String, this_target: int = 0, private: bool = fa
 	else:
 		Ui.sent_chat_message(message, private, this_target)
 
-func send_lobby_data(reason: String = "No reason provided", this_target: int = 0) -> void:
+func send_lobby_data(this_target: int = 0, reason: String = "No reason provided") -> void:
 	if SteamLobbies.is_host() and SteamLobbies.lobby_members.size() > 1:
 		var send_type: int = Steam.NETWORKING_SEND_RELIABLE
 		var channel: int = 0
