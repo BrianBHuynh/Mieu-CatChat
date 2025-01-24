@@ -44,7 +44,7 @@ func _physics_process(delta: float) -> void:
 	
 	move_and_slide()
 	if SteamLobbies.lobby_id != 0:
-			Multithreading.add_task(Callable(SteamP2P.sendMessageToUserFast).bind({"type": "data", "dimensions": 3,"x": GlobalVars.mieu.global_position.x, "y": GlobalVars.mieu.global_position.y, "z": GlobalVars.mieu.global_position.z}))
+			Multithreading.add_task(Callable(SteamP2P.sendMessageToUser).bind({"type": "data", "dimensions": 3,"x": GlobalVars.mieu.global_position.x, "y": GlobalVars.mieu.global_position.y, "z": GlobalVars.mieu.global_position.z}, 0, Steam.NETWORKING_SEND_UNRELIABLE_NO_DELAY))
 
 func _input(event: InputEvent) -> void:
 	if !Ui.menu_open and !Ui.chat_box.is_text_box_focused():

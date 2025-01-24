@@ -94,37 +94,22 @@ func read_p2p_messages() -> void:
 					"world_info":
 						WorldsTracker.add_to_world(message["payload"]["world"], message.identity)
 
-func sendMessageToUser(payload: Dictionary, this_target: int = 0) -> void:
+func sendMessageToUser(payload: Dictionary, this_target: int = 0, send_type: int = Steam.NETWORKING_SEND_RELIABLE) -> void:
 	if SteamLobbies.lobby_members.size() > 1:
-		var send_type: int = Steam.NETWORKING_SEND_RELIABLE
 		var channel: int = 0
 		var this_data: PackedByteArray
 		this_data.append_array(var_to_bytes(payload))
 		this_data = this_data.compress(FileAccess.COMPRESSION_GZIP)
 		if this_target == 0:
-			for this_member: int in SteamLobbies.lobby_members:
-				if this_member != SteamWorks.steam_id and Moderation.is_allowed(this_member):
-					Steam.sendMessageToUser(this_member, this_data, send_type, channel)
-		else:
-			if Moderation.is_allowed(this_target):
-				Steam.sendMessageToUser(this_target, this_data, send_type, channel)
-
-func sendMessageToUserFast(packet_data: Dictionary, this_target: int = 0) -> void:
-	if SteamLobbies.lobby_members.size() > 1:
-		var send_type: int = Steam.NETWORKING_SEND_URELIABLE_NO_NAGLE
-		var channel: int = 0
-		var this_data: PackedByteArray
-		this_data.append_array(var_to_bytes(packet_data))
-		this_data = this_data.compress(FileAccess.COMPRESSION_GZIP)
-		if this_target == 0:
-			if packet_data["type"] == "data":
-				for this_member: int in SteamLobbies.lobby_members:
-					if this_member != SteamWorks.steam_id and WorldsTracker.has(WorldsTracker.current_world, this_member) and Moderation.is_allowed(this_member):
-						Steam.sendMessageToUser(this_member, this_data, send_type, channel)
-			else:
-				for this_member: int in SteamLobbies.lobby_members:
-					if this_member != SteamWorks.steam_id and Moderation.is_allowed(this_member):
-						Steam.sendMessageToUser(this_member, this_data, send_type, channel)
+			match payload["type"]:
+				"data":
+					for this_member: int in SteamLobbies.lobby_members:
+						if this_member != SteamWorks.steam_id and WorldsTracker.has(WorldsTracker.current_world, this_member) and Moderation.is_allowed(this_member):
+							Steam.sendMessageToUser(this_member, this_data, send_type, channel)
+				_:
+					for this_member: int in SteamLobbies.lobby_members:
+						if this_member != SteamWorks.steam_id and Moderation.is_allowed(this_member):
+							Steam.sendMessageToUser(this_member, this_data, send_type, channel)
 		else:
 			if Moderation.is_allowed(this_target):
 				Steam.sendMessageToUser(this_target, this_data, send_type, channel)
