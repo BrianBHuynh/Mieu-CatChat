@@ -2,25 +2,22 @@ extends Node
 
 
 var kitties: Dictionary = {}
-#Currently code improved on from https://godotsteam.com/tutorials/p2p/
 
 func _ready() -> void:
 	Steam.network_messages_session_request.connect(_on_network_messages_session_request)
 	Steam.network_messages_session_failed.connect(_on_p2p_session_connect_fail)
-	SteamLobbies.check_command_line()
 
-func _process(_delta: float) -> void:
-	Steam.run_callbacks()
+func process(_delta: float) -> void:
 	if SteamLobbies.lobby_id > 0:
 		read_p2p_messages()
 
 func _on_network_messages_session_request(remote_id: int) -> void:
 	if Moderation.is_allowed(remote_id):
 		var this_requester: String = Steam.getFriendPersonaName(remote_id)
-		Ui.show_system_message(this_requester + " is requesting a P2P session")
+		print(this_requester + " is requesting a P2P session")
 		Steam.acceptSessionWithUser(remote_id)
 		WorldsTracker.send_world(remote_id)
-		SteamLobbies.make_p2p_handshake()
+		#SteamLobbies.make_p2p_handshake()
 
 func read_p2p_messages() -> void:
 	var messages: Array = Steam.receiveMessagesOnChannel(0, 1000)
@@ -187,8 +184,7 @@ func send_ban(reason: String = "no reason provided", this_target: int = 0) -> vo
 		sendMessageToUser({"type": "kick_announce", "banned_player": this_target}, 0)
 
 func _on_p2p_session_connect_fail(_steam_id: int, _session_error: int, _state: int, debug_msg: String) -> void:
-	#Ui.show_system_message("P2p session connection failed! Reason: " + debug_msg)
-	print("P2p session connection failed! Reason: " + debug_msg)
+	Ui.show_system_warning("P2p session connection failed! Reason: " + debug_msg)
 
 func remove_kitties() -> void:
 	for cat_id: int in SteamP2P.kitties:
