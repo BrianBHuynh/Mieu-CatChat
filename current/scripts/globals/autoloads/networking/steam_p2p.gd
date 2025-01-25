@@ -94,9 +94,8 @@ func read_p2p_messages() -> void:
 					"world_info":
 						WorldsTracker.add_to_world(message["payload"]["world"], message.identity)
 
-func sendMessageToUser(payload: Dictionary, this_target: int = 0, send_type: int = Steam.NETWORKING_SEND_RELIABLE) -> void:
+func sendMessageToUser(payload: Dictionary, this_target: int = 0, send_type: int = Steam.NETWORKING_SEND_RELIABLE, channel: int = 0) -> void:
 	if SteamLobbies.lobby_members.size() > 1:
-		var channel: int = 0
 		var this_data: PackedByteArray
 		this_data.append_array(var_to_bytes(payload))
 		this_data = this_data.compress(FileAccess.COMPRESSION_GZIP)
@@ -114,10 +113,9 @@ func sendMessageToUser(payload: Dictionary, this_target: int = 0, send_type: int
 			if Moderation.is_allowed(this_target):
 				Steam.sendMessageToUser(this_target, this_data, send_type, channel)
 
-func send_chat_message(message: String, this_target: int = 0, private: bool = false) -> void:
+func send_chat_message(message: String, this_target: int = 0, private: bool = false, channel: int = 0) -> void:
 	if SteamLobbies.lobby_members.size() > 1:
 		var send_type: int = Steam.NETWORKING_SEND_RELIABLE
-		var channel: int = 0
 		var this_data: PackedByteArray
 		this_data.append_array(var_to_bytes({"type": "chat", "text": message, "private": private}))
 		this_data = this_data.compress(FileAccess.COMPRESSION_GZIP)
@@ -135,10 +133,9 @@ func send_chat_message(message: String, this_target: int = 0, private: bool = fa
 	else:
 		Ui.sent_chat_message(message, private, this_target)
 
-func send_lobby_data(this_target: int = 0, reason: String = "No reason provided") -> void:
+func send_lobby_data(this_target: int = 0, reason: String = "No reason provided", channel: int = 0) -> void:
 	if SteamLobbies.is_host() and SteamLobbies.lobby_members.size() > 1:
 		var send_type: int = Steam.NETWORKING_SEND_RELIABLE
-		var channel: int = 0
 		var this_data: PackedByteArray
 		this_data.append_array(var_to_bytes({"type": "lobby_data", "lobby_data": {"banned_players": Moderation.banned_players}}))
 		this_data = this_data.compress(FileAccess.COMPRESSION_GZIP)

@@ -24,7 +24,7 @@ func create_lobby(type: int, max_players: int) -> void:
 
 func _on_lobby_created(_connected: int, this_lobby_id: int) -> void:
 	lobby_id = this_lobby_id
-	Ui.show_system_message("Created a lobby: %s" % lobby_id)
+	Ui.show_system_message("Created a lobby: " + str(lobby_id))
 	Steam.setLobbyJoinable(lobby_id, true)
 	Steam.setLobbyData(lobby_id, "name", SteamWorks.steam_username + "'s Lobby")
 	Steam.setLobbyData(lobby_id, "mode", "Multiplayer Lobby")
