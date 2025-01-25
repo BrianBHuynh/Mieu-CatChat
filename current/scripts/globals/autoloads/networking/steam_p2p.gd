@@ -112,6 +112,16 @@ func sendMessageToUser(payload: Dictionary, this_target: int = 0, send_type: int
 		else:
 			if Moderation.is_allowed(this_target):
 				Steam.sendMessageToUser(this_target, this_data, send_type, channel)
+			else:
+				match payload["type"]:
+					"ban":
+						if this_target != SteamWorks.steam_id:
+							Steam.sendMessageToUser(this_target, this_data, send_type, channel)
+					"kick":
+						if this_target != SteamWorks.steam_id:
+							Steam.sendMessageToUser(this_target, this_data, send_type, channel)
+					_:
+						pass
 
 func send_chat_message(message: String, this_target: int = 0, private: bool = false, channel: int = 0) -> void:
 	if SteamLobbies.lobby_members.size() > 1:
@@ -163,7 +173,7 @@ func send_kick(reason: String = "no reason provided", this_target: int = 0) -> v
 func send_ban(reason: String = "no reason provided", this_target: int = 0) -> void:
 	if SteamLobbies.is_host() and SteamLobbies.lobby_members.size() > 1:
 		sendMessageToUser({"type": "ban", "reason": reason}, this_target)
-		sendMessageToUser({"type": "kick_announce", "banned_player": this_target}, 0)
+		sendMessageToUser({"type": "ban_announce", "banned_player": this_target}, 0)
 
 func _on_p2p_session_connect_fail(_steam_id: int, _session_error: int, _state: int, debug_msg: String) -> void:
 	Ui.show_system_warning("P2p session connection failed! Reason: " + debug_msg)
