@@ -66,7 +66,7 @@ func read_p2p_messages() -> void:
 								Ui.show_system_message("creating", Color.GREEN)
 								kitties[message.identity].global_position = Vector2(message.payload.x, message.payload.y)
 					"chat":
-						Ui.process_chat_message(ChatFilter.filter(message))
+						Ui.show_chat_message(ChatFilter.filter(message))
 					"lobby_data":
 						if message.identity == Steam.getLobbyOwner(SteamLobbies.lobby_id):
 							Moderation.banned_players = message["payload"]["lobby_data"]["banned_players"]
@@ -110,18 +110,13 @@ func sendMessageToUser(payload: Dictionary, this_target: int = 0, send_type: int
 						if this_member != SteamWorks.steam_id and Moderation.is_allowed(this_member):
 							Steam.sendMessageToUser(this_member, this_data, send_type, channel)
 		else:
-			if Moderation.is_allowed(this_target):
-				Steam.sendMessageToUser(this_target, this_data, send_type, channel)
-			else:
-				match payload["type"]:
-					"ban":
-						if this_target != SteamWorks.steam_id:
-							Steam.sendMessageToUser(this_target, this_data, send_type, channel)
-					"kick":
-						if this_target != SteamWorks.steam_id:
-							Steam.sendMessageToUser(this_target, this_data, send_type, channel)
-					_:
-						pass
+			match payload["type"]:
+				"ban", "kick":
+					if this_target != SteamWorks.steam_id and SteamLobbies.is_host():
+						Steam.sendMessageToUser(this_target, this_data, send_type, channel)
+				_:
+					if Moderation.is_allowed(this_target):
+						Steam.sendMessageToUser(this_target, this_data, send_type, channel)
 
 func send_chat_message(message: String, this_target: int = 0, private: bool = false, channel: int = 0) -> void:
 	if SteamLobbies.lobby_members.size() > 1:
@@ -137,13 +132,12 @@ func send_chat_message(message: String, this_target: int = 0, private: bool = fa
 		else:
 			if Moderation.is_allowed(this_target):
 				Steam.sendMessageToUser(this_target, this_data, send_type, channel)
-				Ui.sent_chat_message(message, private, this_target)
 			else:
 				Ui.show_system_warning("Target is either blocked or banned!")
-	else:
-		Ui.sent_chat_message(message, private, this_target)
+	print("SENT")
+	Ui.sent_chat_message(message, private, this_target)
 
-func send_lobby_data(this_target: int = 0, reason: String = "No reason provided", channel: int = 0) -> void:
+func send_lobby_data(this_target: int = 0, _reason: String = "No reason provided", channel: int = 0) -> void:
 	if SteamLobbies.is_host() and SteamLobbies.lobby_members.size() > 1:
 		var send_type: int = Steam.NETWORKING_SEND_RELIABLE
 		var this_data: PackedByteArray
@@ -151,26 +145,18 @@ func send_lobby_data(this_target: int = 0, reason: String = "No reason provided"
 		this_data = this_data.compress(FileAccess.COMPRESSION_GZIP)
 		if this_target == 0:
 			for this_member: int in SteamLobbies.lobby_members:
-				if this_member != SteamWorks.steam_id:
-					if Moderation.is_allowed(this_member):
-						Steam.sendMessageToUser(this_member, this_data, send_type, channel)
-					else:
-						var ban_message: PackedByteArray = var_to_bytes({"type": "ban", "reason": reason})
-						Steam.sendMessageToUser(this_member, ban_message, send_type, channel)
+				if this_member != SteamWorks.steam_id and Moderation.is_allowed(this_member):
+					Steam.sendMessageToUser(this_member, this_data, send_type, channel)
 		else:
-			if this_target != SteamWorks.steam_id:
-				if not Moderation.is_allowed(this_target):
+			if this_target != SteamWorks.steam_id and Moderation.is_allowed(this_target):
 					Steam.sendMessageToUser(this_target, this_data, send_type, channel)
-				else:
-					var ban_message: PackedByteArray = var_to_bytes({"type": "ban", "reason": reason})
-					Steam.sendMessageToUser(this_target, ban_message, send_type, channel)
 
-func send_kick(reason: String = "no reason provided", this_target: int = 0) -> void:
+func send_kick(this_target: int = 0, reason: String = "no reason provided") -> void:
 	if SteamLobbies.is_host() and SteamLobbies.lobby_members.size() > 1:
 		sendMessageToUser({"type": "kick", "reason": reason}, this_target)
 		sendMessageToUser({"type": "kick_announce", "kicked_player": this_target}, 0)
 
-func send_ban(reason: String = "no reason provided", this_target: int = 0) -> void:
+func send_ban(this_target: int = 0, reason: String = "no reason provided") -> void:
 	if SteamLobbies.is_host() and SteamLobbies.lobby_members.size() > 1:
 		sendMessageToUser({"type": "ban", "reason": reason}, this_target)
 		sendMessageToUser({"type": "ban_announce", "banned_player": this_target}, 0)

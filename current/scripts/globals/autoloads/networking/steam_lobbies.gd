@@ -105,8 +105,8 @@ func _on_lobby_chat_update(_this_lobby_id: int, change_id: int, _making_change_i
 		elif chat_state == Steam.CHAT_MEMBER_STATE_CHANGE_LEFT:
 			Ui.show_system_message("%s has left the lobby." % changer_name)
 			if SteamP2P.kitties.has(change_id) and SteamP2P.kitties.get(change_id).is_inside_tree():
-					get_parent().remove_child(SteamP2P.kitties.get(change_id))
-					SteamP2P.kitties.erase(change_id)
+				get_parent().remove_child(SteamP2P.kitties.get(change_id))
+				SteamP2P.kitties.erase(change_id)
 			WorldsTracker.remove_from_worlds(change_id)
 		else:
 			Ui.show_system_message("%s did... something." % changer_name)

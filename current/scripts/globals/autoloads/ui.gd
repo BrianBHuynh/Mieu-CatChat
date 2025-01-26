@@ -30,22 +30,23 @@ func _process(_delta: float) -> void:
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
 func show_system_message(message: String, color: Color = Color.DARK_BLUE) -> void:
-	if chat_box != null:
-		chat_box.show_system_message(message, color)
-	else:
-		while chat_box == null:
-			await get_tree().process_frame
-		chat_box.show_system_message(message, color)
+	while chat_box == null:
+		await get_tree().process_frame
+	chat_box.show_system_message(message, color)
 
 func show_system_warning(message: String, color: Color = Color.DARK_BLUE) -> void:
-	if chat_box != null:
-		chat_box.show_system_warning(message, color)
-	else:
-		while chat_box == null:
-			await get_tree().process_frame
-		chat_box.show_system_warning(message, color)
+	while chat_box == null:
+		await get_tree().process_frame
+	chat_box.show_system_warning(message, color)
+
+func show_chat_message(message: Dictionary) -> void:
+	while chat_box == null:
+		await get_tree().process_frame
+	chat_box.process_chat_message(message)
 
 func sent_chat_message(message: String, private: bool, target: int) -> void:
+	while chat_box == null:
+		await get_tree().process_frame
 	chat_box.sent_chat_message(message, private, target)
 
 func open_menu(menu_path: String) -> void:
@@ -64,6 +65,3 @@ func close_menu() -> void:
 		cur_menu.queue_free()
 		cur_menu = null
 		menu_open = false
-
-func process_chat_message(message: Dictionary) -> void:
-	chat_box.process_chat_message(message)
