@@ -1,4 +1,4 @@
-extends AnimatedSprite2D
+extends Node2D
 
 var id: int
 var player_name: String

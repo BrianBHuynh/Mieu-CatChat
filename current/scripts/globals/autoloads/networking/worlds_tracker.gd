@@ -52,10 +52,10 @@ func initialize_pos() -> void:
 	if first_world_started == false and is_instance_valid(GlobalVars.mieu):
 		match dimensions: 
 			3:
-				GlobalVars.mieu.position = Vector3(Saves.get_or_add("Player","pos_x", GlobalVars.mieu.position.x), Saves.get_or_add("Player","pos_y", GlobalVars.mieu.position.y), Saves.get_or_add("Player","pos_z", GlobalVars.mieu.position.z))
+				GlobalVars.mieu.global_position = Vector3(Saves.get_or_add("Player","pos_x", GlobalVars.mieu.global_position.x), Saves.get_or_add("Player","pos_y", GlobalVars.mieu.global_position.y), Saves.get_or_add("Player","pos_z", GlobalVars.mieu.global_position.z))
 				GlobalVars.mieu.rotation = Vector3(Saves.get_or_add("Player", "rot_x", GlobalVars.mieu.rotation.x), Saves.get_or_add("Player", "rot_y", GlobalVars.mieu.rotation.y), Saves.get_or_add("Player", "rot_z", GlobalVars.mieu.rotation.z))
 			2:
-				GlobalVars.mieu.position = Vector2(Saves.get_or_add("Player","pos_x", GlobalVars.mieu.position.x), Saves.get_or_add("Player","pos_y", GlobalVars.mieu.position.y))
+				GlobalVars.mieu.global_position = Vector2(Saves.get_or_add("Player","pos_x", GlobalVars.mieu.global_position.x), Saves.get_or_add("Player","pos_y", GlobalVars.mieu.global_position.y))
 			_:
 				pass
 		first_world_started = true

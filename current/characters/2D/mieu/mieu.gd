@@ -6,7 +6,6 @@ func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
 func _physics_process(_delta: float) -> void:
-
 	var input_dir: Vector2 = Vector2(0, 0)
 	if not Ui.menu_open:
 		if Input.is_action_pressed("move_left") and not Input.is_action_pressed("move_right"):

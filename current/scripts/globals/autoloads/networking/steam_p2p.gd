@@ -39,7 +39,7 @@ func read_p2p_messages() -> void:
 							if WorldsTracker.has(WorldsTracker.current_world, message.identity) and WorldsTracker.dimensions == message.payload["dimensions"]:
 								if message.payload["dimensions"] == 3 and kitties[message.identity] is AnimatedSprite3D:
 									kitties[message.identity].move_to(Vector3(message.payload.x, message.payload.y, message.payload.z))
-								elif message.payload["dimensions"] == 2 and kitties[message.identity] is AnimatedSprite2D:
+								elif message.payload["dimensions"] == 2 and kitties[message.identity] is Node2D:
 									kitties[message.identity].move_to(Vector2(message.payload.x, message.payload.y))
 								else:
 									Ui.show_system_message("Error reading locational data")
@@ -59,7 +59,7 @@ func read_p2p_messages() -> void:
 								while !WorldsTracker.middleground:
 									await get_tree().process_frame
 								var file: Resource = load("res://current/characters/2D/mieu_peer/mieu_peer.tscn")
-								var kit: AnimatedSprite2D = file.instantiate()
+								var kit: Node2D = file.instantiate()
 								WorldsTracker.middleground.add_child(kit)
 								kit.sign_adoption(message["identity"])
 								kitties[message["identity"]] = kit
@@ -76,6 +76,7 @@ func read_p2p_messages() -> void:
 									Steam.closeSessionWithUser(player_id)
 									SteamLobbies.lobby_members.erase(player_id)
 					"ban":
+						print("BAN RECIEVED")
 						if message.identity == Steam.getLobbyOwner(SteamLobbies.lobby_id):
 							SteamLobbies.leave_lobby()
 							Ui.show_system_message("You were banned from the lobby")

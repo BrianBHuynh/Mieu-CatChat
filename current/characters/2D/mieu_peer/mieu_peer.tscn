@@ -61,16 +61,18 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="MieuPeer" type="AnimatedSprite2D"]
+[node name="Node2D" type="Node2D"]
+script = ExtResource("2_gb511")
+
+[node name="MieuPeer" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -90)
 scale = Vector2(0.75, 0.75)
 sprite_frames = SubResource("SpriteFrames_25e44")
 autoplay = "default"
-script = ExtResource("2_gb511")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
 offset_left = -200.0
-offset_top = -200.0
+offset_top = -240.0
 offset_right = 200.0
-offset_bottom = -125.0
+offset_bottom = -165.0
 script = ExtResource("3_846l6")
