@@ -33,6 +33,7 @@ func read_p2p_messages() -> void:
 				remove_kitty(message.identity)
 			else:
 				message.payload = bytes_to_var(message.payload.decompress_dynamic(-1, FileAccess.COMPRESSION_GZIP))
+				print(message["payload"])
 				match message["payload"]["type"]:
 					"data":
 						if kitties.has(message.identity):
@@ -70,13 +71,13 @@ func read_p2p_messages() -> void:
 					"lobby_data":
 						if message.identity == Steam.getLobbyOwner(SteamLobbies.lobby_id):
 							Moderation.banned_players = message["payload"]["lobby_data"]["banned_players"]
-							for player_id: int in Moderation.banned_players:
-								if SteamLobbies.lobby_members.has(player_id) or kitties.has(player_id):
-									remove_kitty(player_id)
-									Steam.closeSessionWithUser(player_id)
-									SteamLobbies.lobby_members.erase(player_id)
+							for player_id: String in Moderation.banned_players:
+								var player_id_int: int = player_id.to_int()
+								if SteamLobbies.lobby_members.has(player_id_int) or kitties.has(player_id_int):
+									remove_kitty(player_id_int)
+									Steam.closeSessionWithUser(player_id_int)
+									SteamLobbies.lobby_members.erase(player_id_int)
 					"ban":
-						print("BAN RECIEVED")
 						if message.identity == Steam.getLobbyOwner(SteamLobbies.lobby_id):
 							SteamLobbies.leave_lobby()
 							Ui.show_system_message("You were banned from the lobby")
@@ -115,6 +116,8 @@ func sendMessageToUser(payload: Dictionary, this_target: int = 0, send_type: int
 				"ban", "kick":
 					if this_target != SteamWorks.steam_id and SteamLobbies.is_host():
 						Steam.sendMessageToUser(this_target, this_data, send_type, channel)
+						await get_tree().create_timer(1).timeout
+						Steam.closeSessionWithUser(this_target)
 				_:
 					if Moderation.is_allowed(this_target):
 						Steam.sendMessageToUser(this_target, this_data, send_type, channel)
@@ -129,7 +132,6 @@ func send_chat_message(message: String, this_target: int = 0, private: bool = fa
 			for this_member: int in SteamLobbies.lobby_members:
 				if this_member != SteamWorks.steam_id and Moderation.is_allowed(this_member):
 					Steam.sendMessageToUser(this_member, this_data, send_type, channel)
-			Ui.sent_chat_message(message, private, this_target)
 		else:
 			if Moderation.is_allowed(this_target):
 				Steam.sendMessageToUser(this_target, this_data, send_type, channel)
@@ -162,8 +164,9 @@ func send_ban(this_target: int = 0, reason: String = "no reason provided") -> vo
 		sendMessageToUser({"type": "ban", "reason": reason}, this_target)
 		sendMessageToUser({"type": "ban_announce", "banned_player": this_target}, 0)
 
-func _on_p2p_session_connect_fail(_steam_id: int, _session_error: int, _state: int, debug_msg: String) -> void:
+func _on_p2p_session_connect_fail(steam_id: int, _session_error: int, _state: int, debug_msg: String) -> void:
 	Ui.show_system_warning("P2p session connection failed! Reason: " + debug_msg)
+	remove_kitty(steam_id)
 
 func remove_kitties() -> void:
 	for cat_id: int in SteamP2P.kitties:

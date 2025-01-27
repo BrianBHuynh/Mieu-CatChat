@@ -5,13 +5,14 @@ func _ready() -> void:
 	$CheckBox.set_pressed_no_signal(Saves.get_or_return("settings", "auto_scroll", true))
 	SignalBus.load_finished.connect(load_finished)
 	for message: Dictionary in Ui.chat_log:
+		print(str(message))
 		match message["type"]:
 			"chat_message":
 				add_chat_message(message["sender"], message["target"], message["content"], message["private"], false)
 			"system_message":
 				show_system_message(message["content"], message["color"], false)
 			"system_warning":
-				show_system_message(message["warning"], message["color"], false)
+				show_system_message(message["content"], message["color"], false)
 
 func load_finished() -> void:
 	$CheckBox.set_pressed_no_signal(Saves.get_or_return("settings", "auto_scroll", true))

@@ -116,9 +116,9 @@ func leave_lobby() -> void:
 	if lobby_id != 0:
 		Steam.leaveLobby(lobby_id)
 		lobby_id = 0
-		for this_member: Dictionary in lobby_members:
-			if this_member['steam_id'] != SteamWorks.steam_id:
-				Steam.closeSessionWithUser(this_member['steam_id'])
+		for this_member: int in lobby_members:
+			if this_member != SteamWorks.steam_id:
+				Steam.closeSessionWithUser(this_member)
 		SteamP2P.remove_kitties()
 		lobby_members.clear()
 		WorldsTracker.clear_worlds()
