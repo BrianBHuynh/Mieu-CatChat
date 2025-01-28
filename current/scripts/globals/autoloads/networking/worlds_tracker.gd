@@ -45,8 +45,7 @@ func update_world(world_path: String) -> void:
 	Saves.set_value("settings", "world_path", world_path)
 	initialize_pos()
 	send_world()
-	Ui.show_system_message("Current world: " + current_world)
-	Ui.show_system_message("2D or 3D: " + str(dimensions))
+	Ui.show_system_message("Current world is " + current_world)
 
 func initialize_pos() -> void:
 	if first_world_started == false and is_instance_valid(GlobalVars.mieu):

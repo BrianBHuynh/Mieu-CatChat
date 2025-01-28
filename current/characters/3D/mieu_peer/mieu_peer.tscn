@@ -74,15 +74,17 @@ animations = [{
 "speed": 7.0
 }]
 
-[node name="Sprite" type="AnimatedSprite3D"]
+[node name="Node3D" type="Node3D"]
+script = ExtResource("3_n7imm")
+
+[node name="Sprite" type="AnimatedSprite3D" parent="."]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 billboard = 1
 texture_filter = 0
 sprite_frames = SubResource("SpriteFrames_hmhyg")
 animation = &"front"
 autoplay = "front"
-script = ExtResource("3_n7imm")
 
 [node name="Label3D" type="Label3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.60782, 0)
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0.321564, 0)
 script = ExtResource("4_1qrr7")

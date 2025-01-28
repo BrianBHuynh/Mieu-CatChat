@@ -13,11 +13,8 @@ func process(_delta: float) -> void:
 
 func _on_network_messages_session_request(remote_id: int) -> void:
 	if Moderation.is_allowed(remote_id):
-		var this_requester: String = Steam.getFriendPersonaName(remote_id)
-		print(this_requester + " is requesting a P2P session")
 		Steam.acceptSessionWithUser(remote_id)
 		WorldsTracker.send_world(remote_id)
-		#SteamLobbies.make_p2p_handshake()
 
 func read_p2p_messages() -> void:
 	var messages: Array = Steam.receiveMessagesOnChannel(0, 1000)
@@ -33,7 +30,6 @@ func read_p2p_messages() -> void:
 				remove_kitty(message.identity)
 			else:
 				message.payload = bytes_to_var(message.payload.decompress_dynamic(-1, FileAccess.COMPRESSION_GZIP))
-				print(message["payload"])
 				match message["payload"]["type"]:
 					"data":
 						if kitties.has(message.identity):
@@ -50,7 +46,7 @@ func read_p2p_messages() -> void:
 						elif WorldsTracker.has(WorldsTracker.current_world, message.identity):
 							if WorldsTracker.dimensions == 3 and message.payload["dimensions"] == 3 and get_tree().current_scene is Node3D:
 								var file: Resource = load("res://current/characters/3D/mieu_peer/mieu_peer.tscn")
-								var kit: AnimatedSprite3D = file.instantiate()
+								var kit: Node3D = file.instantiate()
 								get_parent().add_child(kit)
 								kit.sign_adoption(message["identity"])
 								kitties[message["identity"]] = kit
@@ -137,7 +133,6 @@ func send_chat_message(message: String, this_target: int = 0, private: bool = fa
 				Steam.sendMessageToUser(this_target, this_data, send_type, channel)
 			else:
 				Ui.show_system_warning("Target is either blocked or banned!")
-	print("SENT")
 	Ui.sent_chat_message(message, private, this_target)
 
 func send_lobby_data(this_target: int = 0, _reason: String = "No reason provided", channel: int = 0) -> void:

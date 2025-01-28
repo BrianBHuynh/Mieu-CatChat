@@ -25,6 +25,8 @@ func _process(_delta: float) -> void:
 		chat_box.release_focus()
 		if WorldsTracker.dimensions == 3:
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		else:
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	elif Input.is_action_just_pressed("chat") and menu_open == false:
 		chat_box.open_text_input()
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
@@ -39,10 +41,15 @@ func show_system_warning(message: String, color: Color = Color.DARK_BLUE) -> voi
 		await get_tree().process_frame
 	chat_box.show_system_warning(message, color)
 
+func show_system_debug(message: String, color: Color = Color.SLATE_GRAY) -> void:
+	while chat_box == null:
+		await get_tree().process_frame
+	chat_box.show_system_debug(message, color)
+
 func show_chat_message(message: Dictionary) -> void:
 	while chat_box == null:
 		await get_tree().process_frame
-	chat_box.process_chat_message(message)
+	chat_box.show_chat_message(message)
 
 func sent_chat_message(message: String, private: bool, target: int) -> void:
 	while chat_box == null:

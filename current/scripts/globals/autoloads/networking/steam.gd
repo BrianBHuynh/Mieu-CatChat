@@ -9,7 +9,7 @@ func _ready() -> void:
 		Multithreading.add_task(Steam.initRelayNetworkAccess)
 		Multithreading.add_task(Steam.initAuthentication)
 		Ui.show_system_message("Steam is running!")
-		Ui.show_system_message("User: " + Steam.getFriendPersonaName(Steam.getSteamID()))
+		Ui.show_system_message("User is " + Steam.getFriendPersonaName(Steam.getSteamID()))
 		steam_id = Steam.getSteamID()
 		steam_username = Steam.getFriendPersonaName(Steam.getSteamID())
 		running = true

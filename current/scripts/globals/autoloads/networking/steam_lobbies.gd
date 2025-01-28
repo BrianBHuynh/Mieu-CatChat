@@ -1,6 +1,5 @@
 extends Node
 #Currently heavily based on code from https://godotsteam.com/tutorials/lobbies/
-#var lobby_data
 
 var lobby_id: int = 0
 var lobby_members: Dictionary = {}
@@ -57,7 +56,6 @@ func _on_lobby_joined(this_lobby_id: int, _permissions: int, _locked: bool, resp
 	if response == Steam.CHAT_ROOM_ENTER_RESPONSE_SUCCESS:
 		lobby_id = this_lobby_id
 		get_lobby_members()
-		#make_p2p_handshake()
 		WorldsTracker.send_world()
 	else:
 		var fail_reason: String
@@ -92,10 +90,6 @@ func _on_persona_change(this_steam_id: int, _flag: int) -> void:
 		print("A user (%s) had information change, update the lobby list" % this_steam_id)
 		get_lobby_members()
 
-func make_p2p_handshake() -> void:
-	print("Sending P2P handshake to the lobby")
-	SteamP2P.sendMessageToUser({"type": "Handshake", "message": "handshake", "from": SteamWorks.steam_id})
-
 func _on_lobby_chat_update(_this_lobby_id: int, change_id: int, _making_change_id: int, chat_state: int) -> void:
 	if Moderation.is_allowed(change_id):
 		var changer_name: String = Steam.getFriendPersonaName(change_id)
@@ -104,9 +98,7 @@ func _on_lobby_chat_update(_this_lobby_id: int, change_id: int, _making_change_i
 			SteamP2P.send_lobby_data(change_id, "lobby_join")
 		elif chat_state == Steam.CHAT_MEMBER_STATE_CHANGE_LEFT:
 			Ui.show_system_message("%s has left the lobby." % changer_name)
-			if SteamP2P.kitties.has(change_id) and SteamP2P.kitties.get(change_id).is_inside_tree():
-				get_parent().remove_child(SteamP2P.kitties.get(change_id))
-				SteamP2P.kitties.erase(change_id)
+			SteamP2P.remove_kitty(change_id)
 			WorldsTracker.remove_from_worlds(change_id)
 		else:
 			Ui.show_system_message("%s did... something." % changer_name)

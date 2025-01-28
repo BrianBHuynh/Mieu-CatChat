@@ -1,4 +1,4 @@
-extends AnimatedSprite3D
+extends Node3D
 
 var id: int
 var player_name: String

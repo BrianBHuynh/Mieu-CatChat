@@ -9,4 +9,4 @@ func _on_debug_2d_pressed() -> void:
 
 
 func _on_debug_3d_pressed() -> void:
-	WorldsTracker.update_world("res://current/scenes/3D/debug/3D_test_2/3D_test_2.tscn")
+	WorldsTracker.update_world("res://current/scenes/3D/debug/3D_test_1/3D_test_1.tscn")

@@ -16,6 +16,8 @@ func _ready() -> void:
 	var data_temp: Variant = load_file_encrypted("mieu")
 	if data_temp != null:
 		data = data_temp
+	else:
+		Ui.show_system_message("It looks like this is your first time playing mieu :D welcome!")
 	var settings_temp: Variant = load_file("settings")
 	if settings_temp != null:
 		settings = settings_temp
@@ -26,7 +28,7 @@ func _ready() -> void:
 	SignalBus.load_finished.emit()
 	save_loaded = true
 	await get_tree().process_frame
-	WorldsTracker.update_world(get_or_return("settings", "world_path", "res://current/scenes/3D/debug/3D_test_1/3D_test_1.tscn"))
+	WorldsTracker.update_world(get_or_return("settings", "world_path", "res://current/scenes/2D/debug/2D_test_1/2D_test_1.tscn"))
 	while true:
 		#Auto Saves every 5 minutes
 		await get_tree().create_timer(300).timeout
@@ -126,7 +128,7 @@ func load_file_encrypted(location: String) -> Variant:
 		print("File 1 and 2 have failed their checks, file 3 passed all checks")
 		return content.data
 	else:
-		Ui.show_system_warning("File could not be loaded! Starting new save.")
+		print("File could not be loaded! (" + location + ")")
 		return null
 
 func load_file(location: String) -> Variant:
@@ -141,7 +143,7 @@ func load_file(location: String) -> Variant:
 		print("File 1 and 2 have failed their checks, file 3 passed all checks")
 		return content.data
 	else:
-		Ui.show_system_warning("File could not be loaded!")
+		print("File could not be loaded! (" + location + ")")
 		return null
 
 func sanity_check_encrypted(dir: String, location: String, content: JSON) -> bool:
