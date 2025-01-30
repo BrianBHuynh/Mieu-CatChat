@@ -21,7 +21,7 @@ func load_finished() -> void:
 func show_chat_message(message: Dictionary) -> void:
 	add_chat_message(message.identity, SteamWorks.steam_id, message["payload"]["text"], message["payload"]["private"])
 
-func sent_chat_message(message: String, private: bool, target: int) -> void:
+func sent_chat_message(message: String, target: int = true, private: bool = false) -> void:
 	add_chat_message(SteamWorks.steam_id, target, message, private)
 
 func add_chat_message(sender: int, target: int, content: String, private: bool, save: bool = true) -> void:

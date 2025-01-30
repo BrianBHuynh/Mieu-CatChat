@@ -15,7 +15,7 @@ func _ready() -> void:
 	Steam.persona_state_change.connect(_on_persona_change)
 	Steam.addRequestLobbyListDistanceFilter(Steam.LOBBY_DISTANCE_FILTER_WORLDWIDE)
 
-func create_lobby(type: int, max_players: int) -> void:
+func create_lobby(type: int = Steam.LOBBY_TYPE_PUBLIC, max_players: int = 250) -> void:
 	if lobby_id == 0:
 		Steam.createLobby(type, max_players)
 	else:

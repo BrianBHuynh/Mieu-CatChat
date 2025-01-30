@@ -51,10 +51,10 @@ func show_chat_message(message: Dictionary) -> void:
 		await get_tree().process_frame
 	chat_box.show_chat_message(message)
 
-func sent_chat_message(message: String, private: bool, target: int) -> void:
+func sent_chat_message(message: String, target: int = 0, private: bool = false) -> void:
 	while chat_box == null:
 		await get_tree().process_frame
-	chat_box.sent_chat_message(message, private, target)
+	chat_box.sent_chat_message(message, target, private)
 
 func open_menu(menu_path: String) -> void:
 	var old_menu: Control = cur_menu

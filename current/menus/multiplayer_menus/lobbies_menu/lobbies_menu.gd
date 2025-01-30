@@ -6,7 +6,7 @@ func _ready() -> void:
 	refresh_lobbies()
 
 func _on_create_lobby_btn_pressed() -> void:
-	SteamLobbies.create_lobby(Steam.LOBBY_TYPE_PUBLIC, 250)
+	SteamLobbies.create_lobby()
 
 func refresh_lobbies() -> void:
 	Steam.requestLobbyList()

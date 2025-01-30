@@ -133,7 +133,7 @@ func send_chat_message(message: String, this_target: int = 0, private: bool = fa
 				Steam.sendMessageToUser(this_target, this_data, send_type, channel)
 			else:
 				Ui.show_system_warning("Target is either blocked or banned!")
-	Ui.sent_chat_message(message, private, this_target)
+	Ui.sent_chat_message(message, this_target, private)
 
 func send_lobby_data(this_target: int = 0, _reason: String = "No reason provided", channel: int = 0) -> void:
 	if SteamLobbies.is_host() and SteamLobbies.lobby_members.size() > 1:
