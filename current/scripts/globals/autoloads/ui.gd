@@ -1,7 +1,7 @@
 extends Node
 
 var menu_open: bool = false
-var pause_menu: Resource = load("res://current/menus/escape_menu/escape_menu.tscn")
+var pause_menu: String = "res://current/menus/escape_menu/escape_menu.tscn"
 var cur_menu: Control
 var lobbies: VBoxContainer
 var chat_box: Control
@@ -15,10 +15,7 @@ func _process(_delta: float) -> void:
 		if Saves.save_loaded:
 			if not menu_open:
 				Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-				var new_menu: Control = pause_menu.instantiate()
-				get_tree().root.add_child(new_menu)
-				cur_menu = new_menu
-				menu_open = true
+				open_menu(pause_menu)
 			else:
 				close_menu()
 	elif Input.is_action_just_pressed("send_message"):
@@ -61,8 +58,9 @@ func open_menu(menu_path: String) -> void:
 	var new_menu: Control = load(menu_path).instantiate()
 	get_tree().root.add_child(new_menu)
 	cur_menu = new_menu
-	if old_menu != null:
+	if old_menu != null and is_instance_valid(old_menu):
 		old_menu.queue_free()
+	menu_open = true
 
 func close_menu() -> void:
 	if cur_menu:
