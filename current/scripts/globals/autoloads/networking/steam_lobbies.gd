@@ -13,7 +13,6 @@ func _ready() -> void:
 	Steam.lobby_joined.connect(_on_lobby_joined)
 	Steam.lobby_match_list.connect(_on_lobby_match_list)
 	Steam.persona_state_change.connect(_on_persona_change)
-	Steam.addRequestLobbyListDistanceFilter(Steam.LOBBY_DISTANCE_FILTER_WORLDWIDE)
 
 func create_lobby(type: int = Steam.LOBBY_TYPE_PUBLIC, max_players: int = 250) -> void:
 	if lobby_id == 0:
@@ -29,6 +28,7 @@ func _on_lobby_created(_connected: int, this_lobby_id: int) -> void:
 	Steam.setLobbyData(lobby_id, "mode", "Multiplayer Lobby")
 
 func _on_open_lobby_list_pressed() -> void:
+	Steam.addRequestLobbyListDistanceFilter(Steam.LOBBY_DISTANCE_FILTER_WORLDWIDE)
 	Steam.requestLobbyList()
 
 func _on_lobby_match_list(these_lobbies: Array) -> void:
@@ -87,7 +87,7 @@ func get_lobby_members() -> void:
 	
 func _on_persona_change(this_steam_id: int, _flag: int) -> void:
 	if lobby_id > 0:
-		print("A user (%s) had information change, update the lobby list" % this_steam_id)
+		Ui.show_system_debug("A user (%s) had information change, update the lobby list" % this_steam_id)
 		get_lobby_members()
 
 func _on_lobby_chat_update(_this_lobby_id: int, change_id: int, _making_change_id: int, chat_state: int) -> void:

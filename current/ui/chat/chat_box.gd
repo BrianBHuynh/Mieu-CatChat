@@ -58,7 +58,6 @@ func add_chat_message(sender: int, target: int, content: String, private: bool, 
 func show_system_message(content: String, color: Color = Color.DARK_BLUE, save: bool = true, prefix: String = "SYSTEM") -> void:
 	var message_text: RichTextLabel = RichTextLabel.new()
 	message_text.text = prefix + ": " + content
-	print(message_text.text)
 	message_text.set_script(load("res://current/scripts/node/chat_message.gd"))
 	message_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	message_text.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -67,6 +66,7 @@ func show_system_message(content: String, color: Color = Color.DARK_BLUE, save: 
 	$ScrollContainer/VBoxContainer.add_child(message_text)
 	if save:
 		Ui.chat_log.append({"type": prefix, "content": content, "color": color})
+		print(message_text.text)
 	if Saves.get_or_add("settings", "auto_scroll", true) and WorldsTracker.first_world_started:
 		await get_tree().create_timer(.05).timeout
 		create_tween().tween_property($ScrollContainer.get_v_scroll_bar(), "value", $ScrollContainer.get_v_scroll_bar().max_value, 1.0)

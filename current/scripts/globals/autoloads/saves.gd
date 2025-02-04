@@ -17,7 +17,7 @@ func _ready() -> void:
 	if data_temp != null:
 		data = data_temp
 	else:
-		Ui.show_system_message("It looks like this is your first time playing mieu :D welcome!")
+		Ui.ashow_system_message("It looks like this is your first time playing mieu :D welcome!")
 	var settings_temp: Variant = load_file("settings")
 	if settings_temp != null:
 		settings = settings_temp
@@ -31,7 +31,8 @@ func _ready() -> void:
 	WorldsTracker.update_world(get_or_return("settings", "world_path", "res://current/scenes/2D/debug/2D_test_1/2D_test_1.tscn"))
 	while true:
 		#Auto Saves every 5 minutes
-		await get_tree().create_timer(300).timeout
+		if get_tree():
+			await get_tree().create_timer(300).timeout
 		if get_or_add("settings", "auto_save", true):
 			save_game()
 
@@ -119,31 +120,31 @@ func write_json(content: Variant, dir: String, location: String) -> void:
 func load_file_encrypted(location: String) -> Variant:
 	var content: JSON = JSON.new()
 	if sanity_check_encrypted("user://saves/", location, content):
-		print("File 1 passed all checks")
+		Ui.show_system_debug("File 1 passed all checks")
 		return content.data
 	elif sanity_check_encrypted("user://backup/", location, content):
-		print("File 1 has failed it's checks, file 2 passed all checks")
+		Ui.show_system_debug("File 1 has failed it's checks, file 2 passed all checks")
 		return content.data
 	elif sanity_check_encrypted("user://fallback/", location, content):
-		print("File 1 and 2 have failed their checks, file 3 passed all checks")
+		Ui.show_system_debug("File 1 and 2 have failed their checks, file 3 passed all checks")
 		return content.data
 	else:
-		print("File could not be loaded! (" + location + ")")
+		Ui.show_system_warning("File could not be loaded! (" + location + ")")
 		return null
 
 func load_file(location: String) -> Variant:
 	var content: JSON = JSON.new()
 	if sanity_check("user://saves/", location, content):
-		print("File 1 passed all checks")
+		Ui.show_system_debug("File 1 passed all checks")
 		return content.data
 	elif sanity_check("user://backup/", location, content):
-		print("File 1 has failed it's checks, file 2 passed all checks")
+		Ui.show_system_debug("File 1 has failed it's checks, file 2 passed all checks")
 		return content.data
 	elif sanity_check("user://fallback/", location, content):
-		print("File 1 and 2 have failed their checks, file 3 passed all checks")
+		Ui.show_system_debug("File 1 and 2 have failed their checks, file 3 passed all checks")
 		return content.data
 	else:
-		print("File could not be loaded! (" + location + ")")
+		Ui.show_system_warning("File could not be loaded! (" + location + ")")
 		return null
 
 func sanity_check_encrypted(dir: String, location: String, content: JSON) -> bool:

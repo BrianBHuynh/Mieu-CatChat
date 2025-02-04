@@ -14,19 +14,19 @@ func _process(_delta: float) -> void:
 		chat_box.release_input_focus()
 		if Saves.save_loaded:
 			if not menu_open:
-				Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+				set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 				open_menu(pause_menu)
 			else:
 				close_menu()
 	elif Input.is_action_just_pressed("send_message"):
 		chat_box.release_focus()
 		if WorldsTracker.dimensions == 3:
-			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+			set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 		else:
-			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+			set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	elif Input.is_action_just_pressed("chat") and menu_open == false:
 		chat_box.open_text_input()
-		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 func show_system_message(message: String, color: Color = Color.DARK_BLUE) -> void:
 	while chat_box == null:
@@ -70,3 +70,7 @@ func close_menu() -> void:
 		cur_menu.queue_free()
 		cur_menu = null
 		menu_open = false
+
+func set_mouse_mode(mode: int) -> void:
+	if 3 >= mode and mode >= 0:
+		Input.mouse_mode = mode as Input.MouseMode
