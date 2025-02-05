@@ -29,27 +29,27 @@ func _process(_delta: float) -> void:
 		set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 func show_system_message(message: String, color: Color = Color.DARK_BLUE) -> void:
-	while chat_box == null:
+	while chat_box == null or !is_instance_valid(chat_box):
 		await get_tree().process_frame
 	chat_box.show_system_message(message, color)
 
 func show_system_warning(message: String, color: Color = Color.DARK_BLUE) -> void:
-	while chat_box == null:
+	while chat_box == null or !is_instance_valid(chat_box):
 		await get_tree().process_frame
 	chat_box.show_system_warning(message, color)
 
 func show_system_debug(message: String, color: Color = Color.SLATE_GRAY) -> void:
-	while chat_box == null:
+	while chat_box == null or !is_instance_valid(chat_box):
 		await get_tree().process_frame
 	chat_box.show_system_debug(message, color)
 
 func show_chat_message(message: Dictionary) -> void:
-	while chat_box == null:
+	while chat_box == null or !is_instance_valid(chat_box):
 		await get_tree().process_frame
 	chat_box.show_chat_message(message)
 
 func sent_chat_message(message: String, target: int = 0, private: bool = false) -> void:
-	while chat_box == null:
+	while chat_box == null or !is_instance_valid(chat_box):
 		await get_tree().process_frame
 	chat_box.sent_chat_message(message, target, private)
 

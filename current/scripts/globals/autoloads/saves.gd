@@ -17,7 +17,7 @@ func _ready() -> void:
 	if data_temp != null:
 		data = data_temp
 	else:
-		Ui.ashow_system_message("It looks like this is your first time playing mieu :D welcome!")
+		Ui.show_system_message("It looks like this is your first time playing mieu :D welcome!")
 	var settings_temp: Variant = load_file("settings")
 	if settings_temp != null:
 		settings = settings_temp
@@ -115,7 +115,6 @@ func write_json_encrypted(content: Variant, dir: String, location: String) -> vo
 
 func write_json(content: Variant, dir: String, location: String) -> void:
 	open_write(dir + location + save_extension).store_line(content)
-	open_write(dir + location + checksum_extension).store_line(FileAccess.get_sha256(dir + location + save_extension))
 
 func load_file_encrypted(location: String) -> Variant:
 	var content: JSON = JSON.new()
@@ -160,7 +159,7 @@ func sanity_check_encrypted(dir: String, location: String, content: JSON) -> boo
 		)
 	return false
 
-func sanity_check(dir: String, location: String, content: JSON) -> bool:
+func sanity_check_checksum(dir: String, location: String, content: JSON) -> bool:
 	var sanity: bool = false
 	if (
 		FileAccess.file_exists(dir + location + save_extension)
@@ -172,6 +171,14 @@ func sanity_check(dir: String, location: String, content: JSON) -> bool:
 		FileAccess.get_sha256(dir + location + save_extension) == open_read(dir + location + checksum_extension).get_line() 
 		and content.parse(open_read(dir + location + save_extension).get_as_text()) == OK
 		)
+	return sanity
+
+func sanity_check(dir: String, location: String, content: JSON) -> bool:
+	var sanity: bool = false
+	if (
+		FileAccess.file_exists(dir + location + save_extension) and open_read(dir + location + save_extension) != null
+	):
+		sanity = content.parse(open_read(dir + location + save_extension).get_as_text()) == OK
 	return sanity
 
 func open_write_encrypted(path: String) -> FileAccess:
