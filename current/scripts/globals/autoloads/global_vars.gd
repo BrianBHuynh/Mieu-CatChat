@@ -8,10 +8,10 @@ var frame: float = 0.01666666666
 var first_world_started: bool = false
 
 func _ready() -> void:
-	load_finished()
-	SignalBus.load_finished.connect(load_finished)
+	_load_finished()
+	SignalBus.load_finished.connect(_load_finished)
 
-func load_finished() -> void:
+func _load_finished() -> void:
 	set_stretch_aspect(Saves.get_or_return("settings", "stretch_aspect", 1))
 	set_window_mode(Saves.get_or_return("settings", "window_mode", 2))
 	set_borderless(Saves.get_or_return("settings", "borderless", false))

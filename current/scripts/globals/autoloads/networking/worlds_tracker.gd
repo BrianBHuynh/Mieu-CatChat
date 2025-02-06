@@ -63,4 +63,4 @@ func send_world(pid: int = 0) -> void:
 	SteamP2P.sendMessageToUser({"type": "world_info", "world": current_world}, pid)
 
 func clear_worlds() -> void:
-	worlds = {}
+	worlds.clear()
