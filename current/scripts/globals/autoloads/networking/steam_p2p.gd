@@ -34,7 +34,7 @@ func read_p2p_messages() -> void:
 					"data":
 						if kitties.has(message.identity):
 							if WorldsTracker.has(WorldsTracker.current_world, message.identity) and WorldsTracker.dimensions == message.payload["dimensions"]:
-								if message.payload["dimensions"] == 3 and kitties[message.identity] is AnimatedSprite3D:
+								if message.payload["dimensions"] == 3 and kitties[message.identity] is Node3D:
 									kitties[message.identity].move_to(Vector3(message.payload.x, message.payload.y, message.payload.z))
 								elif message.payload["dimensions"] == 2 and kitties[message.identity] is Node2D:
 									kitties[message.identity].move_to(Vector2(message.payload.x, message.payload.y))
