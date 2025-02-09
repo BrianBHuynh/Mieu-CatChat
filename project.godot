@@ -31,6 +31,7 @@ SteamP2P="*res://current/scripts/globals/autoloads/networking/steam_p2p.gd"
 ChatFilter="*res://current/scripts/globals/autoloads/networking/chat_filter.gd"
 WorldsTracker="*res://current/scripts/globals/autoloads/networking/worlds_tracker.gd"
 Moderation="*res://current/scripts/globals/autoloads/networking/moderation.gd"
+MinigameManager="*res://current/scripts/globals/autoloads/minigame_manager.gd"
 
 [debug]
 
