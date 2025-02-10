@@ -45,7 +45,7 @@ func update_world(world_path: String) -> void:
 	Saves.set_value("settings", "world_path", world_path)
 	initialize_pos()
 	send_world()
-	Ui.show_system_message("Current world is " + current_world)
+	Ui.show_system_message("Now entering " + current_world, Color.CYAN, true, "")
 
 func initialize_pos() -> void:
 	if first_world_started == false and is_instance_valid(GlobalVars.mieu):

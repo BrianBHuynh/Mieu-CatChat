@@ -57,7 +57,10 @@ func add_chat_message(sender: int, target: int, content: String, private: bool, 
 
 func show_system_message(content: String, color: Color = Color.DARK_BLUE, save: bool = true, prefix: String = "SYSTEM") -> void:
 	var message_text: RichTextLabel = RichTextLabel.new()
-	message_text.text = prefix + ": " + content
+	if !prefix.is_empty():
+		message_text.text = prefix + ": " + content
+	else:
+		message_text.text = content
 	message_text.set_script(load("res://current/scripts/node/chat_message.gd"))
 	message_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	message_text.size_flags_horizontal = Control.SIZE_EXPAND_FILL

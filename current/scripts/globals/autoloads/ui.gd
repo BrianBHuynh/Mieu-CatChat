@@ -28,10 +28,10 @@ func _process(_delta: float) -> void:
 		chat_box.open_text_input()
 		set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
-func show_system_message(message: String, color: Color = Color.DARK_BLUE) -> void:
+func show_system_message(content: String, color: Color = Color.DARK_BLUE, save: bool = true, prefix: String = "SYSTEM") -> void:
 	while chat_box == null or !is_instance_valid(chat_box):
 		await get_tree().process_frame
-	chat_box.show_system_message(message, color)
+	chat_box.show_system_message(content, color, save, prefix)
 
 func show_system_warning(message: String, color: Color = Color.DARK_BLUE) -> void:
 	while chat_box == null or !is_instance_valid(chat_box):
