@@ -74,7 +74,7 @@ animations = [{
 "speed": 7.0
 }]
 
-[node name="Node3D" type="Node3D"]
+[node name="MieuPeerRoot3D" type="Node3D"]
 script = ExtResource("3_n7imm")
 
 [node name="Sprite" type="AnimatedSprite3D" parent="."]

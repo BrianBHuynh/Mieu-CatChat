@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://bdllfrs3wcm24"]
+[gd_scene load_steps=5 format=3 uid="uid://bdllfrs3wcm24"]
 
 [ext_resource type="PackedScene" uid="uid://cj7jy8rdyeuvj" path="res://current/characters/2D/mieu/mieu.tscn" id="2_7bh0q"]
+[ext_resource type="PackedScene" uid="uid://ccppo6wmem00o" path="res://current/characters/2D/mieu_peer/mieu_peer.tscn" id="2_fuipg"]
 [ext_resource type="PackedScene" uid="uid://cbajq0dylq2p2" path="res://current/ui/vpet_gui/vpet_gui.tscn" id="2_h7gx6"]
 [ext_resource type="PackedScene" uid="uid://w7p53meqohhf" path="res://current/ui/chat/chat_box.tscn" id="3_7hwlv"]
 
@@ -15,6 +16,19 @@ y_sort_enabled = true
 position = Vector2(923, 690)
 
 [node name="Foreground" type="Node2D" parent="."]
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(1920, 1080)
+size_2d_override_stretch = true
+render_target_update_mode = 4
+
+[node name="Node2D" parent="SubViewportContainer/SubViewport" instance=ExtResource("2_fuipg")]
+position = Vector2(500, 500)
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
