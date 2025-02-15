@@ -28,7 +28,7 @@ func _ready() -> void:
 	SignalBus.load_finished.emit()
 	save_loaded = true
 	await get_tree().process_frame
-	WorldsTracker.update_world(get_or_return("settings", "world_path", "res://current/scenes/2D/templates/2D_scene_template/2D_scene_template.tscn"))
+	WorldsTracker.update_world(get_or_return("settings", "world_path", "res://current/scenes/templates/main_scenes/2D_scene_template/2D_scene_template.tscn"))
 	while true:
 		#Auto Saves every 5 minutes
 		if get_tree():
