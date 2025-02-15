@@ -29,23 +29,24 @@ func has(world: String, pid: int) -> bool:
 func update_world(world_path: String) -> void:
 	Ui.close_menu()
 	var world_packed: PackedScene = load(world_path)
-	current_world = world_packed.get_state().get_node_name(0)
-	match world_packed.get_state().get_node_type(0):
-		"Node2D":
-			dimensions = 2
-		"Node3D":
-			dimensions = 3
-		_:
-			Ui.show_system_warning("Invalid world type, world type is: " + world_packed.get_state().get_node_type(0))
-	get_tree().change_scene_to_packed(world_packed)
-	while !get_tree().current_scene:
-		await get_tree().process_frame
-	if dimensions == 2:
-		middleground = get_node("/root/" + current_world + "/Middleground")
-	Saves.set_value("settings", "world_path", world_path)
-	initialize_pos()
-	send_world()
-	Ui.show_system_message("Now entering " + current_world, Color.CYAN, true, "")
+	if world_packed != null:
+		current_world = world_packed.get_state().get_node_name(0)
+		match world_packed.get_state().get_node_type(0):
+			"Node2D":
+				dimensions = 2
+			"Node3D":
+				dimensions = 3
+			_:
+				Ui.show_system_warning("Invalid world type, world type is: " + world_packed.get_state().get_node_type(0))
+		get_tree().change_scene_to_packed(world_packed)
+		while !get_tree().current_scene:
+			await get_tree().process_frame
+		if dimensions == 2:
+			middleground = get_node("/root/" + current_world + "/Middleground")
+		Saves.set_value("settings", "world_path", world_path)
+		initialize_pos()
+		send_world()
+		Ui.show_system_message("Now entering " + current_world, Color.CYAN, true, "")
 
 func initialize_pos() -> void:
 	if first_world_started == false and is_instance_valid(GlobalVars.mieu):

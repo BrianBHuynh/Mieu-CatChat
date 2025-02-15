@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Mieu"
-run/main_scene="res://current/scenes/2D/debug/2D_test_1/2D_test_1.tscn"
+run/main_scene="res://current/scenes/2D/templates/2D_scene_template/2D_scene_template.tscn"
 config/use_custom_user_dir=true
 config/features=PackedStringArray("4.3", "GL Compatibility")
 boot_splash/image="res://current/assets/images/mieu_splash.png"

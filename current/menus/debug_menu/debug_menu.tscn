@@ -41,6 +41,29 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 alignment = 1
 
+[node name="DebugMessagesToggle" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/HBoxContainer"]
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/ScrollContainer/HBoxContainer/DebugMessagesToggle"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "[center]Toggle Debug Text[/center]"
+fit_content = true
+script = ExtResource("1_a66ng")
+
+[node name="Debug_Text" type="TextureButton" parent="VBoxContainer/ScrollContainer/HBoxContainer/DebugMessagesToggle"]
+texture_filter = 1
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture_normal = ExtResource("2_xge1m")
+stretch_mode = 5
+
 [node name="VBoxContainer2D" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/HBoxContainer"]
 clip_contents = true
 layout_mode = 2
@@ -86,5 +109,6 @@ size_flags_vertical = 3
 texture_normal = ExtResource("2_xge1m")
 stretch_mode = 5
 
+[connection signal="pressed" from="VBoxContainer/ScrollContainer/HBoxContainer/DebugMessagesToggle/Debug_Text" to="." method="_on_debug_text_pressed"]
 [connection signal="pressed" from="VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer2D/Debug_2D" to="." method="_on_debug_2d_pressed"]
 [connection signal="pressed" from="VBoxContainer/ScrollContainer/HBoxContainer/VBoxContainer3D/Debug_3D" to="." method="_on_debug_3d_pressed"]

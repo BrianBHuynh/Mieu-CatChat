@@ -5,8 +5,15 @@ func _on_check_button_toggled(toggled_on: bool) -> void:
 
 
 func _on_debug_2d_pressed() -> void:
-	WorldsTracker.update_world("res://current/scenes/2D/debug/2D_test_1/2D_test_1.tscn")
+	WorldsTracker.update_world("res://current/scenes/2D/templates/2D_scene_template/2D_scene_template.tscn")
 
 
 func _on_debug_3d_pressed() -> void:
-	WorldsTracker.update_world("res://current/scenes/3D/debug/3D_test_1/3D_test_1.tscn")
+	WorldsTracker.update_world("res://current/scenes/3D/debug/3D_scene_template/3D_scene_template.tscn")
+
+
+func _on_debug_text_pressed() -> void:
+	if Saves.get_or_return("settings", "show_debug", false):
+		Saves.set_value("settings", "show_debug", false)
+	else:
+		Saves.set_value("settings", "show_debug", true)

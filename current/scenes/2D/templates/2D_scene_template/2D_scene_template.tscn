@@ -1,0 +1,49 @@
+[gd_scene load_steps=7 format=3 uid="uid://bdllfrs3wcm24"]
+
+[ext_resource type="PackedScene" uid="uid://cj7jy8rdyeuvj" path="res://current/characters/2D/mieu/mieu.tscn" id="1_cusr4"]
+[ext_resource type="Script" path="res://current/scripts/node/minigame_subviewport.gd" id="2_1jjmx"]
+[ext_resource type="Script" path="res://current/scripts/node/minigame_display.gd" id="2_8fype"]
+[ext_resource type="PackedScene" uid="uid://cbajq0dylq2p2" path="res://current/ui/vpet_gui/vpet_gui.tscn" id="3_583d6"]
+[ext_resource type="PackedScene" uid="uid://w7p53meqohhf" path="res://current/ui/chat/chat_box.tscn" id="4_ddg54"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_605u8"]
+viewport_path = NodePath("Minigame/SubViewport")
+
+[node name="2D_scene_template" type="Node2D"]
+
+[node name="Background" type="Node2D" parent="."]
+
+[node name="Middleground" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="Mieu" parent="Middleground" instance=ExtResource("1_cusr4")]
+position = Vector2(923, 690)
+
+[node name="Foreground" type="Node2D" parent="."]
+
+[node name="Minigame" type="Node2D" parent="."]
+
+[node name="SubViewport" type="SubViewport" parent="Minigame"]
+handle_input_locally = false
+sdf_scale = 0
+size = Vector2i(1920, 1080)
+size_2d_override_stretch = true
+render_target_update_mode = 4
+script = ExtResource("2_1jjmx")
+
+[node name="Display" type="Sprite2D" parent="Minigame"]
+scale = Vector2(0.75, 0.75)
+texture = SubResource("ViewportTexture_605u8")
+script = ExtResource("2_8fype")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="VpetGui" parent="Control" instance=ExtResource("3_583d6")]
+layout_mode = 1
+
+[node name="ChatBox" parent="Control" instance=ExtResource("4_ddg54")]
+layout_mode = 1

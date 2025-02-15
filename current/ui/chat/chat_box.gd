@@ -8,12 +8,8 @@ func _ready() -> void:
 		match message["type"]:
 			"chat_message":
 				add_chat_message(message["sender"], message["target"], message["content"], message["private"], false)
-			"SYSTEM":
-				show_system_message(message["content"], message["color"], false)
-			"SYSTEM_WARNING":
-				show_system_message(message["content"], message["color"], false)
-			"DEBUG":
-				show_system_message(message["content"], message["color"], false)
+			_:
+				show_system_message(message["content"], message["color"], false, message["type"])
 
 func load_finished() -> void:
 	$CheckBox.set_pressed_no_signal(Saves.get_or_return("settings", "auto_scroll", true))

@@ -2,7 +2,9 @@ extends Node
 
 
 var minigame: Variant = null
+var minigame_display: Sprite2D = null
 var minigame_name: String = ""
+var minigame_subviewport: SubViewport = null
 
 func is_minigame_open() -> bool:
 	if minigame == null or minigame_name.is_empty():
@@ -30,6 +32,13 @@ func get_minigame() -> Variant:
 
 func open_minigame(minigame_path: String) -> void:
 	var minigame_instance: Variant = load(minigame_path).instantiate()
-	get_tree().add_child(minigame_instance)
-	minigame = minigame_instance
-	minigame_name = minigame_instance.name
+	if minigame_instance.name != minigame_name:
+		minigame = minigame_instance
+		minigame_name = minigame_instance.name
+		for minigame_node: Node2D in minigame_subviewport.get_children():
+			minigame_node.queue_free()
+		minigame_subviewport.add_child(minigame_instance)
+	minigame_display.show()
+
+func close_minigame() -> void:
+	minigame_display.hide()

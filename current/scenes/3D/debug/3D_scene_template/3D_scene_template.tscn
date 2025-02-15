@@ -1,9 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://cr4rywm07luw3"]
+[gd_scene load_steps=10 format=3 uid="uid://cr4rywm07luw3"]
 
 [ext_resource type="PackedScene" uid="uid://cbajq0dylq2p2" path="res://current/ui/vpet_gui/vpet_gui.tscn" id="2_l3gao"]
 [ext_resource type="PackedScene" uid="uid://w7p53meqohhf" path="res://current/ui/chat/chat_box.tscn" id="3_ycnw3"]
 [ext_resource type="PackedScene" uid="uid://bliphh5kps0ly" path="res://current/characters/3D/mieu/mieu.tscn" id="4_1oncb"]
 [ext_resource type="Script" path="res://current/scripts/node/camera_3d.gd" id="5_cefjs"]
+[ext_resource type="Script" path="res://current/scripts/node/minigame_subviewport.gd" id="5_x12sx"]
+[ext_resource type="Script" path="res://current/scripts/node/minigame_display.gd" id="6_5n61i"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6i420"]
 size = Vector3(50, 1, 5)
@@ -11,7 +13,10 @@ size = Vector3(50, 1, 5)
 [sub_resource type="BoxMesh" id="BoxMesh_e5fkv"]
 size = Vector3(50, 1, 5)
 
-[node name="3D_test_1" type="Node3D"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_eihwp"]
+viewport_path = NodePath("Minigame/SubViewport")
+
+[node name="3D_scene_template" type="Node3D"]
 
 [node name="VpetGui" parent="." instance=ExtResource("2_l3gao")]
 
@@ -31,3 +36,18 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 2.5)
 script = ExtResource("5_cefjs")
+
+[node name="Minigame" type="Node2D" parent="."]
+
+[node name="SubViewport" type="SubViewport" parent="Minigame"]
+handle_input_locally = false
+sdf_scale = 0
+size = Vector2i(1920, 1080)
+size_2d_override_stretch = true
+render_target_update_mode = 4
+script = ExtResource("5_x12sx")
+
+[node name="Display" type="Sprite2D" parent="Minigame"]
+scale = Vector2(0.75, 0.75)
+texture = SubResource("ViewportTexture_eihwp")
+script = ExtResource("6_5n61i")

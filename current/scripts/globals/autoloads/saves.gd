@@ -28,7 +28,7 @@ func _ready() -> void:
 	SignalBus.load_finished.emit()
 	save_loaded = true
 	await get_tree().process_frame
-	WorldsTracker.update_world(get_or_return("settings", "world_path", "res://current/scenes/2D/debug/2D_test_1/2D_test_1.tscn"))
+	WorldsTracker.update_world(get_or_return("settings", "world_path", "res://current/scenes/2D/templates/2D_scene_template/2D_scene_template.tscn"))
 	while true:
 		#Auto Saves every 5 minutes
 		if get_tree():
@@ -128,7 +128,7 @@ func load_file_encrypted(location: String) -> Variant:
 		Ui.show_system_debug("File 1 and 2 have failed their checks, file 3 passed all checks")
 		return content.data
 	else:
-		Ui.show_system_warning("File could not be loaded! (" + location + ")")
+		Ui.show_system_debug("File could not be loaded! (" + location + ")")
 		return null
 
 func load_file(location: String) -> Variant:
@@ -143,7 +143,7 @@ func load_file(location: String) -> Variant:
 		Ui.show_system_debug("File 1 and 2 have failed their checks, file 3 passed all checks")
 		return content.data
 	else:
-		Ui.show_system_warning("File could not be loaded! (" + location + ")")
+		Ui.show_system_debug("File could not be loaded! (" + location + ")")
 		return null
 
 func sanity_check_encrypted(dir: String, location: String, content: JSON) -> bool:
