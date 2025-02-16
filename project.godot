@@ -32,6 +32,7 @@ ChatFilter="*res://current/scripts/globals/autoloads/networking/chat_filter.gd"
 WorldsTracker="*res://current/scripts/globals/autoloads/networking/worlds_tracker.gd"
 Moderation="*res://current/scripts/globals/autoloads/networking/moderation.gd"
 MinigameManager="*res://current/scripts/globals/autoloads/minigame_manager.gd"
+Cryptography="*res://current/scripts/globals/autoloads/networking/cryptography.gd"
 
 [debug]
 

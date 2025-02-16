@@ -22,6 +22,9 @@ func read_p2p_messages() -> void:
 		pass
 	else:
 		for message: Dictionary in messages:
+			process_message(message)
+
+func process_message(message: Dictionary):
 			if message.is_empty() or message == null:
 				Ui.show_system_debug("WARNING: read an empty packet with non-zero size!")
 			elif !Moderation.is_allowed(message.identity):
@@ -91,11 +94,18 @@ func read_p2p_messages() -> void:
 							Ui.show_system_message("The lobby owner " + SteamLobbies.get_host_name() + "has kicked " + Steam.getFriendPersonaName(message["payload"]["kicked_player"]))
 					"world_info":
 						WorldsTracker.add_to_world(message["payload"]["world"], message.identity)
+					"encrypted_message":
+						Cryptography.save_message(message.identity, message["payload"]["message_id"], message["payload"]["encrypted_payload"])
+					"encrypted_key":
+						Cryptography.decode_message(message.identity, message["payload"]["message_id"], message["payload"]["key"])
 
-func sendMessageToUser(payload: Dictionary, this_target: int = 0, send_type: int = Steam.NETWORKING_SEND_RELIABLE, channel: int = 0) -> void:
+func send_message_to_user(payload: Dictionary, this_target: int = 0, send_type: int = Steam.NETWORKING_SEND_RELIABLE, channel: int = 0, encrypted: bool = false) -> void:
 	if SteamLobbies.lobby_members.size() > 1:
 		var this_data: PackedByteArray
-		this_data.append_array(var_to_bytes(payload))
+		if encrypted:
+			this_data.append_array(Cryptography.encode_payload(payload))
+		else:
+			this_data.append_array(var_to_bytes(payload))
 		this_data = this_data.compress(FileAccess.COMPRESSION_GZIP)
 		if this_target == 0:
 			match payload["type"]:
@@ -151,13 +161,13 @@ func send_lobby_data(this_target: int = 0, _reason: String = "No reason provided
 
 func send_kick(this_target: int = 0, reason: String = "no reason provided") -> void:
 	if SteamLobbies.is_host() and SteamLobbies.lobby_members.size() > 1:
-		sendMessageToUser({"type": "kick", "reason": reason}, this_target)
-		sendMessageToUser({"type": "kick_announce", "kicked_player": this_target}, 0)
+		send_message_to_user({"type": "kick", "reason": reason}, this_target)
+		send_message_to_user({"type": "kick_announce", "kicked_player": this_target}, 0)
 
 func send_ban(this_target: int = 0, reason: String = "no reason provided") -> void:
 	if SteamLobbies.is_host() and SteamLobbies.lobby_members.size() > 1:
-		sendMessageToUser({"type": "ban", "reason": reason}, this_target)
-		sendMessageToUser({"type": "ban_announce", "banned_player": this_target}, 0)
+		send_message_to_user({"type": "ban", "reason": reason}, this_target)
+		send_message_to_user({"type": "ban_announce", "banned_player": this_target}, 0)
 
 func _on_p2p_session_connect_fail(steam_id: int, _session_error: int, _state: int, debug_msg: String) -> void:
 	Ui.show_system_warning("P2p session connection failed! Reason: " + debug_msg)

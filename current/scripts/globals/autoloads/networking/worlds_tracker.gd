@@ -47,6 +47,8 @@ func update_world(world_path: String) -> void:
 		initialize_pos()
 		send_world()
 		Ui.show_system_message("Now entering " + current_world, Color.CYAN, true, "")
+	else:
+		Ui.show_system_debug("The world that you tried to load was not found")
 
 func initialize_pos() -> void:
 	if first_world_started == false and is_instance_valid(GlobalVars.mieu):
@@ -61,7 +63,7 @@ func initialize_pos() -> void:
 		first_world_started = true
 
 func send_world(pid: int = 0) -> void:
-	SteamP2P.sendMessageToUser({"type": "world_info", "world": current_world}, pid)
+	SteamP2P.send_message_to_user({"type": "world_info", "world": current_world}, pid)
 
 func clear_worlds() -> void:
 	worlds.clear()
