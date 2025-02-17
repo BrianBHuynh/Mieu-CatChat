@@ -13,17 +13,12 @@ func _ready() -> void:
 	make_dir("user://backup")
 	make_dir("user://fallback")
 	make_dir("user://fonts")
-	var data_temp: Variant = load_file_encrypted("mieu")
-	if data_temp != null:
-		data = data_temp
-	else:
+	data = load_file_encrypted("mieu")
+	if data.is_empty():
 		Ui.show_system_message("It looks like this is your first time playing mieu :D welcome!")
-	var settings_temp: Variant = load_file("settings")
-	if settings_temp != null:
-		settings = settings_temp
-	var networking_temp: Variant = load_file("networking")
-	if networking_temp != null:
-		networking = networking_temp
+	settings = load_file("settings")
+	networking = load_file("networking")
+	MinigameManager.highscores = Saves.load_file_encrypted("perch")
 	
 	SignalBus.load_finished.emit()
 	save_loaded = true
@@ -75,6 +70,8 @@ func save_game() -> void:
 	store_player_state()
 	Multithreading.add_task(save_file_encrypted.bind(data, "mieu"))
 	Multithreading.add_task(save_file.bind(data, "mieu.readable"))
+	Multithreading.add_task(save_file_encrypted.bind(MinigameManager.highscores, "perch"))
+	Multithreading.add_task(save_file.bind(MinigameManager.highscores, "perch.readable"))
 	Multithreading.add_task(save_file.bind(settings, "settings"))
 	Multithreading.add_task(save_file.bind(networking, "networking"))
 
@@ -129,7 +126,7 @@ func load_file_encrypted(location: String) -> Variant:
 		return content.data
 	else:
 		Ui.show_system_debug("File could not be loaded! (" + location + ")")
-		return null
+		return {}
 
 func load_file(location: String) -> Variant:
 	var content: JSON = JSON.new()
@@ -144,7 +141,7 @@ func load_file(location: String) -> Variant:
 		return content.data
 	else:
 		Ui.show_system_debug("File could not be loaded! (" + location + ")")
-		return null
+		return {}
 
 func sanity_check_encrypted(dir: String, location: String, content: JSON) -> bool:
 	if (

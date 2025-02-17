@@ -24,7 +24,7 @@ func read_p2p_messages() -> void:
 		for message: Dictionary in messages:
 			process_message(message)
 
-func process_message(message: Dictionary):
+func process_message(message: Dictionary) -> void:
 			if message.is_empty() or message == null:
 				Ui.show_system_debug("WARNING: read an empty packet with non-zero size!")
 			elif !Moderation.is_allowed(message.identity):
