@@ -103,7 +103,7 @@ func send_message_to_user(payload: Dictionary, this_target: int = 0, send_type: 
 	if SteamLobbies.lobby_members.size() > 1:
 		var this_data: PackedByteArray
 		if encrypted:
-			this_data.append_array(Cryptography.encode_payload(payload))
+			this_data.append_array(Cryptography.encrypted_messages_sent[Cryptography.encode_payload(payload)]["payload"])
 		else:
 			this_data.append_array(var_to_bytes(payload))
 		this_data = this_data.compress(FileAccess.COMPRESSION_GZIP)
