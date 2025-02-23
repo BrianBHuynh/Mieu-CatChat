@@ -15,6 +15,9 @@ size = Vector3(50, 1, 5)
 [node name="3D_scene_template" type="Node3D"]
 
 [node name="Minigame" type="Window" parent="."]
+mode = 2
+initial_position = 2
+size = Vector2i(1920, 1080)
 script = ExtResource("1_k6oj2")
 
 [node name="VpetGui" parent="." instance=ExtResource("1_m21qy")]

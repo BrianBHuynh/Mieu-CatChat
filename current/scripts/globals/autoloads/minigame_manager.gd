@@ -7,10 +7,13 @@ var minigame_name: String = ""
 var highscores: Dictionary = {}
 
 func is_minigame_open() -> bool:
-	if minigame == null or minigame_name.is_empty():
-		return false
-	else:
-		return true
+	return minigame_display.visible
+
+func minigame_close() -> void:
+	minigame_display.hide()
+
+func minigame_open() -> void:
+	minigame_display.show()
 
 func minigame_dimensions() -> int:
 	var dimensions: int

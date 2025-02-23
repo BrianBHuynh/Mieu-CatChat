@@ -9,9 +9,9 @@
 
 [node name="Minigame" type="Window" parent="."]
 mode = 2
-initial_position = 3
+initial_position = 2
 size = Vector2i(1920, 1050)
-current_screen = 0
+popup_window = true
 script = ExtResource("1_ve3hq")
 
 [node name="Background" type="Node2D" parent="."]
@@ -35,3 +35,5 @@ layout_mode = 1
 
 [node name="ChatBox" parent="Control" instance=ExtResource("5_p2mc7")]
 layout_mode = 1
+
+[connection signal="close_requested" from="Minigame" to="Minigame" method="_on_close_requested"]
