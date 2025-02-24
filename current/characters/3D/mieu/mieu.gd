@@ -19,7 +19,7 @@ func _physics_process(delta: float) -> void:
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var input_dir: Vector3 = Vector3(0, 0, 0)
-	if not Ui.menu_open:
+	if not Ui.is_menu_open():
 		if Input.is_action_pressed("move_left") and not Input.is_action_pressed("move_right"):
 			input_dir = Vector3(-1, 0, 0)
 		elif Input.is_action_pressed("move_right") and not Input.is_action_pressed("move_left"):

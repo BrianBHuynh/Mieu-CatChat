@@ -12,8 +12,18 @@ func is_minigame_open() -> bool:
 func minigame_close() -> void:
 	minigame_display.hide()
 
-func minigame_open() -> void:
-	minigame_display.show()
+func minigame_open(minigame_path: String = "") -> void:
+	if minigame_path.is_empty():
+		minigame_display.show()
+	else:
+		var minigame_instance: Variant = load(minigame_path).instantiate()
+		if minigame_instance.name != minigame_name:
+			minigame = minigame_instance
+			minigame_name = minigame_instance.name
+			for minigame_node: Node2D in minigame_display.get_children():
+				minigame_node.queue_free()
+			minigame_display.add_child(minigame_instance)
+		minigame_display.show()
 
 func minigame_dimensions() -> int:
 	var dimensions: int
@@ -32,16 +42,6 @@ func get_minigame() -> Variant:
 		return minigame
 	else:
 		return null
-
-func open_minigame(minigame_path: String) -> void:
-	var minigame_instance: Variant = load(minigame_path).instantiate()
-	if minigame_instance.name != minigame_name:
-		minigame = minigame_instance
-		minigame_name = minigame_instance.name
-		for minigame_node: Node2D in minigame_display.get_children():
-			minigame_node.queue_free()
-		minigame_display.add_child(minigame_instance)
-	minigame_display.show()
 
 func close_minigame() -> void:
 	minigame_display.hide()

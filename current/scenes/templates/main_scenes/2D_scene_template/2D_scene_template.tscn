@@ -11,6 +11,7 @@
 mode = 2
 initial_position = 2
 size = Vector2i(1920, 1050)
+visible = false
 popup_window = true
 script = ExtResource("1_ve3hq")
 

@@ -1,6 +1,5 @@
 extends Node
 
-var menu_open: bool = false
 var pause_menu: String = "res://current/menus/escape_menu/escape_menu.tscn"
 var cur_menu: Control
 var lobbies: VBoxContainer
@@ -13,7 +12,7 @@ func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("pause"):
 		chat_box.release_input_focus()
 		if Saves.save_loaded:
-			if not menu_open:
+			if not is_menu_open():
 				set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 				open_menu(pause_menu)
 			else:
@@ -24,9 +23,12 @@ func _process(_delta: float) -> void:
 			set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 		else:
 			set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	elif Input.is_action_just_pressed("chat") and menu_open == false:
+	elif Input.is_action_just_pressed("chat") and !is_menu_open():
 		chat_box.open_text_input()
 		set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+
+func is_menu_open() -> bool:
+	return is_instance_valid(cur_menu)
 
 func show_system_message(content: String, color: Color = Color.DARK_BLUE, save: bool = true, prefix: String = "SYSTEM") -> void:
 	while chat_box == null or !is_instance_valid(chat_box):
@@ -60,7 +62,6 @@ func open_menu(menu_path: String) -> void:
 	cur_menu = new_menu
 	if old_menu != null and is_instance_valid(old_menu):
 		old_menu.queue_free()
-	menu_open = true
 
 func close_menu() -> void:
 	if cur_menu:
@@ -69,7 +70,6 @@ func close_menu() -> void:
 		get_tree().root.remove_child(cur_menu)
 		cur_menu.queue_free()
 		cur_menu = null
-		menu_open = false
 
 func set_mouse_mode(mode: int) -> void:
 	if 3 >= mode and mode >= 0:

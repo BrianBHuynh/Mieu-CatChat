@@ -17,3 +17,7 @@ func _on_debug_text_pressed() -> void:
 		Saves.set_value("settings", "show_debug", false)
 	else:
 		Saves.set_value("settings", "show_debug", true)
+
+
+func _on_minigame_pressed() -> void:
+	MinigameManager.minigame_open("res://current/scenes/templates/main_scenes/3D_scene_template/3D_scene_template.tscn")
