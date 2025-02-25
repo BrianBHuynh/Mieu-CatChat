@@ -1,9 +1,26 @@
-[gd_scene load_steps=2 format=3 uid="uid://cwxscncrwon38"]
+[gd_scene load_steps=3 format=3 uid="uid://cwxscncrwon38"]
 
+[ext_resource type="Script" path="res://current/scenes/templates/main_scenes/2D_minigame_template/2d_minigame_template.gd" id="1_0tt65"]
 [ext_resource type="Texture2D" uid="uid://37vx6dgthk0f" path="res://current/assets/images/mieu.png" id="1_yqwda"]
 
 [node name="2dMinigameTemplate" type="Node2D"]
+script = ExtResource("1_0tt65")
+
+[node name="Mieu2" type="Sprite2D" parent="."]
+position = Vector2(1536, 512)
+scale = Vector2(0.277241, 0.584102)
+texture = ExtResource("1_yqwda")
 
 [node name="Mieu" type="Sprite2D" parent="."]
-position = Vector2(976, 528)
+position = Vector2(504, 512)
+scale = Vector2(0.256111, 0.577857)
 texture = ExtResource("1_yqwda")
+
+[node name="Button" type="Button" parent="."]
+modulate = Color(1, 1, 1, 0)
+offset_left = 848.0
+offset_top = 208.0
+offset_right = 944.0
+offset_bottom = 424.0
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
