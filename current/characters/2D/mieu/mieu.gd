@@ -7,7 +7,7 @@ func _ready() -> void:
 
 func _physics_process(_delta: float) -> void:
 	var input_dir: Vector2 = Vector2(0, 0)
-	if not Ui.is_menu_open():
+	if GlobalVars.is_player_interactive():
 		if Input.is_action_pressed("move_left") and not Input.is_action_pressed("move_right"):
 			input_dir = Vector2(-1, 0)
 		elif Input.is_action_pressed("move_right") and not Input.is_action_pressed("move_left"):

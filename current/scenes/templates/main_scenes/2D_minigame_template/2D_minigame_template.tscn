@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://cwxscncrwon38"]
+
+[ext_resource type="Texture2D" uid="uid://37vx6dgthk0f" path="res://current/assets/images/mieu.png" id="1_yqwda"]
+
+[node name="2dMinigameTemplate" type="Node2D"]
+
+[node name="Mieu" type="Sprite2D" parent="."]
+position = Vector2(976, 528)
+texture = ExtResource("1_yqwda")

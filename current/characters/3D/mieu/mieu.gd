@@ -47,7 +47,7 @@ func _physics_process(delta: float) -> void:
 			Multithreading.add_task(Callable(SteamP2P.send_message_to_user).bind({"type": "data", "dimensions": 3,"x": GlobalVars.mieu.global_position.x, "y": GlobalVars.mieu.global_position.y, "z": GlobalVars.mieu.global_position.z}, 0, Steam.NETWORKING_SEND_UNRELIABLE_NO_DELAY))
 
 func _input(event: InputEvent) -> void:
-	if !Ui.menu_open and !Ui.chat_box.is_text_box_focused():
+	if GlobalVars.is_player_interactive():
 		if event is InputEventMouseMotion:
 			rotate_y(deg_to_rad(-event.relative.x*Saves.get_or_return("settings", "mouse_sense", .20)))
 			$CameraOrigin.rotate_x(deg_to_rad(-event.relative.y*Saves.get_or_return("settings", "mouse_sense", .20)))

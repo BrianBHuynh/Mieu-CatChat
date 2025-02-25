@@ -60,3 +60,6 @@ func set_window_mode(mode: int) -> void:
 func set_borderless(toggled: bool) -> void:
 	get_window().set_flag(Window.FLAG_BORDERLESS, toggled)
 	Saves.set_value("settings", "borderless", toggled)
+
+func is_player_interactive() -> bool:
+	return not (Ui.is_menu_open() or MinigameManager.is_minigame_open() or Ui.chat_box.is_text_box_focused())
