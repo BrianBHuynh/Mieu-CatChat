@@ -1,0 +1,80 @@
+[gd_scene load_steps=12 format=3 uid="uid://cm40xnuc8mogi"]
+
+[ext_resource type="Script" path="res://current/characters/2D/sidescroll_mieu/sidescroll_mieu.gd" id="1_uiwn2"]
+[ext_resource type="Texture2D" uid="uid://lhikvxbnengm" path="res://current/assets/images/mieu_idle_front.png" id="2_76dns"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_flex7"]
+atlas = ExtResource("2_76dns")
+region = Rect2(0, 0, 480, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o70wn"]
+atlas = ExtResource("2_76dns")
+region = Rect2(480, 0, 480, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4kd80"]
+atlas = ExtResource("2_76dns")
+region = Rect2(960, 0, 480, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lo8ej"]
+atlas = ExtResource("2_76dns")
+region = Rect2(1440, 0, 480, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gy6dc"]
+atlas = ExtResource("2_76dns")
+region = Rect2(1920, 0, 480, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tced4"]
+atlas = ExtResource("2_76dns")
+region = Rect2(2400, 0, 480, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cmh0j"]
+atlas = ExtResource("2_76dns")
+region = Rect2(2880, 0, 480, 480)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_h658l"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_flex7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o70wn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4kd80")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lo8ej")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gy6dc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tced4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cmh0j")
+}],
+"loop": true,
+"name": &"front",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_e3ni3"]
+radius = 11.0
+height = 170.0
+
+[node name="SidescrollMieu" type="CharacterBody2D"]
+slide_on_ceiling = false
+script = ExtResource("1_uiwn2")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -90)
+scale = Vector2(0.75, 0.75)
+sprite_frames = SubResource("SpriteFrames_h658l")
+animation = &"front"
+autoplay = "front"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_e3ni3")

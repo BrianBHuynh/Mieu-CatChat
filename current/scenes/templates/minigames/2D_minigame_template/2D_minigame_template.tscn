@@ -1,3 +1,40 @@
-[gd_scene format=3 uid="uid://ik7x43hmcc7x"]
+[gd_scene load_steps=5 format=3 uid="uid://cwxscncrwon38"]
+
+[ext_resource type="Script" path="res://current/scenes/templates/minigames/2D_minigame_template/2d_minigame_template.gd" id="1_e33rw"]
+[ext_resource type="Texture2D" uid="uid://37vx6dgthk0f" path="res://current/assets/images/mieu.png" id="2_dwlht"]
+[ext_resource type="PackedScene" uid="uid://cm40xnuc8mogi" path="res://current/characters/2D/sidescroll_mieu/sidescroll_mieu.tscn" id="3_61pvm"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vpuaw"]
+size = Vector2(1989, 89)
 
 [node name="2dMinigameTemplate" type="Node2D"]
+script = ExtResource("1_e33rw")
+
+[node name="Mieu2" type="Sprite2D" parent="."]
+position = Vector2(1536, 512)
+scale = Vector2(0.277241, 0.584102)
+texture = ExtResource("2_dwlht")
+
+[node name="Mieu" type="Sprite2D" parent="."]
+position = Vector2(504, 512)
+scale = Vector2(0.256111, 0.577857)
+texture = ExtResource("2_dwlht")
+
+[node name="Button" type="Button" parent="."]
+offset_left = 848.0
+offset_top = 216.0
+offset_right = 952.0
+offset_bottom = 432.0
+flat = true
+clip_text = true
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(1037.5, 868.5)
+shape = SubResource("RectangleShape2D_vpuaw")
+
+[node name="SidescrollMieu" parent="." instance=ExtResource("3_61pvm")]
+position = Vector2(528, 482)
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

@@ -20,4 +20,4 @@ func _on_debug_text_pressed() -> void:
 
 
 func _on_minigame_pressed() -> void:
-	MinigameManager.minigame_open("res://current/scenes/templates/main_scenes/2D_minigame_template/2D_minigame_template.tscn")
+	MinigameManager.minigame_open("res://current/scenes/templates/minigames/2D_minigame_template/2D_minigame_template.tscn")
