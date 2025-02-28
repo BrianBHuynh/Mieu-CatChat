@@ -8,6 +8,7 @@
 [node name="2D_scene_template" type="Node2D"]
 
 [node name="Minigame" type="Window" parent="."]
+handle_input_locally = false
 mode = 2
 initial_position = 2
 size = Vector2i(1920, 1080)

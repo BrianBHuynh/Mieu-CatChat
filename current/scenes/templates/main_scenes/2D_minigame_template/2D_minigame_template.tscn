@@ -17,10 +17,11 @@ scale = Vector2(0.256111, 0.577857)
 texture = ExtResource("1_yqwda")
 
 [node name="Button" type="Button" parent="."]
-modulate = Color(1, 1, 1, 0)
 offset_left = 848.0
-offset_top = 208.0
-offset_right = 944.0
-offset_bottom = 424.0
+offset_top = 216.0
+offset_right = 952.0
+offset_bottom = 432.0
+flat = true
+clip_text = true
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
