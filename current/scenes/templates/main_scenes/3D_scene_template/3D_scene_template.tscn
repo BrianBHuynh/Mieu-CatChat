@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://cr4rywm07luw3"]
+[gd_scene load_steps=9 format=3 uid="uid://cr4rywm07luw3"]
 
 [ext_resource type="Script" path="res://current/scripts/node/minigame_window.gd" id="1_k6oj2"]
 [ext_resource type="PackedScene" uid="uid://cbajq0dylq2p2" path="res://current/ui/vpet_gui/vpet_gui.tscn" id="1_m21qy"]
+[ext_resource type="Script" path="res://current/scenes/templates/main_scenes/3D_scene_template/3d_scene_template.gd" id="1_p7t0c"]
 [ext_resource type="PackedScene" uid="uid://w7p53meqohhf" path="res://current/ui/chat/chat_box.tscn" id="2_5d3gs"]
 [ext_resource type="PackedScene" uid="uid://bliphh5kps0ly" path="res://current/characters/3D/mieu/mieu.tscn" id="3_eeycp"]
 [ext_resource type="Script" path="res://current/scripts/node/camera_3d.gd" id="4_s2yyp"]
@@ -13,6 +14,7 @@ size = Vector3(50, 1, 5)
 size = Vector3(50, 1, 5)
 
 [node name="3D_scene_template" type="Node3D"]
+script = ExtResource("1_p7t0c")
 
 [node name="Minigame" type="Window" parent="."]
 mode = 2

@@ -5,11 +5,11 @@ func _on_check_button_toggled(toggled_on: bool) -> void:
 
 
 func _on_debug_2d_pressed() -> void:
-	WorldsTracker.update_world("res://current/scenes/templates/main_scenes/2D_scene_template/2D_scene_template.tscn")
+	WorldsTracker.change_world("res://current/scenes/templates/main_scenes/2D_scene_template/2D_scene_template.tscn")
 
 
 func _on_debug_3d_pressed() -> void:
-	WorldsTracker.update_world("res://current/scenes/templates/main_scenes/3D_scene_template/3D_scene_template.tscn")
+	WorldsTracker.change_world("res://current/scenes/templates/main_scenes/3D_scene_template/3D_scene_template.tscn")
 
 
 func _on_debug_text_pressed() -> void:

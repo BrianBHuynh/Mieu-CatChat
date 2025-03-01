@@ -1,11 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://bdllfrs3wcm24"]
+[gd_scene load_steps=6 format=3 uid="uid://bdllfrs3wcm24"]
 
+[ext_resource type="Script" path="res://current/scenes/templates/main_scenes/2D_scene_template/2d_scene_template.gd" id="1_jxoa0"]
 [ext_resource type="PackedScene" uid="uid://cj7jy8rdyeuvj" path="res://current/characters/2D/mieu/mieu.tscn" id="1_uyj3n"]
 [ext_resource type="Script" path="res://current/scripts/node/minigame_window.gd" id="1_ve3hq"]
 [ext_resource type="PackedScene" uid="uid://cbajq0dylq2p2" path="res://current/ui/vpet_gui/vpet_gui.tscn" id="4_yrj4q"]
 [ext_resource type="PackedScene" uid="uid://w7p53meqohhf" path="res://current/ui/chat/chat_box.tscn" id="5_p2mc7"]
 
 [node name="2D_scene_template" type="Node2D"]
+script = ExtResource("1_jxoa0")
 
 [node name="Minigame" type="Window" parent="."]
 handle_input_locally = false

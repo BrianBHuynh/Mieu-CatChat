@@ -36,7 +36,7 @@ func process_message(message: Dictionary) -> void:
 				match message["payload"]["type"]:
 					"data":
 						if kitties.has(message.identity):
-							if WorldsTracker.has(WorldsTracker.current_world, message.identity) and WorldsTracker.dimensions == message.payload["dimensions"]:
+							if WorldsTracker.has(message.identity, WorldsTracker.current_world_name) and WorldsTracker.dimensions == message.payload["dimensions"]:
 								if message.payload["dimensions"] == 3 and kitties[message.identity] is Node3D:
 									kitties[message.identity].move_to(Vector3(message.payload.x, message.payload.y, message.payload.z))
 								elif message.payload["dimensions"] == 2 and kitties[message.identity] is Node2D:
@@ -46,7 +46,7 @@ func process_message(message: Dictionary) -> void:
 									remove_kitty(message.identity)
 							else:
 								remove_kitty(message.identity)
-						elif WorldsTracker.has(WorldsTracker.current_world, message.identity):
+						elif WorldsTracker.has(message.identity, WorldsTracker.current_world_name):
 							if WorldsTracker.dimensions == 3 and message.payload["dimensions"] == 3 and get_tree().current_scene is Node3D:
 								var file: Resource = load("res://current/characters/3D/mieu_peer/mieu_peer.tscn")
 								var kit: Node3D = file.instantiate()
@@ -93,7 +93,7 @@ func process_message(message: Dictionary) -> void:
 						if message.identity == Steam.getLobbyOwner(SteamLobbies.lobby_id):
 							Ui.show_system_message("The lobby owner " + SteamLobbies.get_host_name() + "has kicked " + Steam.getFriendPersonaName(message["payload"]["kicked_player"]))
 					"world_info":
-						WorldsTracker.add_to_world(message["payload"]["world"], message.identity)
+						WorldsTracker.add_to_world(message.identity, message["payload"]["world"])
 					"encrypted_message":
 						Cryptography.save_message(message.identity, message["payload"]["message_id"], message["payload"]["encrypted_payload"])
 					"encrypted_key":
@@ -111,7 +111,7 @@ func send_message_to_user(payload: Dictionary, this_target: int = 0, send_type: 
 			match payload["type"]:
 				"data":
 					for this_member: int in SteamLobbies.lobby_members:
-						if this_member != SteamWorks.steam_id and WorldsTracker.has(WorldsTracker.current_world, this_member) and Moderation.is_allowed(this_member):
+						if this_member != SteamWorks.steam_id and WorldsTracker.has(this_member, WorldsTracker.current_world_name, WorldsTracker.current_instance_id) and Moderation.is_allowed(this_member):
 							Steam.sendMessageToUser(this_member, this_data, send_type, channel)
 				_:
 					for this_member: int in SteamLobbies.lobby_members:
