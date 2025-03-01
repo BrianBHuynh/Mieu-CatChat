@@ -5,6 +5,15 @@ var minigame: Variant = null
 var minigame_display: Window = null
 var minigame_name: String = ""
 var highscores: Dictionary = {}
+var lost_focus_timer: int = -1
+
+func _physics_process(delta: float) -> void:
+	if minigame_display.visible and !minigame_display.has_focus():
+		lost_focus_timer = lost_focus_timer + 1
+		if lost_focus_timer > 10:
+			close_minigame()
+	else:
+		lost_focus_timer = -1
 
 func is_minigame_open() -> bool:
 	return minigame_display.visible
