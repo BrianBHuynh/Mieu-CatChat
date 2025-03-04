@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cbajq0dylq2p2"]
 
-[ext_resource type="Script" path="res://current/ui/vpet_gui/vpet_gui.gd" id="1_vhiic"]
+[ext_resource type="Script" uid="uid://spkkv81vthwt" path="res://current/ui/vpet_gui/vpet_gui.gd" id="1_vhiic"]
 
 [node name="VpetGui" type="Control"]
 layout_mode = 3

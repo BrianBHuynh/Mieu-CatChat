@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://cwxscncrwon38"]
 
-[ext_resource type="Script" path="res://current/scenes/templates/minigames/2D_minigame_template/2d_minigame_template.gd" id="1_e33rw"]
+[ext_resource type="Script" uid="uid://ctdgbiuud038h" path="res://current/scenes/templates/minigames/2D_minigame_template/2d_minigame_template.gd" id="1_e33rw"]
 [ext_resource type="Texture2D" uid="uid://37vx6dgthk0f" path="res://current/assets/images/mieu.png" id="2_dwlht"]
 [ext_resource type="PackedScene" uid="uid://cm40xnuc8mogi" path="res://current/characters/2D/sidescroll_mieu/sidescroll_mieu.tscn" id="3_61pvm"]
 

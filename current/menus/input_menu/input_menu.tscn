@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://cnrc7vt8gfblb"]
 
-[ext_resource type="Script" path="res://current/menus/input_menu/input_menu.gd" id="1_q42ff"]
-[ext_resource type="Script" path="res://current/scripts/node/rich_text_label.gd" id="2_fdbjy"]
+[ext_resource type="Script" uid="uid://o6mtkyofbeey" path="res://current/menus/input_menu/input_menu.gd" id="1_q42ff"]
+[ext_resource type="Script" uid="uid://vftddq4ojmo2" path="res://current/scripts/node/rich_text_label.gd" id="2_fdbjy"]
 
 [node name="DebugMenu" type="Control"]
 layout_mode = 3
