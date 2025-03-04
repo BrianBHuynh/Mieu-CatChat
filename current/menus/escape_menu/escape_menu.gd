@@ -19,10 +19,8 @@ func _on_multiplayer_pressed() -> void:
 		Ui.show_system_message("Steam is not currently open!")
 
 func _on_reset_pos_pressed() -> void:
-	if WorldsTracker.dimensions == 3:
-		GlobalVars.mieu.global_position = Vector3(0, 1, 0)
-	elif WorldsTracker.dimensions == 2:
-		pass
+	if GlobalVars.reset_position != null:
+		GlobalVars.mieu.global_position = GlobalVars.reset_position
 
 
 func _on_input_btn_pressed() -> void:

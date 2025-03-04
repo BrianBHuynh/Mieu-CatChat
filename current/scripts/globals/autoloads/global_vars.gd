@@ -6,6 +6,7 @@ var move_speed_2D: float = 500.0
 var jump_speed: float = 2.5
 var frame: float = 0.01666666666
 var first_world_started: bool = false
+var reset_position: Variant
 
 func _ready() -> void:
 	_load_finished()
@@ -13,7 +14,7 @@ func _ready() -> void:
 
 func _load_finished() -> void:
 	set_stretch_aspect(Saves.get_or_return("settings", "stretch_aspect", 1))
-	set_window_mode(Saves.get_or_return("settings", "window_mode", 2))
+	set_window_mode(Saves.get_or_return("settings", "window_mode", 0))
 	set_borderless(Saves.get_or_return("settings", "borderless", false))
 	get_window().scaling_3d_scale = Saves.get_or_return("settings", "scaling_3d_scale", 1.0)
 	get_window().size = Vector2(Saves.get_or_return("settings", "width", DisplayServer.screen_get_size().x), Saves.get_or_add("settings", "height", DisplayServer.screen_get_size().y))
@@ -40,17 +41,12 @@ func set_stretch_aspect(aspect: int) -> void:
 func set_window_mode(mode: int) -> void:
 	match mode:
 		0: 
-			#Dubious check below
-			var temp: Vector2 = get_window().get_size()
 			get_window().set_mode(Window.MODE_WINDOWED)
-			get_window().set_size(temp)
 		1:
 			get_window().set_mode(Window.MODE_MINIMIZED)
 		2:
-			#Dubious, wait for https://github.com/godotengine/godot/issues/99952 to remove
-			get_window().set_flag(Window.FLAG_BORDERLESS, false)
+			#Currently there is a bug where if the window is Maximized, it will offset the cursor if window size changed
 			get_window().set_mode(Window.MODE_MAXIMIZED)
-			get_window().set_flag(Window.FLAG_BORDERLESS, true)
 		3:
 			get_window().set_mode(Window.MODE_FULLSCREEN)
 		4:

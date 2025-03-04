@@ -3,6 +3,7 @@ extends CharacterBody3D
 
 func _ready() -> void:
 	GlobalVars.mieu = self
+	GlobalVars.reset_position = global_position
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	$CameraOrigin/SpringArm3D.set_length(Saves.get_or_return("settings", "camera_distance", 1.0))
 	await get_tree().process_frame

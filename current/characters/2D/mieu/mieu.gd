@@ -3,6 +3,7 @@ extends CharacterBody2D
 
 func _ready() -> void:
 	GlobalVars.mieu = self
+	GlobalVars.reset_position = global_position
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
 func _physics_process(_delta: float) -> void:
