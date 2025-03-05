@@ -1,7 +1,7 @@
 extends Node
 
 
-var worlds: Dictionary = {}
+var worlds: Dictionary[String, Dictionary] = {}
 var current_world_name: String = "default"
 var current_world: Variant = null
 var current_instance_id: int = -1
@@ -11,11 +11,11 @@ var first_world_started: bool = false
 
 func add_to_world(pid: int, world: String = current_world, instance_id: int = -1) -> void:
 	if !worlds.has(world):
-		worlds[world] = []
-		worlds[world][instance_id] = []
+		worlds[world] = {}
+		worlds[world][instance_id] = {}
 	else:
 		if !worlds[world].has(instance_id):
-			worlds[world][instance_id] = []
+			worlds[world][instance_id] = {}
 	for world_array: String in worlds:
 		for world_instance: int in worlds[world_array]:
 			worlds[world_array][world_instance].erase(pid)

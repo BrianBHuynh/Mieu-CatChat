@@ -22,6 +22,5 @@ func _on_reset_pos_pressed() -> void:
 	if GlobalVars.reset_position != null:
 		GlobalVars.mieu.global_position = GlobalVars.reset_position
 
-
 func _on_input_btn_pressed() -> void:
 	Ui.open_menu("res://current/menus/input_menu/input_menu.tscn")

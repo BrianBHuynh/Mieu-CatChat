@@ -1,8 +1,8 @@
 extends Node
-#Currently heavily based on code from https://godotsteam.com/tutorials/lobbies/
+
 
 var lobby_id: int = 0
-var lobby_members: Dictionary = {}
+var lobby_members: Dictionary[int, Dictionary] = {}
 var lobby_members_max: int = 10
 var lobby_vote_kick: bool = false
 

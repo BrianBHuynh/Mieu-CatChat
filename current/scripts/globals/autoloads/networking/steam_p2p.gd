@@ -24,7 +24,7 @@ func read_p2p_messages() -> void:
 		for message: Dictionary in messages:
 			process_message(message)
 
-func process_message(message: Dictionary) -> void:
+func process_message(message: Dictionary[String, Variant]) -> void:
 			if message.is_empty() or message == null:
 				Ui.show_system_debug("WARNING: read an empty packet with non-zero size!")
 			elif !Moderation.is_allowed(message.identity):
@@ -70,12 +70,11 @@ func process_message(message: Dictionary) -> void:
 					"lobby_data":
 						if message.identity == Steam.getLobbyOwner(SteamLobbies.lobby_id):
 							Moderation.banned_players = message["payload"]["lobby_data"]["banned_players"]
-							for player_id: String in Moderation.banned_players:
-								var player_id_int: int = player_id.to_int()
-								if SteamLobbies.lobby_members.has(player_id_int) or kitties.has(player_id_int):
-									remove_kitty(player_id_int)
-									Steam.closeSessionWithUser(player_id_int)
-									SteamLobbies.lobby_members.erase(player_id_int)
+							for player_id: int in Moderation.banned_players:
+								if SteamLobbies.lobby_members.has(player_id) or kitties.has(player_id):
+									remove_kitty(player_id)
+									Steam.closeSessionWithUser(player_id)
+									SteamLobbies.lobby_members.erase(player_id)
 					"ban":
 						if message.identity == Steam.getLobbyOwner(SteamLobbies.lobby_id):
 							SteamLobbies.leave_lobby()
@@ -99,7 +98,7 @@ func process_message(message: Dictionary) -> void:
 					"encrypted_key":
 						Cryptography.decode_message(message.identity, message["payload"]["message_id"], message["payload"]["key"])
 
-func send_message_to_user(payload: Dictionary, this_target: int = 0, send_type: int = Steam.NETWORKING_SEND_RELIABLE, channel: int = 0, encrypted: bool = false) -> void:
+func send_message_to_user(payload: Dictionary[String, Variant], this_target: int = 0, send_type: int = Steam.NETWORKING_SEND_RELIABLE, channel: int = 0, encrypted: bool = false) -> void:
 	if SteamLobbies.lobby_members.size() > 1:
 		var this_data: PackedByteArray
 		if encrypted:
