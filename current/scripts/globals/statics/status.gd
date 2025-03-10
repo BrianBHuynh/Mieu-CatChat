@@ -1,6 +1,7 @@
 extends Node
 class_name Status
 
+
 static func init_stat(stat_name: String, stat_value: float, stat_rate: float, stat_max: float, stat_min: float) -> void:
 	var temp_dict: Dictionary = {}
 	temp_dict["value"] = stat_value

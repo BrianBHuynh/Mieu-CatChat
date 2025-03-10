@@ -1,5 +1,6 @@
 extends Node
 
+
 var pause_menu: String = "res://current/menus/escape_menu/escape_menu.tscn"
 var cur_menu: Control
 var lobbies: VBoxContainer

@@ -58,3 +58,6 @@ func close_minigame() -> void:
 
 func accept_minigame_data(message: Dictionary) -> void:
 	minigame.accept_minigame_data(message)
+
+func send_minigame(pid: int = 0) -> void:
+	SteamP2P.send_message_to_user({"type": "minigame_info", "minigame_name": minigame_name, "minigame_instance_id": minigame_instance_id}, pid)

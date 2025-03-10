@@ -1,8 +1,8 @@
 extends Node2D
 
+
 var id: int
 var player_name: String
-
 
 func sign_adoption(identity: int) -> void:
 	id = identity

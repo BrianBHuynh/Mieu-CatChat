@@ -1,5 +1,6 @@
 extends Node
 
+
 var data: Dictionary = {}
 var settings: Dictionary = {}
 var networking: Dictionary = {}
@@ -37,6 +38,7 @@ func auto_save() -> void:
 			await get_tree().process_frame
 		if get_or_add("settings", "auto_save", true):
 			save_game()
+	Ui.show_system_debug("auto saving!")
 
 func set_value(dictionary: String, key: String, value: Variant) -> void:
 	match dictionary:

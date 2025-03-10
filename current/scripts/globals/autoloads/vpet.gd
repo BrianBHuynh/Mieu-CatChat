@@ -1,5 +1,6 @@
 extends Node
 
+
 func _ready() -> void:
 	SignalBus.load_finished.connect(initialize)
 

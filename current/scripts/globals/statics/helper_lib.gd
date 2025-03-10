@@ -1,6 +1,7 @@
 extends Node
 class_name Helper
 
+
 static func get_font(font_path: String) -> Font:
 	if ResourceLoader.exists(font_path):
 		return load(font_path)
@@ -25,3 +26,6 @@ static func get_font(font_path: String) -> Font:
 	else:
 		Ui.show_system_warning("Invalid font format at: " + font_path)
 		return load("res://current/assets/fonts/AtkinsonHyperlegible-Regular.ttf")
+
+static func get_string_from_txt(location: String) -> String:
+	return FileAccess.get_file_as_string(location)

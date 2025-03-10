@@ -1,5 +1,6 @@
 extends Control
 
+
 func _ready() -> void:
 	Ui.chat_box = self
 	$CheckBox.set_pressed_no_signal(Saves.get_or_return("settings", "auto_scroll", true))
