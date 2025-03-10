@@ -7,6 +7,8 @@ var encryption_key: String = OS.get_unique_id()
 var save_loaded: bool = false
 const save_extension: String = ".MIEU"
 const checksum_extension: String = ".COLLAR"
+var autosave_tick: int = 0
+var autosave_interval: int = 300
 
 func _ready() -> void:
 	make_dir("user://saves")
@@ -18,16 +20,21 @@ func _ready() -> void:
 		Ui.show_system_message("It looks like this is your first time playing mieu :D welcome!")
 	settings = load_file("settings")
 	networking = load_file("networking")
-	MinigameManager.highscores = Saves.load_file_encrypted("perch")
-	
+	MinigameManager.minigame_stats = Saves.load_file_encrypted("minigame_stats")
 	SignalBus.load_finished.emit()
 	save_loaded = true
 	await get_tree().process_frame
 	WorldsTracker.change_world(get_or_return("settings", "world_path", "res://current/scenes/templates/main_scenes/2D_scene_template/2D_scene_template.tscn"))
-	while true:
-		#Auto Saves every 5 minutes
-		if get_tree():
-			await get_tree().create_timer(300).timeout
+
+func _physics_process(_delta: float) -> void:
+	auto_save()
+
+func auto_save() -> void:
+	autosave_tick = autosave_tick + 1
+	if autosave_tick > autosave_interval:
+		autosave_tick = 0
+		while get_tree() == null:
+			await get_tree().process_frame
 		if get_or_add("settings", "auto_save", true):
 			save_game()
 
@@ -54,6 +61,8 @@ func get_or_add(dictionary: String, key: String, default_value: Variant) -> Vari
 			return settings.get_or_add(key, default_value)
 		"networking":
 			return networking.get_or_add(key, default_value)
+		"minigame_stats":
+			return MinigameManager.minigame_stats.get_or_add(key, default_value)
 		_:
 			return data.get_or_add(dictionary, {}).get_or_add(key, default_value)
 
@@ -63,15 +72,16 @@ func get_or_return(dictionary: String, key: String, default_value: Variant) -> V
 			return settings.get(key, default_value)
 		"networking":
 			return networking.get(key, default_value)
+		"minigame_stats":
+			return MinigameManager.minigame_stats.get(key, default_value)
 		_:
 			return data.get(dictionary, {}).get(key, default_value)
 
 func save_game() -> void:
 	store_player_state()
+	await get_tree().process_frame
 	Multithreading.add_task(save_file_encrypted.bind(data, "mieu"))
-	Multithreading.add_task(save_file.bind(data, "mieu.readable"))
-	Multithreading.add_task(save_file_encrypted.bind(MinigameManager.highscores, "perch"))
-	Multithreading.add_task(save_file.bind(MinigameManager.highscores, "perch.readable"))
+	Multithreading.add_task(save_file_encrypted.bind(MinigameManager.minigame_stats, "minigame_stats"))
 	Multithreading.add_task(save_file.bind(settings, "settings"))
 	Multithreading.add_task(save_file.bind(networking, "networking"))
 
@@ -105,6 +115,7 @@ func save_file_encrypted(content: Variant, location: String) -> void:
 	write_json_encrypted(content_json, "user://saves/", location) 
 	write_json_encrypted(content_json, "user://backup/", location) 
 	write_json_encrypted(content_json, "user://fallback/", location)
+	save_file.bind(data, location + ".readable")
 
 func write_json_encrypted(content: Variant, dir: String, location: String) -> void:
 	open_write_encrypted(dir + location + save_extension).store_line(content)

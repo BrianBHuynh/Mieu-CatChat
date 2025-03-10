@@ -65,6 +65,9 @@ func process_message(message: Dictionary[String, Variant]) -> void:
 								kitties[message["identity"]] = kit
 								Ui.show_system_message("creating", Color.GREEN)
 								kitties[message.identity].global_position = Vector2(message.payload.x, message.payload.y)
+					"minigame_data":
+						if MinigameManager.minigame_name == message.payload["minigame_name"] && MinigameManager.minigame_instance_id == message.payload["minigame_instance_id"]:
+							MinigameManager.accept_minigame_data(message)
 					"chat":
 						Ui.show_chat_message(ChatFilter.filter(message))
 					"lobby_data":

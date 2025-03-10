@@ -28,6 +28,6 @@ func encode_payload(payload: Dictionary[String, Variant]) -> int:
 	while ID == 0 or encrypted_messages_sent.has(ID):
 		ID = RNG.randi()
 	var encrypted: PackedByteArray = crypto.encrypt(key, var_to_bytes(payload).compress(FileAccess.COMPRESSION_GZIP))
-	var encrypted_payload: PackedByteArray = var_to_bytes({"type": "encrypted_message", "message_id": ID, "encrypted_payload": encrypted})
-	encrypted_messages_sent[ID] = {"key": key, "payload": encrypted_payload}
+	var processed_payload: PackedByteArray = var_to_bytes({"type": "encrypted_message", "message_id": ID, "encrypted_payload": encrypted})
+	encrypted_messages_sent[ID] = {"key": key, "payload": processed_payload}
 	return ID

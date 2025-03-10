@@ -4,7 +4,8 @@ extends Node
 var minigame: Variant = null
 var minigame_display: Window = null
 var minigame_name: String = ""
-var highscores: Dictionary = {}
+var minigame_instance_id: int = -1
+var minigame_stats: Dictionary = {}
 var lost_focus_timer: int = -1
 
 func _physics_process(_delta: float) -> void:
@@ -54,3 +55,6 @@ func get_minigame() -> Variant:
 
 func close_minigame() -> void:
 	minigame_display.hide()
+
+func accept_minigame_data(message: Dictionary) -> void:
+	minigame.accept_minigame_data(message)
