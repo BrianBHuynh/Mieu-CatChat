@@ -161,6 +161,26 @@ size_flags_horizontal = 3
 texture_normal = ExtResource("2_t8lwk")
 stretch_mode = 5
 
+[node name="Credits" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+clip_contents = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="CreditsLabel" type="RichTextLabel" parent="ScrollContainer/VBoxContainer/Credits"]
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "[center]Credits:[/center]"
+script = ExtResource("2_leq0j")
+
+[node name="CreditBtn" type="TextureButton" parent="ScrollContainer/VBoxContainer/Credits"]
+modulate = Color(0.768468, 0.566809, 0, 0.980392)
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+texture_normal = ExtResource("2_t8lwk")
+stretch_mode = 5
+
 [node name="ResetPos" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
 clip_contents = true
 layout_mode = 2
@@ -187,4 +207,5 @@ stretch_mode = 5
 [connection signal="pressed" from="ScrollContainer/VBoxContainer/Video/VideoBtn" to="." method="_on_video_pressed"]
 [connection signal="pressed" from="ScrollContainer/VBoxContainer/Debug/DebugBtn" to="." method="_on_debug_pressed"]
 [connection signal="pressed" from="ScrollContainer/VBoxContainer/Save/SaveBtn" to="." method="_on_save_pressed"]
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/Credits/CreditBtn" to="." method="_on_credit_btn_pressed"]
 [connection signal="pressed" from="ScrollContainer/VBoxContainer/ResetPos/ResetBtn" to="." method="_on_reset_pos_pressed"]

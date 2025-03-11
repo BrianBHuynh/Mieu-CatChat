@@ -24,3 +24,6 @@ func _on_reset_pos_pressed() -> void:
 
 func _on_input_btn_pressed() -> void:
 	Ui.open_menu("res://current/menus/input_menu/input_menu.tscn")
+
+func _on_credit_btn_pressed() -> void:
+	Ui.open_menu("res://current/menus/credits_and_licenses_menu/credits_and_licenses.tscn")
