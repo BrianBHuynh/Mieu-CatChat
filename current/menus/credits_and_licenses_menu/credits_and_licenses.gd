@@ -1,15 +1,15 @@
 extends Control
 
 
-var folder_paths: Array = ["res://credits/", "res://licenses/"]
-var file_paths: Array = []
+var folder_paths: Array[String] = ["res://credits/", "res://licenses/"]
+var file_paths: Array[String] = []
 
 func _ready() -> void:
-	for folder in folder_paths:
-		for sub_folder in DirAccess.get_directories_at(folder):
+	for folder: String in folder_paths:
+		for sub_folder: String in DirAccess.get_directories_at(folder):
 			folder_paths.append(folder + sub_folder + "/")
-	for folder in folder_paths:
-		for file_path in DirAccess.get_files_at(folder):
+	for folder: String in folder_paths:
+		for file_path: String in DirAccess.get_files_at(folder):
 			file_paths.append(folder + file_path)
 	get_next()
 

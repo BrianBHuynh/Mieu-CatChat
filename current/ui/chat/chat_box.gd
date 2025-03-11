@@ -79,7 +79,8 @@ func show_system_debug(content: String, color: Color = Color.SLATE_GRAY, save: b
 		show_system_message(content, color, save, "DEBUG")
 
 func release_input_focus() -> void:
-	$TextBox.release_focus()
+	if $TextBox.is_inside_tree():
+		$TextBox.release_focus()
 
 func open_text_input() -> void:
 	$TextBox.grab_focus()
