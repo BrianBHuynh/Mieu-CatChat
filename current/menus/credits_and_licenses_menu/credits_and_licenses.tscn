@@ -15,6 +15,7 @@ script = ExtResource("1_ukxnp")
 [node name="ColorRect" type="ColorRect" parent="."]
 clip_contents = true
 custom_minimum_size = Vector2(50, 50)
+layout_mode = 0
 offset_left = 320.0
 offset_top = 64.0
 offset_right = 1600.0
@@ -23,6 +24,7 @@ size_flags_vertical = 3
 color = Color(0.255806, 0, 0.0329192, 0.588235)
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 0
 offset_left = 384.0
 offset_top = 128.0
 offset_right = 1536.0

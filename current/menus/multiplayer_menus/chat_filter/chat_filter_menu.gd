@@ -4,7 +4,7 @@ func _ready() -> void:
 	populate_from_file()
 
 func _on_save_filter_button_pressed() -> void:
-	var filtered_words: Dictionary[String, Dictionary] = {}
+	var filtered_words: Dictionary = {}
 	var first: bool = true
 	for Hbox: HBoxContainer in $ScrollContainer/VBoxContainer.get_children():
 		if first:
@@ -13,7 +13,7 @@ func _on_save_filter_button_pressed() -> void:
 			var Fields: Array = Hbox.get_children()
 			var FilteredText: String = Fields.pop_front().text
 			if not FilteredText.is_empty():
-				var new_dict: Dictionary[String, Variant] = {}
+				var new_dict: Dictionary = {}
 				new_dict["replacement_word"] = Fields.pop_front().text
 				new_dict["ban"] = Fields.pop_front().button_pressed
 				new_dict["block"] = Fields.pop_front().button_pressed
@@ -36,7 +36,7 @@ func create_empty_entry() -> void:
 	$ScrollContainer/VBoxContainer.move_child(hbox, 1)
 
 func populate_from_file() -> void:
-	var filtered_words: Dictionary[String, Dictionary] = Saves.get_or_add("networking", "chat_filter", {})
+	var filtered_words: Dictionary = Saves.get_or_add("networking", "chat_filter", {})
 	for word: String in filtered_words:
 		var hbox: HBoxContainer = HBoxContainer.new()
 		hbox.alignment = BoxContainer.ALIGNMENT_CENTER
@@ -60,7 +60,7 @@ func clear_entries() -> void:
 func _on_add_entry_pressed() -> void:
 	create_empty_entry()
 
-func create_text_edit(word: String, key: String, filter: Dictionary[String, Dictionary]) -> TextEdit:
+func create_text_edit(word: String, key: String, filter: Dictionary) -> TextEdit:
 	var text_edit: TextEdit = TextEdit.new()
 	text_edit.text = filter[word][key]
 	text_edit.clip_contents = true
@@ -68,7 +68,7 @@ func create_text_edit(word: String, key: String, filter: Dictionary[String, Dict
 	text_edit.size_flags_stretch_ratio = 1.0
 	return text_edit
 
-func create_check_button(word: String, key: String, filter: Dictionary[String, Dictionary]) -> Button:
+func create_check_button(word: String, key: String, filter: Dictionary) -> Button:
 	var button: CheckBox = CheckBox.new()
 	button.button_pressed = filter[word][key]
 	button.size_flags_horizontal = Control.SIZE_EXPAND_FILL

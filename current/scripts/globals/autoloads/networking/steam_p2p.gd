@@ -24,7 +24,7 @@ func read_p2p_messages() -> void:
 		for message: Dictionary in messages:
 			process_message(message)
 
-func process_message(message: Dictionary[String, Variant]) -> void:
+func process_message(message: Dictionary) -> void:
 			if message.is_empty() or message == null:
 				Ui.show_system_debug("WARNING: read an empty packet with non-zero size!")
 			elif !Moderation.is_allowed(message.identity):
@@ -101,7 +101,7 @@ func process_message(message: Dictionary[String, Variant]) -> void:
 					"encrypted_key":
 						Cryptography.decode_message(message.identity, message["payload"]["message_id"], message["payload"]["key"])
 
-func send_message_to_user(payload: Dictionary[String, Variant], this_target: int = 0, send_type: int = Steam.NETWORKING_SEND_RELIABLE, channel: int = 0, encrypted: bool = false) -> void:
+func send_message_to_user(payload: Dictionary, this_target: int = 0, send_type: int = Steam.NETWORKING_SEND_RELIABLE, channel: int = 0, encrypted: bool = false) -> void:
 	if SteamLobbies.lobby_members.size() > 1:
 		var this_data: PackedByteArray
 		if encrypted:

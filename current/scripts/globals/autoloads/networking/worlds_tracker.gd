@@ -1,7 +1,7 @@
 extends Node
 
 
-var worlds: Dictionary[String, Dictionary] = {}
+var worlds: Dictionary = {}
 var current_world_name: String = "default"
 var current_world: Variant = null
 var current_instance_id: int = -1

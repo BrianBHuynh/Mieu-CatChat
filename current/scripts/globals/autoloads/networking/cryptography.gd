@@ -1,8 +1,8 @@
 extends Node
 
 
-var encrypted_messages_recieved: Dictionary[int, Dictionary] = {}
-var encrypted_messages_sent: Dictionary[int, Dictionary] = {}
+var encrypted_messages_recieved: Dictionary = {}
+var encrypted_messages_sent: Dictionary = {}
 var crypto: Crypto = Crypto.new()
 var RNG: RandomNumberGenerator = RandomNumberGenerator.new()
 
@@ -19,10 +19,10 @@ func decode_message(sender_identity: int, message_id: int, key: String) -> void:
 		var crypto_key: CryptoKey = CryptoKey.new()
 		crypto_key.load_from_string(key)
 		var decrypted_byte_array: PackedByteArray = crypto.decrypt(crypto_key, encrypted_messages_recieved[sender_identity][message_id])
-		var decrypted_message: Dictionary[String, Variant] = {"identity": sender_identity, "payload": decrypted_byte_array}
+		var decrypted_message: Dictionary = {"identity": sender_identity, "payload": decrypted_byte_array}
 		SteamP2P.process_message(decrypted_message)
 
-func encode_payload(payload: Dictionary[String, Variant]) -> int:
+func encode_payload(payload: Dictionary) -> int:
 	var key: CryptoKey = crypto.generate_rsa(4096)
 	var ID: int = 0
 	while ID == 0 or encrypted_messages_sent.has(ID):
