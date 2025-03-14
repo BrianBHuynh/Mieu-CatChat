@@ -44,7 +44,7 @@ func _on_lobby_match_list(these_lobbies: Array) -> void:
 		lobby_button.set_text("Lobby %s: %s [%s] - %s Player(s)" % [this_lobby, lobby_name, lobby_mode, lobby_num_members])
 		lobby_button.set_size(Vector2(800, 50))
 		lobby_button.set_name("lobby_%s" % this_lobby)
-		lobby_button.connect("pressed", Callable(self, "join_lobby").bind(this_lobby))
+		lobby_button.connect("pressed", join_lobby.bind(this_lobby))
 		Ui.lobbies.add_child(lobby_button)
 
 func join_lobby(this_lobby_id: int) -> void:
