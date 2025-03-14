@@ -1,0 +1,65 @@
+[gd_scene load_steps=3 format=3 uid="uid://b18ly42w5ilr3"]
+
+[ext_resource type="Script" uid="uid://dyagdfw48yc8q" path="res://current/menus/First_load_menu/first_load.gd" id="1_65pdf"]
+[ext_resource type="Script" uid="uid://vftddq4ojmo2" path="res://current/scripts/node/rich_text_label.gd" id="2_30can"]
+
+[node name="CreditsAndLicenses" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_65pdf")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+clip_contents = true
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 0
+offset_left = 320.0
+offset_top = 64.0
+offset_right = 1600.0
+offset_bottom = 1024.0
+size_flags_vertical = 3
+color = Color(0.255806, 0, 0.0329192, 0.588235)
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 0
+offset_left = 384.0
+offset_top = 128.0
+offset_right = 1536.0
+offset_bottom = 960.0
+size_flags_horizontal = 3
+horizontal_scroll_mode = 3
+vertical_scroll_mode = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer"]
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="PreviousButton" type="Button" parent="ScrollContainer/HBoxContainer"]
+clip_contents = true
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.1
+text = "<"
+
+[node name="CreditsOrLicense" type="RichTextLabel" parent="ScrollContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Sample text"
+fit_content = true
+script = ExtResource("2_30can")
+
+[node name="NextButton" type="Button" parent="ScrollContainer/HBoxContainer"]
+clip_contents = true
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.1
+text = ">"
+
+[connection signal="pressed" from="ScrollContainer/HBoxContainer/PreviousButton" to="." method="get_previous"]
+[connection signal="pressed" from="ScrollContainer/HBoxContainer/NextButton" to="." method="get_next"]

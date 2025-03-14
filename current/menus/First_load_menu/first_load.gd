@@ -1,7 +1,7 @@
 extends Control
 
 
-var folder_paths: Array[String] = ["res://current/text/credits/", "res://current/text/licenses/"]
+var folder_paths: Array[String] = ["res://current/text/startup_message/"]
 var file_paths: Array[String] = []
 
 func _ready() -> void:
