@@ -32,20 +32,21 @@ func _on_open_lobby_list_pressed() -> void:
 	Steam.requestLobbyList()
 
 func _on_lobby_match_list(these_lobbies: Array) -> void:
-	var lobby_buttons: Array = Ui.lobbies.get_children()
-	for button: Button in lobby_buttons:
-		button.queue_free()
-		lobby_buttons.erase(button)
-	for this_lobby: int in these_lobbies:
-		var lobby_name: String = Steam.getLobbyData(this_lobby, "name")
-		var lobby_mode: String = Steam.getLobbyData(this_lobby, "mode")
-		var lobby_num_members: int = Steam.getNumLobbyMembers(this_lobby)
-		var lobby_button: Button = Button.new()
-		lobby_button.set_text("Lobby %s: %s [%s] - %s Player(s)" % [this_lobby, lobby_name, lobby_mode, lobby_num_members])
-		lobby_button.set_size(Vector2(800, 50))
-		lobby_button.set_name("lobby_%s" % this_lobby)
-		lobby_button.connect("pressed", join_lobby.bind(this_lobby))
-		Ui.lobbies.add_child(lobby_button)
+	if Ui.lobbies != null:
+		var lobby_buttons: Array = Ui.lobbies.get_children()
+		for button: Button in lobby_buttons:
+			button.queue_free()
+			lobby_buttons.erase(button)
+		for this_lobby: int in these_lobbies:
+			var lobby_name: String = Steam.getLobbyData(this_lobby, "name")
+			var lobby_mode: String = Steam.getLobbyData(this_lobby, "mode")
+			var lobby_num_members: int = Steam.getNumLobbyMembers(this_lobby)
+			var lobby_button: Button = Button.new()
+			lobby_button.set_text("Lobby %s: %s [%s] - %s Player(s)" % [this_lobby, lobby_name, lobby_mode, lobby_num_members])
+			lobby_button.set_size(Vector2(800, 50))
+			lobby_button.set_name("lobby_%s" % this_lobby)
+			lobby_button.connect("pressed", join_lobby.bind(this_lobby))
+			Ui.lobbies.add_child(lobby_button)
 
 func join_lobby(this_lobby_id: int) -> void:
 	Ui.show_system_message("Attempting to join lobby " + str(lobby_id))

@@ -9,7 +9,7 @@ var save_loaded: bool = false
 const save_extension: String = ".MIEU"
 const checksum_extension: String = ".COLLAR"
 var autosave_tick: int = 0
-var autosave_interval: int = 300
+var autosave_interval: int = 36000
 
 func _ready() -> void:
 	make_dir("user://saves")
@@ -38,7 +38,7 @@ func auto_save() -> void:
 			await get_tree().process_frame
 		if get_or_add("settings", "auto_save", true):
 			save_game()
-	Ui.show_system_debug("auto saving!")
+		Ui.show_system_debug("auto saving!")
 
 func set_value(dictionary: String, key: String, value: Variant) -> void:
 	match dictionary:
