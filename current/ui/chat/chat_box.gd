@@ -67,7 +67,7 @@ func show_system_message(content: String, color: Color = Color.DARK_BLUE, save: 
 	if save:
 		Ui.chat_log.append({"type": prefix, "content": content, "color": color})
 		print(message_text.text)
-	if Saves.get_or_add("settings", "auto_scroll", true) and WorldsTracker.first_world_started:
+	if Saves.get_or_add("settings", "auto_scroll", true) and WorldManager.first_world_started:
 		await get_tree().create_timer(.05).timeout
 		create_tween().tween_property($ScrollContainer.get_v_scroll_bar(), "value", $ScrollContainer.get_v_scroll_bar().max_value, 1.0)
 
@@ -90,7 +90,7 @@ func is_text_box_focused() -> bool:
 
 func _on_send_pressed() -> void:
 	release_input_focus()
-	if WorldsTracker.dimensions == 3:
+	if WorldManager.dimensions == 3:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	if !$TextBox.text == "":
 		SteamP2P.send_chat_message($TextBox.text)

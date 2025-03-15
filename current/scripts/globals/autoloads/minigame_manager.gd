@@ -9,7 +9,7 @@ var minigame_stats: Dictionary = {}
 var lost_focus_timer: int = -1
 
 func _physics_process(_delta: float) -> void:
-	if minigame_display.visible and !minigame_display.has_focus():
+	if minigame_display != null and minigame_display.visible and !minigame_display.has_focus():
 		lost_focus_timer = lost_focus_timer + 1
 		if lost_focus_timer > 10:
 			close_minigame()

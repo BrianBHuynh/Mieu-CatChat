@@ -56,7 +56,7 @@ func _on_lobby_joined(this_lobby_id: int, _permissions: int, _locked: bool, resp
 	if response == Steam.CHAT_ROOM_ENTER_RESPONSE_SUCCESS:
 		lobby_id = this_lobby_id
 		get_lobby_members()
-		WorldsTracker.send_world()
+		WorldManager.send_world()
 	else:
 		var fail_reason: String
 		match response:
@@ -99,7 +99,7 @@ func _on_lobby_chat_update(_this_lobby_id: int, change_id: int, _making_change_i
 		elif chat_state == Steam.CHAT_MEMBER_STATE_CHANGE_LEFT:
 			Ui.show_system_message("%s has left the lobby." % changer_name)
 			SteamP2P.remove_kitty(change_id)
-			WorldsTracker.remove_from_worlds(change_id)
+			WorldManager.remove_from_worlds(change_id)
 		else:
 			Ui.show_system_message("%s did... something." % changer_name)
 		get_lobby_members()
@@ -113,7 +113,7 @@ func leave_lobby() -> void:
 				Steam.closeSessionWithUser(this_member)
 		SteamP2P.remove_kitties()
 		lobby_members.clear()
-		WorldsTracker.clear_worlds()
+		WorldManager.clear_worlds()
 
 func is_host() -> bool:
 	return host() == SteamWorks.steam_id

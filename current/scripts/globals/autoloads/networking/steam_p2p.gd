@@ -14,7 +14,7 @@ func process(_delta: float) -> void:
 func _on_network_messages_session_request(remote_id: int) -> void:
 	if Moderation.is_allowed(remote_id):
 		Steam.acceptSessionWithUser(remote_id)
-		WorldsTracker.send_world(remote_id)
+		WorldManager.send_world(remote_id)
 
 func read_p2p_messages() -> void:
 	var messages: Array = Steam.receiveMessagesOnChannel(0, 1000)
@@ -36,7 +36,7 @@ func process_message(message: Dictionary) -> void:
 				match message["payload"]["type"]:
 					"data":
 						if kitties.has(message.identity):
-							if WorldsTracker.has(message.identity, WorldsTracker.current_world_name) and WorldsTracker.dimensions == message.payload["dimensions"]:
+							if WorldManager.has(message.identity, WorldManager.current_world_name) and WorldManager.dimensions == message.payload["dimensions"]:
 								if message.payload["dimensions"] == 3 and kitties[message.identity] is Node3D:
 									kitties[message.identity].move_to(Vector3(message.payload.x, message.payload.y, message.payload.z))
 								elif message.payload["dimensions"] == 2 and kitties[message.identity] is Node2D:
@@ -46,8 +46,8 @@ func process_message(message: Dictionary) -> void:
 									remove_kitty(message.identity)
 							else:
 								remove_kitty(message.identity)
-						elif WorldsTracker.has(message.identity, WorldsTracker.current_world_name):
-							if WorldsTracker.dimensions == 3 and message.payload["dimensions"] == 3 and get_tree().current_scene is Node3D:
+						elif WorldManager.has(message.identity, WorldManager.current_world_name):
+							if WorldManager.dimensions == 3 and message.payload["dimensions"] == 3 and get_tree().current_scene is Node3D:
 								var file: Resource = load("res://current/characters/3D/mieu_peer/mieu_peer.tscn")
 								var kit: Node3D = file.instantiate()
 								get_parent().add_child(kit)
@@ -55,12 +55,12 @@ func process_message(message: Dictionary) -> void:
 								kitties[message["identity"]] = kit
 								Ui.show_system_message("creating", Color.GREEN)
 								kitties[message.identity].global_position = Vector3(message.payload.x, message.payload.y, message.payload.z)
-							elif WorldsTracker.dimensions == 2 and message.payload["dimensions"] == 2 and get_tree().current_scene is Node2D:
-								while !WorldsTracker.middleground:
+							elif WorldManager.dimensions == 2 and message.payload["dimensions"] == 2 and get_tree().current_scene is Node2D:
+								while !WorldManager.middleground:
 									await get_tree().process_frame
 								var file: Resource = load("res://current/characters/2D/mieu_peer/mieu_peer.tscn")
 								var kit: Node2D = file.instantiate()
-								WorldsTracker.middleground.add_child(kit)
+								WorldManager.middleground.add_child(kit)
 								kit.sign_adoption(message["identity"])
 								kitties[message["identity"]] = kit
 								Ui.show_system_message("creating", Color.GREEN)
@@ -95,7 +95,7 @@ func process_message(message: Dictionary) -> void:
 						if message.identity == Steam.getLobbyOwner(SteamLobbies.lobby_id):
 							Ui.show_system_message("The lobby owner " + SteamLobbies.get_host_name() + "has kicked " + Steam.getFriendPersonaName(message["payload"]["kicked_player"]))
 					"world_info":
-						WorldsTracker.add_to_world(message.identity, message["payload"]["world"])
+						WorldManager.add_to_world(message.identity, message["payload"]["world"])
 					"encrypted_message":
 						Cryptography.save_message(message.identity, message["payload"]["message_id"], message["payload"]["encrypted_payload"])
 					"encrypted_key":
@@ -113,7 +113,7 @@ func send_message_to_user(payload: Dictionary, this_target: int = 0, send_type: 
 			match payload["type"]:
 				"data":
 					for this_member: int in SteamLobbies.lobby_members:
-						if this_member != SteamWorks.steam_id and WorldsTracker.has(this_member, WorldsTracker.current_world_name, WorldsTracker.current_instance_id) and Moderation.is_allowed(this_member):
+						if this_member != SteamWorks.steam_id and WorldManager.has(this_member, WorldManager.current_world_name, WorldManager.current_instance_id) and Moderation.is_allowed(this_member):
 							Steam.sendMessageToUser(this_member, this_data, send_type, channel)
 				_:
 					for this_member: int in SteamLobbies.lobby_members:
