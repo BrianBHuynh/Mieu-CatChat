@@ -6,8 +6,8 @@ var player_name: String
 
 func sign_adoption(identity: int) -> void:
 	id = identity
-	player_name = Steam.getPlayerNickname(id)
-	$RichTextLabel.text = player_name
+	player_name = SteamLobbies.lobby_members[id]["steam_name"]
+	$RichTextLabel.text = "[center]" + player_name + "[/center]"
 
 func move_to(new_position: Vector2) -> void:
 	if Saves.get_or_add("networking", "networking_tween_enabled", true):

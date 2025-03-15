@@ -76,6 +76,6 @@ sprite_frames = SubResource("SpriteFrames_h658l")
 animation = &"front"
 autoplay = "front"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="Feet Collider" type="CollisionShape2D" parent="."]
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_e3ni3")

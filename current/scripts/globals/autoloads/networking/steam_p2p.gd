@@ -37,13 +37,16 @@ func process_message(message: Dictionary) -> void:
 					"data":
 						if kitties.has(message.identity):
 							if WorldManager.has(message.identity, WorldManager.current_world_name) and WorldManager.dimensions == message.payload["dimensions"]:
-								if message.payload["dimensions"] == 3 and kitties[message.identity] is Node3D:
-									kitties[message.identity].move_to(Vector3(message.payload.x, message.payload.y, message.payload.z))
-								elif message.payload["dimensions"] == 2 and kitties[message.identity] is Node2D:
-									kitties[message.identity].move_to(Vector2(message.payload.x, message.payload.y))
-								else:
-									Ui.show_system_message("Error reading locational data")
-									remove_kitty(message.identity)
+								match message.payload["dimensions"]:
+									3:
+										if kitties[message.identity] != null and kitties[message.identity] is Node3D:
+											kitties[message.identity].move_to(Vector3(message.payload.x, message.payload.y, message.payload.z))
+									2:
+										if kitties[message.identity] != null and kitties[message.identity] is Node2D:
+											kitties[message.identity].move_to(Vector2(message.payload.x, message.payload.y))
+									_:
+										Ui.show_system_message("Error reading locational data")
+										remove_kitty(message.identity)
 							else:
 								remove_kitty(message.identity)
 						elif WorldManager.has(message.identity, WorldManager.current_world_name):
@@ -181,6 +184,6 @@ func remove_kitties() -> void:
 	kitties.clear()
 
 func remove_kitty(pid: int = 0) -> void:
-	if kitties.has(pid):
+	if kitties.has(pid) and kitties[pid] != null:
 		kitties[pid].queue_free()
 		kitties.erase(pid)

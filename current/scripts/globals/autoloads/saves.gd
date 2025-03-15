@@ -26,10 +26,6 @@ func _ready() -> void:
 	save_loaded = true
 	await get_tree().process_frame
 	WorldManager.change_world(get_or_return("settings", "world_path", "res://current/scenes/templates/main_scenes/2D_scene_template/2D_scene_template.tscn"))
-	await get_tree().process_frame
-	if get_or_return("settings", "first_load", true):
-		Ui.open_menu("res://current/menus/First_load_menu/first_load.tscn")
-		set_value("settings", "first_load", false)
 
 func _physics_process(_delta: float) -> void:
 	auto_save()

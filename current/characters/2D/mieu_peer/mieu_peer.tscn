@@ -71,8 +71,11 @@ sprite_frames = SubResource("SpriteFrames_25e44")
 autoplay = "default"
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
-offset_left = -200.0
-offset_top = -240.0
-offset_right = 200.0
-offset_bottom = -165.0
+offset_left = -196.0
+offset_top = -202.0
+offset_right = 204.0
+offset_bottom = -127.0
+bbcode_enabled = true
+text = "[center]Player Name[/center]"
+fit_content = true
 script = ExtResource("3_846l6")

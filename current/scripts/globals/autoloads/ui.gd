@@ -11,7 +11,8 @@ const DEFAULT_CHAT_FONT_SIZE: float = 20.0
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("pause"):
-		chat_box.release_input_focus()
+		if chat_box != null:
+			chat_box.release_input_focus()
 		if Saves.save_loaded:
 			if not is_menu_open():
 				set_mouse_mode(Input.MOUSE_MODE_VISIBLE)

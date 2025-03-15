@@ -27,5 +27,7 @@ func _physics_process(_delta: float) -> void:
 		velocity.y = move_toward(velocity.y, 0, GlobalVars.move_speed_2D)
 	
 	move_and_slide()
+	global_position = global_position.clamp(Vector2(0.0,0.0), Vector2(1920.0, 1080.0))
+	print(global_position)
 	if SteamLobbies.lobby_id != 0:
 			Multithreading.add_task(SteamP2P.send_message_to_user.bind({"type": "data", "dimensions": 2,"x": global_position.x, "y": global_position.y}, 0, Steam.NETWORKING_SEND_UNRELIABLE_NO_DELAY))

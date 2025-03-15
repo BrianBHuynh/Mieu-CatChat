@@ -21,7 +21,7 @@ func add_to_world(pid: int, world: String = current_world, instance_id: int = -1
 	for world_array: String in worlds:
 		for world_instance: int in worlds[world_array]:
 			worlds[world_array][world_instance].erase(pid)
-	worlds[world][instance_id].append(pid)
+	worlds[world][instance_id][pid] = SteamLobbies.lobby_members[pid]["steam_name"]
 	if world != current_world_name or instance_id != current_instance_id:
 		SteamP2P.remove_kitty(pid)
 
@@ -63,6 +63,10 @@ func change_world(world_path: String, instance_id: int = -1) -> void:
 		Saves.set_value("settings", "world_path", world_path)
 		send_world()
 		Ui.show_system_message("Now entering " + current_world_name, Color.CYAN, true, "")
+		await get_tree().process_frame
+		if Saves.get_or_return("settings", "first_load", true):
+			Ui.open_menu("res://current/menus/First_load_menu/first_load.tscn")
+			Saves.set_value("settings", "first_load", false)
 	else:
 		Ui.show_system_debug("The world that you tried to load was not found")
 

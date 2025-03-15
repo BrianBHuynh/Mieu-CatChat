@@ -10,7 +10,7 @@ func _ready() -> void:
 	WorldManager.set_door($Middleground/DoorB, "B")
 
 func _on_door_a_body_entered(body: Node2D) -> void:
-	WorldManager.door_teleport(body, "res://current/scenes/worlds/sketch_worlds/park/park.tscn", "B", $Middleground/Mieu.global_position - $Middleground/DoorA.get_child(0).global_position)
+	WorldManager.door_teleport(body, "res://current/scenes/templates/main_scenes/2D_scene_template/2D_scene_template.tscn", "B", $Middleground/Mieu.global_position - $Middleground/DoorA.get_child(0).global_position)
 
 func _on_door_b_body_entered(body: Node2D) -> void:
 	WorldManager.door_teleport(body, "res://current/scenes/worlds/sketch_worlds/town_center/town_center.tscn", "A", $Middleground/Mieu.global_position - $Middleground/DoorB.get_child(0).global_position)
