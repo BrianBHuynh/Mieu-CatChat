@@ -99,7 +99,7 @@ func change_world_door(world_path: String, door: String = "", door_offset: Vecto
 			Saves.set_value("settings", "world_path", world_path)
 			send_world()
 			Ui.show_system_message("Now entering " + current_world_name, Color.CYAN, true, "")
-			await get_tree().create_timer(1).timeout
+			await get_tree().create_timer(.25).timeout
 			door_cooldown = false
 		else:
 			Ui.show_system_debug("The world that you tried to load was not found")
