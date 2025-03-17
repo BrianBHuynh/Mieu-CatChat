@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://w7g10qhhkaf8"]
+[gd_scene load_steps=9 format=3 uid="uid://w7g10qhhkaf8"]
 
 [ext_resource type="Script" uid="uid://dbmfdeitoh0o0" path="res://current/scenes/worlds/sketch_worlds/park/park.gd" id="1_8d3qt"]
 [ext_resource type="Script" uid="uid://dwtq2tmpbk1dm" path="res://current/scripts/node/minigame_window.gd" id="2_8r8d5"]
@@ -9,6 +9,9 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i62hu"]
 size = Vector2(80.5, 372.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8d3qt"]
+size = Vector2(1920, 20)
 
 [node name="Park" type="Node2D"]
 script = ExtResource("1_8d3qt")
@@ -32,17 +35,23 @@ texture = ExtResource("3_8d3qt")
 [node name="Middleground" type="Node2D" parent="."]
 y_sort_enabled = true
 
+[node name="DoorA" type="Area2D" parent="Middleground"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Middleground/DoorA"]
+position = Vector2(40, 894)
+shape = SubResource("RectangleShape2D_i62hu")
+
 [node name="DoorB" type="Area2D" parent="Middleground"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Middleground/DoorB"]
 position = Vector2(1880, 894)
 shape = SubResource("RectangleShape2D_i62hu")
 
-[node name="DoorA" type="Area2D" parent="Middleground"]
+[node name="DoorC" type="Area2D" parent="Middleground"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Middleground/DoorA"]
-position = Vector2(40, 894)
-shape = SubResource("RectangleShape2D_i62hu")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Middleground/DoorC"]
+position = Vector2(960, 10)
+shape = SubResource("RectangleShape2D_8d3qt")
 
 [node name="Mieu" parent="Middleground" instance=ExtResource("4_5hbkt")]
 position = Vector2(923, 690)
@@ -62,5 +71,6 @@ layout_mode = 1
 layout_mode = 1
 
 [connection signal="close_requested" from="Minigame" to="Minigame" method="_on_close_requested"]
-[connection signal="body_entered" from="Middleground/DoorB" to="." method="_on_door_b_body_entered"]
 [connection signal="body_entered" from="Middleground/DoorA" to="." method="_on_door_a_body_entered"]
+[connection signal="body_entered" from="Middleground/DoorB" to="." method="_on_door_b_body_entered"]
+[connection signal="body_entered" from="Middleground/DoorC" to="." method="_on_door_c_body_entered"]

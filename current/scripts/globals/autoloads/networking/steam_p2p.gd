@@ -41,36 +41,25 @@ func process_message(message: Dictionary) -> void:
 									3:
 										if kitties[message.identity] != null and kitties[message.identity] is Node3D:
 											kitties[message.identity].move_to(Vector3(message.payload.x, message.payload.y, message.payload.z))
+										else:
+											spawn_kitty(message)
 									2:
 										if kitties[message.identity] != null and kitties[message.identity] is Node2D:
 											kitties[message.identity].move_to(Vector2(message.payload.x, message.payload.y))
+										else:
+											spawn_kitty(message)
 									_:
 										Ui.show_system_message("Error reading locational data")
 										remove_kitty(message.identity)
 							else:
 								remove_kitty(message.identity)
 						elif WorldManager.has(message.identity, WorldManager.current_world_name):
-							if WorldManager.dimensions == 3 and message.payload["dimensions"] == 3 and get_tree().current_scene is Node3D:
-								var file: Resource = load("res://current/characters/3D/mieu_peer/mieu_peer.tscn")
-								var kit: Node3D = file.instantiate()
-								get_parent().add_child(kit)
-								kit.sign_adoption(message["identity"])
-								kitties[message["identity"]] = kit
-								Ui.show_system_message("creating", Color.GREEN)
-								kitties[message.identity].global_position = Vector3(message.payload.x, message.payload.y, message.payload.z)
-							elif WorldManager.dimensions == 2 and message.payload["dimensions"] == 2 and get_tree().current_scene is Node2D:
-								while !WorldManager.middleground:
-									await get_tree().process_frame
-								var file: Resource = load("res://current/characters/2D/mieu_peer/mieu_peer.tscn")
-								var kit: Node2D = file.instantiate()
-								WorldManager.middleground.add_child(kit)
-								kit.sign_adoption(message["identity"])
-								kitties[message["identity"]] = kit
-								Ui.show_system_message("creating", Color.GREEN)
-								kitties[message.identity].global_position = Vector2(message.payload.x, message.payload.y)
+							spawn_kitty(message)
 					"minigame_data":
-						if MinigameManager.minigame_name == message.payload["minigame_name"] && MinigameManager.minigame_instance_id == message.payload["minigame_instance_id"]:
-							MinigameManager.accept_minigame_data(message)
+						pass
+						#TODO
+						#if MinigameManager.minigame_name == message.payload["minigame_name"] && MinigameManager.minigame_instance_id == message.payload["minigame_instance_id"]:
+						#	MinigameManager.accept_minigame_data(message)
 					"chat":
 						Ui.show_chat_message(ChatFilter.filter(message))
 					"lobby_data":
@@ -187,3 +176,23 @@ func remove_kitty(pid: int = 0) -> void:
 	if kitties.has(pid) and kitties[pid] != null:
 		kitties[pid].queue_free()
 		kitties.erase(pid)
+
+func spawn_kitty(message: Dictionary) -> void:
+	if WorldManager.dimensions == 3 and message.payload["dimensions"] == 3 and get_tree().current_scene is Node3D:
+		var file: Resource = load("res://current/characters/3D/mieu_peer/mieu_peer.tscn")
+		var kit: Node3D = file.instantiate()
+		get_parent().add_child(kit)
+		kit.sign_adoption(message["identity"])
+		kitties[message["identity"]] = kit
+		Ui.show_system_message("creating", Color.GREEN)
+		kitties[message.identity].global_position = Vector3(message.payload.x, message.payload.y, message.payload.z)
+	elif WorldManager.dimensions == 2 and message.payload["dimensions"] == 2 and get_tree().current_scene is Node2D:
+		while !WorldManager.middleground:
+			await get_tree().process_frame
+		var file: Resource = load("res://current/characters/2D/mieu_peer/mieu_peer.tscn")
+		var kit: Node2D = file.instantiate()
+		WorldManager.middleground.add_child(kit)
+		kit.sign_adoption(message["identity"])
+		kitties[message["identity"]] = kit
+		Ui.show_system_message("creating", Color.GREEN)
+		kitties[message.identity].global_position = Vector2(message.payload.x, message.payload.y)

@@ -74,7 +74,7 @@ func show_system_message(content: String, color: Color = Color.DARK_BLUE, save: 
 func show_system_warning(content: String, color: Color = Color.DARK_RED, save: bool = true) -> void:
 	show_system_message(content, color, save, "SYSTEM_WARNING")
 
-func show_system_debug(content: String, color: Color = Color.SLATE_GRAY, save: bool = true) -> void:
+func show_system_debug(content: String, color: Color = Color.BLACK, save: bool = true) -> void:
 	if Saves.get_or_return("settings", "show_debug", false):
 		show_system_message(content, color, save, "DEBUG")
 
