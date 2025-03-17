@@ -39,12 +39,12 @@ position = Vector2(960, 1070)
 shape = SubResource("RectangleShape2D_i62hu")
 
 [node name="Mieu" parent="Middleground" instance=ExtResource("4_8op36")]
+visible = false
 position = Vector2(923, 690)
 
 [node name="Foreground" type="Node2D" parent="."]
 
 [node name="Control" type="Control" parent="."]
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0

@@ -33,65 +33,30 @@ func process_message(message: Dictionary) -> void:
 				remove_kitty(message.identity)
 			else:
 				message.payload = bytes_to_var(message.payload.decompress_dynamic(-1, FileAccess.COMPRESSION_GZIP))
-				match message["payload"]["type"]:
-					"data":
-						if kitties.has(message.identity):
-							if WorldManager.has(message.identity, WorldManager.current_world_name) and WorldManager.dimensions == message.payload["dimensions"]:
-								match message.payload["dimensions"]:
-									3:
-										if kitties[message.identity] != null and kitties[message.identity] is Node3D:
-											kitties[message.identity].move_to(Vector3(message.payload.x, message.payload.y, message.payload.z))
-										else:
-											spawn_kitty(message)
-									2:
-										if kitties[message.identity] != null and kitties[message.identity] is Node2D:
-											kitties[message.identity].move_to(Vector2(message.payload.x, message.payload.y))
-										else:
-											spawn_kitty(message)
-									_:
-										Ui.show_system_message("Error reading locational data")
-										remove_kitty(message.identity)
-							else:
-								remove_kitty(message.identity)
-						elif WorldManager.has(message.identity, WorldManager.current_world_name):
-							spawn_kitty(message)
-					"minigame_data":
-						pass
-						#TODO
-						#if MinigameManager.minigame_name == message.payload["minigame_name"] && MinigameManager.minigame_instance_id == message.payload["minigame_instance_id"]:
-						#	MinigameManager.accept_minigame_data(message)
-					"chat":
-						Ui.show_chat_message(ChatFilter.filter(message))
-					"lobby_data":
-						if message.identity == Steam.getLobbyOwner(SteamLobbies.lobby_id):
-							Moderation.banned_players = message["payload"]["lobby_data"]["banned_players"]
-							for player_id: int in Moderation.banned_players:
-								if SteamLobbies.lobby_members.has(player_id) or kitties.has(player_id):
-									remove_kitty(player_id)
-									Steam.closeSessionWithUser(player_id)
-									SteamLobbies.lobby_members.erase(player_id)
-					"ban":
-						if message.identity == Steam.getLobbyOwner(SteamLobbies.lobby_id):
-							SteamLobbies.leave_lobby()
-							Ui.show_system_message("You were banned from the lobby")
-							Ui.show_system_message("Reason provided: " + message["payload"]["reason"])
-					"ban_announce":
-						if message.identity == Steam.getLobbyOwner(SteamLobbies.lobby_id):
-							Ui.show_system_message("The lobby owner " + SteamLobbies.get_host_name() + "has banned " + Steam.getFriendPersonaName(message["payload"]["banned_player"]))
-					"kick":
-						if message.identity == Steam.getLobbyOwner(SteamLobbies.lobby_id):
-							SteamLobbies.leave_lobby()
-							Ui.show_system_message("You were kicked from the lobby")
-							Ui.show_system_message("Reason provided: " + message["payload"]["reason"])
-					"kick_announce":
-						if message.identity == Steam.getLobbyOwner(SteamLobbies.lobby_id):
-							Ui.show_system_message("The lobby owner " + SteamLobbies.get_host_name() + "has kicked " + Steam.getFriendPersonaName(message["payload"]["kicked_player"]))
-					"world_info":
-						WorldManager.add_to_world(message.identity, message["payload"]["world"])
-					"encrypted_message":
-						Cryptography.save_message(message.identity, message["payload"]["message_id"], message["payload"]["encrypted_payload"])
-					"encrypted_key":
-						Cryptography.decode_message(message.identity, message["payload"]["message_id"], message["payload"]["key"])
+				if message.payload is Dictionary:
+					match message["payload"]["type"]:
+						"data":
+							MessageHandler.data(message)
+						"minigame_data":
+							MessageHandler.minigame_data(message)
+						"chat":
+							MessageHandler.chat(message)
+						"lobby_data":
+							MessageHandler.lobby_data(message)
+						"ban":
+							MessageHandler.ban(message)
+						"ban_announce":
+							MessageHandler.ban_announce(message)
+						"kick":
+							MessageHandler.kick(message)
+						"kick_announce":
+							MessageHandler.kick_announce(message)
+						"world_info":
+							MessageHandler.world_info(message)
+						"encrypted_message":
+							MessageHandler.encrypted_message(message)
+						"encrypted_key":
+							MessageHandler.encrypted_key(message)
 
 func send_message_to_user(payload: Dictionary, this_target: int = 0, send_type: int = Steam.NETWORKING_SEND_RELIABLE, channel: int = 0, encrypted: bool = false) -> void:
 	if SteamLobbies.lobby_members.size() > 1:
@@ -167,6 +132,37 @@ func _on_p2p_session_connect_fail(steam_id: int, _session_error: int, _state: in
 	Ui.show_system_warning("P2p session connection failed! Reason: " + debug_msg)
 	remove_kitty(steam_id)
 
+func spawn_kitty(message: Dictionary) -> void:
+	if WorldManager.dimensions == 3 and message.payload["dimensions"] == 3 and get_tree().current_scene is Node3D:
+		if (
+		message.payload.has("x") and message.payload["x"] is float
+		and message.payload.has("y") and message.payload["y"] is float
+		and message.payload.has("z") and message.payload["z"] is float
+		):
+			var file: Resource = load("res://current/characters/3D/mieu_peer/mieu_peer.tscn")
+			var kit: Node3D = file.instantiate()
+			get_parent().add_child(kit)
+			kit.sign_adoption(message["identity"])
+			SteamP2P.kitties[message["identity"]] = kit
+			Ui.show_system_message("creating", Color.GREEN)
+			SteamP2P.kitties[message.identity].global_position = Vector3(message.payload.x, message.payload.y, message.payload.z)
+	elif WorldManager.dimensions == 2 and message.payload["dimensions"] == 2 and get_tree().current_scene is Node2D:
+		if (
+		message.payload.has("x") and message.payload["x"] is float
+		and message.payload.has("y") and message.payload["y"] is float
+		):
+			while !WorldManager.middleground:
+				await get_tree().process_frame
+			var file: Resource = load("res://current/characters/2D/mieu_peer/mieu_peer.tscn")
+			var kit: Node2D = file.instantiate()
+			kit.hide()
+			WorldManager.middleground.add_child(kit)
+			kit.sign_adoption(message["identity"])
+			SteamP2P.kitties[message["identity"]] = kit
+			Ui.show_system_message("creating", Color.GREEN)
+			SteamP2P.kitties[message.identity].global_position = Vector2(message.payload.x, message.payload.y)
+			kit.show()
+
 func remove_kitties() -> void:
 	for cat_id: int in SteamP2P.kitties:
 		kitties[cat_id].queue_free()
@@ -176,23 +172,3 @@ func remove_kitty(pid: int = 0) -> void:
 	if kitties.has(pid) and kitties[pid] != null:
 		kitties[pid].queue_free()
 		kitties.erase(pid)
-
-func spawn_kitty(message: Dictionary) -> void:
-	if WorldManager.dimensions == 3 and message.payload["dimensions"] == 3 and get_tree().current_scene is Node3D:
-		var file: Resource = load("res://current/characters/3D/mieu_peer/mieu_peer.tscn")
-		var kit: Node3D = file.instantiate()
-		get_parent().add_child(kit)
-		kit.sign_adoption(message["identity"])
-		kitties[message["identity"]] = kit
-		Ui.show_system_message("creating", Color.GREEN)
-		kitties[message.identity].global_position = Vector3(message.payload.x, message.payload.y, message.payload.z)
-	elif WorldManager.dimensions == 2 and message.payload["dimensions"] == 2 and get_tree().current_scene is Node2D:
-		while !WorldManager.middleground:
-			await get_tree().process_frame
-		var file: Resource = load("res://current/characters/2D/mieu_peer/mieu_peer.tscn")
-		var kit: Node2D = file.instantiate()
-		WorldManager.middleground.add_child(kit)
-		kit.sign_adoption(message["identity"])
-		kitties[message["identity"]] = kit
-		Ui.show_system_message("creating", Color.GREEN)
-		kitties[message.identity].global_position = Vector2(message.payload.x, message.payload.y)

@@ -40,6 +40,7 @@ position = Vector2(10, 894)
 shape = SubResource("RectangleShape2D_i62hu")
 
 [node name="Mieu" parent="Middleground" instance=ExtResource("1_uyj3n")]
+visible = false
 position = Vector2(923, 690)
 
 [node name="Foreground" type="Node2D" parent="."]

@@ -58,11 +58,12 @@ func change_world(world_path: String, instance_id: int = -1) -> void:
 		get_tree().change_scene_to_packed(world_packed)
 		while !get_tree().current_scene:
 			await get_tree().process_frame
+		initialize_pos()
 		if dimensions == 2:
 			middleground = get_node("/root/" + current_world_name + "/Middleground")
 		Saves.set_value("settings", "world_path", world_path)
 		send_world()
-		Ui.show_system_message("Now entering " + current_world_name, Color.CYAN, true, "")
+		Ui.show_system_message("Now entering " + current_world_name, Color.CYAN, false, "")
 		await get_tree().process_frame
 		if Saves.get_or_return("settings", "first_load", true):
 			Ui.open_menu("res://current/menus/First_load_menu/first_load.tscn")
@@ -98,7 +99,7 @@ func change_world_door(world_path: String, door: String = "", door_offset: Vecto
 				middleground = get_node("/root/" + current_world_name + "/Middleground")
 			Saves.set_value("settings", "world_path", world_path)
 			send_world()
-			Ui.show_system_message("Now entering " + current_world_name, Color.CYAN, true, "")
+			Ui.show_system_message("Now entering " + current_world_name, Color.CYAN, false, "")
 			await get_tree().create_timer(.25).timeout
 			door_cooldown = false
 		else:
@@ -119,6 +120,7 @@ func initialize_pos(door: String = "", door_offset: Vector2 = Vector2(0,0)) -> v
 	else:
 		if doors.has(door) and is_instance_valid(doors[door]):
 			GlobalVars.mieu.global_position = doors[door].get_child(0).global_position + door_offset
+	GlobalVars.mieu.show()
 
 func update_world(world: Variant) -> void:
 	current_world = world
