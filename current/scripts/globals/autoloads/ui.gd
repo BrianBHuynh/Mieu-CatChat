@@ -32,7 +32,7 @@ func _process(_delta: float) -> void:
 func is_menu_open() -> bool:
 	return is_instance_valid(cur_menu)
 
-func show_system_message(content: String, color: Color = Color.DARK_BLUE, save: bool = true, prefix: String = "SYSTEM") -> void:
+func show_system_message(content: String, color: Color = Color.DARK_BLUE, save: bool = false, prefix: String = "SYSTEM") -> void:
 	while chat_box == null or !is_instance_valid(chat_box):
 		await get_tree().process_frame
 	chat_box.show_system_message(content, color, save, prefix)
@@ -42,7 +42,7 @@ func show_system_warning(message: String, color: Color = Color.DARK_BLUE) -> voi
 		await get_tree().process_frame
 	chat_box.show_system_warning(message, color)
 
-func show_system_debug(message: String, color: Color = Color.SLATE_GRAY) -> void:
+func show_system_debug(message: String, color: Color = Color.BLACK) -> void:
 	while chat_box == null or !is_instance_valid(chat_box):
 		await get_tree().process_frame
 	chat_box.show_system_debug(message, color)

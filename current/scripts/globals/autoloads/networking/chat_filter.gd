@@ -16,4 +16,4 @@ func filter(message: Dictionary) -> Dictionary:
 			
 			if chat_filter[word]["delete"]:
 				message["payload"]["text"] = "Deleted by filter"
-		return message
+	return message

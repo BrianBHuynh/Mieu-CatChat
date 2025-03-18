@@ -144,7 +144,7 @@ func spawn_kitty(message: Dictionary) -> void:
 			get_parent().add_child(kit)
 			kit.sign_adoption(message["identity"])
 			SteamP2P.kitties[message["identity"]] = kit
-			Ui.show_system_message("creating", Color.GREEN)
+			Ui.show_system_debug("creating")
 			SteamP2P.kitties[message.identity].global_position = Vector3(message.payload.x, message.payload.y, message.payload.z)
 	elif WorldManager.dimensions == 2 and message.payload["dimensions"] == 2 and get_tree().current_scene is Node2D:
 		if (
@@ -159,7 +159,7 @@ func spawn_kitty(message: Dictionary) -> void:
 			WorldManager.middleground.add_child(kit)
 			kit.sign_adoption(message["identity"])
 			SteamP2P.kitties[message["identity"]] = kit
-			Ui.show_system_message("creating", Color.GREEN)
+			Ui.show_system_debug("creating")
 			SteamP2P.kitties[message.identity].global_position = Vector2(message.payload.x, message.payload.y)
 			kit.show()
 

@@ -44,7 +44,7 @@ func _physics_process(delta: float) -> void:
 				velocity.y = move_toward(velocity.y, -2.5, .5)
 	
 	move_and_slide()
-	if SteamLobbies.lobby_id != 0:
+	if SteamLobbies.lobby_id != 0 and is_visible_in_tree():
 			Multithreading.add_task(SteamP2P.send_message_to_user.bind({"type": "data", "dimensions": 3,"x": GlobalVars.mieu.global_position.x, "y": GlobalVars.mieu.global_position.y, "z": GlobalVars.mieu.global_position.z}, 0, Steam.NETWORKING_SEND_UNRELIABLE_NO_DELAY))
 
 func _input(event: InputEvent) -> void:

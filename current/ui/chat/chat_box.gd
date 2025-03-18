@@ -71,10 +71,10 @@ func show_system_message(content: String, color: Color = Color.DARK_BLUE, save: 
 		await get_tree().create_timer(.05).timeout
 		create_tween().tween_property($ScrollContainer.get_v_scroll_bar(), "value", $ScrollContainer.get_v_scroll_bar().max_value, 1.0)
 
-func show_system_warning(content: String, color: Color = Color.DARK_RED, save: bool = true) -> void:
+func show_system_warning(content: String, color: Color = Color.DARK_RED, save: bool = false) -> void:
 	show_system_message(content, color, save, "SYSTEM_WARNING")
 
-func show_system_debug(content: String, color: Color = Color.BLACK, save: bool = true) -> void:
+func show_system_debug(content: String, color: Color = Color.BLACK, save: bool = false) -> void:
 	if Saves.get_or_return("settings", "show_debug", false):
 		show_system_message(content, color, save, "DEBUG")
 

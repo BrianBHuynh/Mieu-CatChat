@@ -31,7 +31,7 @@ static func get_string_from_txt(location: String) -> String:
 	return FileAccess.get_file_as_string(location)
 
 static func dict_type_check(dict: Dictionary, key: Variant, type: String) -> bool:
-	if dict.has(key):
+	if dict.has(key) and key != null:
 		match type:
 			"String":
 				return dict[key] is String
