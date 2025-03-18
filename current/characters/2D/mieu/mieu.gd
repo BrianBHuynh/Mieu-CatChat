@@ -5,6 +5,7 @@ func _ready() -> void:
 	GlobalVars.mieu = self
 	GlobalVars.reset_position = global_position
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	$RichTextLabel.text = "[center]" + SteamWorks.steam_username + "[/center]"
 
 func _physics_process(_delta: float) -> void:
 	var input_dir: Vector2 = Vector2(0, 0)

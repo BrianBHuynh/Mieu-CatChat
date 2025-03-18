@@ -1,7 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://cj7jy8rdyeuvj"]
+[gd_scene load_steps=13 format=3 uid="uid://cj7jy8rdyeuvj"]
 
 [ext_resource type="Script" uid="uid://bvgqp75l2lsd3" path="res://current/characters/2D/mieu/mieu.gd" id="1_xoutb"]
 [ext_resource type="Texture2D" uid="uid://lhikvxbnengm" path="res://current/assets/images/mieu_idle_front.png" id="2_dd5pl"]
+[ext_resource type="Script" uid="uid://vftddq4ojmo2" path="res://current/scripts/node/rich_text_label.gd" id="3_f8btm"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_flex7"]
 atlas = ExtResource("2_dd5pl")
@@ -79,3 +80,14 @@ autoplay = "front"
 [node name="Feet Collider" type="CollisionShape2D" parent="."]
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_e3ni3")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+offset_left = -196.0
+offset_top = -202.0
+offset_right = 204.0
+offset_bottom = -127.0
+theme_override_colors/font_shadow_color = Color(0.292672, 0.465613, 1, 1)
+bbcode_enabled = true
+text = "[center]Player Name[/center]"
+fit_content = true
+script = ExtResource("3_f8btm")
