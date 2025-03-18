@@ -25,7 +25,10 @@ func _ready() -> void:
 	SignalBus.load_finished.emit()
 	save_loaded = true
 	await get_tree().process_frame
-	WorldManager.change_world(get_or_return("settings", "world_path", "res://current/scenes/templates/scene_template/scene_template.tscn"))
+	if FileAccess.file_exists(get_or_return("settings", "world_path", "res://current/scenes/templates/scene_template/scene_template.tscn")):
+		WorldManager.change_world(get_or_return("settings", "world_path", "res://current/scenes/templates/scene_template/scene_template.tscn"))
+	else:
+		WorldManager.change_world("res://current/scenes/templates/scene_template/scene_template.tscn")
 
 func _physics_process(_delta: float) -> void:
 	auto_save()
