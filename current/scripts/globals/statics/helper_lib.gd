@@ -29,3 +29,26 @@ static func get_font(font_path: String) -> Font:
 
 static func get_string_from_txt(location: String) -> String:
 	return FileAccess.get_file_as_string(location)
+
+static func dict_type_check(dict: Dictionary, key: Variant, type: String) -> bool:
+	if dict.has(key):
+		match type:
+			"String":
+				return dict[key] is String
+			"int":
+				return dict[key] is int
+			"float":
+				return dict[key] is float
+			"Dictionary":
+				return dict[key] is Dictionary
+			"Node2D":
+				return dict[key] is Node2D
+			"Node3D":
+				return dict[key] is Node3D
+			"PackedByteArray":
+				return dict[key] is PackedByteArray
+			_:
+				Ui.show_system_warning("Please check dict type check's type")
+				return false
+	else:
+		return false
