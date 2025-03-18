@@ -10,7 +10,7 @@ func load_finished() -> void:
 	$FoodBar.min_value = Status.get_param("food", "min")
 	$FoodBar.value = Status.get_stat("food")
 
-func _process(_delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	$FoodBar.value = Status.get_stat("food")
 
 

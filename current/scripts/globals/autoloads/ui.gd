@@ -9,7 +9,7 @@ var chat_log: Array = []
 const DEFAULT_FONT_SIZE: float = 30.0
 const DEFAULT_CHAT_FONT_SIZE: float = 20.0
 
-func _process(_delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if Input.is_action_just_pressed("pause"):
 		if chat_box != null:
 			chat_box.release_input_focus()

@@ -20,7 +20,7 @@ func _ready() -> void:
 		Ui.show_system_message("Steam is not running right now, online features may not work correctly!")
 		running = false
 
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	Steam.run_callbacks()
 	SteamP2P.process(delta)
 
