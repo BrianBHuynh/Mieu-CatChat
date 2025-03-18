@@ -69,6 +69,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="CreateLobby" type="TextureButton" parent="ScrollContainer/HBoxContainer/Buttons"]
+modulate = Color(0.797768, 0.553362, 0.848338, 1)
 texture_filter = 1
 clip_contents = true
 layout_mode = 2
@@ -77,6 +78,7 @@ texture_normal = ExtResource("3_i2ca0")
 stretch_mode = 5
 
 [node name="RefreshLobbies" type="TextureButton" parent="ScrollContainer/HBoxContainer/Buttons"]
+modulate = Color(0.869535, 0.382748, 0.676443, 1)
 texture_filter = 1
 clip_contents = true
 layout_mode = 2
@@ -85,6 +87,7 @@ texture_normal = ExtResource("3_i2ca0")
 stretch_mode = 5
 
 [node name="LeaveLobby" type="TextureButton" parent="ScrollContainer/HBoxContainer/Buttons"]
+modulate = Color(0.917703, 0.403097, 0.384092, 1)
 texture_filter = 1
 clip_contents = true
 layout_mode = 2

@@ -35,18 +35,6 @@ func minigame_open(minigame_path: String = "") -> void:
 			minigame_display.add_child(minigame_instance)
 		minigame_display.show()
 
-func minigame_dimensions() -> int:
-	var dimensions: int
-	match minigame.get_class:
-		"Node2D":
-			dimensions = 2
-		"Node3D":
-			dimensions = 3
-		_:
-			dimensions = -1
-			Ui.show_system_warning("No minigame open")
-	return dimensions
-
 func get_minigame() -> Variant:
 	if is_instance_valid(minigame):
 		return minigame

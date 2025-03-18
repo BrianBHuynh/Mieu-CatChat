@@ -25,7 +25,7 @@ func _ready() -> void:
 	SignalBus.load_finished.emit()
 	save_loaded = true
 	await get_tree().process_frame
-	WorldManager.change_world(get_or_return("settings", "world_path", "res://current/scenes/templates/main_scenes/2D_scene_template/2D_scene_template.tscn"))
+	WorldManager.change_world(get_or_return("settings", "world_path", "res://current/scenes/templates/scene_template/scene_template.tscn"))
 
 func _physics_process(_delta: float) -> void:
 	auto_save()
@@ -90,17 +90,8 @@ func save_game() -> void:
 func store_player_state() -> void:
 	while !is_instance_valid(GlobalVars.mieu):
 		await get_tree().process_frame
-	if GlobalVars.mieu is CharacterBody2D:
-		Saves.set_value("Player", "pos_x", GlobalVars.mieu.global_position.x)
-		Saves.set_value("Player", "pos_y", GlobalVars.mieu.global_position.y)
-	elif GlobalVars.mieu is CharacterBody3D:
-		Saves.set_value("Player", "pos_x", GlobalVars.mieu.global_position.x)
-		Saves.set_value("Player", "pos_y", GlobalVars.mieu.global_position.y)
-		Saves.set_value("Player", "pos_z", GlobalVars.mieu.global_position.z)
-		Saves.set_value("Player", "rot_x", GlobalVars.mieu.rotation.x)
-		Saves.set_value("Player", "rot_y", GlobalVars.mieu.rotation.y)
-		Saves.set_value("Player", "rot_z", GlobalVars.mieu.rotation.z)
-		Saves.set_value("settings", "camera_distance", GlobalVars.mieu.get_spring_arm_length())
+	Saves.set_value("Player", "pos_x", GlobalVars.mieu.global_position.x)
+	Saves.set_value("Player", "pos_y", GlobalVars.mieu.global_position.y)
 
 func make_dir(dir: String) -> void:
 	if not DirAccess.dir_exists_absolute(dir):

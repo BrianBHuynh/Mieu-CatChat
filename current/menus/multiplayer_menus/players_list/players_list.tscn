@@ -18,7 +18,7 @@ offset_left = 256.0
 offset_top = 64.0
 offset_right = 1664.0
 offset_bottom = 1024.0
-color = Color(0.793558, 0.455552, 0.183554, 1)
+color = Color(0.883545, 0.512522, 0.293142, 1)
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 0

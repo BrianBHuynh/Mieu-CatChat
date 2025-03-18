@@ -43,8 +43,6 @@ static func dict_type_check(dict: Dictionary, key: Variant, type: String) -> boo
 				return dict[key] is Dictionary
 			"Node2D":
 				return dict[key] is Node2D
-			"Node3D":
-				return dict[key] is Node3D
 			"PackedByteArray":
 				return dict[key] is PackedByteArray
 			_:

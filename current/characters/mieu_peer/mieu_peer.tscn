@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=3 uid="uid://ccppo6wmem00o"]
 
 [ext_resource type="Texture2D" uid="uid://lhikvxbnengm" path="res://current/assets/images/mieu_idle_front.png" id="1_6gnlj"]
-[ext_resource type="Script" uid="uid://domwpnd10yqiu" path="res://current/characters/2D/mieu_peer/mieu_peer.gd" id="2_gb511"]
+[ext_resource type="Script" uid="uid://domwpnd10yqiu" path="res://current/characters/mieu_peer/mieu_peer.gd" id="2_gb511"]
 [ext_resource type="Script" uid="uid://vftddq4ojmo2" path="res://current/scripts/node/rich_text_label.gd" id="3_846l6"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1k7s1"]

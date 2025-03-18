@@ -48,91 +48,28 @@ fit_content = true
 script = ExtResource("2_leq0j")
 
 [node name="MultiplayerBtn" type="TextureButton" parent="ScrollContainer/VBoxContainer/Multiplayer"]
-modulate = Color(0, 1, 1, 1)
+modulate = Color(0.292512, 1, 0.907563, 1)
 texture_filter = 1
 layout_mode = 2
 size_flags_horizontal = 3
 texture_normal = ExtResource("2_t8lwk")
 stretch_mode = 5
 
-[node name="Accessibility" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+[node name="Settings" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
 clip_contents = true
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="AccessibilityLabel" type="RichTextLabel" parent="ScrollContainer/VBoxContainer/Accessibility"]
+[node name="SettingsLabel" type="RichTextLabel" parent="ScrollContainer/VBoxContainer/Settings"]
 layout_mode = 2
 size_flags_horizontal = 3
 bbcode_enabled = true
-text = "[center]Accessibility[/center]"
+text = "[center]Settings:[/center]"
 fit_content = true
 script = ExtResource("2_leq0j")
 
-[node name="AccessibilityBtn" type="TextureButton" parent="ScrollContainer/VBoxContainer/Accessibility"]
-modulate = Color(1, 0, 1, 1)
-texture_filter = 1
-layout_mode = 2
-size_flags_horizontal = 3
-texture_normal = ExtResource("2_t8lwk")
-stretch_mode = 5
-
-[node name="Input" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
-clip_contents = true
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="InputLabel" type="RichTextLabel" parent="ScrollContainer/VBoxContainer/Input"]
-layout_mode = 2
-size_flags_horizontal = 3
-bbcode_enabled = true
-text = "[center]Input:[/center]"
-fit_content = true
-script = ExtResource("2_leq0j")
-
-[node name="InputBtn" type="TextureButton" parent="ScrollContainer/VBoxContainer/Input"]
-modulate = Color(0.509804, 0, 1, 1)
-texture_filter = 1
-layout_mode = 2
-size_flags_horizontal = 3
-texture_normal = ExtResource("2_t8lwk")
-stretch_mode = 5
-
-[node name="Video" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
-clip_contents = true
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="VideoLabel" type="RichTextLabel" parent="ScrollContainer/VBoxContainer/Video"]
-layout_mode = 2
-size_flags_horizontal = 3
-bbcode_enabled = true
-text = "[center]Video:[/center]"
-fit_content = true
-script = ExtResource("2_leq0j")
-
-[node name="VideoBtn" type="TextureButton" parent="ScrollContainer/VBoxContainer/Video"]
-modulate = Color(1, 1, 0, 1)
-texture_filter = 1
-layout_mode = 2
-size_flags_horizontal = 3
-texture_normal = ExtResource("2_t8lwk")
-stretch_mode = 5
-
-[node name="Debug" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
-clip_contents = true
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="DebugLabel" type="RichTextLabel" parent="ScrollContainer/VBoxContainer/Debug"]
-layout_mode = 2
-size_flags_horizontal = 3
-bbcode_enabled = true
-text = "[center]Debug:[/center]"
-fit_content = true
-script = ExtResource("2_leq0j")
-
-[node name="DebugBtn" type="TextureButton" parent="ScrollContainer/VBoxContainer/Debug"]
-modulate = Color(1, 0, 0, 1)
+[node name="SettingsBtn" type="TextureButton" parent="ScrollContainer/VBoxContainer/Settings"]
+modulate = Color(0.171911, 0.649322, 1, 1)
 texture_filter = 1
 layout_mode = 2
 size_flags_horizontal = 3
@@ -153,7 +90,7 @@ fit_content = true
 script = ExtResource("2_leq0j")
 
 [node name="SaveBtn" type="TextureButton" parent="ScrollContainer/VBoxContainer/Save"]
-modulate = Color(0, 0, 1, 1)
+modulate = Color(0.870567, 0.420667, 0.895458, 1)
 texture_filter = 1
 clip_contents = true
 layout_mode = 2
@@ -174,7 +111,8 @@ text = "[center]Credits:[/center]"
 script = ExtResource("2_leq0j")
 
 [node name="CreditBtn" type="TextureButton" parent="ScrollContainer/VBoxContainer/Credits"]
-modulate = Color(0.768468, 0.566809, 0, 0.980392)
+modulate = Color(0.964401, 0.385545, 0.398434, 0.980392)
+texture_filter = 1
 clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -194,7 +132,8 @@ text = "[center]Reset Position:[/center]"
 script = ExtResource("2_leq0j")
 
 [node name="ResetBtn" type="TextureButton" parent="ScrollContainer/VBoxContainer/ResetPos"]
-modulate = Color(0, 0.733333, 0, 0.980392)
+modulate = Color(0.878379, 0.48463, 0.256657, 0.980392)
+texture_filter = 1
 clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -202,10 +141,7 @@ texture_normal = ExtResource("2_t8lwk")
 stretch_mode = 5
 
 [connection signal="pressed" from="ScrollContainer/VBoxContainer/Multiplayer/MultiplayerBtn" to="." method="_on_multiplayer_pressed"]
-[connection signal="pressed" from="ScrollContainer/VBoxContainer/Accessibility/AccessibilityBtn" to="." method="_on_accessibility_pressed"]
-[connection signal="pressed" from="ScrollContainer/VBoxContainer/Input/InputBtn" to="." method="_on_input_btn_pressed"]
-[connection signal="pressed" from="ScrollContainer/VBoxContainer/Video/VideoBtn" to="." method="_on_video_pressed"]
-[connection signal="pressed" from="ScrollContainer/VBoxContainer/Debug/DebugBtn" to="." method="_on_debug_pressed"]
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/Settings/SettingsBtn" to="." method="_on_settings_btn_pressed"]
 [connection signal="pressed" from="ScrollContainer/VBoxContainer/Save/SaveBtn" to="." method="_on_save_pressed"]
 [connection signal="pressed" from="ScrollContainer/VBoxContainer/Credits/CreditBtn" to="." method="_on_credit_btn_pressed"]
 [connection signal="pressed" from="ScrollContainer/VBoxContainer/ResetPos/ResetBtn" to="." method="_on_reset_pos_pressed"]

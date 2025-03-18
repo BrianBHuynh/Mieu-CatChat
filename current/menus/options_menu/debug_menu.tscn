@@ -1,15 +1,15 @@
-[gd_scene load_steps=4 format=3 uid="uid://ddau1wbdns8mp"]
+[gd_scene load_steps=4 format=3 uid="uid://bcutg018m1m0t"]
 
-[ext_resource type="Script" uid="uid://vftddq4ojmo2" path="res://current/scripts/node/rich_text_label.gd" id="1_a66ng"]
-[ext_resource type="Script" uid="uid://ckeet5kuoltcj" path="res://current/menus/debug_menu/debug_menu.gd" id="1_ngo7l"]
-[ext_resource type="Texture2D" uid="uid://dv4n5etipadpk" path="res://current/assets/ui/btn_sized.png" id="2_xge1m"]
+[ext_resource type="Script" uid="uid://ckeet5kuoltcj" path="res://current/menus/debug_menu/debug_menu.gd" id="1_ufww1"]
+[ext_resource type="Script" uid="uid://vftddq4ojmo2" path="res://current/scripts/node/rich_text_label.gd" id="2_knr0x"]
+[ext_resource type="Texture2D" uid="uid://dv4n5etipadpk" path="res://current/assets/ui/btn_sized.png" id="3_emi8t"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-script = ExtResource("1_ngo7l")
+script = ExtResource("1_ufww1")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 0
@@ -53,16 +53,15 @@ size_flags_vertical = 3
 bbcode_enabled = true
 text = "[center]Toggle Debug Text[/center]"
 fit_content = true
-script = ExtResource("1_a66ng")
+script = ExtResource("2_knr0x")
 
 [node name="DebugMessages" type="TextureButton" parent="VBoxContainer/ScrollContainer/HBoxContainer/DebugMessagesToggle"]
-modulate = Color(4.81308e-06, 0.585066, 0.762153, 1)
 texture_filter = 1
 clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-texture_normal = ExtResource("2_xge1m")
+texture_normal = ExtResource("3_emi8t")
 stretch_mode = 5
 
 [node name="WorldManager" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/HBoxContainer"]
@@ -77,16 +76,15 @@ size_flags_vertical = 3
 bbcode_enabled = true
 text = "[center]Worlds Manager[/center]"
 fit_content = true
-script = ExtResource("1_a66ng")
+script = ExtResource("2_knr0x")
 
 [node name="WorldManager" type="TextureButton" parent="VBoxContainer/ScrollContainer/HBoxContainer/WorldManager"]
-modulate = Color(0.785804, 0.220457, 0.359955, 1)
 texture_filter = 1
 clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-texture_normal = ExtResource("2_xge1m")
+texture_normal = ExtResource("3_emi8t")
 stretch_mode = 5
 
 [node name="MinigameDebug" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/HBoxContainer"]
@@ -101,16 +99,15 @@ size_flags_vertical = 3
 bbcode_enabled = true
 text = "[center]Minigame[/center]"
 fit_content = true
-script = ExtResource("1_a66ng")
+script = ExtResource("2_knr0x")
 
 [node name="Minigame" type="TextureButton" parent="VBoxContainer/ScrollContainer/HBoxContainer/MinigameDebug"]
-modulate = Color(0.18621, 0.71665, 0.502636, 1)
 texture_filter = 1
 clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-texture_normal = ExtResource("2_xge1m")
+texture_normal = ExtResource("3_emi8t")
 stretch_mode = 5
 
 [connection signal="pressed" from="VBoxContainer/ScrollContainer/HBoxContainer/DebugMessagesToggle/DebugMessages" to="." method="_on_debug_messages_pressed"]

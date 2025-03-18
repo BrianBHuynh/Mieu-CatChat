@@ -21,13 +21,8 @@ func _physics_process(_delta: float) -> void:
 				close_menu()
 	elif Input.is_action_just_pressed("send_message"):
 		chat_box.release_focus()
-		if WorldManager.dimensions == 3:
-			set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-		else:
-			set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	elif Input.is_action_just_pressed("chat") and !is_menu_open():
 		chat_box.open_text_input()
-		set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 func is_menu_open() -> bool:
 	return is_instance_valid(cur_menu)
@@ -67,8 +62,6 @@ func open_menu(menu_path: String) -> void:
 
 func close_menu() -> void:
 	if cur_menu:
-		if WorldManager.dimensions == 3:
-			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 		get_tree().root.remove_child(cur_menu)
 		cur_menu.queue_free()
 		cur_menu = null

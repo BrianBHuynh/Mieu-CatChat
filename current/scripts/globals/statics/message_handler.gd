@@ -4,21 +4,11 @@ class_name MessageHandler
 
 static func data(message: Dictionary) -> void:
 	if SteamP2P.kitties.has(message.identity) :
-		if WorldManager.has(message.identity, WorldManager.current_world_name) and Helper.dict_type_check(message["payload"], "dimensions", "int") and WorldManager.dimensions == message.payload["dimensions"]:
-			match message.payload["dimensions"]:
-				3:
-					if Helper.dict_type_check(SteamP2P.kitties, message.identity, "Node3D"):
-						SteamP2P.kitties[message.identity].move_to(Vector3(message.payload.x, message.payload.y, message.payload.z))
-					else:
-						SteamP2P.spawn_kitty(message)
-				2:
-					if Helper.dict_type_check(SteamP2P.kitties, message.identity, "Node2D"):
-						SteamP2P.kitties[message.identity].move_to(Vector2(message.payload.x, message.payload.y))
-					else:
-						SteamP2P.spawn_kitty(message)
-				_:
-					Ui.show_system_debug("Error reading locational data")
-					SteamP2P.remove_kitty(message.identity)
+		if WorldManager.has(message.identity, WorldManager.current_world_name):
+			if Helper.dict_type_check(SteamP2P.kitties, message.identity, "Node2D"):
+				SteamP2P.kitties[message.identity].move_to(Vector2(message.payload.x, message.payload.y))
+			else:
+				SteamP2P.spawn_kitty(message)
 		else:
 			SteamP2P.remove_kitty(message.identity)
 	elif WorldManager.has(message.identity, WorldManager.current_world_name):

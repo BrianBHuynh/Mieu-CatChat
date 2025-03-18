@@ -2,12 +2,11 @@ extends Node
 
 
 var mieu: Variant
-var move_speed_3D: float = 7.5
-var move_speed_2D: float = 500.0
+var move_speed: float = 500.0
 var jump_speed: float = 2.5
 var frame: float = 0.01666666666
 var first_world_started: bool = false
-var reset_position: Variant
+var reset_position: Vector2
 
 func _ready() -> void:
 	_load_finished()
@@ -17,7 +16,6 @@ func _load_finished() -> void:
 	set_stretch_aspect(Saves.get_or_return("settings", "stretch_aspect", 1))
 	set_window_mode(Saves.get_or_return("settings", "window_mode", 0))
 	set_borderless(Saves.get_or_return("settings", "borderless", false))
-	get_window().scaling_3d_scale = Saves.get_or_return("settings", "scaling_3d_scale", 1.0)
 	get_window().size = Vector2(Saves.get_or_return("settings", "width", DisplayServer.screen_get_size().x), Saves.get_or_add("settings", "height", DisplayServer.screen_get_size().y))
 
 func set_resolution(width: int, height: int) -> void:

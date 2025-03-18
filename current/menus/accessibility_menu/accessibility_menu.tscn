@@ -22,7 +22,7 @@ offset_top = 64.0
 offset_right = 1600.0
 offset_bottom = 1024.0
 size_flags_vertical = 3
-color = Color(0, 0.145098, 0.129412, 0.588235)
+color = Color(0.0081237, 0.491378, 0.488869, 0.588235)
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 2
@@ -37,31 +37,6 @@ clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-
-[node name="Fov" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
-clip_contents = true
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 2.0
-alignment = 1
-
-[node name="Fov Text" type="RichTextLabel" parent="ScrollContainer/VBoxContainer/Fov"]
-layout_mode = 2
-size_flags_horizontal = 3
-bbcode_enabled = true
-text = "[center]FOV[/center]"
-fit_content = true
-script = ExtResource("2_4yg4i")
-
-[node name="Fov_Slider" type="HSlider" parent="ScrollContainer/VBoxContainer/Fov"]
-clip_contents = true
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 2.0
-min_value = 10.0
-max_value = 150.0
-value = 80.0
-rounded = true
 
 [node name="Font Size Warning" type="RichTextLabel" parent="ScrollContainer/VBoxContainer"]
 layout_mode = 2
@@ -145,5 +120,4 @@ size_flags_horizontal = 3
 texture_normal = ExtResource("3_pvipk")
 stretch_mode = 5
 
-[connection signal="value_changed" from="ScrollContainer/VBoxContainer/Fov/Fov_Slider" to="." method="_on_fov_slider_value_changed"]
 [connection signal="pressed" from="ScrollContainer/VBoxContainer/HBoxContainer/TextureButton" to="." method="_font_changed"]

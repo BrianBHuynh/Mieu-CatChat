@@ -21,7 +21,7 @@ offset_top = 64.0
 offset_right = 1600.0
 offset_bottom = 1024.0
 size_flags_vertical = 3
-color = Color(0.255806, 0, 0.0329192, 0.588235)
+color = Color(0.452107, 0.830391, 0.28103, 0.588235)
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 0

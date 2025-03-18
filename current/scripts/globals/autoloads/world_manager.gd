@@ -6,7 +6,6 @@ var current_world_name: String = "default"
 var current_world: Variant = null
 var current_instance_id: int = -1
 var middleground: Node2D
-var dimensions: int = 0
 var first_world_started: bool = false
 var door_cooldown: bool = false
 var doors: Dictionary[String, Variant] = {}
@@ -48,19 +47,11 @@ func change_world(world_path: String, instance_id: int = -1) -> void:
 	if world_packed != null:
 		current_world_name = world_packed.get_state().get_node_name(0)
 		current_instance_id = instance_id
-		match world_packed.get_state().get_node_type(0):
-			"Node2D":
-				dimensions = 2
-			"Node3D":
-				dimensions = 3
-			_:
-				Ui.show_system_warning("Invalid world type, world type is: " + world_packed.get_state().get_node_type(0))
 		get_tree().change_scene_to_packed(world_packed)
 		while !get_tree().current_scene:
 			await get_tree().process_frame
 		initialize_pos()
-		if dimensions == 2:
-			middleground = get_node("/root/" + current_world_name + "/Middleground")
+		middleground = get_node("/root/" + current_world_name + "/Middleground")
 		Saves.set_value("settings", "world_path", world_path)
 		send_world()
 		Ui.show_system_message("Now entering " + current_world_name, Color.CYAN, false, "")
@@ -84,19 +75,11 @@ func change_world_door(world_path: String, door: String = "", door_offset: Vecto
 		if world_packed != null:
 			current_world_name = world_packed.get_state().get_node_name(0)
 			current_instance_id = instance_id
-			match world_packed.get_state().get_node_type(0):
-				"Node2D":
-					dimensions = 2
-				"Node3D":
-					dimensions = 3
-				_:
-					Ui.show_system_warning("Invalid world type, world type is: " + world_packed.get_state().get_node_type(0))
 			get_tree().change_scene_to_packed(world_packed)
 			while !get_tree().current_scene:
 				await get_tree().process_frame
 			initialize_pos(door, door_offset)
-			if dimensions == 2:
-				middleground = get_node("/root/" + current_world_name + "/Middleground")
+			middleground = get_node("/root/" + current_world_name + "/Middleground")
 			Saves.set_value("settings", "world_path", world_path)
 			send_world()
 			Ui.show_system_message("Now entering " + current_world_name, Color.CYAN, false, "")
@@ -108,14 +91,7 @@ func change_world_door(world_path: String, door: String = "", door_offset: Vecto
 func initialize_pos(door: String = "", door_offset: Vector2 = Vector2(0,0)) -> void:
 	if door.is_empty():
 		if first_world_started == false and is_instance_valid(GlobalVars.mieu):
-			match dimensions: 
-				3:
-					GlobalVars.mieu.global_position = Vector3(Saves.get_or_add("Player","pos_x", GlobalVars.mieu.global_position.x), Saves.get_or_add("Player","pos_y", GlobalVars.mieu.global_position.y), Saves.get_or_add("Player","pos_z", GlobalVars.mieu.global_position.z))
-					GlobalVars.mieu.rotation = Vector3(Saves.get_or_add("Player", "rot_x", GlobalVars.mieu.rotation.x), Saves.get_or_add("Player", "rot_y", GlobalVars.mieu.rotation.y), Saves.get_or_add("Player", "rot_z", GlobalVars.mieu.rotation.z))
-				2:
-					GlobalVars.mieu.global_position = Vector2(Saves.get_or_add("Player","pos_x", GlobalVars.mieu.global_position.x), Saves.get_or_add("Player","pos_y", GlobalVars.mieu.global_position.y))
-				_:
-					pass
+			GlobalVars.mieu.global_position = Vector2(Saves.get_or_add("Player","pos_x", GlobalVars.mieu.global_position.x), Saves.get_or_add("Player","pos_y", GlobalVars.mieu.global_position.y))
 			first_world_started = true
 	else:
 		if doors.has(door) and is_instance_valid(doors[door]):

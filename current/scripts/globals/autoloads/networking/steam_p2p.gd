@@ -133,35 +133,21 @@ func _on_p2p_session_connect_fail(steam_id: int, _session_error: int, _state: in
 	remove_kitty(steam_id)
 
 func spawn_kitty(message: Dictionary) -> void:
-	if WorldManager.dimensions == 3 and message.payload["dimensions"] == 3 and get_tree().current_scene is Node3D:
-		if (
-		message.payload.has("x") and message.payload["x"] is float
-		and message.payload.has("y") and message.payload["y"] is float
-		and message.payload.has("z") and message.payload["z"] is float
-		):
-			var file: Resource = load("res://current/characters/3D/mieu_peer/mieu_peer.tscn")
-			var kit: Node3D = file.instantiate()
-			get_parent().add_child(kit)
-			kit.sign_adoption(message["identity"])
-			SteamP2P.kitties[message["identity"]] = kit
-			Ui.show_system_debug("creating")
-			SteamP2P.kitties[message.identity].global_position = Vector3(message.payload.x, message.payload.y, message.payload.z)
-	elif WorldManager.dimensions == 2 and message.payload["dimensions"] == 2 and get_tree().current_scene is Node2D:
-		if (
-		message.payload.has("x") and message.payload["x"] is float
-		and message.payload.has("y") and message.payload["y"] is float
-		):
-			while !WorldManager.middleground:
-				await get_tree().process_frame
-			var file: Resource = load("res://current/characters/2D/mieu_peer/mieu_peer.tscn")
-			var kit: Node2D = file.instantiate()
-			kit.hide()
-			WorldManager.middleground.add_child(kit)
-			kit.sign_adoption(message["identity"])
-			SteamP2P.kitties[message["identity"]] = kit
-			Ui.show_system_debug("creating")
-			SteamP2P.kitties[message.identity].global_position = Vector2(message.payload.x, message.payload.y)
-			kit.show()
+	if (
+	Helper.dict_type_check(message["payload"], "x", "float")
+	and Helper.dict_type_check(message["payload"], "y", "float")
+	):
+		while !WorldManager.middleground:
+			await get_tree().process_frame
+		var file: Resource = load("res://current/characters/mieu_peer/mieu_peer.tscn")
+		var kit: Node2D = file.instantiate()
+		kit.hide()
+		WorldManager.middleground.add_child(kit)
+		kit.sign_adoption(message["identity"])
+		SteamP2P.kitties[message["identity"]] = kit
+		Ui.show_system_debug("creating")
+		SteamP2P.kitties[message.identity].global_position = Vector2(message.payload.x, message.payload.y)
+		kit.show()
 
 func remove_kitties() -> void:
 	for cat_id: int in SteamP2P.kitties:

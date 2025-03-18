@@ -21,7 +21,7 @@ offset_top = 64.0
 offset_right = 1600.0
 offset_bottom = 1024.0
 size_flags_vertical = 3
-color = Color(0.255806, 0, 0.0329192, 0.588235)
+color = Color(0.643929, 0.579871, 0.890044, 0.588235)
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 0
@@ -39,13 +39,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="PreviousButton" type="Button" parent="ScrollContainer/HBoxContainer"]
-clip_contents = true
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.1
-text = "<"
-
 [node name="CreditsOrLicense" type="RichTextLabel" parent="ScrollContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -53,13 +46,3 @@ size_flags_vertical = 3
 text = "Sample text"
 fit_content = true
 script = ExtResource("2_30can")
-
-[node name="NextButton" type="Button" parent="ScrollContainer/HBoxContainer"]
-clip_contents = true
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.1
-text = ">"
-
-[connection signal="pressed" from="ScrollContainer/HBoxContainer/PreviousButton" to="." method="get_previous"]
-[connection signal="pressed" from="ScrollContainer/HBoxContainer/NextButton" to="." method="get_next"]

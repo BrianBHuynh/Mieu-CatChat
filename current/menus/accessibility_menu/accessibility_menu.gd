@@ -1,11 +1,8 @@
 extends Control
-var camera3D: Camera3D
 var fonts: Array = ["res://current/assets/fonts/AtkinsonHyperlegible-Regular.ttf", "res://current/assets/fonts/NotoSans-VariableFont_wdth,wght.ttf", "res://current/assets/fonts/OpenDyslexic-Regular.otf", "res://current/assets/fonts/OpenSans-VariableFont_wdth,wght.ttf", "res://current/assets/fonts/PixelifySans-VariableFont_wght.ttf", "res://current/assets/fonts/RobotoMono-VariableFont_wght.ttf"]
 
+
 func _ready() -> void:
-	camera3D = get_viewport().get_camera_3d()
-	if WorldManager.dimensions == 3:
-		$ScrollContainer/VBoxContainer/Fov/Fov_Slider.value = camera3D.fov
 	$ScrollContainer/VBoxContainer/TextSize/Text_Size_Slider.value = Saves.get_or_add("settings", "font_size", Ui.DEFAULT_FONT_SIZE)
 	$ScrollContainer/VBoxContainer/TextSize/Text_Size_Slider.value_changed.connect(_on_text_size_slider_value_changed)
 	$ScrollContainer/VBoxContainer/ChatTextSize/Text_Size_Slider.value = Saves.get_or_add("settings", "chat_font_size", Ui.DEFAULT_CHAT_FONT_SIZE)
@@ -13,11 +10,6 @@ func _ready() -> void:
 	var fonts_temp: PackedStringArray = DirAccess.get_files_at("user://fonts/")
 	for font: String in fonts_temp:
 		fonts.append("user://fonts/" + font)
-
-func _on_fov_slider_value_changed(value: float) -> void:
-	if is_instance_valid(camera3D):
-		camera3D.fov = value
-	Saves.set_value("settings", "fov", value)
 
 func _font_changed() -> void:
 	var tempfont: String = fonts.pop_front()

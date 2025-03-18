@@ -16,9 +16,9 @@ func _physics_process(delta: float) -> void:
 	input_dir = input_dir.normalized()
 	
 	if input_dir:
-		velocity.x =  move_toward(velocity.x, GlobalVars.move_speed_2D * input_dir.x, GlobalVars.move_speed_2D)
+		velocity.x =  move_toward(velocity.x, GlobalVars.move_speed * input_dir.x, GlobalVars.move_speed)
 	else:
-		velocity.x = move_toward(velocity.x, 0, GlobalVars.move_speed_2D)
+		velocity.x = move_toward(velocity.x, 0, GlobalVars.move_speed)
 	
 	if not is_on_floor():
 		velocity += get_gravity() * delta
@@ -29,4 +29,4 @@ func _physics_process(delta: float) -> void:
 	
 	move_and_slide()
 	if SteamLobbies.lobby_id != 0:
-			Multithreading.add_task(SteamP2P.send_message_to_user.bind({"type": "minigame_data", "dimensions": 2,"x": global_position.x, "y": global_position.y}, 0, Steam.NETWORKING_SEND_UNRELIABLE_NO_DELAY))
+			Multithreading.add_task(SteamP2P.send_message_to_user.bind({"type": "minigame_data","x": global_position.x, "y": global_position.y}, 0, Steam.NETWORKING_SEND_UNRELIABLE_NO_DELAY))
