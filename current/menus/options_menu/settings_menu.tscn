@@ -43,7 +43,7 @@ size_flags_vertical = 3
 layout_mode = 2
 size_flags_horizontal = 3
 bbcode_enabled = true
-text = "[center]Accessibility[/center]"
+text = "[center]Text[/center]"
 fit_content = true
 script = ExtResource("2_4m5my")
 

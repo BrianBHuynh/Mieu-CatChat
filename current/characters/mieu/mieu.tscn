@@ -86,7 +86,6 @@ offset_left = -200.0
 offset_top = -200.0
 offset_right = 200.0
 offset_bottom = -150.0
-theme_override_constants/outline_size = 3
 bbcode_enabled = true
 text = "[center]Player Name[/center]"
 fit_content = true
