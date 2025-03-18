@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://bul7fpmury427"]
 
-[ext_resource type="Script" uid="uid://b30708qpwiu2y" path="res://current/menus/accessibility_menu/accessibility_menu.gd" id="1_7wl3y"]
-[ext_resource type="Script" uid="uid://vftddq4ojmo2" path="res://current/scripts/node/rich_text_label.gd" id="2_4yg4i"]
-[ext_resource type="Texture2D" uid="uid://dv4n5etipadpk" path="res://current/assets/ui/btn_sized.png" id="3_pvipk"]
+[ext_resource type="Script" uid="uid://b30708qpwiu2y" path="res://current/menus/text_menu/text_menu.gd" id="1_5ah6d"]
+[ext_resource type="Script" uid="uid://vftddq4ojmo2" path="res://current/scripts/node/rich_text_label.gd" id="2_we7n5"]
+[ext_resource type="Texture2D" uid="uid://dv4n5etipadpk" path="res://current/assets/ui/btn_sized.png" id="3_pgb34"]
 
 [node name="DebugMenu" type="Control"]
 layout_mode = 3
@@ -11,7 +11,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_7wl3y")
+script = ExtResource("1_5ah6d")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 clip_contents = true
@@ -46,7 +46,7 @@ text = "[center]Font Size
 
 Note: Extreme font sizes may look strange[/center]"
 fit_content = true
-script = ExtResource("2_4yg4i")
+script = ExtResource("2_we7n5")
 
 [node name="TextSize" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
 clip_contents = true
@@ -59,12 +59,11 @@ alignment = 1
 layout_mode = 2
 size_flags_horizontal = 3
 bbcode_enabled = true
-text = "[center]EXAMPLE TEXT
-example text[/center]"
+text = "[center]Text size:[/center]"
 fit_content = true
-script = ExtResource("2_4yg4i")
+script = ExtResource("2_we7n5")
 
-[node name="Text_Size_Slider" type="HSlider" parent="ScrollContainer/VBoxContainer/TextSize"]
+[node name="TextSizeSlider" type="HSlider" parent="ScrollContainer/VBoxContainer/TextSize"]
 clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -87,9 +86,34 @@ size_flags_horizontal = 3
 bbcode_enabled = true
 text = "[center]Chat font size:[/center]"
 fit_content = true
-script = ExtResource("2_4yg4i")
+script = ExtResource("2_we7n5")
 
-[node name="Text_Size_Slider" type="HSlider" parent="ScrollContainer/VBoxContainer/ChatTextSize"]
+[node name="TextSizeSlider" type="HSlider" parent="ScrollContainer/VBoxContainer/ChatTextSize"]
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+size_flags_stretch_ratio = 2.0
+min_value = 5.0
+value = 15.0
+rounded = true
+
+[node name="NameTagSize" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+alignment = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="ScrollContainer/VBoxContainer/NameTagSize"]
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "[center]Name Tag size:[/center]"
+fit_content = true
+script = ExtResource("2_we7n5")
+
+[node name="NameTagSizeSlider" type="HSlider" parent="ScrollContainer/VBoxContainer/NameTagSize"]
 clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -110,14 +134,14 @@ size_flags_stretch_ratio = 3.0
 bbcode_enabled = true
 text = "[center]Change Font[/center]"
 fit_content = true
-script = ExtResource("2_4yg4i")
+script = ExtResource("2_we7n5")
 
 [node name="TextureButton" type="TextureButton" parent="ScrollContainer/VBoxContainer/HBoxContainer"]
 texture_filter = 1
 clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 3
-texture_normal = ExtResource("3_pvipk")
+texture_normal = ExtResource("3_pgb34")
 stretch_mode = 5
 
 [connection signal="pressed" from="ScrollContainer/VBoxContainer/HBoxContainer/TextureButton" to="." method="_font_changed"]

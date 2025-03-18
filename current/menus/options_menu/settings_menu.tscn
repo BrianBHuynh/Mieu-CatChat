@@ -39,7 +39,7 @@ clip_contents = true
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="AccessibilityLabel" type="RichTextLabel" parent="ScrollContainer/VBoxContainer/Accessibility"]
+[node name="TextLabel" type="RichTextLabel" parent="ScrollContainer/VBoxContainer/Accessibility"]
 layout_mode = 2
 size_flags_horizontal = 3
 bbcode_enabled = true
@@ -47,7 +47,7 @@ text = "[center]Accessibility[/center]"
 fit_content = true
 script = ExtResource("2_4m5my")
 
-[node name="AccessibilityBtn" type="TextureButton" parent="ScrollContainer/VBoxContainer/Accessibility"]
+[node name="TextBtn" type="TextureButton" parent="ScrollContainer/VBoxContainer/Accessibility"]
 modulate = Color(0.33414, 0.671897, 0.800019, 1)
 texture_filter = 1
 layout_mode = 2
@@ -97,6 +97,6 @@ size_flags_horizontal = 3
 texture_normal = ExtResource("3_5hodh")
 stretch_mode = 5
 
-[connection signal="pressed" from="ScrollContainer/VBoxContainer/Accessibility/AccessibilityBtn" to="." method="_on_accessibility_pressed"]
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/Accessibility/TextBtn" to="." method="_on_text_btn_pressed"]
 [connection signal="pressed" from="ScrollContainer/VBoxContainer/Video/VideoBtn" to="." method="_on_video_pressed"]
 [connection signal="pressed" from="ScrollContainer/VBoxContainer/Debug/DebugBtn" to="." method="_on_debug_pressed"]
