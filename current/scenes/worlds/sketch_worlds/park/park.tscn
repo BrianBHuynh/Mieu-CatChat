@@ -8,10 +8,10 @@
 [ext_resource type="PackedScene" uid="uid://w7p53meqohhf" path="res://current/ui/chat/chat_box.tscn" id="6_org83"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i62hu"]
-size = Vector2(20, 372)
+size = Vector2(2, 372)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8d3qt"]
-size = Vector2(1920, 20)
+size = Vector2(1920, 2)
 
 [node name="Park" type="Node2D"]
 script = ExtResource("1_8d3qt")
@@ -38,19 +38,19 @@ y_sort_enabled = true
 [node name="DoorA" type="Area2D" parent="Middleground"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Middleground/DoorA"]
-position = Vector2(10, 894)
+position = Vector2(1, 894)
 shape = SubResource("RectangleShape2D_i62hu")
 
 [node name="DoorB" type="Area2D" parent="Middleground"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Middleground/DoorB"]
-position = Vector2(1910, 894)
+position = Vector2(1919, 894)
 shape = SubResource("RectangleShape2D_i62hu")
 
 [node name="DoorC" type="Area2D" parent="Middleground"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Middleground/DoorC"]
-position = Vector2(960, 10)
+position = Vector2(960, 1)
 shape = SubResource("RectangleShape2D_8d3qt")
 
 [node name="Mieu" parent="Middleground" instance=ExtResource("4_5hbkt")]
@@ -60,6 +60,7 @@ position = Vector2(923, 690)
 [node name="Foreground" type="Node2D" parent="."]
 
 [node name="Control" type="Control" parent="."]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0

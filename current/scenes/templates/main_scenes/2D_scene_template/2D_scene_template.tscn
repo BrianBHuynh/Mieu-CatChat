@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://w7p53meqohhf" path="res://current/ui/chat/chat_box.tscn" id="5_p2mc7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i62hu"]
-size = Vector2(20, 372)
+size = Vector2(2, 372)
 
 [node name="2D_scene_template" type="Node2D"]
 script = ExtResource("1_jxoa0")
@@ -30,13 +30,13 @@ y_sort_enabled = true
 [node name="DoorB" type="Area2D" parent="Middleground"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Middleground/DoorB"]
-position = Vector2(1910, 894)
+position = Vector2(1919, 894)
 shape = SubResource("RectangleShape2D_i62hu")
 
 [node name="DoorA" type="Area2D" parent="Middleground"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Middleground/DoorA"]
-position = Vector2(10, 894)
+position = Vector2(1, 894)
 shape = SubResource("RectangleShape2D_i62hu")
 
 [node name="Mieu" parent="Middleground" instance=ExtResource("1_uyj3n")]
