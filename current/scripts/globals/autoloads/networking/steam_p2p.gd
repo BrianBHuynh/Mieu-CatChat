@@ -53,6 +53,8 @@ func process_message(message: Dictionary) -> void:
 							MessageHandler.kick_announce(message)
 						"world_info":
 							MessageHandler.world_info(message)
+						"minigame_info":
+							MessageHandler.minigame_info(message)
 						"encrypted_message":
 							MessageHandler.encrypted_message(message)
 						"encrypted_key":

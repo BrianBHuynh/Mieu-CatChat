@@ -7,7 +7,7 @@ var lobbies: VBoxContainer
 var chat_box: Control
 var chat_log: Array = []
 const DEFAULT_FONT_SIZE: float = 30.0
-const DEFAULT_CHAT_FONT_SIZE: float = 20.0
+const DEFAULT_CHAT_FONT_SIZE: float = 25.0
 
 func _physics_process(_delta: float) -> void:
 	if Input.is_action_just_pressed("pause"):
@@ -27,7 +27,7 @@ func _physics_process(_delta: float) -> void:
 func is_menu_open() -> bool:
 	return is_instance_valid(cur_menu)
 
-func show_system_message(content: String, color: Color = Color.DARK_BLUE, save: bool = false, prefix: String = "SYSTEM") -> void:
+func show_system_message(content: String, color: Color = Color.DEEP_SKY_BLUE, save: bool = false, prefix: String = "SYSTEM") -> void:
 	while chat_box == null or !is_instance_valid(chat_box):
 		await get_tree().process_frame
 	chat_box.show_system_message(content, color, save, prefix)

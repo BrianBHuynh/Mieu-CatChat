@@ -52,7 +52,7 @@ func add_chat_message(sender: int, target: int, content: String, private: bool, 
 			await get_tree().create_timer(.05).timeout
 			create_tween().tween_property($ScrollContainer.get_v_scroll_bar(), "value", $ScrollContainer.get_v_scroll_bar().max_value, 1.0)
 
-func show_system_message(content: String, color: Color = Color.DARK_BLUE, save: bool = true, prefix: String = "SYSTEM") -> void:
+func show_system_message(content: String, color: Color = Color.DEEP_SKY_BLUE, save: bool = true, prefix: String = "SYSTEM") -> void:
 	var message_text: RichTextLabel = RichTextLabel.new()
 	if !prefix.is_empty():
 		message_text.text = prefix + ": " + content

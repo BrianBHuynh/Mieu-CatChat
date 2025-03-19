@@ -4,7 +4,7 @@ class_name MessageHandler
 
 static func data(message: Dictionary) -> void:
 	if SteamP2P.kitties.has(message.identity) :
-		if WorldManager.has(message.identity, WorldManager.current_world_name):
+		if WorldManager.has(message.identity):
 			if Helper.dict_type_check(SteamP2P.kitties, message.identity, "Node2D"):
 				SteamP2P.kitties[message.identity].move_to(Vector2(message.payload.x, message.payload.y))
 			else:
@@ -15,9 +15,7 @@ static func data(message: Dictionary) -> void:
 		SteamP2P.spawn_kitty(message)
 
 static func minigame_data(message: Dictionary) -> void:
-	if (Helper.dict_type_check(message["payload"], "minigame_name", "String") and Helper.dict_type_check(message["payload"], "minigame_instance_id", "int")
-	and MinigameManager.minigame_name == message["payload"]["minigame_name"] && MinigameManager.minigame_instance_id == message["payload"]["minigame_instance_id"]
-	):
+	if MinigameManager.has(message.identity):
 		MinigameManager.accept_minigame_data(message)
 
 static func chat(message: Dictionary) -> void:
@@ -62,8 +60,15 @@ static func kick_announce(message: Dictionary) -> void:
 		Ui.show_system_message("The lobby owner " + SteamLobbies.get_host_name() + "has kicked " + Steam.getFriendPersonaName(message["payload"]["kicked_player"]))
 
 static func world_info(message: Dictionary) -> void:
-	if Helper.dict_type_check(message["payload"], "world", "String"):
-		WorldManager.add_to_world(message.identity, message["payload"]["world"])
+	if (Helper.dict_type_check(message["payload"], "world_name", "String")
+	and Helper.dict_type_check(message["payload"], "instance_id", "int")
+	):
+		WorldManager.add_to_world(message.identity, message["payload"]["world_name"], message["payload"]["instance_id"])
+
+static func minigame_info(message: Dictionary) -> void:
+	if (Helper.dict_type_check(message["payload"], "minigame_name", "String")
+	and Helper.dict_type_check(message["payload"], "minigame_instance_id", "int")):
+		MinigameManager.add_to_minigame(message.identity, message["payload"]["minigame_name"], message["payload"]["minigame_instance_id"])
 
 static func encrypted_message(message: Dictionary) -> void:
 	if (Helper.dict_type_check(message["payload"], "message_id", "int")

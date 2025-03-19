@@ -10,7 +10,7 @@ var first_world_started: bool = false
 var door_cooldown: bool = false
 var doors: Dictionary[String, Variant] = {}
 
-func add_to_world(pid: int, world: String = current_world, instance_id: int = -1) -> void:
+func add_to_world(pid: int, world: String = current_world_name, instance_id: int = -1) -> void:
 	if !worlds.has(world):
 		worlds[world] = {}
 		worlds[world][instance_id] = {}
@@ -32,7 +32,7 @@ func remove_from_worlds(pid: int) -> void:
 		for world_instance: int in worlds[world]:
 			worlds[world][world_instance].erase(pid)
 
-func has(pid: int, world: String = current_world, instance_id: int = -1) -> bool:
+func has(pid: int, world: String = current_world_name, instance_id: int = -1) -> bool:
 	if !worlds.has(world):
 		return false
 	elif !worlds[world].has(instance_id):
@@ -41,12 +41,12 @@ func has(pid: int, world: String = current_world, instance_id: int = -1) -> bool
 		return worlds[world][instance_id].has(pid)
 
 func get_same_world() -> Dictionary:
-	if !worlds.has(current_world):
+	if !worlds.has(current_world_name):
 		return {}
-	elif !worlds[current_world].has(current_instance_id):
+	elif !worlds[current_world_name].has(current_instance_id):
 		return {}
 	else:
-		return worlds[current_world][current_instance_id]
+		return worlds[current_world_name][current_instance_id]
 
 func change_world(world_path: String, instance_id: int = -1) -> void:
 	doors.clear()
@@ -115,7 +115,7 @@ func update_world(world: Variant) -> void:
 		send_world()
 
 func send_world(pid: int = 0) -> void:
-	SteamP2P.send_message_to_user({"type": "world_info", "world": current_world_name, "instance": current_instance_id}, pid)
+	SteamP2P.send_message_to_user({"type": "world_info", "world_name": current_world_name, "instance_id": current_instance_id}, pid)
 
 func clear_worlds() -> void:
 	worlds.clear()
