@@ -3,9 +3,10 @@ extends Node
 
 var minigame: Variant = null
 var minigame_display: Window = null
-var minigame_name: String = ""
-var minigame_instance_id: int = -1
+var current_minigame: String = ""
+var current_minigame_instance_id: int = -1
 var minigame_stats: Dictionary = {}
+var minigames: Dictionary = {}
 var lost_focus_timer: int = -1
 
 func _physics_process(_delta: float) -> void:
@@ -22,14 +23,15 @@ func is_minigame_open() -> bool:
 func minigame_close() -> void:
 	minigame_display.hide()
 
-func minigame_open(minigame_path: String = "") -> void:
+func minigame_open(minigame_path: String = "", minigame_instance_id: int = -1) -> void:
 	if minigame_path.is_empty():
 		minigame_display.show()
 	else:
 		var minigame_instance: Variant = load(minigame_path).instantiate()
-		if minigame_instance.name != minigame_name:
+		if minigame_instance.name != current_minigame:
 			minigame = minigame_instance
-			minigame_name = minigame_instance.name
+			current_minigame = minigame_instance.name
+			current_minigame_instance_id = minigame_instance_id
 			for minigame_node: Node2D in minigame_display.get_children():
 				minigame_node.queue_free()
 			minigame_display.add_child(minigame_instance)
@@ -48,4 +50,32 @@ func accept_minigame_data(message: Dictionary) -> void:
 	minigame.accept_minigame_data(message)
 
 func send_minigame_info(pid: int = 0) -> void:
-	SteamP2P.send_message_to_user({"type": "minigame_info", "minigame_name": minigame_name, "minigame_instance_id": minigame_instance_id}, pid)
+	SteamP2P.send_message_to_user({"type": "minigame_info", "minigame_name": current_minigame, "minigame_instance_id": current_minigame_instance_id}, pid)
+
+func add_to_minigame(pid: int, minigame: String = current_minigame, minigame_instance_id: int = -1) -> void:
+	if !minigames.has(minigame):
+		minigames[minigame] = {}
+		minigames[minigame][minigame_instance_id] = {}
+	else:
+		if !minigames[minigame].has(minigame_instance_id):
+			minigames[minigame][minigame_instance_id] = {}
+	for minigame_array: String in minigames:
+		for minigame_instance: int in minigames[minigame_array]:
+			minigames[minigame_array][minigame_instance].erase(pid)
+	minigames[minigame][minigame_instance_id][pid] = SteamLobbies.lobby_members[pid]["steam_name"]
+
+func has(pid: int, minigame: String = current_minigame, minigame_instance_id: int = -1) -> bool:
+	if !minigames.has(minigame):
+		return false
+	elif !minigames[minigame].has(minigame_instance_id):
+		return false
+	else:
+		return minigames[minigame][minigame_instance_id]
+
+func get_same_minigame() -> Dictionary:
+	if !minigames.has(current_minigame):
+		return {}
+	elif !minigames[current_minigame].has(current_minigame_instance_id):
+		return {}
+	else:
+		return minigames[minigame][current_minigame_instance_id]

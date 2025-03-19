@@ -69,8 +69,8 @@ func send_message_to_user(payload: Dictionary, this_target: int = 0, send_type: 
 		if this_target == 0:
 			match payload["type"]:
 				"data":
-					for this_member: int in SteamLobbies.lobby_members:
-						if this_member != SteamWorks.steam_id and WorldManager.has(this_member, WorldManager.current_world_name, WorldManager.current_instance_id) and Moderation.is_allowed(this_member):
+					for this_member: int in WorldManager.get_same_world():
+						if Moderation.is_allowed(this_member):
 							Steam.sendMessageToUser(this_member, this_data, send_type, channel)
 				_:
 					for this_member: int in SteamLobbies.lobby_members:

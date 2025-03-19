@@ -40,6 +40,14 @@ func has(pid: int, world: String = current_world, instance_id: int = -1) -> bool
 	else:
 		return worlds[world][instance_id].has(pid)
 
+func get_same_world() -> Dictionary:
+	if !worlds.has(current_world):
+		return {}
+	elif !worlds[current_world].has(current_instance_id):
+		return {}
+	else:
+		return worlds[current_world][current_instance_id]
+
 func change_world(world_path: String, instance_id: int = -1) -> void:
 	doors.clear()
 	Ui.close_menu()
