@@ -1,6 +1,8 @@
 extends CharacterBody2D
 
 
+var last_pos: Vector2 = Vector2(-1, -1)
+
 func _ready() -> void:
 	GlobalVars.mieu = self
 	GlobalVars.reset_position = global_position
@@ -30,5 +32,6 @@ func _physics_process(_delta: float) -> void:
 	move_and_slide()
 	global_position = global_position.clamp(Vector2(0.0,0.0), Vector2(1920.0, 1080.0))
 	
-	if SteamLobbies.lobby_id != 0 and is_visible_in_tree():
-			Multithreading.add_task(SteamP2P.send_message_to_user.bind({"type": "data","x": global_position.x, "y": global_position.y}, 0, Steam.NETWORKING_SEND_UNRELIABLE_NO_DELAY))
+	if SteamLobbies.lobby_id != 0 and is_visible_in_tree() and last_pos != global_position:
+		Multithreading.add_task(SteamP2P.send_message_to_user.bind({"type": "data","x": global_position.x, "y": global_position.y}, 0, Steam.NETWORKING_SEND_UNRELIABLE_NO_DELAY))
+		last_pos = global_position

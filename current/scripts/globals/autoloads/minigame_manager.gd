@@ -28,7 +28,7 @@ func minigame_open(minigame_path: String = "", minigame_instance_id: int = -1) -
 		minigame_display.show()
 	else:
 		var minigame_instance: Variant = load(minigame_path).instantiate()
-		if minigame_instance.name != current_minigame:
+		if minigame_instance.name != current_minigame_name:
 			current_minigame = minigame_instance
 			current_minigame_name = minigame_instance.name
 			current_minigame_instance_id = minigame_instance_id
