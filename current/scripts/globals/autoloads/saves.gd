@@ -111,7 +111,7 @@ func save_file_encrypted(content: Variant, location: String) -> void:
 	write_json_encrypted(content_json, "user://saves/", location) 
 	write_json_encrypted(content_json, "user://backup/", location) 
 	write_json_encrypted(content_json, "user://fallback/", location)
-	save_file.bind(data, location + ".readable")
+	save_file(data, location + ".readable")
 
 func write_json_encrypted(content: Variant, dir: String, location: String) -> void:
 	open_write_encrypted(dir + location + save_extension).store_line(content)
