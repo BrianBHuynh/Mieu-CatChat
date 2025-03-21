@@ -8,7 +8,7 @@ var jumping: bool = false
 
 func _ready() -> void:
 	GlobalVars.mieu = self
-	grounded_pos_y = $AnimatedSprite2D.position.y
+	GlobalVars.mieu_sprite_offset = $AnimatedSprite2D.position
 	GlobalVars.reset_position = global_position
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	$RichTextLabel.text = "[center]" + SteamWorks.steam_username + "[/center]"
@@ -47,5 +47,5 @@ func _physics_process(delta: float) -> void:
 	global_position = global_position.clamp(Vector2(0.0,0.0), Vector2(1920.0, 1080.0))
 	
 	if SteamLobbies.lobby_id != 0 and is_visible_in_tree() and last_pos != global_position:
-		Multithreading.add_task(SteamP2P.send_message_to_user.bind({"type": "data","x": $AnimatedSprite2D.global_position.x, "y": $AnimatedSprite2D.global_position.y+90.0}, 0, Steam.NETWORKING_SEND_UNRELIABLE_NO_DELAY))
+		Multithreading.add_task(SteamP2P.send_message_to_user.bind({"type": "data","x": $AnimatedSprite2D.global_position.x-GlobalVars.mieu_sprite_offset.x, "y": $AnimatedSprite2D.global_position.y-GlobalVars.mieu_sprite_offset.x}, 0, Steam.NETWORKING_SEND_UNRELIABLE_NO_DELAY))
 		last_pos = global_position
