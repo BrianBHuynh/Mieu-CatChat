@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://50ntgxjwc53q"]
+[gd_scene load_steps=5 format=3 uid="uid://50ntgxjwc53q"]
 
 [ext_resource type="Script" uid="uid://cwg8tdo6qtw1m" path="res://current/menus/multiplayer_menus/chat_filter/chat_filter_menu.gd" id="1_blk3d"]
 [ext_resource type="Script" uid="uid://vftddq4ojmo2" path="res://current/scripts/node/rich_text_label.gd" id="2_f6a7s"]
 [ext_resource type="Texture2D" uid="uid://dv4n5etipadpk" path="res://current/assets/ui/btn_sized.png" id="3_mdwmk"]
+[ext_resource type="Texture2D" uid="uid://dws4hl3nqf84c" path="res://current/assets/ui/settingMono.png" id="4_lonfd"]
 
 [node name="ChatFilter" type="Control"]
 layout_mode = 3
@@ -112,5 +113,15 @@ offset_right = 1664.0
 offset_bottom = 208.0
 text = "+"
 
+[node name="Settings" type="Button" parent="."]
+layout_mode = 0
+offset_left = 256.0
+offset_top = 952.0
+offset_right = 337.0
+offset_bottom = 1024.0
+icon = ExtResource("4_lonfd")
+flat = true
+
 [connection signal="pressed" from="SaveFilterButton" to="." method="_on_save_filter_button_pressed"]
 [connection signal="pressed" from="AddEntry" to="." method="_on_add_entry_pressed"]
+[connection signal="pressed" from="Settings" to="." method="_on_settings_pressed"]

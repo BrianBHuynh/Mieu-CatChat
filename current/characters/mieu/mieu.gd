@@ -25,6 +25,7 @@ func _physics_process(delta: float) -> void:
 			$AnimatedSprite2D.position.y = grounded_pos_y
 			total_delta = 0.0
 			jumping = false
+		
 		if Input.is_action_pressed("move_left") and not Input.is_action_pressed("move_right"):
 			input_dir = Vector2(-1, 0)
 		elif Input.is_action_pressed("move_right") and not Input.is_action_pressed("move_left"):
