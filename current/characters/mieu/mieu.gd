@@ -2,16 +2,29 @@ extends CharacterBody2D
 
 
 var last_pos: Vector2 = Vector2(-1, -1)
+var grounded_pos_y: float
+var total_delta: float = 0.0
+var jumping: bool = false
 
 func _ready() -> void:
 	GlobalVars.mieu = self
+	grounded_pos_y = $AnimatedSprite2D.position.y
 	GlobalVars.reset_position = global_position
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	$RichTextLabel.text = "[center]" + SteamWorks.steam_username + "[/center]"
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	var input_dir: Vector2 = Vector2(0, 0)
 	if GlobalVars.is_player_interactive():
+		if Input.is_action_pressed("jump") and !jumping:
+			jumping = true
+		elif jumping and $AnimatedSprite2D.position.y <= grounded_pos_y:
+			total_delta = delta+total_delta
+			$AnimatedSprite2D.position.y = (grounded_pos_y + (981.0/2.0)*(total_delta - .391)**2 - 75.0)
+		elif jumping:
+			$AnimatedSprite2D.position.y = grounded_pos_y
+			total_delta = 0.0
+			jumping = false
 		if Input.is_action_pressed("move_left") and not Input.is_action_pressed("move_right"):
 			input_dir = Vector2(-1, 0)
 		elif Input.is_action_pressed("move_right") and not Input.is_action_pressed("move_left"):
@@ -33,5 +46,5 @@ func _physics_process(_delta: float) -> void:
 	global_position = global_position.clamp(Vector2(0.0,0.0), Vector2(1920.0, 1080.0))
 	
 	if SteamLobbies.lobby_id != 0 and is_visible_in_tree() and last_pos != global_position:
-		Multithreading.add_task(SteamP2P.send_message_to_user.bind({"type": "data","x": global_position.x, "y": global_position.y}, 0, Steam.NETWORKING_SEND_UNRELIABLE_NO_DELAY))
+		Multithreading.add_task(SteamP2P.send_message_to_user.bind({"type": "data","x": $AnimatedSprite2D.global_position.x, "y": $AnimatedSprite2D.global_position.y+90.0}, 0, Steam.NETWORKING_SEND_UNRELIABLE_NO_DELAY))
 		last_pos = global_position
