@@ -5,8 +5,9 @@ func _ready() -> void:
 	update_font()
 	SignalBus.load_finished.connect(update_font)
 	SignalBus.settings_updated.connect(update_font)
-	add_theme_constant_override("outline_size", 5)
-	add_theme_constant_override("shadow_outline_size", 3)
+	add_theme_constant_override("outline_size", 7)
+	add_theme_constant_override("shadow_outline_size", 5)
+	texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 
 func update_font() -> void:
 	#Bug workaround, remove await once https://github.com/godotengine/godot/issues/98819 is solved

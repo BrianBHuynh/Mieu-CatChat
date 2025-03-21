@@ -1,8 +1,65 @@
-[gd_scene load_steps=12 format=3 uid="uid://ccppo6wmem00o"]
+[gd_scene load_steps=20 format=3 uid="uid://ccppo6wmem00o"]
 
 [ext_resource type="Texture2D" uid="uid://lhikvxbnengm" path="res://current/assets/images/mieu_idle_front.png" id="1_6gnlj"]
 [ext_resource type="Script" uid="uid://domwpnd10yqiu" path="res://current/characters/mieu_peer/mieu_peer.gd" id="2_gb511"]
 [ext_resource type="Script" uid="uid://vftddq4ojmo2" path="res://current/scripts/node/rich_text_label.gd" id="3_846l6"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_flex7"]
+atlas = ExtResource("1_6gnlj")
+region = Rect2(0, 0, 480, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o70wn"]
+atlas = ExtResource("1_6gnlj")
+region = Rect2(480, 0, 480, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4kd80"]
+atlas = ExtResource("1_6gnlj")
+region = Rect2(960, 0, 480, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lo8ej"]
+atlas = ExtResource("1_6gnlj")
+region = Rect2(1440, 0, 480, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gy6dc"]
+atlas = ExtResource("1_6gnlj")
+region = Rect2(1920, 0, 480, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tced4"]
+atlas = ExtResource("1_6gnlj")
+region = Rect2(2400, 0, 480, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cmh0j"]
+atlas = ExtResource("1_6gnlj")
+region = Rect2(2880, 0, 480, 480)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qf47w"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_flex7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o70wn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4kd80")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lo8ej")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gy6dc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tced4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cmh0j")
+}],
+"loop": true,
+"name": &"front",
+"speed": 5.0
+}]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1k7s1"]
 atlas = ExtResource("1_6gnlj")
@@ -64,17 +121,25 @@ animations = [{
 [node name="MieuPeerRoot2D" type="Node2D"]
 script = ExtResource("2_gb511")
 
+[node name="Shadow" type="AnimatedSprite2D" parent="."]
+modulate = Color(0, 0, 0, 0.0980392)
+position = Vector2(0, -10)
+scale = Vector2(0.5, 0.25)
+sprite_frames = SubResource("SpriteFrames_qf47w")
+animation = &"front"
+autoplay = "front"
+
 [node name="MieuPeer" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -90)
 scale = Vector2(0.75, 0.75)
 sprite_frames = SubResource("SpriteFrames_25e44")
 autoplay = "default"
 
-[node name="RichTextLabel" type="RichTextLabel" parent="."]
-offset_left = -196.0
-offset_top = -202.0
-offset_right = 204.0
-offset_bottom = -127.0
+[node name="RichTextLabel" type="RichTextLabel" parent="MieuPeer"]
+offset_left = -200.0
+offset_top = -150.0
+offset_right = 200.0
+offset_bottom = -75.0
 bbcode_enabled = true
 text = "[center]Player Name[/center]"
 fit_content = true

@@ -2,7 +2,6 @@ extends CharacterBody2D
 
 
 var last_pos: Vector2 = Vector2(-1, -1)
-var grounded_pos_y: float
 var total_delta: float = 0.0
 var jumping: bool = false
 
@@ -11,21 +10,21 @@ func _ready() -> void:
 	GlobalVars.mieu_sprite_offset = $AnimatedSprite2D.position
 	GlobalVars.reset_position = global_position
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-	$RichTextLabel.text = "[center]" + SteamWorks.steam_username + "[/center]"
+	$AnimatedSprite2D/RichTextLabel.text = "[center]" + SteamWorks.steam_username + "[/center]"
 
 func _physics_process(delta: float) -> void:
 	var input_dir: Vector2 = Vector2(0, 0)
 	if GlobalVars.is_player_interactive():
 		if Input.is_action_pressed("jump") and !jumping:
 			jumping = true
-		elif jumping and $AnimatedSprite2D.position.y <= grounded_pos_y:
+		elif jumping and $AnimatedSprite2D.position.y <= GlobalVars.mieu_sprite_offset.y:
 			total_delta = delta+total_delta
-			$AnimatedSprite2D.position.y = (grounded_pos_y + (981.0/2.0)*(total_delta - .391)**2 - 75.0)
+			$AnimatedSprite2D.position.y = (GlobalVars.mieu_sprite_offset.y + (981.0)*(total_delta - .2765)**2 - 75.0)
 		elif jumping:
-			$AnimatedSprite2D.position.y = grounded_pos_y
+			$AnimatedSprite2D.position = GlobalVars.mieu_sprite_offset
 			total_delta = 0.0
 			jumping = false
-		
+	
 		if Input.is_action_pressed("move_left") and not Input.is_action_pressed("move_right"):
 			input_dir = Vector2(-1, 0)
 		elif Input.is_action_pressed("move_right") and not Input.is_action_pressed("move_left"):

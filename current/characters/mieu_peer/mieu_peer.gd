@@ -7,7 +7,7 @@ var player_name: String
 func sign_adoption(identity: int) -> void:
 	id = identity
 	player_name = SteamLobbies.lobby_members[id]["steam_name"]
-	$RichTextLabel.text = "[center]" + player_name + "[/center]"
+	$MieuPeer/RichTextLabel.text = "[center]" + player_name + "[/center]"
 
 func move_to(new_position: Vector2) -> void:
 	new_position = new_position.clamp(Vector2(0,0), Vector2(1920, 1080))
