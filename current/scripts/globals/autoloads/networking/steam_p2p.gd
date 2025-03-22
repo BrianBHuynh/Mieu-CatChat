@@ -135,9 +135,10 @@ func _on_p2p_session_connect_fail(steam_id: int, _session_error: int, _state: in
 	remove_kitty(steam_id)
 
 func spawn_kitty(message: Dictionary) -> void:
-	if (
-	Helper.dict_type_check(message["payload"], "x", "float")
-	and Helper.dict_type_check(message["payload"], "y", "float")
+	if (Helper.dict_type_check(message["payload"], "x", "float")
+		and Helper.dict_type_check(message["payload"], "y", "float")
+		and Helper.dict_type_check(message["payload"], "sprite_x", "float")
+		and Helper.dict_type_check(message["payload"], "sprite_y", "float")
 	):
 		while !WorldManager.middleground:
 			await get_tree().process_frame
@@ -149,6 +150,7 @@ func spawn_kitty(message: Dictionary) -> void:
 		SteamP2P.kitties[message["identity"]] = kit
 		Ui.show_system_debug("creating")
 		SteamP2P.kitties[message.identity].global_position = Vector2(message.payload.x, message.payload.y)
+		SteamP2P.kitties[message.identity].move_to(Vector2(message.payload.x, message.payload.y), Vector2(message.payload.sprite_x, message.payload.sprite_y))
 		kit.show()
 
 func remove_kitties() -> void:

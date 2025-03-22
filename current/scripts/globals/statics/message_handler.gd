@@ -3,16 +3,21 @@ class_name MessageHandler
 
 
 static func data(message: Dictionary) -> void:
-	if SteamP2P.kitties.has(message.identity) :
-		if WorldManager.has(message.identity):
-			if Helper.dict_type_check(SteamP2P.kitties, message.identity, "Node2D"):
-				SteamP2P.kitties[message.identity].move_to(Vector2(message.payload.x, message.payload.y))
+	if (Helper.dict_type_check(message["payload"], "x", "float")
+		and Helper.dict_type_check(message["payload"], "y", "float")
+		and Helper.dict_type_check(message["payload"], "sprite_x", "float")
+		and Helper.dict_type_check(message["payload"], "sprite_y", "float")
+		):
+		if SteamP2P.kitties.has(message.identity) :
+			if WorldManager.has(message.identity):
+				if Helper.dict_type_check(SteamP2P.kitties, message.identity, "Node2D"):
+					SteamP2P.kitties[message.identity].move_to(Vector2(message.payload.x, message.payload.y), Vector2(message["payload"]["sprite_x"], message["payload"]["sprite_y"]))
+				else:
+					SteamP2P.spawn_kitty(message)
 			else:
-				SteamP2P.spawn_kitty(message)
-		else:
-			SteamP2P.remove_kitty(message.identity)
-	elif WorldManager.has(message.identity, WorldManager.current_world_name):
-		SteamP2P.spawn_kitty(message)
+				SteamP2P.remove_kitty(message.identity)
+		elif WorldManager.has(message.identity):
+			SteamP2P.spawn_kitty(message)
 
 static func minigame_data(message: Dictionary) -> void:
 	if MinigameManager.has(message.identity):
@@ -64,6 +69,8 @@ static func world_info(message: Dictionary) -> void:
 	and Helper.dict_type_check(message["payload"], "instance_id", "int")
 	):
 		WorldManager.add_to_world(message.identity, message["payload"]["world_name"], message["payload"]["instance_id"])
+		if WorldManager.has(message.identity, message["payload"]["world_name"], message["payload"]["instance_id"]) and GlobalVars.mieu != null and is_instance_valid(GlobalVars.mieu):
+			GlobalVars.mieu.send_location(Steam.NETWORKING_SEND_RELIABLE_NO_NAGLE)
 
 static func minigame_info(message: Dictionary) -> void:
 	if (Helper.dict_type_check(message["payload"], "minigame_name", "String")

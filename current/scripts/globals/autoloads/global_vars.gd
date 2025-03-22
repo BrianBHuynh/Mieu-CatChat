@@ -6,8 +6,8 @@ var move_speed: float = 500.0
 var jump_speed: float = 2.5
 var frame: float = 0.01666666666
 var first_world_started: bool = false
+var sprite_offset: Vector2 = Vector2(0, 0)
 var reset_position: Vector2
-var mieu_sprite_offset: Vector2 = Vector2(0, 0)
 
 func _ready() -> void:
 	_load_finished()
