@@ -8,7 +8,7 @@ func _ready() -> void:
 	for message: Dictionary in Ui.chat_log:
 		match message["type"]:
 			"chat_message":
-				add_chat_message(message["sender"], message["target"], message["content"], message["private"], false)
+				add_chat_message(message["sender"], message["target"], message["content"], message["private"], false, false)
 			_:
 				show_system_message(message["content"], message["color"], false, message["type"])
 
@@ -21,7 +21,7 @@ func show_chat_message(message: Dictionary) -> void:
 func sent_chat_message(message: String, target: int = true, private: bool = false) -> void:
 	add_chat_message(SteamWorks.steam_id, target, message, private)
 
-func add_chat_message(sender: int, target: int, content: String, private: bool, save: bool = true) -> void:
+func add_chat_message(sender: int, target: int, content: String, private: bool, save: bool = true, print: bool = true) -> void:
 	var hbox: HBoxContainer = HBoxContainer.new()
 	hbox.clip_contents = true
 	var message_text: RichTextLabel = RichTextLabel.new()
@@ -32,7 +32,8 @@ func add_chat_message(sender: int, target: int, content: String, private: bool, 
 			message_text.set_text(Steam.getFriendPersonaName(sender) + ": " + content)
 		else:
 			message_text.set_text("You" + ": " + content)
-	print(message_text.text)
+	if print:
+		print(message_text.text)
 	message_text.set_script(load("res://current/scripts/node/chat_message.gd"))
 	message_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	message_text.size_flags_horizontal = Control.SIZE_EXPAND_FILL
