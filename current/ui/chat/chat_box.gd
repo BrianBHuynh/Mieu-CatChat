@@ -21,7 +21,7 @@ func show_chat_message(message: Dictionary) -> void:
 func sent_chat_message(message: String, target: int = true, private: bool = false) -> void:
 	add_chat_message(SteamWorks.steam_id, target, message, private)
 
-func add_chat_message(sender: int, target: int, content: String, private: bool, save: bool = true, print: bool = true) -> void:
+func add_chat_message(sender: int, target: int, content: String, private: bool, save: bool = true, print_message: bool = true) -> void:
 	var hbox: HBoxContainer = HBoxContainer.new()
 	hbox.clip_contents = true
 	var message_text: RichTextLabel = RichTextLabel.new()
@@ -32,7 +32,7 @@ func add_chat_message(sender: int, target: int, content: String, private: bool, 
 			message_text.set_text(Steam.getFriendPersonaName(sender) + ": " + content)
 		else:
 			message_text.set_text("You" + ": " + content)
-	if print:
+	if print_message:
 		print(message_text.text)
 	message_text.set_script(load("res://current/scripts/node/chat_message.gd"))
 	message_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
