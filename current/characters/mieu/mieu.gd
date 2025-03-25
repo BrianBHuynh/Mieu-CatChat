@@ -22,9 +22,6 @@ func _physics_process(delta: float) -> void:
 		total_delta = 0.0
 		jumping = false
 	if GlobalVars.is_player_interactive():
-		if Input.is_action_pressed("jump") and !jumping:
-			jumping = true
-	
 		if Input.is_action_pressed("move_left") and not Input.is_action_pressed("move_right"):
 			input_dir = Vector2(-1, 0)
 		elif Input.is_action_pressed("move_right") and not Input.is_action_pressed("move_left"):
@@ -45,10 +42,15 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	global_position = global_position.clamp(Vector2(0.0,0.0), Vector2(1920.0, 1080.0))
 	
-	if last_pos != $AnimatedSprite2D.global_position:
+	if Input.is_action_pressed("jump") and !jumping:
+		jumping = true
+		$AnimatedSprite2D.set_frame_and_progress(2, 0.0)
+		$Shadow.set_frame_and_progress(2, 0.0)
+		send_location(Steam.NETWORKING_SEND_UNRELIABLE_NO_DELAY, $AnimatedSprite2D.frame)
+	elif last_pos != $AnimatedSprite2D.global_position:
 		send_location()
 
-func send_location(send_method: int = Steam.NETWORKING_SEND_UNRELIABLE_NO_DELAY) -> void:
+func send_location(send_method: int = Steam.NETWORKING_SEND_UNRELIABLE_NO_DELAY, frame: int = -1) -> void:
 	if SteamLobbies.lobby_id != 0 and is_visible_in_tree():
-		Multithreading.add_task(SteamP2P.send_message_to_user.bind({"type": "data", "x": global_position.x, "y": global_position.y, "sprite_x": $AnimatedSprite2D.global_position.x, "sprite_y": $AnimatedSprite2D.global_position.y}, 0, send_method))
+		Multithreading.add_task(SteamP2P.send_message_to_user.bind({"type": "data", "x": global_position.x, "y": global_position.y, "sprite_x": $AnimatedSprite2D.global_position.x, "sprite_y": $AnimatedSprite2D.global_position.y, "frame": frame}, 0, send_method))
 		last_pos = $AnimatedSprite2D.global_position
