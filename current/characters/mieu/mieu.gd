@@ -51,8 +51,6 @@ func _physics_process(delta: float) -> void:
 		send_location(Steam.NETWORKING_SEND_UNRELIABLE_NO_DELAY, get_frame())
 	elif last_pos != $Sprite.global_position:
 		send_location()
-	
-	sync_frame()
 
 func send_location(send_method: int = Steam.NETWORKING_SEND_UNRELIABLE_NO_DELAY, frame: int = -1) -> void:
 	if SteamLobbies.lobby_id != 0 and is_visible_in_tree():
@@ -68,10 +66,3 @@ func get_frame() -> int:
 func set_frame(frame: int) -> void:
 	$Sprite.frame = frame
 	$Shadow.frame = frame
-
-func sync_frame() -> void:
-	if since_last_synced >= 3600:
-		since_last_synced = 0
-		send_location(Steam.NETWORKING_SEND_UNRELIABLE_NO_DELAY, get_frame())
-	else:
-		since_last_synced = since_last_synced + 1
