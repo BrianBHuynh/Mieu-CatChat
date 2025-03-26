@@ -32,7 +32,7 @@ func remove_from_worlds(pid: int) -> void:
 		for world_instance: int in worlds[world]:
 			worlds[world][world_instance].erase(pid)
 
-func has(pid: int, world: String = current_world_name, instance_id: int = -1) -> bool:
+func has(pid: int, world: String = current_world_name, instance_id: int = current_instance_id) -> bool:
 	if !worlds.has(world):
 		return false
 	elif !worlds[world].has(instance_id):

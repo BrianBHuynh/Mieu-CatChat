@@ -71,7 +71,7 @@ static func world_info(message: Dictionary) -> void:
 	and Helper.dict_type_check(message["payload"], "instance_id", "int")
 	):
 		WorldManager.add_to_world(message.identity, message["payload"]["world_name"], message["payload"]["instance_id"])
-		if WorldManager.has(message.identity, message["payload"]["world_name"], message["payload"]["instance_id"]) and GlobalVars.mieu != null and is_instance_valid(GlobalVars.mieu):
+		if WorldManager.has(message.identity) and GlobalVars.mieu != null and is_instance_valid(GlobalVars.mieu):
 			GlobalVars.mieu.send_location(Steam.NETWORKING_SEND_RELIABLE_NO_NAGLE)
 
 static func minigame_info(message: Dictionary) -> void:
