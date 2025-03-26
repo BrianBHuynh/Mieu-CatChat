@@ -25,40 +25,40 @@ func read_p2p_messages() -> void:
 			process_message(message)
 
 func process_message(message: Dictionary) -> void:
-			if message.is_empty() or message == null:
-				Ui.show_system_debug("WARNING: read an empty packet with non-zero size!")
-			elif !Moderation.is_allowed(message.identity):
-				Ui.show_system_debug("Message from blocked or banned player")
-				Steam.closeSessionWithUser(message.identity)
-				remove_kitty(message.identity)
-			else:
-				message.payload = bytes_to_var(message.payload.decompress_dynamic(-1, FileAccess.COMPRESSION_GZIP))
-				if message.payload is Dictionary:
-					match message["payload"]["type"]:
-						"data":
-							MessageHandler.data(message)
-						"minigame_data":
-							MessageHandler.minigame_data(message)
-						"chat":
-							MessageHandler.chat(message)
-						"lobby_data":
-							MessageHandler.lobby_data(message)
-						"ban":
-							MessageHandler.ban(message)
-						"ban_announce":
-							MessageHandler.ban_announce(message)
-						"kick":
-							MessageHandler.kick(message)
-						"kick_announce":
-							MessageHandler.kick_announce(message)
-						"world_info":
-							MessageHandler.world_info(message)
-						"minigame_info":
-							MessageHandler.minigame_info(message)
-						"encrypted_message":
-							MessageHandler.encrypted_message(message)
-						"encrypted_key":
-							MessageHandler.encrypted_key(message)
+	if message.is_empty() or message == null:
+		Ui.show_system_debug("WARNING: read an empty packet with non-zero size!")
+	elif !Moderation.is_allowed(message.identity):
+		Ui.show_system_debug("Message from blocked or banned player")
+		Steam.closeSessionWithUser(message.identity)
+		remove_kitty(message.identity)
+	else:
+		message.payload = bytes_to_var(message.payload.decompress_dynamic(-1, FileAccess.COMPRESSION_GZIP))
+		if message.payload is Dictionary:
+			match message["payload"]["type"]:
+				"data":
+					MessageHandler.data(message)
+				"minigame_data":
+					MessageHandler.minigame_data(message)
+				"chat":
+					MessageHandler.chat(message)
+				"lobby_data":
+					MessageHandler.lobby_data(message)
+				"ban":
+					MessageHandler.ban(message)
+				"ban_announce":
+					MessageHandler.ban_announce(message)
+				"kick":
+					MessageHandler.kick(message)
+				"kick_announce":
+					MessageHandler.kick_announce(message)
+				"world_info":
+					MessageHandler.world_info(message)
+				"minigame_info":
+					MessageHandler.minigame_info(message)
+				"encrypted_message":
+					MessageHandler.encrypted_message(message)
+				"encrypted_key":
+					MessageHandler.encrypted_key(message)
 
 func send_message_to_user(payload: Dictionary, this_target: int = 0, send_type: int = Steam.NETWORKING_SEND_RELIABLE, channel: int = 0, encrypted: bool = false) -> void:
 	if SteamLobbies.lobby_members.size() > 1:
