@@ -45,7 +45,7 @@ func _physics_process(delta: float) -> void:
 		total_delta = 0.0
 		jumping = false
 	
-	if Input.is_action_pressed("jump") and !jumping and GlobalVars.is_player_interactive():
+	if Input.is_action_pressed("jump") and !jumping:
 		jumping = true
 		set_frame(2)
 		send_location(Steam.NETWORKING_SEND_UNRELIABLE_NO_DELAY, get_frame())

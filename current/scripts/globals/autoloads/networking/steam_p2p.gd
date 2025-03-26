@@ -18,9 +18,7 @@ func _on_network_messages_session_request(remote_id: int) -> void:
 
 func read_p2p_messages() -> void:
 	var messages: Array = Steam.receiveMessagesOnChannel(0, 1000)
-	if messages.size() == 0:
-		pass
-	else:
+	if messages.size() != 0:
 		for message: Dictionary in messages:
 			process_message(message)
 
