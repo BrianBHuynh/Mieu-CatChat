@@ -7,20 +7,14 @@ var jumping: bool = false
 
 func _ready() -> void:
 	GlobalVars.mieu = self
-	GlobalVars.sprite_offset = $AnimatedSprite2D.position
+	GlobalVars.sprite_offset = $Sprite.position
 	GlobalVars.reset_position = global_position
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-	$AnimatedSprite2D/RichTextLabel.text = "[center]" + SteamWorks.steam_username + "[/center]"
+	$Sprite/RichTextLabel.text = "[center]" + SteamWorks.steam_username + "[/center]"
 
 func _physics_process(delta: float) -> void:
 	var input_dir: Vector2 = Vector2(0, 0)
-	if jumping and $AnimatedSprite2D.position.y <= GlobalVars.sprite_offset.y:
-		total_delta = delta+total_delta
-		$AnimatedSprite2D.position.y = (GlobalVars.sprite_offset.y + (981.0)*(total_delta - .2765)**2 - 75.0)
-	elif jumping:
-		$AnimatedSprite2D.position = GlobalVars.sprite_offset
-		total_delta = 0.0
-		jumping = false
+	
 	if GlobalVars.is_player_interactive():
 		if Input.is_action_pressed("move_left") and not Input.is_action_pressed("move_right"):
 			input_dir = Vector2(-1, 0)
@@ -42,15 +36,34 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	global_position = global_position.clamp(Vector2(0.0,0.0), Vector2(1920.0, 1080.0))
 	
+	if jumping and $Sprite.position.y <= GlobalVars.sprite_offset.y:
+		total_delta = delta+total_delta
+		$Sprite.position.y = (GlobalVars.sprite_offset.y + (981.0)*(total_delta - .2765)**2 - 75.0)
+	elif jumping:
+		$Sprite.position = GlobalVars.sprite_offset
+		total_delta = 0.0
+		jumping = false
+	
 	if Input.is_action_pressed("jump") and !jumping:
 		jumping = true
-		$AnimatedSprite2D.set_frame_and_progress(2, 0.0)
-		$Shadow.set_frame_and_progress(2, 0.0)
-		send_location(Steam.NETWORKING_SEND_UNRELIABLE_NO_DELAY, $AnimatedSprite2D.frame)
-	elif last_pos != $AnimatedSprite2D.global_position:
+		set_frame(2)
+		send_location(Steam.NETWORKING_SEND_UNRELIABLE_NO_DELAY, get_frame())
+	elif get_frame() == 0:
+		send_location(Steam.NETWORKING_SEND_UNRELIABLE_NO_DELAY, get_frame())
+	elif last_pos != $Sprite.global_position:
 		send_location()
 
 func send_location(send_method: int = Steam.NETWORKING_SEND_UNRELIABLE_NO_DELAY, frame: int = -1) -> void:
 	if SteamLobbies.lobby_id != 0 and is_visible_in_tree():
-		Multithreading.add_task(SteamP2P.send_message_to_user.bind({"type": "data", "x": global_position.x, "y": global_position.y, "sprite_x": $AnimatedSprite2D.global_position.x, "sprite_y": $AnimatedSprite2D.global_position.y, "frame": frame}, 0, send_method))
-		last_pos = $AnimatedSprite2D.global_position
+		if frame == -1:
+			Multithreading.add_task(SteamP2P.send_message_to_user.bind({"type": "data", "x": global_position.x, "y": global_position.y, "sprite_x": $Sprite.global_position.x, "sprite_y": $Sprite.global_position.y}, 0, send_method))
+		else:
+			Multithreading.add_task(SteamP2P.send_message_to_user.bind({"type": "data", "x": global_position.x, "y": global_position.y, "sprite_x": $Sprite.global_position.x, "sprite_y": $Sprite.global_position.y, "frame": frame}, 0, send_method))
+		last_pos = $Sprite.global_position
+
+func get_frame() -> int:
+	return $Sprite.frame
+
+func set_frame(frame: int) -> void:
+	$Sprite.frame = frame
+	$Shadow.frame = frame

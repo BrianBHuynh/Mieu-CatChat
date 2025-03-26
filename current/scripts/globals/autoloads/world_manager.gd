@@ -72,9 +72,9 @@ func change_world(world_path: String, instance_id: int = -1) -> void:
 
 func door_teleport(body: Variant, world_path: String, door: String = "", door_offset: Vector2 = Vector2(0,0), instance_id: int = -1) -> void:
 	if body == GlobalVars.mieu:
-		WorldManager.change_world_door.bind(world_path, door, door_offset, instance_id).call_deferred()
+		WorldManager.change_world_door.bind(world_path, door, door_offset, instance_id, body.get_frame()).call_deferred()
 
-func change_world_door(world_path: String, door: String = "", door_offset: Vector2 = Vector2(0,0), instance_id: int = -1) -> void:
+func change_world_door(world_path: String, door: String = "", door_offset: Vector2 = Vector2(0,0), frame: int = 0, instance_id: int = -1) -> void:
 	if door_cooldown == false:
 		door_cooldown = true
 		doors.clear()
@@ -86,7 +86,7 @@ func change_world_door(world_path: String, door: String = "", door_offset: Vecto
 			get_tree().change_scene_to_packed(world_packed)
 			while !get_tree().current_scene:
 				await get_tree().process_frame
-			initialize_pos(door, door_offset)
+			initialize_pos(door, door_offset, frame)
 			middleground = get_node("/root/" + current_world_name + "/Middleground")
 			Saves.set_value("settings", "world_path", world_path)
 			send_world()
@@ -96,7 +96,7 @@ func change_world_door(world_path: String, door: String = "", door_offset: Vecto
 		else:
 			Ui.show_system_debug("The world that you tried to load was not found")
 
-func initialize_pos(door: String = "", door_offset: Vector2 = Vector2(0,0)) -> void:
+func initialize_pos(door: String = "", door_offset: Vector2 = Vector2(0,0), frame: int = 0) -> void:
 	while GlobalVars.mieu == null:
 		await get_tree().process_frame
 	if door.is_empty():
@@ -106,6 +106,7 @@ func initialize_pos(door: String = "", door_offset: Vector2 = Vector2(0,0)) -> v
 	else:
 		if doors.has(door) and is_instance_valid(doors[door]):
 			GlobalVars.mieu.global_position = doors[door].get_child(0).global_position + door_offset
+			GlobalVars.mieu.set_frame(frame)
 	GlobalVars.mieu.show()
 
 func update_world(world: Variant) -> void:

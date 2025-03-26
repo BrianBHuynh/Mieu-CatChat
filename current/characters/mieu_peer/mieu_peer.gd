@@ -19,5 +19,8 @@ func move_to(new_position: Vector2, sprite_position: Vector2, frame: int = -1) -
 		$MieuPeer.global_position = sprite_position
 	
 	if frame != -1:
-		$Shadow.frame = frame
-		$MieuPeer.frame = frame
+		set_frame(frame)
+
+func set_frame(frame: int) -> void:
+	$Shadow.frame = frame
+	$MieuPeer.frame = frame

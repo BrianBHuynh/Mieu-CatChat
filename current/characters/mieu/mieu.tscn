@@ -78,14 +78,14 @@ sprite_frames = SubResource("SpriteFrames_h658l")
 animation = &"front"
 autoplay = "front"
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -90)
 scale = Vector2(0.75, 0.75)
 sprite_frames = SubResource("SpriteFrames_h658l")
 animation = &"front"
 autoplay = "front"
 
-[node name="RichTextLabel" type="RichTextLabel" parent="AnimatedSprite2D"]
+[node name="RichTextLabel" type="RichTextLabel" parent="Sprite"]
 offset_left = -200.0
 offset_top = -150.0
 offset_right = 200.0

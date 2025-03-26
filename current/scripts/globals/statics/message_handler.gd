@@ -7,8 +7,9 @@ static func data(message: Dictionary) -> void:
 		and Helper.dict_type_check(message["payload"], "y", "float")
 		and Helper.dict_type_check(message["payload"], "sprite_x", "float")
 		and Helper.dict_type_check(message["payload"], "sprite_y", "float")
-		and Helper.dict_type_check(message["payload"], "frame", "int")
 		):
+		if !Helper.dict_type_check(message["payload"], "frame", "int"):
+			message["payload"]["frame"] = -1
 		if SteamP2P.kitties.has(message.identity) :
 			if WorldManager.has(message.identity):
 				if Helper.dict_type_check(SteamP2P.kitties, message.identity, "Node2D"):
