@@ -18,6 +18,11 @@ func move_to(new_position: Vector2, sprite_position: Vector2, frame: int = -1) -
 		global_position = new_position
 		$MieuPeer.global_position = sprite_position
 	
+	if $Sprite.position.y <= GlobalVars.sprite_offset.y:
+		$Shadow.scale = Vector2(.5, .25) * (($Sprite.position.y - GlobalVars.sprite_offset.y)/1000.0 + 1)
+	elif $Shadow.scale != Vector2(.5, .25):
+		$Shadow.scale = Vector2(.5, .25)
+	
 	if frame != -1:
 		set_frame(frame)
 
