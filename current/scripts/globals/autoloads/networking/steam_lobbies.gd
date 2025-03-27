@@ -97,6 +97,7 @@ func _on_lobby_chat_update(_this_lobby_id: int, change_id: int, _making_change_i
 		if chat_state == Steam.CHAT_MEMBER_STATE_CHANGE_ENTERED:
 			Ui.show_system_message("%s has joined the lobby." % changer_name)
 			SteamP2P.send_lobby_data(change_id, "lobby_join")
+			WorldManager.send_world(change_id)
 		elif chat_state == Steam.CHAT_MEMBER_STATE_CHANGE_LEFT:
 			Ui.show_system_message("%s has left the lobby." % changer_name)
 			SteamP2P.remove_kitty(change_id)

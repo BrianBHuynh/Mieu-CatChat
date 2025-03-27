@@ -148,7 +148,8 @@ func spawn_kitty(message: Dictionary) -> void:
 
 func remove_kitties() -> void:
 	for cat_id: int in SteamP2P.kitties:
-		kitties[cat_id].queue_free()
+		if kitties[cat_id] != null and is_instance_valid(kitties[cat_id]):
+			kitties[cat_id].queue_free()
 	kitties.clear()
 
 func remove_kitty(pid: int = 0) -> void:
