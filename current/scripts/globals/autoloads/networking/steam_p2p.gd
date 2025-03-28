@@ -143,7 +143,7 @@ func spawn_kitty(message: Dictionary) -> void:
 	SteamP2P.kitties[message["identity"]] = kit
 	Ui.show_system_debug("creating")
 	SteamP2P.kitties[message.identity].global_position = Vector2(message.payload.x, message.payload.y)
-	SteamP2P.kitties[message.identity].move_to(Vector2(message.payload.x, message.payload.y), Vector2(message.payload.sprite_x, message.payload.sprite_y), message.payload.frame)
+	SteamP2P.kitties[message.identity].move_to(Vector2(message.payload.x, message.payload.y), Vector2(message.payload.x, message.payload.sprite_y), message.payload.frame)
 	kit.show()
 
 func remove_kitties() -> void:
