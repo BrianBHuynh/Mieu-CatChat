@@ -62,8 +62,8 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_e3ni3"]
-radius = 11.0
-height = 170.0
+radius = 5.0
+height = 150.0
 
 [node name="Mieu" type="CharacterBody2D"]
 motion_mode = 1
@@ -96,5 +96,6 @@ fit_content = true
 script = ExtResource("3_c6knm")
 
 [node name="Feet Collider" type="CollisionShape2D" parent="."]
+position = Vector2(0, 3)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_e3ni3")
