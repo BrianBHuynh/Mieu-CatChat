@@ -40,7 +40,7 @@ func _physics_process(delta: float) -> void:
 	if jumping and $Sprite.position.y <= GlobalVars.sprite_offset.y:
 		total_delta = delta+total_delta
 		$Sprite.position.y = (GlobalVars.sprite_offset.y + (981.0)*(total_delta - .2765)**2 - 75.0)
-		$Shadow.scale = Vector2(.5, .25) * (($Sprite.position.y - GlobalVars.sprite_offset.y)/300.0 + 1)
+		$Shadow.scale = Vector2(.5, .25) * (($Sprite.position.y - GlobalVars.sprite_offset.y)/1000.0 + 1)
 	elif jumping:
 		$Sprite.position = GlobalVars.sprite_offset
 		$Shadow.scale = Vector2(.5, .25)

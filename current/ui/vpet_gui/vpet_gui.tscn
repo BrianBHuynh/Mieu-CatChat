@@ -13,12 +13,14 @@ grow_vertical = 2
 script = ExtResource("1_vhiic")
 
 [node name="FoodBar" type="ProgressBar" parent="."]
+texture_filter = 2
 layout_mode = 0
 offset_left = 1408.0
 offset_right = 1920.0
 offset_bottom = 64.0
 
 [node name="FeedButton" type="Button" parent="."]
+texture_filter = 2
 layout_mode = 0
 offset_left = 1408.0
 offset_top = 64.0

@@ -62,7 +62,7 @@ text = "Perma Ban
 fit_content = true
 script = ExtResource("2_lm1xg")
 
-[node name="Perma Ban2" type="RichTextLabel" parent="ScrollContainer/VBoxContainer/HBoxContainer"]
+[node name="Block" type="RichTextLabel" parent="ScrollContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.1

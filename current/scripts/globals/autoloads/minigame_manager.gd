@@ -35,6 +35,8 @@ func minigame_open(minigame_path: String = "", minigame_instance_id: int = -1) -
 			for minigame_node: Node2D in minigame_display.get_children():
 				minigame_node.queue_free()
 			minigame_display.add_child(minigame_instance)
+		elif minigame_display.get_child_count() == 0:
+			minigame_display.add_child(current_minigame)
 		minigame_display.show()
 
 func get_minigame() -> Variant:

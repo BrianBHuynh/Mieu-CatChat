@@ -43,11 +43,12 @@ placeholder_text = "Message..."
 modulate = Color(1, 1, 1, 0.407843)
 layout_mode = 0
 offset_top = 768.0
-offset_right = 104.0
-offset_bottom = 800.0
+offset_right = 105.0
+offset_bottom = 797.0
 
 [node name="CheckBox" type="CheckBox" parent="."]
 modulate = Color(0, 0, 0, 1)
+texture_filter = 2
 layout_mode = 0
 offset_top = 768.0
 offset_right = 105.0

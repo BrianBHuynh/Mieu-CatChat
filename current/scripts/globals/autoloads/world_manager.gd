@@ -49,6 +49,8 @@ func get_same_world() -> Dictionary:
 		return worlds[current_world_name][current_instance_id]
 
 func change_world(world_path: String, instance_id: int = -1) -> void:
+	if MinigameManager.current_minigame != null:
+		MinigameManager.minigame_display.remove_child(MinigameManager.current_minigame)
 	doors.clear()
 	Ui.close_menu()
 	var world_packed: PackedScene = load(world_path)
@@ -76,6 +78,8 @@ func door_teleport(body: Variant, world_path: String, door: String = "", door_of
 
 func change_world_door(world_path: String, door: String = "", door_offset: Vector2 = Vector2(0,0), frame: int = 0, instance_id: int = -1) -> void:
 	if door_cooldown == false:
+		if MinigameManager.current_minigame != null:
+			MinigameManager.minigame_display.remove_child(MinigameManager.current_minigame)
 		door_cooldown = true
 		doors.clear()
 		Ui.close_menu()
