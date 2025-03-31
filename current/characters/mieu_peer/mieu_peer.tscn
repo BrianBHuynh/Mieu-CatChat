@@ -130,6 +130,7 @@ animation = &"front"
 autoplay = "front"
 
 [node name="MieuPeer" type="AnimatedSprite2D" parent="."]
+top_level = true
 position = Vector2(0, -90)
 scale = Vector2(0.75, 0.75)
 sprite_frames = SubResource("SpriteFrames_25e44")
