@@ -16,7 +16,7 @@ func move_to(new_position: Vector2, sprite_position: Vector2, frame: int = -1) -
 		get_tree().create_tween().tween_property($MieuPeer, "global_position", sprite_position, GlobalVars.frame * Saves.get_or_add("networking", "tween_val", 5.0))
 	else:
 		global_position = new_position
-		$MieuPeer.global_position.y = sprite_y
+		$MieuPeer.global_position = sprite_position
 	
 	if $MieuPeer.position.y <= GlobalVars.sprite_offset.y:
 		$Shadow.scale = Vector2(.5, .25) * (($MieuPeer.position.y - GlobalVars.sprite_offset.y)/300.0 + 1)
