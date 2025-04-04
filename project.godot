@@ -34,6 +34,7 @@ WorldManager="*res://current/scripts/globals/autoloads/world_manager.gd"
 Moderation="*res://current/scripts/globals/autoloads/networking/moderation.gd"
 MinigameManager="*res://current/scripts/globals/autoloads/minigame_manager.gd"
 Cryptography="*res://current/scripts/globals/autoloads/networking/cryptography.gd"
+StabilityMitigator="*res://current/scripts/globals/autoloads/networking/stability_mitigator.gd"
 
 [debug]
 
