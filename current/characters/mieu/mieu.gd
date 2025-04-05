@@ -6,6 +6,7 @@ var total_delta: float = 0.0
 var jumping: bool = false
 var since_last_synced: int = 0
 var movement_id: int = 0
+var moving: bool = false
 
 func _ready() -> void:
 	GlobalVars.mieu = self
@@ -15,9 +16,6 @@ func _ready() -> void:
 	$Sprite/RichTextLabel.text = "[center]" + SteamWorks.steam_username + "[/center]"
 
 func _physics_process(delta: float) -> void:
-	movement_id = movement_id + 1
-	if movement_id >= 100:
-		movement_id = 0
 	var input_dir: Vector2 = Vector2(0, 0)
 	
 	if GlobalVars.is_player_interactive():
@@ -30,6 +28,15 @@ func _physics_process(delta: float) -> void:
 		elif Input.is_action_pressed("move_backwards") and not Input.is_action_pressed("move_forwards"):
 			input_dir = input_dir + Vector2(0, 1)
 	input_dir = input_dir.normalized()
+	
+	if moving:
+		if input_dir == Vector2(0,0):
+			movement_id = movement_id + 1
+			moving = false
+			if movement_id >= 100:
+				movement_id = 0
+	elif input_dir != Vector2(0, 0):
+			moving = true
 	
 	if input_dir and GlobalVars.is_player_interactive():
 		velocity.x =  move_toward(velocity.x, GlobalVars.move_speed * input_dir.x, GlobalVars.move_speed)
