@@ -60,8 +60,28 @@ size_flags_vertical = 1
 size_flags_stretch_ratio = 2.0
 min_value = 1.0
 max_value = 120.0
-value = 5.0
+value = 2.0
 exp_edit = true
 rounded = true
 tick_count = 10
 ticks_on_borders = true
+
+[node name="StabilityMitigation2" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+alignment = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="ScrollContainer/VBoxContainer/StabilityMitigation2"]
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "[center]Auto mitigation:[/center]"
+fit_content = true
+script = ExtResource("2_j54vr")
+
+[node name="AutoTweenCheckBox" type="CheckBox" parent="ScrollContainer/VBoxContainer/StabilityMitigation2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0

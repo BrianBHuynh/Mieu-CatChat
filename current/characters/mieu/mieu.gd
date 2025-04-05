@@ -5,6 +5,7 @@ var last_pos: Vector2 = Vector2(-1, -1)
 var total_delta: float = 0.0
 var jumping: bool = false
 var since_last_synced: int = 0
+var movement_id: int = 0
 
 func _ready() -> void:
 	GlobalVars.mieu = self
@@ -14,6 +15,9 @@ func _ready() -> void:
 	$Sprite/RichTextLabel.text = "[center]" + SteamWorks.steam_username + "[/center]"
 
 func _physics_process(delta: float) -> void:
+	movement_id = movement_id + 1
+	if movement_id >= 100:
+		movement_id = 0
 	var input_dir: Vector2 = Vector2(0, 0)
 	
 	if GlobalVars.is_player_interactive():
@@ -57,9 +61,9 @@ func _physics_process(delta: float) -> void:
 func send_location(send_method: int = Steam.NETWORKING_SEND_UNRELIABLE_NO_DELAY, frame: int = -1) -> void:
 	if SteamLobbies.lobby_id != 0 and is_visible_in_tree():
 		if frame == -1:
-			Multithreading.add_task(SteamP2P.send_message_to_user.bind({"type": "data", "x": global_position.x, "y": global_position.y, "sprite_y": $Sprite.global_position.y}, 0, send_method))
+			Multithreading.add_task(SteamP2P.send_message_to_user.bind({"type": "data", "x": global_position.x, "y": global_position.y, "sprite_y": $Sprite.global_position.y, "movment_id": movement_id}, 0, send_method))
 		else:
-			Multithreading.add_task(SteamP2P.send_message_to_user.bind({"type": "data", "x": global_position.x, "y": global_position.y, "sprite_y": $Sprite.global_position.y, "frame": frame}, 0, send_method))
+			Multithreading.add_task(SteamP2P.send_message_to_user.bind({"type": "data", "x": global_position.x, "y": global_position.y, "sprite_y": $Sprite.global_position.y, "movement_id": movement_id, "frame": frame}, 0, send_method))
 		last_pos = $Sprite.global_position
 
 func get_frame() -> int:
