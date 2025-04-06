@@ -21,14 +21,14 @@ func move_to(new_position: Vector2, sprite_y: float, movement_id: int, frame: in
 	if Saves.get_or_add("networking", "manual_tween_enabled", true):
 		if Saves.get_or_add("networking", "auto_tween_enabled", true):
 			get_tree().create_tween().tween_property(self, "global_position", new_position, GlobalVars.frame * (Saves.get_or_add("networking", "tween_val", 5.0) + StabilityMitigator.get_mitigation(id)))
-			get_tree().create_tween().tween_property($MieuPeer.position, "y", sprite_y, GlobalVars.frame * (Saves.get_or_add("networking", "tween_val", 5.0) + StabilityMitigator.get_mitigation(id)))
+			get_tree().create_tween().tween_property($MieuPeer, "position", Vector2($MieuPeer.position.x, sprite_y), GlobalVars.frame * (Saves.get_or_add("networking", "tween_val", 5.0) + StabilityMitigator.get_mitigation(id)))
 		else:
 			get_tree().create_tween().tween_property(self, "global_position", new_position, GlobalVars.frame * (Saves.get_or_add("networking", "tween_val", 5.0)))
-			get_tree().create_tween().tween_property($MieuPeer.position, "y", sprite_y, GlobalVars.frame * (Saves.get_or_add("networking", "tween_val", 5.0)))
+			get_tree().create_tween().tween_property($MieuPeer, "position", Vector2($MieuPeer.position.x, sprite_y), GlobalVars.frame * (Saves.get_or_add("networking", "tween_val", 5.0)))
 	else:
 		if Saves.get_or_add("networking", "auto_tween_enabled", true):
 			get_tree().create_tween().tween_property(self, "global_position", new_position, GlobalVars.frame * StabilityMitigator.get_mitigation(id))
-			get_tree().create_tween().tween_property($MieuPeer.position, "y", sprite_y, GlobalVars.frame * StabilityMitigator.get_mitigation(id))
+			get_tree().create_tween().tween_property($MieuPeer, "position", Vector2($MieuPeer.position.x, sprite_y), GlobalVars.frame * StabilityMitigator.get_mitigation(id))
 		else:
 			global_position = new_position
 			$MieuPeer.global_position = sprite_y

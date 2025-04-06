@@ -47,7 +47,6 @@ func _physics_process(delta: float) -> void:
 	
 	move_and_slide()
 	global_position = global_position.clamp(Vector2(0.0,0.0), Vector2(1920.0, 1080.0))
-	
 	if jumping and $Sprite.position.y <= GlobalVars.sprite_offset.y:
 		total_delta = delta+total_delta
 		$Sprite.position.y = (GlobalVars.sprite_offset.y + (981.0)*(total_delta - .2765)**2 - 75.0)

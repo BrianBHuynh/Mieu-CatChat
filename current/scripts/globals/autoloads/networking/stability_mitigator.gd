@@ -3,11 +3,9 @@ extends Node
 
 var players: Dictionary = {}
 
-func initialize_player(pid: int) -> void:
+func add_mitigation_data(pid: int, movement_id: int, frame_latency: float) -> void:
 	if !players.has(pid):
 		players[pid] = {"movement_id": 0, "movement_averages": [], "current_movement": []}
-
-func add_mitigation_data(pid: int, movement_id: int, frame_latency: float) -> void:
 	if players[pid]["movement_id"] == movement_id and frame_latency != 0.0:
 		players[pid]["current_movement"].append(frame_latency)
 	else:
@@ -15,7 +13,7 @@ func add_mitigation_data(pid: int, movement_id: int, frame_latency: float) -> vo
 		if players[pid]["current_movement"].size() != 0:
 			var total: float = 0.0
 			var iteration: float = 0.0
-			for latency: float in players[pid]["frame_latency"]:
+			for latency: float in players[pid]["current_movement"]:
 				iteration = iteration + 1
 				total = total + latency
 			players[pid]["movement_averages"].append(total/iteration)
