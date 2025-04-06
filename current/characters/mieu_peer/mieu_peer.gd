@@ -8,7 +8,7 @@ var since_last_frame: float = 0.0
 func _physics_process(_delta: float) -> void:
 	since_last_frame = since_last_frame + 1
 	if Saves.get_or_return("settings", "show_debug", false) and Saves.get_or_return("networking", "auto_tween_enabled", true):
-		$MieuPeer/RichTextLabel.text = "[center]" + player_name + "[/center]\n Networking tween value: " + str(Saves.get_or_add("networking", "tween_val", 5.0) + " + " + str(StabilityMitigator.get_mitigation(id)))
+		$MieuPeer/RichTextLabel.text = "[center]" + player_name + "[/center]\n Networking tween value: " + str(Saves.get_or_add("networking", "tween_val", 5.0)) + " + " + str(StabilityMitigator.get_mitigation(id))
 
 func sign_adoption(identity: int) -> void:
 	id = identity

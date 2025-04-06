@@ -67,9 +67,9 @@ func _physics_process(delta: float) -> void:
 func send_location(send_method: int = Steam.NETWORKING_SEND_UNRELIABLE_NO_DELAY, frame: int = -1) -> void:
 	if SteamLobbies.lobby_id != 0 and is_visible_in_tree():
 		if frame == -1:
-			Multithreading.add_task(SteamP2P.send_message_to_user.bind({"type": "data", "x": global_position.x, "y": global_position.y, "sprite_y": $Sprite.global_position.y, "movement_id": movement_id}, 0, send_method))
+			Multithreading.add_task(SteamP2P.send_message_to_user.bind({"type": "data", "x": global_position.x, "y": global_position.y, "sprite_y": $Sprite.position.y, "movement_id": movement_id}, 0, send_method))
 		else:
-			Multithreading.add_task(SteamP2P.send_message_to_user.bind({"type": "data", "x": global_position.x, "y": global_position.y, "sprite_y": $Sprite.global_position.y, "movement_id": movement_id, "frame": frame}, 0, send_method))
+			Multithreading.add_task(SteamP2P.send_message_to_user.bind({"type": "data", "x": global_position.x, "y": global_position.y, "sprite_y": $Sprite.position.y, "movement_id": movement_id, "frame": frame}, 0, send_method))
 		last_pos = $Sprite.global_position
 
 func get_frame() -> int:
