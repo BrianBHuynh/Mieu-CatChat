@@ -95,6 +95,8 @@ func _on_lobby_chat_update(_this_lobby_id: int, change_id: int, _making_change_i
 	if Moderation.is_allowed(change_id):
 		var changer_name: String = Steam.getFriendPersonaName(change_id)
 		if chat_state == Steam.CHAT_MEMBER_STATE_CHANGE_ENTERED:
+			if !StabilityMitigator.players.has(change_id):
+				StabilityMitigator.initialize_player(change_id)
 			Ui.show_system_message("%s has joined the lobby." % changer_name)
 			SteamP2P.send_lobby_data(change_id, "lobby_join")
 			WorldManager.send_world(change_id)
