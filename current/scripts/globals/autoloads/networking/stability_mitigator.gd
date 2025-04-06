@@ -3,14 +3,13 @@ extends Node
 
 var players: Dictionary = {}
 
-func add_player(pid: int) -> void:
-	players[pid] = {"movement_id": 0, "movement_averages": [], "current_movement": []}
-
-func add_mitigation_data(pid: int, movment_id: int, frame_latency: float) -> void:
-	if players[pid]["movement_id"] == movment_id and frame_latency != 0.0:
+func add_mitigation_data(pid: int, movement_id: int, frame_latency: float) -> void:
+	if !players.has(pid):
+		players[pid] = {"movement_id": 0, "movement_averages": [], "current_movement": []}
+	if players[pid]["movement_id"] == movement_id and frame_latency != 0.0:
 		players[pid]["current_movement"].append(frame_latency)
 	else:
-		players[pid]["movement_id"] = movment_id
+		players[pid]["movement_id"] = movement_id
 		if players[pid]["current_movement"].size() != 0:
 			var total: float = 0.0
 			var iteration: float = 0.0
@@ -22,17 +21,19 @@ func add_mitigation_data(pid: int, movment_id: int, frame_latency: float) -> voi
 				players[pid]["movement_averages"].pop_front()
 
 func get_mitigation(pid: int) -> float:
-	if players[pid]["movment_averages"].size() != 0:
+	if !players.has(pid):
+		players[pid] = {"movement_id": 0, "movement_averages": [], "current_movement": []}
+	if players[pid]["movement_averages"].size() != 0:
 		var total: float = 0.0
 		var iteration: float = 0.0
-		for average: float in players[pid]["movment_averages"]:
+		for average: float in players[pid]["movement_averages"]:
 			iteration = iteration + 1
 			total = total + average
 		return total/iteration
-	elif players[pid]["frame_latency"].size() > 0:
+	elif players[pid]["current_movement"].size() > 0:
 		var total: float = 0
 		var iteration: float = 0
-		for latency: float in players[pid]["frame_latency"]:
+		for latency: float in players[pid]["current_movement"]:
 			iteration = iteration + 1
 			total = total + latency
 		return total/iteration

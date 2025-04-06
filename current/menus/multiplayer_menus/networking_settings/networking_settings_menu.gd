@@ -16,5 +16,5 @@ func _on_stability_mitigation_slider_value_changed(value: float) -> void:
 		Saves.set_value("networking", "manual_tween_enabled", true)
 	$ScrollContainer/VBoxContainer/StabilityMitigation/RichTextLabel.text = "[center]Network Stability Mitigation:" + str(value) + "[/center]"
 
-func _on_auto_tween_check_box_toggled(toggled_on: bool):
+func _on_auto_tween_check_box_toggled(toggled_on: bool) -> void:
 	Saves.set_value("networking", "auto_tween_enabled", toggled_on)
