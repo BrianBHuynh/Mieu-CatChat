@@ -29,7 +29,7 @@ func _physics_process(delta: float) -> void:
 			input_dir = input_dir + Vector2(0, 1)
 	input_dir = input_dir.normalized()
 	
-	if moving:
+	if moving and !jumping:
 		if input_dir == Vector2(0,0):
 			movement_id = movement_id + 1
 			moving = false

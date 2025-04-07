@@ -21,19 +21,12 @@ func add_mitigation_data(pid: int, movement_id: int, frame_latency: float) -> vo
 				players[pid]["movement_averages"].pop_front()
 
 func get_mitigation(pid: int) -> float:
-	if players[pid]["movement_averages"].size() != 0:
+	if players[pid]["movement_averages"].size() > 3:
 		var total: float = 0.0
 		var iteration: float = 0.0
 		for average: float in players[pid]["movement_averages"]:
 			iteration = iteration + 1
 			total = total + average
 		return total/iteration
-	elif players[pid]["current_movement"].size() > 0:
-		var total: float = 0
-		var iteration: float = 0
-		for latency: float in players[pid]["current_movement"]:
-			iteration = iteration + 1
-			total = total + latency
-		return total/iteration
 	else:
-		return 0.0
+		return 3.0
