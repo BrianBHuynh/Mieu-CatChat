@@ -89,6 +89,3 @@ func create_blank_text_edit(placeholder_text: String, text: String) -> TextEdit:
 	text_edit.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	text_edit.size_flags_stretch_ratio = 1.0
 	return text_edit
-
-func _on_settings_pressed() -> void:
-	Ui.open_menu("res://current/menus/multiplayer_menus/networking_settings/networking_settings_menu.tscn")
