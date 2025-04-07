@@ -29,13 +29,13 @@ func _physics_process(delta: float) -> void:
 			input_dir = input_dir + Vector2(0, 1)
 	input_dir = input_dir.normalized()
 	
-	if moving and !jumping:
-		if input_dir == Vector2(0,0):
+	if moving:
+		if input_dir == Vector2(0,0) and !jumping:
 			movement_id = movement_id + 1
 			moving = false
 			if movement_id >= 100:
 				movement_id = 0
-	elif input_dir != Vector2(0, 0):
+	elif input_dir != Vector2(0, 0) or jumping:
 			moving = true
 	
 	if input_dir and GlobalVars.is_player_interactive():
