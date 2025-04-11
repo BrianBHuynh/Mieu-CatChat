@@ -23,8 +23,8 @@ func update_mitigation(pid: int, frame_latencies: Dictionary) -> void:
 		total = 0.0
 		for latency: float in frame_latencies:
 			total = total + (average-latency)**2
-		var standard_deviation: float = total/(frame_latencies.size() - 1)
-		set_mitigation_val.call_deferred(pid, sqrt(total + standard_deviation*3))
+		var standard_deviation: float = sqrt(total/(frame_latencies.size() - 1))
+		set_mitigation_val.call_deferred(pid, total + standard_deviation*3)
 
 func set_mitigation_val(pid: int, new_val: float) -> void:
 	players[pid]["mitigation_val"] = new_val
