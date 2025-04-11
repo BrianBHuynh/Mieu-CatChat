@@ -12,18 +12,18 @@ func add_mitigation_data(pid: int, movement_id: int, frame_latency: float) -> vo
 			players[pid]["frame_latencies"].pop_front()
 	else:
 		players[pid]["movement_id"] = movement_id
-	Multithreading.add_task(update_mitigation.bind(pid, players[pid].duplicate()))
+	Multithreading.add_task(update_mitigation.bind(pid, players[pid]["frame_latencies"].duplicate()))
 
-func update_mitigation(pid: int, mitigation_data: Dictionary) -> void:
-	if mitigation_data["frame_latencies"].size() > 10:
+func update_mitigation(pid: int, frame_latencies: Dictionary) -> void:
+	if frame_latencies.size() > 10:
 		var total: float = 0.0
-		for latency: float in mitigation_data["frame_latencies"]:
+		for latency: float in frame_latencies:
 			total = total + latency
-		var average: float = total/mitigation_data["frame_latencies"].size()
+		var average: float = total/frame_latencies.size()
 		total = 0.0
-		for latency: float in mitigation_data["frame_latencies"]:
+		for latency: float in frame_latencies:
 			total = total + (average-latency)**2
-		var standard_deviation: float = total/(mitigation_data["frame_latencies"].size() - 1)
+		var standard_deviation: float = total/(frame_latencies.size() - 1)
 		set_mitigation_val.call_deferred(pid, sqrt(total + standard_deviation*3))
 
 func set_mitigation_val(pid: int, new_val: float) -> void:
