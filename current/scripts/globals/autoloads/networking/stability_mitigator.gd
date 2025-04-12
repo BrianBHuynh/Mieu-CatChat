@@ -8,6 +8,7 @@ func add_mitigation_data(pid: int, movement_id: int, frame_latency: float) -> vo
 		players[pid] = {"movement_id": 0.0, "frame_latencies": [], "mitigation_val": 5.0}
 	if players[pid]["movement_id"] == movement_id and frame_latency > 1.0:
 		players[pid]["frame_latencies"].append(frame_latency)
+		print(frame_latency)
 		if players[pid]["frame_latencies"].size() > 30:
 			players[pid]["frame_latencies"].pop_front()
 	else:
@@ -16,7 +17,7 @@ func add_mitigation_data(pid: int, movement_id: int, frame_latency: float) -> vo
 		Multithreading.add_task(update_mitigation.bind(pid))
 
 func update_mitigation(pid: int) -> void:
-	if players[pid]["frame_latencies"].size() >= 10:
+	if players[pid]["frame_latencies"].size() >= 30:
 		var total: float = 0.0
 		for latency: float in players[pid]["frame_latencies"]:
 			total = total + latency
