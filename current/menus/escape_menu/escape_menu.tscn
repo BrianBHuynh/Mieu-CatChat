@@ -140,8 +140,30 @@ size_flags_horizontal = 3
 texture_normal = ExtResource("2_t8lwk")
 stretch_mode = 5
 
+[node name="Exit" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+clip_contents = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ExitLabel" type="RichTextLabel" parent="ScrollContainer/VBoxContainer/Exit"]
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "[center]Exit:[/center]"
+script = ExtResource("2_leq0j")
+
+[node name="ExitBtn" type="TextureButton" parent="ScrollContainer/VBoxContainer/Exit"]
+modulate = Color(0.639621, 0.483285, 1.92523e-07, 0.980392)
+texture_filter = 1
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+texture_normal = ExtResource("2_t8lwk")
+stretch_mode = 5
+
 [connection signal="pressed" from="ScrollContainer/VBoxContainer/Multiplayer/MultiplayerBtn" to="." method="_on_multiplayer_pressed"]
 [connection signal="pressed" from="ScrollContainer/VBoxContainer/Settings/SettingsBtn" to="." method="_on_settings_btn_pressed"]
 [connection signal="pressed" from="ScrollContainer/VBoxContainer/Save/SaveBtn" to="." method="_on_save_pressed"]
 [connection signal="pressed" from="ScrollContainer/VBoxContainer/Credits/CreditBtn" to="." method="_on_credit_btn_pressed"]
 [connection signal="pressed" from="ScrollContainer/VBoxContainer/ResetPos/ResetBtn" to="." method="_on_reset_pos_pressed"]
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/Exit/ExitBtn" to="." method="_on_exit_btn_pressed"]

@@ -19,3 +19,6 @@ func _on_credit_btn_pressed() -> void:
 func _on_reset_pos_pressed() -> void:
 	if GlobalVars.reset_position != null:
 		GlobalVars.mieu.global_position = GlobalVars.reset_position
+
+func _on_exit_btn_pressed() -> void:
+	get_tree().quit()
