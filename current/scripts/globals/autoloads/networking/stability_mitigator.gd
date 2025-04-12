@@ -2,7 +2,6 @@ extends Node
 
 
 var players: Dictionary = {}
-const buffer: float = 2.0
 
 func add_mitigation_data(pid: int, movement_id: int, frame_latency: float) -> void:
 	if !players.has(pid):
@@ -26,7 +25,7 @@ func update_mitigation(pid: int) -> void:
 		for latency: float in players[pid]["frame_latencies"]:
 			total = total + (average-latency)**2
 		var standard_deviation: float = sqrt(total/(players[pid]["frame_latencies"].size() - 1))
-		players[pid]["mitigation_val"] = average + standard_deviation*3 + buffer
+		players[pid]["mitigation_val"] = average + standard_deviation*3
 
 func get_mitigation(pid: int) -> float:
 	return players[pid]["mitigation_val"]
