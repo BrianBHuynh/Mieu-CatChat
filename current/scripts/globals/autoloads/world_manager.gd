@@ -83,7 +83,7 @@ func change_world_door(world_path: String, door: String = "", door_offset: Vecto
 		door_cooldown = true
 		doors.clear()
 		Ui.close_menu()
-		var world_packed: PackedScene = load(world_path)
+		var world_packed: PackedScene = load("res://current/scenes/worlds/" + world_path)
 		if world_packed != null:
 			current_world_name = world_packed.get_state().get_node_name(0)
 			current_instance_id = instance_id

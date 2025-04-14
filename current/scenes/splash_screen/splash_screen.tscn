@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cghgofk26acco"]
 
-[ext_resource type="Script" uid="uid://cebu018r3pfoc" path="res://current/scenes/splash/splash_screen.gd" id="1_i46j7"]
+[ext_resource type="Script" uid="uid://cebu018r3pfoc" path="res://current/scenes/splash_screen/splash_screen.gd" id="1_i46j7"]
 [ext_resource type="Texture2D" uid="uid://d2wsv05a3y641" path="res://current/assets/images/mieu_splash.png" id="2_mu3gv"]
 
 [node name="2D_scene_template" type="Node2D"]
