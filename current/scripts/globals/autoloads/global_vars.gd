@@ -58,4 +58,4 @@ func set_borderless(toggled: bool) -> void:
 	Saves.set_value("settings", "borderless", toggled)
 
 func is_player_interactive() -> bool:
-	return not (Ui.is_menu_open() or MinigameManager.is_minigame_open() or Ui.chat_box.is_text_box_focused())
+	return not (Ui.is_menu_open() or MinigameManager.minigame_display.has_focus() or Ui.chat_box.is_text_box_focused())

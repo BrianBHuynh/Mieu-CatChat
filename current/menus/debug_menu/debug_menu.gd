@@ -2,7 +2,7 @@ extends Control
 
 
 func _on_minigame_pressed() -> void:
-	MinigameManager.minigame_open("res://current/scenes/templates/minigame_template/minigame_template.tscn")
+	MinigameManager.minigame_open("res://current/scenes/minigame_template/minigame_template.tscn")
 
 func _on_world_manager_pressed() -> void:
 	Ui.show_system_debug(str(WorldManager.worlds) + str(WorldManager.current_instance_id))

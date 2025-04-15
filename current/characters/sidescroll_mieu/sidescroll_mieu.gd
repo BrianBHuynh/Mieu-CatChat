@@ -8,11 +8,10 @@ const Jump_velocity: float = -400.0
 func _physics_process(delta: float) -> void:
 
 	var input_dir: Vector2 = Vector2(0, 0)
-	if !GlobalVars.is_player_interactive():
-		if Input.is_action_pressed("move_left") and not Input.is_action_pressed("move_right"):
-			input_dir = Vector2(-1, 0)
-		elif Input.is_action_pressed("move_right") and not Input.is_action_pressed("move_left"):
-			input_dir = Vector2(1, 0)
+	if Input.is_action_pressed("move_left") and not Input.is_action_pressed("move_right"):
+		input_dir = Vector2(-1, 0)
+	elif Input.is_action_pressed("move_right") and not Input.is_action_pressed("move_left"):
+		input_dir = Vector2(1, 0)
 	input_dir = input_dir.normalized()
 	
 	if input_dir:

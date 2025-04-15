@@ -19,7 +19,6 @@ mode = 2
 initial_position = 2
 size = Vector2i(1920, 1080)
 visible = false
-popup_window = true
 keep_title_visible = true
 script = ExtResource("2_tp45r")
 
@@ -62,6 +61,5 @@ layout_mode = 1
 [node name="ChatBox" parent="Control" instance=ExtResource("6_shwpt")]
 layout_mode = 1
 
-[connection signal="close_requested" from="Minigame" to="Minigame" method="_on_close_requested"]
 [connection signal="body_entered" from="Middleground/DoorB" to="." method="_on_door_b_body_entered"]
 [connection signal="body_entered" from="Middleground/DoorA" to="." method="_on_door_a_body_entered"]

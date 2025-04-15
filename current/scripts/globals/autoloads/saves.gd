@@ -55,7 +55,7 @@ func set_value(dictionary: String, key: String, value: Variant) -> void:
 			data[dictionary][key] = value
 
 func has(dictionary: String, key: String) -> bool:
-	if data.has(dictionary) && data[dictionary].has(key):
+	if data.has(dictionary) and data[dictionary].has(key):
 		return true
 	else:
 		return false
