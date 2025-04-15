@@ -3,11 +3,12 @@ extends Node
 
 var running: bool = false
 var steam_id: int = 0
-var steam_username: String = ""
+var steam_username: String = "Player"
 
 func _ready() -> void:
 	Steam.steamInit()
-	if Steam.isSteamRunning():
+	#Makes sure the game is owned and the user is running steam while logged in.
+	if Steam.isSteamRunning() and Steam.loggedOn() and Steam.isSubscribed():
 		Multithreading.add_task(Steam.initRelayNetworkAccess)
 		Multithreading.add_task(Steam.initAuthentication)
 		Ui.show_system_debug("Steam is running!")
@@ -18,11 +19,11 @@ func _ready() -> void:
 		check_command_line()
 	else:
 		Ui.show_system_message("Steam is not running right now, online features may not work correctly!")
-		running = false
 
 func _physics_process(delta: float) -> void:
-	Steam.run_callbacks()
-	SteamP2P.process(delta)
+	if running:
+		Steam.run_callbacks()
+		SteamP2P.process(delta)
 
 func check_command_line() -> void:
 	#Not fully implemented, test later.
