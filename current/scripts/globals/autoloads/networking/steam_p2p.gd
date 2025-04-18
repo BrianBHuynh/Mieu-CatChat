@@ -59,6 +59,9 @@ func process_message(message: Dictionary) -> void:
 					MessageHandler.encrypted_key(message)
 
 func send_message_to_user(payload: Dictionary, this_target: int = 0, send_type: int = Steam.NETWORKING_SEND_RELIABLE, channel: int = 0, encrypted: bool = false) -> void:
+	Multithreading.add_task(send_message_to_user_task.bind(payload, this_target, send_type, channel, encrypted))
+
+func send_message_to_user_task(payload: Dictionary, this_target: int = 0, send_type: int = Steam.NETWORKING_SEND_RELIABLE, channel: int = 0, encrypted: bool = false) -> void:
 	if SteamLobbies.lobby_members.size() > 1:
 		var this_data: PackedByteArray
 		if encrypted:
@@ -88,6 +91,9 @@ func send_message_to_user(payload: Dictionary, this_target: int = 0, send_type: 
 						Steam.sendMessageToUser(this_target, this_data, send_type, channel)
 
 func send_chat_message(message: String, this_target: int = 0, private: bool = false, channel: int = 0) -> void:
+	Multithreading.add_task(send_chat_message_task.bind(message, this_target, private, channel))
+
+func send_chat_message_task(message: String, this_target: int = 0, private: bool = false, channel: int = 0) -> void:
 	if SteamLobbies.lobby_members.size() > 1:
 		var send_type: int = Steam.NETWORKING_SEND_RELIABLE
 		var this_data: PackedByteArray
@@ -105,6 +111,9 @@ func send_chat_message(message: String, this_target: int = 0, private: bool = fa
 	Ui.sent_chat_message(message, this_target, private)
 
 func send_lobby_data(this_target: int = 0, _reason: String = "No reason provided", channel: int = 0) -> void:
+	Multithreading.add_task(send_lobby_data_task.bind(this_target, _reason, channel))
+
+func send_lobby_data_task(this_target: int = 0, _reason: String = "No reason provided", channel: int = 0) -> void:
 	if SteamLobbies.is_host() and SteamLobbies.lobby_members.size() > 1:
 		var send_type: int = Steam.NETWORKING_SEND_RELIABLE
 		var this_data: PackedByteArray

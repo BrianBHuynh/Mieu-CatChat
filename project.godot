@@ -15,8 +15,9 @@ run/main_scene="uid://cghgofk26acco"
 config/use_custom_user_dir=true
 config/features=PackedStringArray("4.4", "GL Compatibility")
 boot_splash/bg_color=Color(0, 0, 0, 1)
-boot_splash/image="res://current/assets/images/mieu_splash.png"
+boot_splash/image="uid://d2wsv05a3y641"
 config/icon="res://current/assets/images/mieu_splash.png"
+boot_splash/minimum_display_time=1250
 
 [autoload]
 
