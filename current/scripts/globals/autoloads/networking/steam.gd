@@ -18,7 +18,7 @@ func _ready() -> void:
 		running = true
 		check_command_line()
 	else:
-		Ui.show_system_message("Steam is not running right now, online features may not work correctly!")
+		Ui.show_system_warning("Steam is not running right now, online features may not work correctly!")
 
 func _physics_process(delta: float) -> void:
 	if running:

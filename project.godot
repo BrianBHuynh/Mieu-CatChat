@@ -36,8 +36,13 @@ MinigameManager="*res://current/scripts/globals/autoloads/minigame_manager.gd"
 Cryptography="*res://current/scripts/globals/autoloads/networking/cryptography.gd"
 StabilityMitigator="*res://current/scripts/globals/autoloads/networking/stability_mitigator.gd"
 
+[compression]
+
+formats/gzip/compression_level=9
+
 [debug]
 
+file_logging/enable_file_logging.pc=false
 gdscript/warnings/unused_signal=0
 gdscript/warnings/untyped_declaration=1
 gdscript/warnings/inferred_declaration=1
@@ -46,7 +51,6 @@ gdscript/warnings/inferred_declaration=1
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
-window/size/mode=3
 window/subwindows/embed_subwindows=false
 window/stretch/mode="viewport"
 window/per_pixel_transparency/allowed=true
@@ -106,6 +110,11 @@ send_message={
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194309,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
 ]
 }
+
+[physics]
+
+common/physics_jitter_fix=0.0
+common/physics_interpolation=true
 
 [rendering]
 

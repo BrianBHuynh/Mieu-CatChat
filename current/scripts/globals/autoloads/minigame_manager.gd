@@ -19,7 +19,7 @@ func minigame_open(minigame_path: String = "", minigame_instance_id: int = -1) -
 	if minigame_path.is_empty():
 		minigame_display.show()
 	else:
-		var minigame_instance: Variant = load(minigame_path).instantiate()
+		var minigame_instance: Variant = load("res://current/scenes/minigames/" + minigame_path).instantiate()
 		if minigame_instance.name != current_minigame_name:
 			current_minigame = minigame_instance
 			current_minigame_name = minigame_instance.name
