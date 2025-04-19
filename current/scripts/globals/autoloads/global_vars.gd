@@ -8,6 +8,7 @@ var frame: float = 0.016666666666
 var first_world_started: bool = false
 var sprite_offset: Vector2 = Vector2(0, 0)
 var reset_position: Vector2
+var movement_id: int = -1
 
 func _ready() -> void:
 	_load_finished()

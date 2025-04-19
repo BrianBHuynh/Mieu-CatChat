@@ -5,10 +5,10 @@ var last_pos: Vector2 = Vector2(-1, -1)
 var total_delta: float = 0.0
 var jumping: bool = false
 var since_last_synced: int = 0
-var movement_id: int = RandomNumberGenerator.new().randi_range(0, 9999)
 var moving: bool = false
 
 func _ready() -> void:
+	GlobalVars.movement_id = GlobalVars.movement_id + 1
 	GlobalVars.mieu = self
 	GlobalVars.sprite_offset = $Sprite.position
 	GlobalVars.reset_position = global_position
@@ -31,10 +31,10 @@ func _physics_process(delta: float) -> void:
 	
 	if moving:
 		if input_dir == Vector2(0,0) and !jumping:
-			movement_id = movement_id + 1
+			GlobalVars.movement_id = GlobalVars.movement_id + 1
 			moving = false
-			if movement_id >= 9999:
-				movement_id = movement_id - 9999
+			if GlobalVars.movement_id >= 100:
+				GlobalVars.movement_id = 0
 	elif input_dir != Vector2(0, 0) or jumping:
 			moving = true
 	
@@ -67,9 +67,9 @@ func _physics_process(delta: float) -> void:
 func send_location(send_method: int = Steam.NETWORKING_SEND_UNRELIABLE_NO_DELAY, frame: int = -1) -> void:
 	if SteamLobbies.lobby_id != 0 and is_visible_in_tree():
 		if frame == -1:
-			SteamP2P.send_message_to_user({"type": "data", "x": global_position.x, "y": global_position.y, "sprite_y": $Sprite.position.y, "movement_id": movement_id}, 0, send_method)
+			SteamP2P.send_message_to_user({"type": "data", "x": global_position.x, "y": global_position.y, "sprite_y": $Sprite.position.y, "movement_id": GlobalVars.movement_id}, 0, send_method)
 		else:
-			SteamP2P.send_message_to_user({"type": "data", "x": global_position.x, "y": global_position.y, "sprite_y": $Sprite.position.y, "movement_id": movement_id, "frame": frame}, 0, send_method)
+			SteamP2P.send_message_to_user({"type": "data", "x": global_position.x, "y": global_position.y, "sprite_y": $Sprite.position.y, "movement_id": GlobalVars.movement_id, "frame": frame}, 0, send_method)
 		last_pos = $Sprite.global_position
 
 func get_frame() -> int:

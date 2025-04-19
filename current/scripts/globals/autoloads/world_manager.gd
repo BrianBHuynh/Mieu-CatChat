@@ -55,6 +55,7 @@ func change_world(world_path: String, instance_id: int = -1) -> void:
 	Ui.close_menu()
 	var world_packed: PackedScene = load(world_path)
 	if world_packed != null:
+		StabilityMitigator.reset_movement_ids()
 		current_world_name = world_packed.get_state().get_node_name(0)
 		current_instance_id = instance_id
 		get_tree().change_scene_to_packed(world_packed)
@@ -77,7 +78,8 @@ func door_teleport(body: Variant, world_path: String, door: String = "", door_of
 		WorldManager.change_world_door.call_deferred(world_path, door, door_offset, body.get_frame(), instance_id)
 
 func change_world_door(world_path: String, door: String = "", door_offset: Vector2 = Vector2(0,0), frame: int = 0, instance_id: int = -1) -> void:
-	if door_cooldown == false:
+	if !door_cooldown:
+		StabilityMitigator.reset_movement_ids()
 		if MinigameManager.current_minigame != null:
 			MinigameManager.minigame_display.remove_child(MinigameManager.current_minigame)
 		door_cooldown = true

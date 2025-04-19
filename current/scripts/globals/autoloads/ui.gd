@@ -37,7 +37,7 @@ func show_system_warning(message: String, color: Color = Color.DARK_BLUE) -> voi
 		await get_tree().process_frame
 	chat_box.show_system_warning(message, color)
 
-func show_system_debug(message: String, color: Color = Color.BLACK) -> void:
+func show_system_debug(message: String, color: Color = Color.DARK_SLATE_BLUE) -> void:
 	while chat_box == null or !is_instance_valid(chat_box):
 		await get_tree().process_frame
 	chat_box.show_system_debug(message, color)
