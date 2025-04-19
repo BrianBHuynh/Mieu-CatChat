@@ -5,7 +5,7 @@ var last_pos: Vector2 = Vector2(-1, -1)
 var total_delta: float = 0.0
 var jumping: bool = false
 var since_last_synced: int = 0
-var movement_id: int = 0
+var movement_id: int = RandomNumberGenerator.new().randi_range(0, 9999)
 var moving: bool = false
 
 func _ready() -> void:
@@ -33,8 +33,8 @@ func _physics_process(delta: float) -> void:
 		if input_dir == Vector2(0,0) and !jumping:
 			movement_id = movement_id + 1
 			moving = false
-			if movement_id >= 100:
-				movement_id = 0
+			if movement_id >= 9999:
+				movement_id = movement_id - 9999
 	elif input_dir != Vector2(0, 0) or jumping:
 			moving = true
 	
