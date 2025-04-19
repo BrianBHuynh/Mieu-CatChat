@@ -34,3 +34,8 @@ func move_to(new_position: Vector2, sprite_y: float, movement_id: int, frame: in
 func set_frame(frame: int) -> void:
 	$Shadow.frame = frame
 	$MieuPeer.frame = frame
+
+func remove() -> void:
+	if StabilityMitigator.players.has(id):
+		StabilityMitigator.players[id]["movement_id"] = -1
+	queue_free()
