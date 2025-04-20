@@ -8,10 +8,7 @@ var since_last_synced: int = 0
 var moving: bool = false
 
 func _ready() -> void:
-	if GlobalVars.movement_id != 0:
-		GlobalVars.movement_id = GlobalVars.movement_id + 1
-	else:
-		GlobalVars.movement_id = RandomNumberGenerator.new().randi_range(0, 99)
+	GlobalVars.movement_id = GlobalVars.movement_id + 1
 	GlobalVars.mieu = self
 	GlobalVars.sprite_offset = $Sprite.position
 	GlobalVars.reset_position = global_position
