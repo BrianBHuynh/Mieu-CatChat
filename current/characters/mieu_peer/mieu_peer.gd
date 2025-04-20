@@ -3,7 +3,7 @@ extends Node2D
 
 var id: int
 var player_name: String
-var since_last_frame: float = 0.0
+var since_last_frame: int = 0
 
 func _physics_process(_delta: float) -> void:
 	since_last_frame = since_last_frame + 1
