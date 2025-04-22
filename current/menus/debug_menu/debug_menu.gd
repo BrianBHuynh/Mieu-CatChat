@@ -1,6 +1,20 @@
 extends Control
 
 
+func _ready() -> void:
+	$VBoxContainer/ScrollContainer/HBoxContainer/Networking/ChanceSlider.value = NetworkingData.chance
+	$VBoxContainer/ScrollContainer/HBoxContainer/Networking/ChanceLabel.text = "Chance: 1/" + str(NetworkingData.chance)
+	$VBoxContainer/ScrollContainer/HBoxContainer/Networking/GapSlider.value = NetworkingData.gap
+	$VBoxContainer/ScrollContainer/HBoxContainer/Networking/GapLabel.text = "Gap: " + str(NetworkingData.gap)
+
+func _on_chance_changed(value: float) -> void:
+	NetworkingData.chance = int(value)
+	$VBoxContainer/ScrollContainer/HBoxContainer/Networking/ChanceLabel.text = "Chance: 1/" + str(NetworkingData.chance)
+
+func _on_gap_changed(value: float) -> void:
+	NetworkingData.gap = int(value)
+	$VBoxContainer/ScrollContainer/HBoxContainer/Networking/GapLabel.text = "Gap: " + str(NetworkingData.gap)
+
 func _on_minigame_pressed() -> void:
 	MinigameManager.minigame_open("minigame_template/minigame_template.tscn")
 

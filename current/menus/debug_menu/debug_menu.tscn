@@ -113,6 +113,30 @@ size_flags_vertical = 3
 texture_normal = ExtResource("2_xge1m")
 stretch_mode = 5
 
+[node name="Networking" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ChanceLabel" type="RichTextLabel" parent="VBoxContainer/ScrollContainer/HBoxContainer/Networking"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Chance"
+
+[node name="ChanceSlider" type="HSlider" parent="VBoxContainer/ScrollContainer/HBoxContainer/Networking"]
+layout_mode = 2
+size_flags_vertical = 2
+min_value = 1.0
+value = 1.0
+
+[node name="GapLabel" type="RichTextLabel" parent="VBoxContainer/ScrollContainer/HBoxContainer/Networking"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Chance"
+
+[node name="GapSlider" type="HSlider" parent="VBoxContainer/ScrollContainer/HBoxContainer/Networking"]
+layout_mode = 2
+size_flags_vertical = 2
+
 [connection signal="pressed" from="VBoxContainer/ScrollContainer/HBoxContainer/DebugMessagesToggle/DebugMessages" to="." method="_on_debug_messages_pressed"]
 [connection signal="pressed" from="VBoxContainer/ScrollContainer/HBoxContainer/WorldManager/WorldManager" to="." method="_on_world_manager_pressed"]
 [connection signal="pressed" from="VBoxContainer/ScrollContainer/HBoxContainer/MinigameDebug/Minigame" to="." method="_on_minigame_pressed"]
