@@ -35,5 +35,5 @@ func get_mitigation(pid: int) -> float:
 	return players[pid]["mitigation_val"]
 
 func reset_movement_ids() -> void:
-	for player: Dictionary in players:
-		player["movement_id"] = -1
+	for player: int in players:
+		players[player]["movement_id"] = -1
