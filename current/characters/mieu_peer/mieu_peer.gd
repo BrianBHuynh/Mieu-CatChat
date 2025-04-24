@@ -3,10 +3,10 @@ extends Node2D
 
 var id: int
 var player_name: String
-var since_last_frame: int = 0
+var since_last_frame: float = 0
 
 func _physics_process(_delta: float) -> void:
-	since_last_frame = since_last_frame + 1
+	since_last_frame = since_last_frame + 1.0
 	if Saves.get_or_return("settings", "show_debug", false):
 		$MieuPeer/RichTextLabel.text = "[center]" + player_name + "[/center]\n Networking tween value: " + str(StabilityMitigator.get_mitigation(id))
 
@@ -29,7 +29,7 @@ func move_to(new_position: Vector2, sprite_y: float, movement_id: int, frame: in
 	if frame != -1:
 		set_frame(frame)
 	
-	since_last_frame = 0
+	since_last_frame = 0.0
 
 func set_frame(frame: int) -> void:
 	$Shadow.frame = frame
