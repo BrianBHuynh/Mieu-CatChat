@@ -92,6 +92,8 @@ func change_world_door(world_path: String, door: String = "", door_offset: Vecto
 			get_tree().change_scene_to_packed(world_packed)
 			while !get_tree().current_scene:
 				await get_tree().process_frame
+			get_tree().current_scene.modulate = Color(1, 1, 1, .85)
+			get_tree().create_tween().tween_property(get_tree().current_scene, "modulate", Color(1, 1, 1, 1), 1)
 			initialize_pos(door, door_offset, frame)
 			middleground = get_node("/root/" + current_world_name + "/Middleground")
 			Saves.set_value("settings", "world_path", world_path)
