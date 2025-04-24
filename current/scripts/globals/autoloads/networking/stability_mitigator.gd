@@ -23,7 +23,10 @@ func add_mitigation_data(pid: int, movement_id: int, frame_latency: float) -> vo
 		players[pid]["mitigation_val"] = (average-2.0) * 2.99573227355 + 2.0
 
 func get_mitigation(pid: int) -> float:
-	return players[pid]["mitigation_val"]
+	if players.has(pid):
+		return players[pid]["mitigation_val"]
+	else:
+		return 5.0
 
 func reset_movement_ids() -> void:
 	for player: int in players:

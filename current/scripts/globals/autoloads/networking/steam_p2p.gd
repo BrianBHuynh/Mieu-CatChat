@@ -146,13 +146,11 @@ func spawn_kitty(message: Dictionary) -> void:
 		await get_tree().process_frame
 	var file: Resource = load("res://current/characters/mieu_peer/mieu_peer.tscn")
 	var kit: Node2D = file.instantiate()
-	kit.hide()
 	WorldManager.middleground.add_child(kit)
+	kit.global_position = Vector2(message.payload.x, message.payload.y)
 	kit.sign_adoption(message["identity"])
 	SteamP2P.kitties[message["identity"]] = kit
 	Ui.show_system_debug("creating")
-	SteamP2P.kitties[message.identity].global_position = Vector2(message.payload.x, message.payload.y)
-	SteamP2P.kitties[message.identity].move_to(Vector2(message.payload.x, message.payload.y), message.payload.sprite_y, message.payload.movement_id, message.payload.frame)
 	kit.show()
 
 func remove_kitties() -> void:
