@@ -5,8 +5,8 @@ var id: int
 var player_name: String
 var since_last_frame: float = 0
 
-func _process(delta: float) -> void:
-	print($MieuPeer.global_position)
+func _ready() -> void:
+	get_tree().create_tween().tween_property(self, "modulate", Color(1, 1, 1, 1), 1.0)
 
 func _physics_process(_delta: float) -> void:
 	since_last_frame = since_last_frame + 1.0

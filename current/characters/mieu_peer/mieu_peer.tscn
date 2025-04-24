@@ -120,6 +120,7 @@ animations = [{
 
 [node name="MieuPeerRoot2D" type="Node2D"]
 visible = false
+modulate = Color(1, 1, 1, 0)
 script = ExtResource("2_gb511")
 
 [node name="Shadow" type="AnimatedSprite2D" parent="."]
