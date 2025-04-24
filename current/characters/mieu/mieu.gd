@@ -65,7 +65,7 @@ func _physics_process(delta: float) -> void:
 		send_location()
 
 func send_location(send_method: int = Steam.NETWORKING_SEND_UNRELIABLE_NO_DELAY, frame: int = -1) -> void:
-	if SteamLobbies.lobby_id != 0 and is_visible_in_tree() and RandomNumberGenerator.new().randi_range(1, NetworkingData.chance) == 1 and NetworkingData.frame_sendable():
+	if SteamLobbies.lobby_id != 0 and is_visible_in_tree():
 		if frame == -1:
 			SteamP2P.send_message_to_user({"type": "data", "x": global_position.x, "y": global_position.y, "sprite_y": $Sprite.position.y, "movement_id": GlobalVars.movement_id}, 0, send_method)
 		else:

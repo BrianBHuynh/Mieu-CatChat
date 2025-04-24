@@ -89,7 +89,6 @@ func save_game() -> void:
 	Multithreading.add_task(save_file_encrypted.bind(MinigameManager.minigame_stats, "minigame_stats"))
 	Multithreading.add_task(save_file.bind(settings, "settings"))
 	Multithreading.add_task(save_file.bind(networking, "networking"))
-	Multithreading.add_task(save_file.bind(NetworkingData.networking_data, "networking_data"))
 
 func store_player_state() -> void:
 	while !is_instance_valid(GlobalVars.mieu):

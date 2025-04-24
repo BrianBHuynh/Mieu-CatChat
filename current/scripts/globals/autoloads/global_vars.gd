@@ -9,6 +9,9 @@ var first_world_started: bool = false
 var sprite_offset: Vector2 = Vector2(0, 0)
 var reset_position: Vector2
 var movement_id: int = -1
+var gap: int = 0
+var chance: int = 1
+var gap_num: int = 0
 
 func _ready() -> void:
 	_load_finished()
@@ -60,3 +63,11 @@ func set_borderless(toggled: bool) -> void:
 
 func is_player_interactive() -> bool:
 	return not (Ui.is_menu_open() or MinigameManager.minigame_display.has_focus() or Ui.chat_box.is_text_box_focused())
+
+func is_debug_sendable() -> bool:
+	if gap_num >= gap and RandomNumberGenerator.new().randi_range(1, chance) == 1:
+		gap_num = 0
+		return true
+	else:
+		gap_num = gap_num + 1
+		return false

@@ -126,6 +126,7 @@ text = "Chance"
 layout_mode = 2
 size_flags_vertical = 2
 min_value = 1.0
+max_value = 10.0
 value = 1.0
 
 [node name="GapLabel" type="RichTextLabel" parent="VBoxContainer/ScrollContainer/HBoxContainer/Networking"]

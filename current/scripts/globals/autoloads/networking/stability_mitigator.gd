@@ -6,8 +6,6 @@ var players: Dictionary = {}
 func add_mitigation_data(pid: int, movement_id: int, frame_latency: int) -> void:
 	if !players.has(pid):
 		players[pid] = {"movement_id": -1.0, "frame_latencies": [], "mitigation_val": 5.0}
-	if players[pid]["movement_id"] == movement_id:
-		NetworkingData.add_val(pid, frame_latency)
 	if players[pid]["movement_id"] == movement_id and frame_latency > 1.0:
 		if players[pid]["frame_latencies"].size() == 0:
 			players[pid]["frame_latencies"].append(10.0)
