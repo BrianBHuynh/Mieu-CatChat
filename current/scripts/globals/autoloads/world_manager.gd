@@ -76,7 +76,7 @@ func change_world(world_path: String, instance_id: int = -1) -> void:
 
 func door_teleport(body: Variant, world_path: String, door: String = "", door_offset: Vector2 = Vector2(0,0), instance_id: int = -1) -> void:
 	if body == GlobalVars.mieu:
-		WorldManager.change_world_door.call_deferred(world_path, door, door_offset, body.get_frame(), instance_id)
+		WorldManager.change_world_door(world_path, door, door_offset, body.get_frame(), instance_id)
 
 func change_world_door(world_path: String, door: String = "", door_offset: Vector2 = Vector2(0,0), frame: int = 0, instance_id: int = -1) -> void:
 	if !door_cooldown:
