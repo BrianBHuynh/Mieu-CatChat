@@ -6,7 +6,7 @@ var player_name: String
 var since_last_frame: float = 0
 
 func _ready() -> void:
-	get_tree().create_tween().tween_property(self, "modulate", Color(1, 1, 1, 1), 0.25).set_ease(Tween.EASE_OUT)
+	create_tween().tween_property(self, "modulate", Color(1, 1, 1, 1), 0.25).set_ease(Tween.EASE_OUT)
 
 func _physics_process(_delta: float) -> void:
 	since_last_frame = since_last_frame + 1.0
@@ -22,8 +22,8 @@ func move_to(new_position: Vector2, sprite_y: float, movement_id: int, frame: in
 	if is_visible_in_tree():
 		new_position = new_position.clamp(Vector2(0,0), Vector2(1920, 1080))
 		StabilityMitigator.add_mitigation_data(id, movement_id, since_last_frame)
-		get_tree().create_tween().tween_property(self, "global_position", new_position, GlobalVars.frame * StabilityMitigator.get_mitigation(id))
-		get_tree().create_tween().tween_property($MieuPeer, "position", Vector2($MieuPeer.position.x, sprite_y), GlobalVars.frame * StabilityMitigator.get_mitigation(id))
+		create_tween().tween_property(self, "global_position", new_position, GlobalVars.frame * StabilityMitigator.get_mitigation(id))
+		create_tween().tween_property($MieuPeer, "position", Vector2($MieuPeer.position.x, sprite_y), GlobalVars.frame * StabilityMitigator.get_mitigation(id))
 		
 		if $MieuPeer.position.y <= GlobalVars.sprite_offset.y:
 			$Shadow.scale = Vector2(.5, .25) * (($MieuPeer.position.y - GlobalVars.sprite_offset.y)/300.0 + 1)
@@ -44,8 +44,7 @@ func remove() -> void:
 		StabilityMitigator.players[id]["movement_id"] = -1
 	if SteamP2P.kitties.has(id):
 		SteamP2P.kitties[id] = null
-	if get_tree() != null:
-		var tween: Tween = get_tree().create_tween()
-		tween.tween_property(self, "modulate", Color(1, 1, 1, 0), 0.15).set_ease(Tween.EASE_OUT)
-		await tween.finished
+	var tween: Tween = create_tween()
+	tween.tween_property(self, "modulate", Color(1, 1, 1, 0), 0.15).set_ease(Tween.EASE_OUT)
+	await tween.finished
 	queue_free()
