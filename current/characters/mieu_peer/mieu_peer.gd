@@ -44,7 +44,8 @@ func remove() -> void:
 		StabilityMitigator.players[id]["movement_id"] = -1
 	if SteamP2P.kitties.has(id):
 		SteamP2P.kitties[id] = null
-	var tween: Tween = get_tree().create_tween()
-	tween.tween_property(self, "modulate", Color(1, 1, 1, 0), 0.15).set_ease(Tween.EASE_OUT)
-	await tween.finished
+	if get_tree() != null:
+		var tween: Tween = get_tree().create_tween()
+		tween.tween_property(self, "modulate", Color(1, 1, 1, 0), 0.15).set_ease(Tween.EASE_OUT)
+		await tween.finished
 	queue_free()
