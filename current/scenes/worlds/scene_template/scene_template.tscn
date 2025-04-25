@@ -11,6 +11,7 @@
 size = Vector2(2, 372)
 
 [node name="scene_template" type="Node2D"]
+modulate = Color(1, 1, 1, 0.25098)
 script = ExtResource("1_00b47")
 
 [node name="Minigame" type="Window" parent="."]

@@ -61,6 +61,7 @@ func change_world(world_path: String, instance_id: int = -1) -> void:
 		get_tree().change_scene_to_packed(world_packed)
 		while !get_tree().current_scene:
 			await get_tree().process_frame
+		get_tree().create_tween().tween_property(get_tree().current_scene, "modulate", Color(1, 1, 1, 1), 1).set_ease(Tween.EASE_OUT)
 		initialize_pos()
 		middleground = get_node("/root/" + current_world_name + "/Middleground")
 		Saves.set_value("settings", "world_path", world_path)
@@ -87,13 +88,15 @@ func change_world_door(world_path: String, door: String = "", door_offset: Vecto
 		Ui.close_menu()
 		var world_packed: PackedScene = load("res://current/scenes/worlds/" + world_path)
 		if world_packed != null:
+			var tween: Tween = get_tree().create_tween()
+			tween.tween_property(get_tree().current_scene, "modulate", Color(1, 1, 1, .25), .15).set_ease(Tween.EASE_OUT)
+			await tween.finished
 			current_world_name = world_packed.get_state().get_node_name(0)
 			current_instance_id = instance_id
 			get_tree().change_scene_to_packed(world_packed)
 			while !get_tree().current_scene:
 				await get_tree().process_frame
-			get_tree().current_scene.modulate = Color(1, 1, 1, .50)
-			get_tree().create_tween().tween_property(get_tree().current_scene, "modulate", Color(1, 1, 1, 1), 1.5).set_ease(Tween.EASE_OUT)
+			get_tree().create_tween().tween_property(get_tree().current_scene, "modulate", Color(1, 1, 1, 1), 1).set_ease(Tween.EASE_OUT)
 			initialize_pos(door, door_offset, frame)
 			middleground = get_node("/root/" + current_world_name + "/Middleground")
 			Saves.set_value("settings", "world_path", world_path)

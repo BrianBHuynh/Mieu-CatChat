@@ -11,6 +11,7 @@
 size = Vector2(1920, 2)
 
 [node name="CampingGrounds" type="Node2D"]
+modulate = Color(1, 1, 1, 0.25098)
 script = ExtResource("1_a2fsr")
 
 [node name="Minigame" type="Window" parent="."]
