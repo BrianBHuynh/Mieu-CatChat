@@ -6,7 +6,7 @@ var player_name: String
 var since_last_frame: float = 0
 
 func _ready() -> void:
-	get_tree().create_tween().tween_property(self, "modulate", Color(1, 1, 1, 1), 0.5)
+	get_tree().create_tween().tween_property(self, "modulate", Color(1, 1, 1, 1), 0.5).set_ease(Tween.EASE_OUT)
 
 func _physics_process(_delta: float) -> void:
 	since_last_frame = since_last_frame + 1.0
