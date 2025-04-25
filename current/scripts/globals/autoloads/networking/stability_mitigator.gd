@@ -18,9 +18,10 @@ func add_mitigation_data(pid: int, movement_id: int, frame_latency: float) -> vo
 	else:
 		players[pid]["movement_id"] = movement_id
 	if players[pid]["frame_latencies"].size() >= 30:
-		#Uses formula of -mean * ln(.05) to get the upper bound of a 95% confidence interval, modified slightly by shifting the mean down and then adding 2 to the final ammount due to us removing the 0 and 1 values.
+		#Uses formula of -mean * ln(.05) to get the upper bound of a 95% confidence interval, modified slightly by shifting the mean down by 1 due to us removing the 0 and 1 values. The 0 values are invalid since they are = to the non 1 values.
+		#We ignore the 1 values as they are so overly represented that it would be a higher performance impact running the calculations every time a frame is sent in when this is in theory the same.
 		var average: float = players[pid]["total"]/float(players[pid]["frame_latencies"].size())
-		players[pid]["mitigation_val"] = (average-2.0) * 2.99573227355 + 2.0
+		players[pid]["mitigation_val"] = (average-1.0) * 2.99573227355
 
 func get_mitigation(pid: int) -> float:
 	if players.has(pid):
