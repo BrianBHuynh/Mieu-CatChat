@@ -14,7 +14,7 @@ func _ready() -> void:
 	GlobalVars.reset_position = global_position
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	$Sprite/RichTextLabel.text = "[center]" + SteamWorks.steam_username + "[/center]"
-	create_tween().tween_property(self, "modulate", Color(1, 1, 1, 1), 0.25).set_ease(Tween.EASE_OUT)
+	create_tween().tween_property(self, "modulate", Color(1, 1, 1, 1), .05).set_ease(Tween.EASE_OUT)
 
 func _physics_process(delta: float) -> void:
 	var input_dir: Vector2 = Vector2(0, 0)
