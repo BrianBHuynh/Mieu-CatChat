@@ -119,12 +119,11 @@ animations = [{
 }]
 
 [node name="MieuPeerRoot2D" type="Node2D"]
-visible = false
-modulate = Color(1, 1, 1, 0)
+modulate = Color(0.294118, 0.294118, 0.294118, 1)
 script = ExtResource("2_gb511")
 
 [node name="Shadow" type="AnimatedSprite2D" parent="."]
-modulate = Color(0, 0, 0, 0.0980392)
+modulate = Color(0, 0, 0, 0.196078)
 position = Vector2(0, -10)
 scale = Vector2(0.5, 0.25)
 sprite_frames = SubResource("SpriteFrames_qf47w")

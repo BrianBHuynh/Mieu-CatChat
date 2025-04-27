@@ -66,7 +66,7 @@ radius = 5.0
 height = 150.0
 
 [node name="Mieu" type="CharacterBody2D"]
-modulate = Color(1, 1, 1, 0)
+modulate = Color(0, 0, 0, 1)
 motion_mode = 1
 slide_on_ceiling = false
 script = ExtResource("1_xoutb")

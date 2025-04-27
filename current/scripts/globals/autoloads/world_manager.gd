@@ -89,7 +89,7 @@ func change_world_door(world_path: String, door: String = "", door_offset: Vecto
 		var world_packed: PackedScene = load("res://current/scenes/worlds/" + world_path)
 		if world_packed != null:
 			var tween: Tween = create_tween()
-			tween.tween_property(get_tree().current_scene, "modulate", Color(1, 1, 1, 0), .15).set_ease(Tween.EASE_OUT)
+			tween.tween_property(get_tree().current_scene, "modulate", Color(0, 0, 0, 1), .15).set_ease(Tween.EASE_OUT)
 			await tween.finished
 			current_world_name = world_packed.get_state().get_node_name(0)
 			current_instance_id = instance_id
