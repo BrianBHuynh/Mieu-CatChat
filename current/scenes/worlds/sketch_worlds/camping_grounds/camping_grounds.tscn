@@ -55,5 +55,3 @@ layout_mode = 1
 
 [node name="ChatBox" parent="Control" instance=ExtResource("6_gcixn")]
 layout_mode = 1
-
-[connection signal="body_entered" from="Middleground/DoorA" to="." method="_on_door_a_body_entered"]

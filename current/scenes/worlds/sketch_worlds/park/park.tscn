@@ -71,6 +71,4 @@ layout_mode = 1
 [node name="ChatBox" parent="Control" instance=ExtResource("6_org83")]
 layout_mode = 1
 
-[connection signal="body_entered" from="Middleground/DoorA" to="." method="_on_door_a_body_entered"]
-[connection signal="body_entered" from="Middleground/DoorB" to="." method="_on_door_b_body_entered"]
 [connection signal="body_entered" from="Middleground/DoorC" to="." method="_on_door_c_body_entered"]

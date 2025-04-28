@@ -63,6 +63,7 @@ func change_world(world_path: String, instance_id: int = -1) -> void:
 		get_tree().change_scene_to_packed(world_packed)
 		while !get_tree().current_scene:
 			await get_tree().process_frame
+		WorldManager.update_world(get_tree().current_scene)
 		create_tween().tween_property(get_tree().current_scene, "modulate", Color(1, 1, 1, 1), 1).set_ease(Tween.EASE_OUT)
 		initialize_pos()
 		middleground = get_node("/root/" + current_world_name + "/Middleground")
@@ -101,6 +102,7 @@ func change_world_door(world_path: String, door: String = "", door_offset: Vecto
 			get_tree().change_scene_to_packed(world_packed)
 			while !get_tree().current_scene:
 				await get_tree().process_frame
+			WorldManager.update_world(get_tree().current_scene)
 			await get_tree().create_timer(GlobalVars.transition_time).timeout
 			scene_changing = false
 			create_tween().tween_property(get_tree().current_scene, "modulate", Color(1, 1, 1, 1), GlobalVars.fadein_time).set_ease(Tween.EASE_OUT)
@@ -136,6 +138,7 @@ func update_world(world: Variant) -> void:
 
 func send_world(pid: int = 0) -> void:
 	SteamP2P.send_message_to_user({"type": "world_info", "world_name": current_world_name, "instance_id": current_instance_id}, pid)
+	
 
 func clear_worlds() -> void:
 	worlds.clear()

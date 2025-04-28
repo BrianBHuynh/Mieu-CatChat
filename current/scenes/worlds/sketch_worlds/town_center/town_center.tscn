@@ -32,16 +32,16 @@ texture = ExtResource("3_xe5p2")
 [node name="Middleground" type="Node2D" parent="."]
 y_sort_enabled = true
 
-[node name="DoorB" type="Area2D" parent="Middleground"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Middleground/DoorB"]
-position = Vector2(1919, 894)
-shape = SubResource("RectangleShape2D_i62hu")
-
 [node name="DoorA" type="Area2D" parent="Middleground"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Middleground/DoorA"]
 position = Vector2(1, 894)
+shape = SubResource("RectangleShape2D_i62hu")
+
+[node name="DoorB" type="Area2D" parent="Middleground"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Middleground/DoorB"]
+position = Vector2(1919, 894)
 shape = SubResource("RectangleShape2D_i62hu")
 
 [node name="Mieu" parent="Middleground" instance=ExtResource("4_faq2r")]
@@ -61,6 +61,3 @@ layout_mode = 1
 
 [node name="ChatBox" parent="Control" instance=ExtResource("6_shwpt")]
 layout_mode = 1
-
-[connection signal="body_entered" from="Middleground/DoorB" to="." method="_on_door_b_body_entered"]
-[connection signal="body_entered" from="Middleground/DoorA" to="." method="_on_door_a_body_entered"]
