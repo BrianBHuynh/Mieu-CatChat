@@ -9,6 +9,7 @@ var middleground: Node2D
 var first_world_started: bool = false
 var door_cooldown: bool = false
 var doors: Dictionary[String, Variant] = {}
+var scene_changing: bool = false
 
 func add_to_world(pid: int, world: String = current_world_name, instance_id: int = -1) -> void:
 	if !worlds.has(world):
@@ -55,6 +56,7 @@ func change_world(world_path: String, instance_id: int = -1) -> void:
 	Ui.close_menu()
 	var world_packed: PackedScene = load(world_path)
 	if world_packed != null:
+		scene_changing = true
 		StabilityMitigator.reset_movement_ids()
 		current_world_name = world_packed.get_state().get_node_name(0)
 		current_instance_id = instance_id
@@ -71,6 +73,7 @@ func change_world(world_path: String, instance_id: int = -1) -> void:
 		if Saves.get_or_return("settings", "first_load", true):
 			Ui.open_menu("res://current/menus/First_load_menu/first_load.tscn")
 			Saves.set_value("settings", "first_load", false)
+		scene_changing = false
 	else:
 		Ui.show_system_debug("The world that you tried to load was not found")
 
@@ -88,15 +91,19 @@ func change_world_door(world_path: String, door: String = "", door_offset: Vecto
 		Ui.close_menu()
 		var world_packed: PackedScene = load("res://current/scenes/worlds/" + world_path)
 		if world_packed != null:
+			scene_changing = true
+			door_cooldown = true
 			var tween: Tween = create_tween()
-			tween.tween_property(get_tree().current_scene, "modulate", Color(0, 0, 0, 1), .15).set_ease(Tween.EASE_OUT)
+			tween.tween_property(get_tree().current_scene, "modulate", Color(0, 0, 0, 1), GlobalVars.fadeout_time).set_ease(Tween.EASE_OUT)
 			await tween.finished
 			current_world_name = world_packed.get_state().get_node_name(0)
 			current_instance_id = instance_id
 			get_tree().change_scene_to_packed(world_packed)
 			while !get_tree().current_scene:
 				await get_tree().process_frame
-			create_tween().tween_property(get_tree().current_scene, "modulate", Color(1, 1, 1, 1), 1).set_ease(Tween.EASE_OUT)
+			await get_tree().create_timer(GlobalVars.transition_time).timeout
+			scene_changing = false
+			create_tween().tween_property(get_tree().current_scene, "modulate", Color(1, 1, 1, 1), GlobalVars.fadein_time).set_ease(Tween.EASE_OUT)
 			initialize_pos(door, door_offset, frame)
 			middleground = get_node("/root/" + current_world_name + "/Middleground")
 			Saves.set_value("settings", "world_path", world_path)
@@ -104,6 +111,7 @@ func change_world_door(world_path: String, door: String = "", door_offset: Vecto
 			Ui.show_system_message("Now entering " + current_world_name, Color.CYAN, false, "")
 			await get_tree().create_timer(.25).timeout
 			door_cooldown = false
+			GlobalVars.mieu.send_location()
 		else:
 			Ui.show_system_debug("The world that you tried to load was not found")
 

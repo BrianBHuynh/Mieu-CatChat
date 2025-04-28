@@ -12,6 +12,9 @@ var movement_id: int = -1
 var gap: int = 0
 var chance: int = 1
 var gap_num: int = 0
+var fadeout_time: float = .5
+var transition_time: float = .25
+var fadein_time: float = 1
 
 func _ready() -> void:
 	_load_finished()
