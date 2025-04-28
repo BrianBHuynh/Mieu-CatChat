@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://co7veqmo3ixhj"]
+[gd_scene load_steps=9 format=3 uid="uid://co7veqmo3ixhj"]
 
 [ext_resource type="Script" uid="uid://c1n37iix4qli1" path="res://current/scenes/worlds/sketch_worlds/camping_grounds/camping_grounds.gd" id="1_a2fsr"]
 [ext_resource type="Script" uid="uid://dwtq2tmpbk1dm" path="res://current/scripts/node/minigame_window.gd" id="2_4xxgr"]
 [ext_resource type="Texture2D" uid="uid://vjqyspt1k3k5" path="res://current/assets/images/bg-3.png" id="3_8fl6u"]
+[ext_resource type="Script" uid="uid://bd3c3vv2lpyte" path="res://current/scripts/node/door.gd" id="4_8fl6u"]
 [ext_resource type="PackedScene" uid="uid://cj7jy8rdyeuvj" path="res://current/characters/mieu/mieu.tscn" id="4_8op36"]
 [ext_resource type="PackedScene" uid="uid://cbajq0dylq2p2" path="res://current/ui/vpet_gui/vpet_gui.tscn" id="5_nmlgq"]
 [ext_resource type="PackedScene" uid="uid://w7p53meqohhf" path="res://current/ui/chat/chat_box.tscn" id="6_gcixn"]
@@ -33,6 +34,10 @@ texture = ExtResource("3_8fl6u")
 y_sort_enabled = true
 
 [node name="DoorA" type="Area2D" parent="Middleground"]
+script = ExtResource("4_8fl6u")
+path = "sketch_worlds/park/park.tscn"
+target_door = "C"
+door = "A"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Middleground/DoorA"]
 position = Vector2(960, 1079)
