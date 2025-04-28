@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cj7jy8rdyeuvj"]
+[gd_scene load_steps=14 format=3 uid="uid://cj7jy8rdyeuvj"]
 
 [ext_resource type="Script" uid="uid://bvgqp75l2lsd3" path="res://current/characters/mieu/mieu.gd" id="1_xoutb"]
 [ext_resource type="Texture2D" uid="uid://lhikvxbnengm" path="res://current/assets/images/mieu_idle_front.png" id="2_dd5pl"]
@@ -65,6 +65,9 @@ animations = [{
 radius = 5.0
 height = 150.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_c6knm"]
+radius = 71.007
+
 [node name="Mieu" type="CharacterBody2D"]
 motion_mode = 1
 slide_on_ceiling = false
@@ -99,3 +102,9 @@ script = ExtResource("3_c6knm")
 position = Vector2(0, 3)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_e3ni3")
+
+[node name="Door Collider" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Door Collider"]
+position = Vector2(0, -65)
+shape = SubResource("CircleShape2D_c6knm")
