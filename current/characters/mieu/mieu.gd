@@ -16,7 +16,7 @@ func _ready() -> void:
 	$Sprite/RichTextLabel.text = "[center]" + SteamWorks.steam_username + "[/center]"
 
 func _physics_process(delta: float) -> void:
-	movement()
+	movement_logic()
 	jumping_logic(delta)
 	
 	global_position = global_position.clamp(Vector2(0.0,0.0), Vector2(1920.0, 1080.0))
@@ -35,7 +35,7 @@ func send_location(send_method: int = Steam.NETWORKING_SEND_UNRELIABLE_NO_DELAY,
 			SteamP2P.send_message_to_user({"type": "data", "x": global_position.x, "y": global_position.y, "sprite_y": $Sprite.position.y, "movement_id": GlobalVars.movement_id, "frame": frame}, 0, send_method)
 		last_pos = $Sprite.global_position
 
-func movement() -> void:
+func movement_logic() -> void:
 	var input_dir: Vector2 = Vector2(0, 0)
 	
 	if GlobalVars.is_player_interactive():
