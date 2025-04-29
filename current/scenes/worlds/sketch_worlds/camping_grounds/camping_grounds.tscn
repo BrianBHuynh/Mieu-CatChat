@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://co7veqmo3ixhj"]
 
-[ext_resource type="Script" uid="uid://c1n37iix4qli1" path="res://current/scenes/worlds/sketch_worlds/camping_grounds/camping_grounds.gd" id="1_a2fsr"]
+[ext_resource type="Script" uid="uid://cee1f8kqw5s27" path="res://current/scripts/node/world.gd" id="1_8fl6u"]
 [ext_resource type="Script" uid="uid://dwtq2tmpbk1dm" path="res://current/scripts/node/minigame_window.gd" id="2_4xxgr"]
 [ext_resource type="Texture2D" uid="uid://vjqyspt1k3k5" path="res://current/assets/images/bg-3.png" id="3_8fl6u"]
 [ext_resource type="Script" uid="uid://bd3c3vv2lpyte" path="res://current/scripts/node/door.gd" id="4_8fl6u"]
@@ -13,7 +13,7 @@ size = Vector2(1920, 2)
 
 [node name="CampingGrounds" type="Node2D"]
 modulate = Color(0, 0, 0, 1)
-script = ExtResource("1_a2fsr")
+script = ExtResource("1_8fl6u")
 
 [node name="Minigame" type="Window" parent="."]
 handle_input_locally = false

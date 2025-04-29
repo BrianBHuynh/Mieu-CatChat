@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://w7g10qhhkaf8"]
 
-[ext_resource type="Script" uid="uid://dbmfdeitoh0o0" path="res://current/scenes/worlds/sketch_worlds/park/park.gd" id="1_8d3qt"]
+[ext_resource type="Script" uid="uid://cee1f8kqw5s27" path="res://current/scripts/node/world.gd" id="1_7l3bo"]
 [ext_resource type="Script" uid="uid://dwtq2tmpbk1dm" path="res://current/scripts/node/minigame_window.gd" id="2_8r8d5"]
 [ext_resource type="Texture2D" uid="uid://uod8fskpcut6" path="res://current/assets/images/bg-2.jpg" id="3_8d3qt"]
 [ext_resource type="PackedScene" uid="uid://cj7jy8rdyeuvj" path="res://current/characters/mieu/mieu.tscn" id="4_5hbkt"]
@@ -16,7 +16,7 @@ size = Vector2(1920, 2)
 
 [node name="Park" type="Node2D"]
 modulate = Color(0, 0, 0, 1)
-script = ExtResource("1_8d3qt")
+script = ExtResource("1_7l3bo")
 
 [node name="Minigame" type="Window" parent="."]
 handle_input_locally = false

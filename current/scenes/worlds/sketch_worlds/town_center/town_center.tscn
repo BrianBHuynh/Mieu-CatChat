@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://d2behshwjjpn4"]
 
-[ext_resource type="Script" uid="uid://ce7o157ptihxi" path="res://current/scenes/worlds/sketch_worlds/town_center/town_center.gd" id="1_f2qy2"]
+[ext_resource type="Script" uid="uid://cee1f8kqw5s27" path="res://current/scripts/node/world.gd" id="1_k88ro"]
 [ext_resource type="Script" uid="uid://dwtq2tmpbk1dm" path="res://current/scripts/node/minigame_window.gd" id="2_tp45r"]
 [ext_resource type="Texture2D" uid="uid://xc3jnbmmqisd" path="res://current/assets/images/bg-1.jpg" id="3_xe5p2"]
 [ext_resource type="PackedScene" uid="uid://cj7jy8rdyeuvj" path="res://current/characters/mieu/mieu.tscn" id="4_faq2r"]
@@ -13,7 +13,7 @@ size = Vector2(2, 372)
 
 [node name="TownCenter" type="Node2D"]
 modulate = Color(0, 0, 0, 1)
-script = ExtResource("1_f2qy2")
+script = ExtResource("1_k88ro")
 
 [node name="Minigame" type="Window" parent="."]
 handle_input_locally = false
