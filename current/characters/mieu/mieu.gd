@@ -6,6 +6,7 @@ var total_delta: float = 0.0
 var jumping: bool = false
 var since_last_synced: int = 0
 var moving: bool = false
+var scene_changing: bool = false
 
 func _ready() -> void:
 	GlobalVars.movement_id = GlobalVars.movement_id + 1
@@ -58,7 +59,7 @@ func movement_logic() -> void:
 	elif input_dir != Vector2(0, 0) or jumping:
 		moving = true
 	
-	if not WorldManager.scene_changing:
+	if !scene_changing:
 		if input_dir and GlobalVars.is_player_interactive():
 			velocity.x =  move_toward(velocity.x, GlobalVars.move_speed * input_dir.x, GlobalVars.move_speed)
 			velocity.y = move_toward(velocity.y, GlobalVars.move_speed * input_dir.y, GlobalVars.move_speed)
@@ -71,16 +72,19 @@ func movement_logic() -> void:
 				(input_dir.x > 0.0 and global_position.direction_to(WorldManager.door_position).x > 0.0) 
 				or (input_dir.x < 0.0 and global_position.direction_to(WorldManager.door_position).x < 0.0)
 				):
-				velocity.x =  move_toward(velocity.x, GlobalVars.move_speed/3.0 * input_dir.x, GlobalVars.move_speed)
+				velocity.x =  move_toward(velocity.x, GlobalVars.move_speed * input_dir.x, GlobalVars.move_speed)
 			else:
 				velocity.x = 0.0
 			if (
 				(input_dir.y > 0.0 and global_position.direction_to(WorldManager.door_position).y > 0.0) 
 				or (input_dir.y < 0.0 and global_position.direction_to(WorldManager.door_position).y < 0.0)
 				):
-				velocity.y = move_toward(velocity.y, GlobalVars.move_speed/3.0 * input_dir.y, GlobalVars.move_speed)
+				velocity.y = move_toward(velocity.y, GlobalVars.move_speed * input_dir.y, GlobalVars.move_speed)
 			else:
 				velocity.y = 0.0
+		else:
+			velocity.x = move_toward(velocity.x, 0, GlobalVars.move_speed)
+			velocity.y = move_toward(velocity.y, 0, GlobalVars.move_speed)
 	
 	move_and_slide()
 

@@ -9,7 +9,6 @@ var middleground: Node2D
 var first_world_started: bool = false
 var door_cooldown: bool = false
 var doors: Dictionary[String, Variant] = {}
-var scene_changing: bool = false
 var door_position: Vector2 = Vector2(0,0)
 
 func add_to_world(pid: int, world: String = current_world_name, instance_id: int = -1) -> void:
@@ -57,7 +56,6 @@ func change_world(world_path: String, instance_id: int = -1) -> void:
 	Ui.close_menu()
 	var world_packed: PackedScene = load(world_path)
 	if world_packed != null:
-		scene_changing = true
 		StabilityMitigator.reset_movement_ids()
 		current_world_name = world_packed.get_state().get_node_name(0)
 		current_instance_id = instance_id
@@ -75,7 +73,6 @@ func change_world(world_path: String, instance_id: int = -1) -> void:
 		if Saves.get_or_return("settings", "first_load", true):
 			Ui.open_menu("res://current/menus/First_load_menu/first_load.tscn")
 			Saves.set_value("settings", "first_load", false)
-		scene_changing = false
 	else:
 		Ui.show_system_debug("The world that you tried to load was not found")
 
@@ -94,8 +91,8 @@ func change_world_door(world_path: String, door: String = "", door_offset: Vecto
 		var world_packed: PackedScene = load("res://current/scenes/worlds/" + world_path)
 		if world_packed != null:
 			door_position = door_pos
-			scene_changing = true
 			door_cooldown = true
+			GlobalVars.mieu.scene_changing = true
 			var tween: Tween = create_tween()
 			tween.tween_property(get_tree().current_scene, "modulate", Color(0, 0, 0, 1), GlobalVars.fadeout_time).set_ease(Tween.EASE_OUT)
 			await tween.finished
@@ -106,7 +103,6 @@ func change_world_door(world_path: String, door: String = "", door_offset: Vecto
 				await get_tree().process_frame
 			WorldManager.update_world(get_tree().current_scene)
 			await get_tree().create_timer(GlobalVars.transition_time).timeout
-			scene_changing = false
 			create_tween().tween_property(get_tree().current_scene, "modulate", Color(1, 1, 1, 1), GlobalVars.fadein_time).set_ease(Tween.EASE_OUT)
 			initialize_pos(door, door_offset, frame)
 			middleground = get_node("/root/" + current_world_name + "/Middleground")
