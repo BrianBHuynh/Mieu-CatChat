@@ -41,6 +41,7 @@ script = ExtResource("4_7l3bo")
 path = "scene_template/scene_template.tscn"
 target_door = "B"
 door = "A"
+instance_id = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Middleground/DoorA"]
 position = Vector2(1, 894)
@@ -51,6 +52,7 @@ script = ExtResource("4_7l3bo")
 path = "sketch_worlds/town_center/town_center.tscn"
 target_door = "A"
 door = "B"
+instance_id = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Middleground/DoorB"]
 position = Vector2(1919, 894)
@@ -61,6 +63,7 @@ script = ExtResource("4_7l3bo")
 path = "sketch_worlds/camping_grounds/camping_grounds.tscn"
 target_door = "A"
 door = "C"
+instance_id = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Middleground/DoorC"]
 position = Vector2(960, 1)

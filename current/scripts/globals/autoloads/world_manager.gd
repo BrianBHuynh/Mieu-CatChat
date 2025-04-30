@@ -10,6 +10,7 @@ var first_world_started: bool = false
 var door_cooldown: bool = false
 var doors: Dictionary[String, Variant] = {}
 var scene_changing: bool = false
+var door_position: Vector2 = Vector2(0,0)
 
 func add_to_world(pid: int, world: String = current_world_name, instance_id: int = -1) -> void:
 	if !worlds.has(world):
@@ -78,11 +79,11 @@ func change_world(world_path: String, instance_id: int = -1) -> void:
 	else:
 		Ui.show_system_debug("The world that you tried to load was not found")
 
-func door_teleport(body: Variant, world_path: String, door: String = "", door_offset: Vector2 = Vector2(0,0), instance_id: int = -1) -> void:
+func door_teleport(body: Variant, world_path: String, door: String = "", door_offset: Vector2 = Vector2(0,0), instance_id: int = -1, door_pos: Vector2 = Vector2(0,0)) -> void:
 	if body == GlobalVars.mieu:
-		WorldManager.change_world_door(world_path, door, door_offset, body.get_frame(), instance_id)
+		WorldManager.change_world_door(world_path, door, door_offset, body.get_frame(), instance_id, door_pos)
 
-func change_world_door(world_path: String, door: String = "", door_offset: Vector2 = Vector2(0,0), frame: int = 0, instance_id: int = -1) -> void:
+func change_world_door(world_path: String, door: String = "", door_offset: Vector2 = Vector2(0,0), frame: int = 0, instance_id: int = -1, door_pos: Vector2 = Vector2(0,0)) -> void:
 	if !door_cooldown:
 		StabilityMitigator.reset_movement_ids()
 		if MinigameManager.current_minigame != null:
@@ -92,6 +93,7 @@ func change_world_door(world_path: String, door: String = "", door_offset: Vecto
 		Ui.close_menu()
 		var world_packed: PackedScene = load("res://current/scenes/worlds/" + world_path)
 		if world_packed != null:
+			door_position = door_pos
 			scene_changing = true
 			door_cooldown = true
 			var tween: Tween = create_tween()
