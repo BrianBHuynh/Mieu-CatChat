@@ -13,7 +13,7 @@ func add_mitigation_data(pid: int, movement_id: int, frame_latency: float) -> vo
 		else:
 			players[pid]["frame_latencies"].append(frame_latency)
 			players[pid]["total"] = players[pid]["total"] + frame_latency
-		if players[pid]["frame_latencies"].size() > 60:
+		if players[pid]["frame_latencies"].size() > 30:
 			players[pid]["total"] = players[pid]["total"] - players[pid]["frame_latencies"].pop_front()
 	else:
 		players[pid]["movement_id"] = movement_id
