@@ -55,7 +55,7 @@ window/size/viewport_height=1080
 window/subwindows/embed_subwindows=false
 window/stretch/mode="viewport"
 window/per_pixel_transparency/allowed=true
-mouse_cursor/custom_image="res://current/assets/ui/cursorMono.png"
+mouse_cursor/custom_image="uid://c6t75745hligc"
 mouse_cursor/tooltip_position_offset=Vector2(0, 0)
 
 [gui]
