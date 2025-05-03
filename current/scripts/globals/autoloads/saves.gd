@@ -26,9 +26,9 @@ func _ready() -> void:
 	save_loaded = true
 	await get_tree().process_frame
 	if FileAccess.file_exists("res://current/scenes/worlds/" + get_or_return("settings", "world_path", "res://current/scenes/worlds/scene_template/scene_template.tscn")):
-		WorldManager.change_world("res://current/scenes/worlds/" + get_or_return("settings", "world_path", "res://current/scenes/worlds/scene_template/scene_template.tscn"))
+		WorldManager.change_world(get_or_return("settings", "world_path", "res://current/scenes/worlds/scene_template/scene_template.tscn"))
 	else:
-		WorldManager.change_world("res://current/scenes/worlds/scene_template/scene_template.tscn")
+		WorldManager.change_world("scene_template/scene_template.tscn")
 
 func _physics_process(_delta: float) -> void:
 	auto_save()

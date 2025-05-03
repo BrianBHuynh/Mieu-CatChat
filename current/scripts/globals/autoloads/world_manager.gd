@@ -54,7 +54,7 @@ func change_world(world_path: String, instance_id: int = -1) -> void:
 		MinigameManager.minigame_display.remove_child(MinigameManager.current_minigame)
 	doors.clear()
 	Ui.close_menu()
-	var world_packed: PackedScene = load(world_path)
+	var world_packed: PackedScene = load("res://current/scenes/worlds/" + world_path)
 	if world_packed != null:
 		StabilityMitigator.reset_movement_ids()
 		current_world_name = world_packed.get_state().get_node_name(0)
