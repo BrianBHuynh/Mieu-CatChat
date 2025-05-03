@@ -123,11 +123,11 @@ min_value = 5.0
 value = 15.0
 rounded = true
 
-[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+[node name="FontChange" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
 clip_contents = true
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="ScrollContainer/VBoxContainer/HBoxContainer"]
+[node name="RichTextLabel" type="RichTextLabel" parent="ScrollContainer/VBoxContainer/FontChange"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 3.0
@@ -136,7 +136,7 @@ text = "[center]Change Font[/center]"
 fit_content = true
 script = ExtResource("2_we7n5")
 
-[node name="TextureButton" type="TextureButton" parent="ScrollContainer/VBoxContainer/HBoxContainer"]
+[node name="ChangeFontButton" type="TextureButton" parent="ScrollContainer/VBoxContainer/FontChange"]
 texture_filter = 1
 clip_contents = true
 layout_mode = 2
@@ -144,4 +144,21 @@ size_flags_horizontal = 3
 texture_normal = ExtResource("3_pgb34")
 stretch_mode = 5
 
-[connection signal="pressed" from="ScrollContainer/VBoxContainer/HBoxContainer/TextureButton" to="." method="_font_changed"]
+[node name="OutlineInvert" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+clip_contents = true
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="ScrollContainer/VBoxContainer/OutlineInvert"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+bbcode_enabled = true
+text = "[center]Outline Invert[/center]"
+fit_content = true
+script = ExtResource("2_we7n5")
+
+[node name="CheckBox" type="CheckBox" parent="ScrollContainer/VBoxContainer/OutlineInvert"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/FontChange/ChangeFontButton" to="." method="_font_changed"]

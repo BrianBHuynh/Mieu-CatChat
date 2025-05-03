@@ -9,6 +9,8 @@ func _ready() -> void:
 	$ScrollContainer/VBoxContainer/ChatTextSize/TextSizeSlider.value_changed.connect(_on_chat_text_size_slider_value_changed)
 	$ScrollContainer/VBoxContainer/NameTagSize/NameTagSizeSlider.value = Saves.get_or_add("settings", "name_tag_size", Ui.DEFAULT_CHAT_FONT_SIZE)
 	$ScrollContainer/VBoxContainer/NameTagSize/NameTagSizeSlider.value_changed.connect(_on_name_tag_size_slider_value_changed)
+	$ScrollContainer/VBoxContainer/OutlineInvert/CheckBox.button_pressed = Saves.get_or_return("settings", "invert_outline", false)
+	$ScrollContainer/VBoxContainer/OutlineInvert/CheckBox.toggled.connect(_on_outline_invert_toggled)
 	var fonts_temp: PackedStringArray = DirAccess.get_files_at("user://fonts/")
 	for font: String in fonts_temp:
 		fonts.append("user://fonts/" + font)
@@ -29,4 +31,8 @@ func _on_chat_text_size_slider_value_changed(value: float) -> void:
 
 func _on_name_tag_size_slider_value_changed(value: float) -> void:
 	Saves.set_value("settings", "name_tag_size", value)
+	SignalBus.settings_updated.emit()
+
+func _on_outline_invert_toggled(toggled_on: bool) -> void:
+	Saves.set_value("settings", "invert_outline", toggled_on)
 	SignalBus.settings_updated.emit()

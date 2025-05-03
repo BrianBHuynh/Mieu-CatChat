@@ -63,6 +63,8 @@ func show_system_message(content: String, color: Color = Color.DEEP_SKY_BLUE, sa
 	message_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	message_text.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	message_text.add_theme_color_override("default_color", color)
+	if Saves.get_or_return("settings", "invert_outline", false):
+		message_text.add_theme_color_override("font_outline_color", get_theme_color("default_color").inverted())
 	message_text.fit_content = true
 	$ScrollContainer/VBoxContainer.add_child(message_text)
 	if save:
