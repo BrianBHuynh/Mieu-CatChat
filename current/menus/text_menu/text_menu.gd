@@ -1,5 +1,5 @@
 extends Control
-var fonts: Array = ["res://current/assets/fonts/AtkinsonHyperlegible-Regular.ttf", "res://current/assets/fonts/NotoSans-VariableFont_wdth,wght.ttf", "res://current/assets/fonts/OpenDyslexic-Regular.otf", "res://current/assets/fonts/OpenSans-VariableFont_wdth,wght.ttf", "res://current/assets/fonts/PixelifySans-VariableFont_wght.ttf", "res://current/assets/fonts/RobotoMono-VariableFont_wght.ttf"]
+var fonts: Array = ["res://current/assets/fonts/AtkinsonHyperlegible-Regular.ttf", "res://current/assets/fonts/NotoSans-VariableFont_wdth,wght.ttf", "res://current/assets/fonts/OpenDyslexic-Regular.otf", "res://current/assets/fonts/OpenSans-VariableFont_wdth,wght.ttf", "res://current/assets/fonts/PixelifySans-VariableFont_wght.ttf", "res://current/assets/fonts/RobotoMono-VariableFont_wght.ttf", "res://current/assets/fonts/ShadowsIntoLight-Regular.ttf"]
 
 
 func _ready() -> void:
