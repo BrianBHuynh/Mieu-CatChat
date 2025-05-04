@@ -38,10 +38,11 @@ func create_buttons(action: String) -> Array:
 		button.set_script("res://current/scripts/node/button.gd")
 		button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		button.size_flags_stretch_ratio = .2
-		button.pressed.connect(rebind_keybind.bind(action, input))
+		button.pressed.connect(rebind_keybind.bind(action, input, button))
 		buttons.append(button)
 	return buttons
 
-func rebind_keybind(action: String, input: InputEvent) -> void:
+func rebind_keybind(action: String, input: InputEvent, button: Button) -> void:
+	button.modulate = Color.BLACK
 	InputMap.action_erase_event(action, input)
 	InputHandler.set_assigning(action)

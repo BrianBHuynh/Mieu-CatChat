@@ -66,7 +66,7 @@ func change_world(world_path: String, instance_id: int = -1) -> void:
 		create_tween().tween_property(get_tree().current_scene, "modulate", Color(1, 1, 1, 1), 1).set_ease(Tween.EASE_OUT)
 		initialize_pos()
 		middleground = get_node("/root/" + current_world_name + "/Middleground")
-		Saves.set_value("settings", "world_path", world_path)
+		Saves.set_value("player", "world_path", world_path)
 		send_world()
 		Ui.show_system_message("Now entering " + current_world_name, Color.CYAN, false, "")
 		await get_tree().process_frame
@@ -106,7 +106,7 @@ func change_world_door(world_path: String, door: String = "", door_offset: Vecto
 			create_tween().tween_property(get_tree().current_scene, "modulate", Color(1, 1, 1, 1), GlobalVars.fadein_time).set_ease(Tween.EASE_OUT)
 			initialize_pos(door, door_offset, frame)
 			middleground = get_node("/root/" + current_world_name + "/Middleground")
-			Saves.set_value("settings", "world_path", world_path)
+			Saves.set_value("player", "world_path", world_path)
 			send_world()
 			Ui.show_system_message("Now entering " + current_world_name, Color.CYAN, false, "")
 			await get_tree().create_timer(.25).timeout
@@ -120,7 +120,7 @@ func initialize_pos(door: String = "", door_offset: Vector2 = Vector2(0,0), fram
 		await get_tree().process_frame
 	if door.is_empty():
 		if first_world_started == false and is_instance_valid(GlobalVars.mieu):
-			GlobalVars.mieu.global_position = Vector2(Saves.get_or_add("Player","pos_x", GlobalVars.mieu.global_position.x), Saves.get_or_add("Player","pos_y", GlobalVars.mieu.global_position.y))
+			GlobalVars.mieu.global_position = Vector2(Saves.get_or_add("player","pos_x", GlobalVars.mieu.global_position.x), Saves.get_or_add("player","pos_y", GlobalVars.mieu.global_position.y))
 			first_world_started = true
 	else:
 		if doors.has(door) and is_instance_valid(doors[door]):

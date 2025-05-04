@@ -14,6 +14,7 @@ script = ExtResource("1_qgexh")
 [node name="ColorRect" type="ColorRect" parent="."]
 clip_contents = true
 custom_minimum_size = Vector2(50, 50)
+layout_mode = 0
 offset_left = 320.0
 offset_top = 64.0
 offset_right = 1600.0
@@ -22,6 +23,7 @@ size_flags_vertical = 3
 color = Color(0.170215, 0.702624, 0.822525, 0.588235)
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 0
 offset_left = 384.0
 offset_top = 128.0
 offset_right = 1536.0
@@ -34,3 +36,8 @@ vertical_scroll_mode = 3
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
