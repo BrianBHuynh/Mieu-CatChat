@@ -2,7 +2,7 @@ extends Control
 
 
 func _on_settings_btn_pressed() -> void:
-	Ui.open_menu("res://current/menus/options_menu/settings_menu.tscn")
+	Ui.open_menu("res://current/menus/settings_menu/settings_menu.tscn")
 
 func _on_multiplayer_pressed() -> void:
 	if Steam.isSteamRunning():

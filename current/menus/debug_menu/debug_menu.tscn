@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://ckeet5kuoltcj" path="res://current/menus/debug_menu/debug_menu.gd" id="1_ngo7l"]
 [ext_resource type="Texture2D" uid="uid://dv4n5etipadpk" path="res://current/assets/ui/btn_sized.png" id="2_xge1m"]
 
-[node name="Control" type="Control"]
+[node name="DebugMenu" type="Control"]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
