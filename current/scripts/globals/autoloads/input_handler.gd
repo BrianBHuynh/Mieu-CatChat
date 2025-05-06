@@ -5,7 +5,7 @@ var currently_assigning: String = ""
 
 func _unhandled_input(event: InputEvent) -> void:
 	if currently_assigning != "" and InputMap.has_action(currently_assigning):
-		var temp = serialize_input(event)
+		var temp: Dictionary = serialize_input(event)
 		InputMap.action_add_event(currently_assigning, deserialize_input(temp))
 		currently_assigning = ""
 		SignalBus.keybinds_updated.emit()

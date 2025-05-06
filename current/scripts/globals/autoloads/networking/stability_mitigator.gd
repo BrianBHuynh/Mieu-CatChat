@@ -22,7 +22,7 @@ func add_mitigation_data(pid: int, movement_id: int, frame_latency: float) -> vo
 		#We ignore the 1 values as they are so overly represented that it would be a higher performance impact running the calculations every time a frame is sent in when this is in theory the same.
 		#We then add a buffer of 2, just to prevent the most common of lag spikes 
 		var average: float = players[pid]["total"]/float(players[pid]["frame_latencies"].size())
-		players[pid]["mitigation_val"] = (average-2.0) * 2.99573227355 + 2
+		players[pid]["mitigation_val"] = (average-2.0) * 4.60517018599 + 2
 
 func get_mitigation(pid: int) -> float:
 	if players.has(pid):
