@@ -31,16 +31,18 @@ func serialize_input(input: InputEvent) -> Dictionary:
 
 func deserialize_input(dict: Dictionary) -> InputEvent:
 	var input: InputEvent
-	if dict["type"] == "key":
-		input = InputEventKey.new()
-		input.keycode = dict["keycode"]
-		input.key_label = dict["key_label"]
-		input.location = dict["location"]
-		input.physical_keycode = dict["physical_keycode"]
-		input.unicode = dict["unicode"]
-		input.alt_pressed = dict["alt_pressed"]
-		input.ctrl_pressed = dict["ctrl_pressed"]
-		input.meta_pressed = dict["ctrl_pressed"]
-		input.shift_pressed = dict["shift_pressed"]
-		input.device = dict["device"]
+	if dict.has("type"):
+		match dict["type"]:
+			"key":
+				input = InputEventKey.new()
+				input.keycode = dict["keycode"]
+				input.key_label = dict["key_label"]
+				input.location = dict["location"]
+				input.physical_keycode = dict["physical_keycode"]
+				input.unicode = dict["unicode"]
+				input.alt_pressed = dict["alt_pressed"]
+				input.ctrl_pressed = dict["ctrl_pressed"]
+				input.meta_pressed = dict["ctrl_pressed"]
+				input.shift_pressed = dict["shift_pressed"]
+				input.device = dict["device"]
 	return input
