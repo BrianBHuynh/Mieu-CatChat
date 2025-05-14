@@ -5,18 +5,24 @@ var current_selected: Button
 
 func _ready() -> void:
 	populate_menu()
-	SignalBus.keybinds_updated.connect(populate_menu)
+	SignalBus.keybinds_updated.connect(refresh_menu)
+
+func refresh_menu() -> void:
+	delete_old_keybinds()
+	Multithreading.add_task(populate_menu)
 
 func populate_menu() -> void:
+	for action: String in InputMap.get_actions():
+		if !action.begins_with("ui"):
+			create_action(action)
+
+func delete_old_keybinds() -> void:
 	var first: bool = true
 	for element: Variant in $ScrollContainer/VBoxContainer.get_children():
 		if first:
 			first = false
 		else:
 			element.queue_free()
-	for action: String in InputMap.get_actions():
-		if !action.begins_with("ui"):
-			Multithreading.add_task(create_action.bind(action))
 
 func vbox_add_child(child: Variant) -> void:
 	$ScrollContainer/VBoxContainer.add_child(child)

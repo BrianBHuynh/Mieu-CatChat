@@ -12,26 +12,25 @@ func _unhandled_input(event: InputEvent) -> void:
 func bind_input(event: InputEvent) -> void:
 	var assigning: String = currently_assigning
 	var already_bound: bool = false
-	var serialized_input: Dictionary = serialize_input(event)
+	var serialized_event: Dictionary = serialize_input(event)
+	if serialized_event.has("physical_keycode"):
+		serialized_event["physical_keycode"] = DisplayServer.keyboard_get_keycode_from_physical(serialized_event["physical_keycode"])
 	for action: String in InputMap.get_actions():
 		if !action.begins_with("ui"):
 			for input: InputEvent in InputMap.action_get_events(action):
-				var different_event: bool = false
-				for variable: String in serialized_input:
-					if variable != "type" or variable != "physical_keycode" and serialized_input[variable] != input.get(variable):
-						different_event = true
-						break
-					if variable == "physical_keycode" and DisplayServer.keyboard_get_label_from_physical(serialized_input[variable]) != DisplayServer.keyboard_get_label_from_physical(input.get(variable)):
-						different_event = true
-						break
-				if not different_event:
+				var serialized_input: Dictionary = serialize_input(input)
+				if serialized_input.has("physical_keycode"):
+					serialized_input["physical_keycode"] = DisplayServer.keyboard_get_keycode_from_physical(serialized_input["physical_keycode"])
+				if serialized_input == serialized_event:
 					already_bound = true
 					break
-		if not already_bound:
-			InputMap.action_erase_event(assigning, old_input)
-			InputMap.action_add_event(assigning, event)
-			currently_assigning = ""
-			SignalBus.keybinds_updated.emit.call_deferred()
+		if already_bound:
+			break
+	if not already_bound and serialized_event.size() != 0:
+		InputMap.action_erase_event(assigning, old_input)
+		InputMap.action_add_event(assigning, event)
+		currently_assigning = ""
+		SignalBus.keybinds_updated.emit.call_deferred()
 
 func save_inputs() -> void:
 	var input_map: Dictionary = {}
