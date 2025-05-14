@@ -63,6 +63,8 @@ func open_menu(menu_path: String) -> void:
 func close_menu() -> void:
 	if cur_menu:
 		get_tree().root.remove_child(cur_menu)
+		if cur_menu.has_method("close"):
+			cur_menu.close()
 		cur_menu.queue_free()
 		cur_menu = null
 

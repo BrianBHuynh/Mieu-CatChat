@@ -54,7 +54,6 @@ func set_value(dictionary: String, key: String, value: Variant) -> void:
 			networking[key] = value
 		"keybindings":
 			keybindings[key] = value
-			print(value)
 		_:
 			if(not data.has(dictionary)):
 				data[dictionary] = {}

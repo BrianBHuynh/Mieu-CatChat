@@ -12,7 +12,6 @@ func _ready() -> void:
 func _on_chance_changed(value: float) -> void:
 	GlobalVars.chance = int(value)
 	$VBoxContainer/ScrollContainer/HBoxContainer/Networking/ChanceLabel.text = "Chance: 1/" + str(GlobalVars.chance)
-	print("Chance: 1/" + str(GlobalVars.chance))
 
 func _on_gap_changed(value: float) -> void:
 	GlobalVars.gap = int(value)

@@ -1,6 +1,8 @@
 extends Control
 
 
+var current_selected: Button
+
 func _ready() -> void:
 	populate_menu()
 	SignalBus.keybinds_updated.connect(populate_menu)
@@ -47,8 +49,14 @@ func create_buttons(action: String) -> Array:
 	return buttons
 
 func rebind_keybind(action: String, input: InputEvent, button: Button) -> void:
+	if current_selected != null:
+		current_selected.modulate = Color(1, 1, 1, 1)
+	current_selected = button
 	button.modulate = Color.BLACK
 	InputHandler.set_assigning(action, input)
 
 func _on_reset_pressed() -> void:
 	InputHandler.reset()
+
+func close() -> void:
+	InputHandler.disarm_rebind()
