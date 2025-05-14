@@ -4,6 +4,7 @@ extends Node
 var data: Dictionary = {}
 var settings: Dictionary = {}
 var networking: Dictionary = {}
+var keybindings: Dictionary = {}
 var encryption_key: String = OS.get_unique_id()
 var save_loaded: bool = false
 const save_extension: String = ".MIEU"
@@ -21,8 +22,10 @@ func _ready() -> void:
 		Ui.show_system_message("It looks like this is your first time playing mieu :D welcome!")
 	settings = load_file("settings")
 	networking = load_file("networking")
+	keybindings = load_file("keybindings")
 	MinigameManager.minigame_stats = Saves.load_file_encrypted("minigame_stats")
 	SignalBus.load_finished.emit()
+	InputHandler.load_inputs()
 	save_loaded = true
 	await get_tree().process_frame
 	if FileAccess.file_exists("res://current/scenes/worlds/" + get_or_return("player", "world_path", "res://current/scenes/worlds/scene_template/scene_template.tscn")):
@@ -49,6 +52,9 @@ func set_value(dictionary: String, key: String, value: Variant) -> void:
 			settings[key] = value
 		"networking":
 			networking[key] = value
+		"keybindings":
+			keybindings[key] = value
+			print(value)
 		_:
 			if(not data.has(dictionary)):
 				data[dictionary] = {}
@@ -66,6 +72,8 @@ func get_or_add(dictionary: String, key: String, default_value: Variant) -> Vari
 			return settings.get_or_add(key, default_value)
 		"networking":
 			return networking.get_or_add(key, default_value)
+		"keybindings":
+			return keybindings.get_or_add(key, default_value)
 		"minigame_stats":
 			return MinigameManager.minigame_stats.get_or_add(key, default_value)
 		_:
@@ -77,6 +85,8 @@ func get_or_return(dictionary: String, key: String, default_value: Variant) -> V
 			return settings.get(key, default_value)
 		"networking":
 			return networking.get(key, default_value)
+		"keybindings":
+			return keybindings.get(key, default_value)
 		"minigame_stats":
 			return MinigameManager.minigame_stats.get(key, default_value)
 		_:
@@ -84,11 +94,12 @@ func get_or_return(dictionary: String, key: String, default_value: Variant) -> V
 
 func save_game() -> void:
 	store_player_state()
-	await get_tree().process_frame
+	InputHandler.save_inputs()
 	Multithreading.add_task(save_file_encrypted.bind(data, "mieu"))
 	Multithreading.add_task(save_file_encrypted.bind(MinigameManager.minigame_stats, "minigame_stats"))
 	Multithreading.add_task(save_file.bind(settings, "settings"))
 	Multithreading.add_task(save_file.bind(networking, "networking"))
+	Multithreading.add_task(save_file.bind(keybindings, "keybindings"))
 
 func store_player_state() -> void:
 	while !is_instance_valid(GlobalVars.mieu):

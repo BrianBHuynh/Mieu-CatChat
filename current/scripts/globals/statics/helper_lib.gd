@@ -32,9 +32,9 @@ static func get_string_from_txt(location: String) -> String:
 
 static func dict_type_check(dict: Dictionary, key: Variant, type: String) -> bool:
 	if dict.has(key) and dict[key] != null:
-		return type == type(dict[key])
+		return type == get_type(dict[key])
 	else:
 		return false
 
-static func type(variable: Variant) -> String:
+static func get_type(variable: Variant) -> String:
 	return type_string(typeof(variable))
