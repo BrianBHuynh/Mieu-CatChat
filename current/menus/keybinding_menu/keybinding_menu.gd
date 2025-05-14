@@ -21,7 +21,7 @@ func populate_menu() -> void:
 func create_text_label(action: String) -> RichTextLabel:
 	var label: RichTextLabel = RichTextLabel.new()
 	label.text = action
-	label.set_script("res://current/scripts/node/rich_text_label.gd")
+	label.set_script(load("res://current/scripts/node/rich_text_label.gd"))
 	label.clip_contents = true
 	label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	label.size_flags_stretch_ratio = 1.0
@@ -35,7 +35,7 @@ func create_buttons(action: String) -> Array:
 		if key_label == "Joypad":
 			key_label = key_label + " " + input.as_text().split(" ").get(1)
 		button.text = key_label
-		button.set_script("res://current/scripts/node/button.gd")
+		button.set_script(load("res://current/scripts/node/button.gd"))
 		button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		button.size_flags_stretch_ratio = .2
 		button.pressed.connect(rebind_keybind.bind(action, input, button))
