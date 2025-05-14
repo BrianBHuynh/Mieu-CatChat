@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://b3yqr1yqmvxkg"]
+[gd_scene load_steps=3 format=3 uid="uid://b3yqr1yqmvxkg"]
 
 [ext_resource type="Script" uid="uid://cmpw5i0r1o6nb" path="res://current/menus/keybinding_menu/keybinding_menu.gd" id="1_qgexh"]
+[ext_resource type="Script" uid="uid://xpmxnkapx3rw" path="res://current/scripts/node/button.gd" id="2_txl8i"]
 
 [node name="KeybindingMenu" type="Control"]
 layout_mode = 3
@@ -37,7 +38,9 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Button" type="Button" parent="."]
-layout_mode = 0
-offset_right = 8.0
-offset_bottom = 8.0
+[node name="Reset" type="Button" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Reset"
+script = ExtResource("2_txl8i")
+
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/Reset" to="." method="_on_reset_pressed"]

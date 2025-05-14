@@ -6,8 +6,12 @@ func _ready() -> void:
 	SignalBus.keybinds_updated.connect(populate_menu)
 
 func populate_menu() -> void:
+	var first: bool = true
 	for element: Variant in $ScrollContainer/VBoxContainer.get_children():
-		element.queue_free()
+		if first:
+			first = false
+		else:
+			element.queue_free()
 	for action: String in InputMap.get_actions():
 		if !action.begins_with("ui"):
 			var hbox: HBoxContainer = HBoxContainer.new()
@@ -44,5 +48,7 @@ func create_buttons(action: String) -> Array:
 
 func rebind_keybind(action: String, input: InputEvent, button: Button) -> void:
 	button.modulate = Color.BLACK
-	InputMap.action_erase_event(action, input)
-	InputHandler.set_assigning(action)
+	InputHandler.set_assigning(action, input)
+
+func _on_reset_pressed() -> void:
+	InputHandler.reset()
