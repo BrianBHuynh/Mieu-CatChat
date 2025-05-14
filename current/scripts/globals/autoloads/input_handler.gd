@@ -7,28 +7,31 @@ var persistant_variables: Array = ["physical_keycode", "button_index", "axis", "
 
 func _unhandled_input(event: InputEvent) -> void:
 	if currently_assigning != "" and InputMap.has_action(currently_assigning):
-		var already_bound: bool = false
-		var serialized_input: Dictionary = serialize_input(event)
-		for action: String in InputMap.get_actions():
-			if !action.begins_with("ui"):
-				for input: InputEvent in InputMap.action_get_events(action):
-					var different_event: bool = false
-					for variable: String in serialized_input:
-						if variable != "type" and serialized_input[variable] != input.get(variable):
-							different_event = true
-							break
-						if variable == "physical_keycode":
-							if DisplayServer.keyboard_get_label_from_physical(serialized_input[variable]) != DisplayServer.keyboard_get_label_from_physical(input.get(variable)):
-								different_event = true
-								break
-					if not different_event:
-						already_bound = true
+		Multithreading.add_task(bind_input.bind(event))
+
+func bind_input(event: InputEvent) -> void:
+	var assigning: String = currently_assigning
+	var already_bound: bool = false
+	var serialized_input: Dictionary = serialize_input(event)
+	for action: String in InputMap.get_actions():
+		if !action.begins_with("ui"):
+			for input: InputEvent in InputMap.action_get_events(action):
+				var different_event: bool = false
+				for variable: String in serialized_input:
+					if variable != "type" or variable != "physical_keycode" and serialized_input[variable] != input.get(variable):
+						different_event = true
 						break
+					if variable == "physical_keycode" and DisplayServer.keyboard_get_label_from_physical(serialized_input[variable]) != DisplayServer.keyboard_get_label_from_physical(input.get(variable)):
+						different_event = true
+						break
+				if not different_event:
+					already_bound = true
+					break
 		if not already_bound:
-			InputMap.action_erase_event(currently_assigning, old_input)
-			InputMap.action_add_event(currently_assigning, event)
+			InputMap.action_erase_event(assigning, old_input)
+			InputMap.action_add_event(assigning, event)
 			currently_assigning = ""
-			SignalBus.keybinds_updated.emit()
+			SignalBus.keybinds_updated.emit.call_deferred()
 
 func save_inputs() -> void:
 	var input_map: Dictionary = {}

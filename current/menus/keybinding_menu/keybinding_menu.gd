@@ -16,13 +16,19 @@ func populate_menu() -> void:
 			element.queue_free()
 	for action: String in InputMap.get_actions():
 		if !action.begins_with("ui"):
-			var hbox: HBoxContainer = HBoxContainer.new()
-			hbox.alignment = BoxContainer.ALIGNMENT_CENTER
-			hbox.clip_contents = true
-			hbox.add_child(create_text_label(action))
-			for button: Button in create_buttons(action):
-				hbox.add_child(button)
-			$ScrollContainer/VBoxContainer.add_child(hbox)
+			Multithreading.add_task(create_action.bind(action))
+
+func vbox_add_child(child: Variant) -> void:
+	$ScrollContainer/VBoxContainer.add_child(child)
+
+func create_action(action: String) -> void:
+	var hbox: HBoxContainer = HBoxContainer.new()
+	hbox.alignment = BoxContainer.ALIGNMENT_CENTER
+	hbox.clip_contents = true
+	hbox.add_child(create_text_label(action))
+	for button: Button in create_buttons(action):
+		hbox.add_child(button)
+	vbox_add_child.call_deferred(hbox)
 
 func create_text_label(action: String) -> RichTextLabel:
 	var label: RichTextLabel = RichTextLabel.new()
