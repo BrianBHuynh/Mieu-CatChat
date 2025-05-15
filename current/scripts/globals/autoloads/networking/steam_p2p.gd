@@ -15,6 +15,7 @@ func _on_network_messages_session_request(remote_id: int) -> void:
 	if Moderation.is_allowed(remote_id):
 		Steam.acceptSessionWithUser(remote_id)
 		WorldManager.send_world(remote_id)
+		SteamP2P.send_message_to_user({"type": "handshake"}, remote_id)
 
 func read_p2p_messages() -> void:
 	var messages: Array = Steam.receiveMessagesOnChannel(0, 1000)

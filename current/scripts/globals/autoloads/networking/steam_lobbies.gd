@@ -5,6 +5,7 @@ var lobby_id: int = 0
 var lobby_members: Dictionary = {}
 var lobby_members_max: int = 10
 var lobby_vote_kick: bool = false
+var failcount: int = 0
 
 func _ready() -> void:
 	Steam.join_requested.connect(_on_lobby_join_requested)
@@ -17,8 +18,11 @@ func _ready() -> void:
 func create_lobby(type: int = Steam.LOBBY_TYPE_PUBLIC, max_players: int = 250) -> void:
 	if lobby_id == 0:
 		Steam.createLobby(type, max_players)
+		await get_tree().create_timer(1).timeout
+		Steam.requestLobbyList()
 	else:
 		Ui.show_system_message("You are currently already in a lobby!")
+		Steam.requestLobbyList()
 
 func _on_lobby_created(_connected: int, this_lobby_id: int) -> void:
 	lobby_id = this_lobby_id
@@ -34,19 +38,22 @@ func _on_open_lobby_list_pressed() -> void:
 func _on_lobby_match_list(these_lobbies: Array) -> void:
 	if Ui.lobbies != null:
 		var lobby_buttons: Array = Ui.lobbies.get_children()
-		for button: Button in lobby_buttons:
-			button.queue_free()
-			lobby_buttons.erase(button)
-		for this_lobby: int in these_lobbies:
-			var lobby_name: String = Steam.getLobbyData(this_lobby, "name")
-			var lobby_mode: String = Steam.getLobbyData(this_lobby, "mode")
-			var lobby_num_members: int = Steam.getNumLobbyMembers(this_lobby)
-			var lobby_button: Button = Button.new()
-			lobby_button.set_text("Lobby %s: %s [%s] - %s Player(s)" % [this_lobby, lobby_name, lobby_mode, lobby_num_members])
-			lobby_button.set_size(Vector2(800, 50))
-			lobby_button.set_name("lobby_%s" % this_lobby)
-			lobby_button.connect("pressed", join_lobby.bind(this_lobby))
-			Ui.lobbies.add_child(lobby_button)
+		Multithreading.add_task(fill_lobbies.bind(these_lobbies, lobby_buttons))
+
+func fill_lobbies(these_lobbies: Array, lobby_buttons: Array) -> void:
+	for button: Button in lobby_buttons:
+		button.queue_free()
+		lobby_buttons.erase(button)
+	for this_lobby: int in these_lobbies:
+		var lobby_name: String = Steam.getLobbyData(this_lobby, "name")
+		var lobby_mode: String = Steam.getLobbyData(this_lobby, "mode")
+		var lobby_num_members: int = Steam.getNumLobbyMembers(this_lobby)
+		var lobby_button: Button = Button.new()
+		lobby_button.set_text("Lobby %s: %s [%s] - %s Player(s)" % [this_lobby, lobby_name, lobby_mode, lobby_num_members])
+		lobby_button.set_size(Vector2(800, 50))
+		lobby_button.set_name("lobby_%s" % this_lobby)
+		lobby_button.connect("pressed", join_lobby.bind(this_lobby))
+		Ui.lobbies.add_child.call_deferred(lobby_button)
 
 func join_lobby(this_lobby_id: int) -> void:
 	Ui.show_system_message("Attempting to join lobby " + str(lobby_id))
@@ -58,6 +65,8 @@ func _on_lobby_joined(this_lobby_id: int, _permissions: int, _locked: bool, resp
 		lobby_id = this_lobby_id
 		get_lobby_members()
 		WorldManager.send_world()
+		SteamP2P.send_message_to_user({"type": "handshake"})
+		failcount = 0
 	else:
 		var fail_reason: String
 		match response:
@@ -72,6 +81,13 @@ func _on_lobby_joined(this_lobby_id: int, _permissions: int, _locked: bool, resp
 			Steam.CHAT_ROOM_ENTER_RESPONSE_YOU_BLOCKED_MEMBER: fail_reason = "A user you have blocked is in the lobby."
 		Ui.show_system_warning("Failed to join this chat room: %s" % fail_reason)
 		_on_open_lobby_list_pressed()
+		failcount = failcount + 1
+		if failcount <= 2 and response == Steam.CHAT_ROOM_ENTER_RESPONSE_ERROR:
+			Ui.show_system_warning("trying to rejoin in... 5")
+			await get_tree().create_timer(5).timeout
+			Steam.joinLobby(this_lobby_id)
+		else:
+			failcount = 0
 
 func _on_lobby_join_requested(this_lobby_id: int, friend_id: int) -> void:
 	var owner_name: String = Steam.getFriendPersonaName(friend_id)
