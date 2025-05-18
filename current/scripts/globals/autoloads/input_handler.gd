@@ -27,8 +27,15 @@ func bind_input(event: InputEvent) -> void:
 		if already_bound:
 			break
 	if not already_bound and serialized_event.size() != 0:
-		InputMap.action_erase_event(assigning, old_input)
-		InputMap.action_add_event(assigning, event)
+		var events: Array = []
+		for input_event in InputMap.action_get_events(assigning):
+			if input_event != old_input:
+				events.append(serialize_input(input_event))
+			else:
+				events.append(serialized_event)
+		InputMap.action_erase_events(assigning)
+		for input_event in events:
+			InputMap.action_add_event(assigning, deserialize_input(input_event))
 		currently_assigning = ""
 		SignalBus.keybinds_updated.emit.call_deferred()
 
