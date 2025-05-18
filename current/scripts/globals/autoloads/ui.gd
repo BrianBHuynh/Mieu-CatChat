@@ -6,6 +6,7 @@ var cur_menu: Control
 var lobbies: VBoxContainer
 var chat_box: Control
 var chat_log: Array = []
+var max_log_size: int = 100
 const DEFAULT_FONT_SIZE: float = 30.0
 const DEFAULT_CHAT_FONT_SIZE: float = 25.0
 
@@ -71,3 +72,8 @@ func close_menu() -> void:
 func set_mouse_mode(mode: int) -> void:
 	if 3 >= mode and mode >= 0:
 		Input.mouse_mode = mode as Input.MouseMode
+
+func chat_log_add(chat_message: Dictionary) -> void:
+	chat_log.append(chat_message)
+	if chat_log.size() > max_log_size and max_log_size != -1:
+		chat_log.pop_front()

@@ -5,12 +5,20 @@ func _ready() -> void:
 	Ui.chat_box = self
 	$CheckBox.set_pressed_no_signal(Saves.get_or_return("settings", "auto_scroll", true))
 	SignalBus.load_finished.connect(load_finished)
+	show_system_message("Loading...", Color.LIGHT_STEEL_BLUE, false)
+	Multithreading.add_task(load_messages)
+
+func load_messages() -> void:
 	for message: Dictionary in Ui.chat_log:
 		match message["type"]:
 			"chat_message":
-				add_chat_message(message["sender"], message["target"], message["content"], message["private"], false, false)
+				add_chat_message(message["sender"], message["target"], message["content"], message["private"], false)
 			_:
 				show_system_message(message["content"], message["color"], false, message["type"])
+	Ui.chat_box.remove_first.call_deferred()
+
+func remove_first() -> void:
+	$ScrollContainer/VBoxContainer.get_child(0).queue_free()
 
 func load_finished() -> void:
 	$CheckBox.set_pressed_no_signal(Saves.get_or_return("settings", "auto_scroll", true))
@@ -21,7 +29,7 @@ func show_chat_message(message: Dictionary) -> void:
 func sent_chat_message(message: String, target: int = true, private: bool = false) -> void:
 	add_chat_message(SteamWorks.steam_id, target, message, private)
 
-func add_chat_message(sender: int, target: int, content: String, private: bool, save: bool = true, print_message: bool = true) -> void:
+func add_chat_message(sender: int, target: int, content: String, private: bool, save: bool = true) -> void:
 	var hbox: HBoxContainer = HBoxContainer.new()
 	hbox.clip_contents = true
 	var message_text: RichTextLabel = RichTextLabel.new()
@@ -32,8 +40,6 @@ func add_chat_message(sender: int, target: int, content: String, private: bool, 
 			message_text.set_text(Steam.getFriendPersonaName(sender) + ": " + content)
 		else:
 			message_text.set_text("You" + ": " + content)
-	if print_message:
-		print(message_text.text)
 	message_text.set_script(load("res://current/scripts/node/chat_message.gd"))
 	message_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	message_text.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -45,13 +51,23 @@ func add_chat_message(sender: int, target: int, content: String, private: bool, 
 	interact_button.size_flags_stretch_ratio = .1
 	interact_button.pressed.connect(_delete_chat.bind(hbox))
 	hbox.add_child(interact_button)
-	if Ui.chat_box == self and self.is_inside_tree():
-		$ScrollContainer/VBoxContainer.add_child(hbox)
+	if Ui.chat_box != null and Ui.chat_box.is_inside_tree():
+		Ui.chat_box.add_chat_hbox.call_deferred(hbox)
 		if save:
-			Ui.chat_log.append({"type": "chat_message", "sender": sender, "target": target, "content": content, "private": private})
+			print(message_text.text)
+			Ui.chat_log_add.call_deferred({"type": "chat_message", "sender": sender, "target": target, "content": content, "private": private})
 		if Saves.get_or_add("settings", "auto_scroll", true):
-			await get_tree().create_timer(.05).timeout
-			create_tween().tween_property($ScrollContainer.get_v_scroll_bar(), "value", $ScrollContainer.get_v_scroll_bar().max_value, 1.0)
+			scroll_down.call_deferred()
+
+func add_chat_hbox(hbox: HBoxContainer) -> void:
+	$ScrollContainer/VBoxContainer.add_child(hbox)
+
+func add_system_message(message: RichTextLabel) -> void:
+	$ScrollContainer/VBoxContainer.add_child(message)
+
+func scroll_down() -> void:
+	await get_tree().create_timer(.05).timeout
+	create_tween().tween_property($ScrollContainer.get_v_scroll_bar(), "value", $ScrollContainer.get_v_scroll_bar().max_value, 1.0)
 
 func show_system_message(content: String, color: Color = Color.DEEP_SKY_BLUE, save: bool = true, prefix: String = "SYSTEM") -> void:
 	var message_text: RichTextLabel = RichTextLabel.new()
@@ -66,13 +82,12 @@ func show_system_message(content: String, color: Color = Color.DEEP_SKY_BLUE, sa
 	if Saves.get_or_return("settings", "invert_outline", false):
 		message_text.add_theme_color_override("font_outline_color", get_theme_color("default_color").inverted())
 	message_text.fit_content = true
-	$ScrollContainer/VBoxContainer.add_child(message_text)
+	add_system_message.call_deferred(message_text)
+	print(message_text.text)
 	if save:
-		Ui.chat_log.append({"type": prefix, "content": content, "color": color})
-		print(message_text.text)
+		Ui.chat_log_add({"type": prefix, "content": content, "color": color})
 	if Saves.get_or_add("settings", "auto_scroll", true) and WorldManager.first_world_started:
-		await get_tree().create_timer(.05).timeout
-		create_tween().tween_property($ScrollContainer.get_v_scroll_bar(), "value", $ScrollContainer.get_v_scroll_bar().max_value, 1.0)
+		scroll_down.call_deferred()
 
 func show_system_warning(content: String, color: Color = Color.DARK_RED, save: bool = false) -> void:
 	show_system_message(content, color, save, "SYSTEM_WARNING")
