@@ -54,10 +54,10 @@ func create_chat_message(sender: int, _target: int, content: String, private: bo
 	hbox.clip_contents = true
 	var message_text: RichTextLabel = RichTextLabel.new()
 	if private:
-		message_text.set_text("(whisper)" + Steam.getFriendPersonaName(sender) + ": " + content)
+		message_text.set_text("(whisper)" + SteamLobbies.get_lobby_member_name(sender) + ": " + content)
 	else:
 		if SteamWorks.running == true:
-			message_text.set_text(Steam.getFriendPersonaName(sender) + ": " + content)
+			message_text.set_text(SteamLobbies.get_lobby_member_name(sender) + ": " + content)
 		else:
 			message_text.set_text("You" + ": " + content)
 	message_text.set_script(load("res://current/scripts/node/chat_message.gd"))

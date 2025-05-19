@@ -90,16 +90,19 @@ func _on_lobby_joined(this_lobby_id: int, _permissions: int, _locked: bool, resp
 			failcount = 0
 
 func _on_lobby_join_requested(this_lobby_id: int, friend_id: int) -> void:
-	var owner_name: String = Steam.getFriendPersonaName(friend_id)
+	var owner_name: String = get_lobby_member_name(friend_id)
 	Ui.show_system_message("Joining %s's lobby..." % owner_name)
 	join_lobby(this_lobby_id)
+
+func get_lobby_member_name(id: int) -> String:
+	return lobby_members.get_or_add(id, {}).get_or_add("steam_name", Steam.getFriendPersonaName(id))
 
 func get_lobby_members() -> void:
 	lobby_members.clear()
 	var num_of_members: int = Steam.getNumLobbyMembers(lobby_id)
 	for this_member: int in range(0, num_of_members):
 		var member_steam_id: int = Steam.getLobbyMemberByIndex(lobby_id, this_member)
-		var member_steam_name: String = Steam.getFriendPersonaName(member_steam_id)
+		var member_steam_name: String = get_lobby_member_name(member_steam_id)
 		lobby_members[member_steam_id] = {"steam_name": member_steam_name}
 	
 func _on_persona_change(this_steam_id: int, _flag: int) -> void:
@@ -109,7 +112,7 @@ func _on_persona_change(this_steam_id: int, _flag: int) -> void:
 
 func _on_lobby_chat_update(_this_lobby_id: int, change_id: int, _making_change_id: int, chat_state: int) -> void:
 	if Moderation.is_allowed(change_id):
-		var changer_name: String = Steam.getFriendPersonaName(change_id)
+		var changer_name: String = get_lobby_member_name(change_id)
 		if chat_state == Steam.CHAT_MEMBER_STATE_CHANGE_ENTERED:
 			Ui.show_system_message("%s has joined the lobby." % changer_name)
 			SteamP2P.send_lobby_data(change_id, "lobby_join")

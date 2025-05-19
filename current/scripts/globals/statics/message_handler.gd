@@ -53,7 +53,7 @@ static func ban_announce(message: Dictionary) -> void:
 	message.identity == Steam.getLobbyOwner(SteamLobbies.lobby_id)
 	and Helper.dict_type_check(message["payload"], "banned_player", "int")
 	):
-		Ui.show_system_message("The lobby owner " + SteamLobbies.get_host_name() + "has banned " + Steam.getFriendPersonaName(message["payload"]["banned_player"]))
+		Ui.show_system_message("The lobby owner " + SteamLobbies.get_host_name() + "has banned " + SteamLobbies.get_lobby_member_name(message["payload"]["banned_player"]))
 
 static func kick(message: Dictionary) -> void:
 	if message.identity == Steam.getLobbyOwner(SteamLobbies.lobby_id):
@@ -64,7 +64,7 @@ static func kick(message: Dictionary) -> void:
 
 static func kick_announce(message: Dictionary) -> void:
 	if message.identity == Steam.getLobbyOwner(SteamLobbies.lobby_id) and Helper.dict_type_check(message["payload"], "kicked_player", "int"):
-		Ui.show_system_message("The lobby owner " + SteamLobbies.get_host_name() + "has kicked " + Steam.getFriendPersonaName(message["payload"]["kicked_player"]))
+		Ui.show_system_message("The lobby owner " + SteamLobbies.get_host_name() + "has kicked " + SteamLobbies.get_lobby_member_name(message["payload"]["kicked_player"]))
 
 static func world_info(message: Dictionary) -> void:
 	if (Helper.dict_type_check(message["payload"], "world_name", "String")
