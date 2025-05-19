@@ -96,5 +96,3 @@ func chat_log_add(chat_message: Dictionary) -> void:
 			chat_archive = chat_archive + "\n" + SteamLobbies.get_lobby_member_name(new_archive["sender"]) + ": " + new_archive["content"]
 		else:
 			chat_archive = chat_archive + "\n" + new_archive["type"] + ": " + new_archive["content"]
-		print(chat_archive)
-	print(chat_log)
