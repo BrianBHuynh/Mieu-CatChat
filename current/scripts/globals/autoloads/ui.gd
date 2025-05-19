@@ -22,7 +22,7 @@ func _physics_process(_delta: float) -> void:
 				close_menu()
 	elif Input.is_action_just_pressed("send_message"):
 		chat_box.release_focus()
-	elif Input.is_action_just_pressed("chat") and !is_menu_open():
+	elif Input.is_action_just_pressed("chat") and !is_menu_open() and chat_box != null:
 		chat_box.open_text_input()
 
 func is_menu_open() -> bool:
@@ -74,6 +74,19 @@ func set_mouse_mode(mode: int) -> void:
 		Input.mouse_mode = mode as Input.MouseMode
 
 func chat_log_add(chat_message: Dictionary) -> void:
-	chat_log.append(chat_message)
+	var last_message: Dictionary
+	if chat_log.size() > 0:
+		last_message = chat_log.pop_back()
+		if (last_message["type"] == "chat_message" 
+			and last_message["sender"] == chat_message["sender"] 
+			and last_message["target"] == chat_message["target"]
+		):
+			last_message["content"] = last_message["content"] + "\n" + SteamLobbies.get_lobby_member_name(chat_message["sender"]) + ": " + chat_message["content"]
+			chat_log.append(last_message)
+		else:
+			chat_log.append(last_message)
+			chat_log.append(chat_message)
+	else:
+		chat_log.append(chat_message)
 	if chat_log.size() > max_log_size and max_log_size != -1:
 		chat_log.pop_front()

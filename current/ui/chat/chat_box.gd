@@ -1,6 +1,8 @@
 extends Control
 
 
+var latest_message: Variant
+
 func _ready() -> void:
 	Ui.chat_box = self
 	$CheckBox.set_pressed_no_signal(Saves.get_or_return("settings", "auto_scroll", true))
@@ -40,14 +42,28 @@ func sent_chat_message(message: String, target: int = 0, private: bool = false) 
 	add_chat_message(SteamWorks.steam_id, target, message, private)
 
 func add_chat_message(sender: int, target: int, content: String, private: bool, save: bool = true) -> void:
-	var message: HBoxContainer = create_chat_message(sender, target, content, private, save)
-	if Ui.chat_box != null and Ui.chat_box.is_inside_tree():
-		Ui.chat_box.add_chat_hbox.call_deferred(message)
-		if save:
-			print(content)
-			Ui.chat_log_add.call_deferred({"type": "chat_message", "sender": sender, "target": target, "content": content, "private": private})
-		if Saves.get_or_add("settings", "auto_scroll", true):
-			scroll_down.call_deferred()
+	if (latest_message != null 
+	and latest_message is HBoxContainer
+	):
+		var message_text: String
+		if private:
+			message_text = "(whisper)" + SteamLobbies.get_lobby_member_name(sender) + ": " + content
+		else:
+			if SteamWorks.running == true:
+				message_text = SteamLobbies.get_lobby_member_name(sender) + ": " + content
+			else:
+				message_text = "You" + ": " + content
+		latest_message.get_child(0).text = latest_message.get_child(0).text + "\n" + message_text
+	else:
+		var message: HBoxContainer = create_chat_message(sender, target, content, private, save)
+		if Ui.chat_box != null and Ui.chat_box.is_inside_tree():
+			Ui.chat_box.add_chat_hbox(message)
+			if save:
+				print(content)
+				Ui.chat_log_add({"type": "chat_message", "sender": sender, "target": target, "content": content, "private": private})
+			if Saves.get_or_add("settings", "auto_scroll", true):
+				scroll_down()
+		latest_message = message
 
 func create_chat_message(sender: int, _target: int, content: String, private: bool, _save: bool = true) -> HBoxContainer:
 	var hbox: HBoxContainer = HBoxContainer.new()
@@ -84,14 +100,21 @@ func scroll_down() -> void:
 	create_tween().tween_property($ScrollContainer.get_v_scroll_bar(), "value", $ScrollContainer.get_v_scroll_bar().max_value, 1.0)
 
 func show_system_message(content: String, color: Color = Color.DEEP_SKY_BLUE, save: bool = true, prefix: String = "SYSTEM") -> void:
-	var message: RichTextLabel = create_system_message(content, color, save, prefix)
-	if Ui.chat_box != null and Ui.chat_box.is_inside_tree():
-		Ui.chat_box.add_system_label.call_deferred(message)
-		print(content)
-		if save:
-			Ui.chat_log_add({"type": prefix, "content": content, "color": color})
-		if Saves.get_or_add("settings", "auto_scroll", true) and WorldManager.first_world_started:
-			scroll_down.call_deferred()
+	if (latest_message != null 
+	and latest_message is RichTextLabel
+	and latest_message.get_theme_color("default_color") == color
+	):
+		latest_message.text = latest_message.text + "\n" + prefix + ": " + content
+	else:
+		var message: RichTextLabel = create_system_message(content, color, save, prefix)
+		if Ui.chat_box != null and Ui.chat_box.is_inside_tree():
+			Ui.chat_box.add_system_label(message)
+			print(content)
+			if save:
+				Ui.chat_log_add({"type": prefix, "content": content, "color": color})
+			if Saves.get_or_add("settings", "auto_scroll", true) and WorldManager.first_world_started:
+				scroll_down()
+		latest_message = message
 
 func create_system_message(content: String, color: Color = Color.DEEP_SKY_BLUE, _save: bool = true, prefix: String = "SYSTEM") -> RichTextLabel:
 	var system_message: RichTextLabel = RichTextLabel.new()

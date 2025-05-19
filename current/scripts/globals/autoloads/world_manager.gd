@@ -136,7 +136,6 @@ func update_world(world: Variant) -> void:
 
 func send_world(pid: int = 0) -> void:
 	SteamP2P.send_message_to_user({"type": "world_info", "world_name": current_world_name, "instance_id": current_instance_id}, pid)
-	
 
 func clear_worlds() -> void:
 	worlds.clear()
