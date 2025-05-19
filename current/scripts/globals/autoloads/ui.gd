@@ -6,6 +6,7 @@ var cur_menu: Control
 var lobbies: VBoxContainer
 var chat_box: Control
 var chat_log: Array = []
+var chat_archive: String = ""
 var max_log_size: int = 100
 const DEFAULT_FONT_SIZE: float = 30.0
 const DEFAULT_CHAT_FONT_SIZE: float = 25.0
@@ -89,4 +90,11 @@ func chat_log_add(chat_message: Dictionary) -> void:
 	else:
 		chat_log.append(chat_message)
 	if chat_log.size() > max_log_size and max_log_size != -1:
-		chat_log.pop_front()
+		var new_archive: Dictionary = chat_log.pop_front()
+		if (new_archive["type"] == "chat_message" 
+		):
+			chat_archive = chat_archive + "\n" + SteamLobbies.get_lobby_member_name(new_archive["sender"]) + ": " + new_archive["content"]
+		else:
+			chat_archive = chat_archive + "\n" + new_archive["type"] + ": " + new_archive["content"]
+		print(chat_archive)
+	print(chat_log)

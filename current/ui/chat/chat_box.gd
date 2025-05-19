@@ -21,16 +21,13 @@ func load_messages() -> void:
 	Ui.chat_box.add_messages.call_deferred(messages)
 
 func add_messages(messages: Array) -> void:
-	remove_first()
+	replace_first()
 	for message: Control in messages:
-		if message is HBoxContainer:
-			add_chat_hbox(message)
-		elif message is RichTextLabel:
-			add_system_label(message)
+		add_chat_label(message)
 
-func remove_first() -> void:
+func replace_first() -> void:
 	if $ScrollContainer/VBoxContainer.get_child_count() > 0:
-		$ScrollContainer/VBoxContainer.get_child(0).queue_free()
+		$ScrollContainer/VBoxContainer.get_child(0).text = Ui.chat_archive
 
 func load_finished() -> void:
 	$CheckBox.set_pressed_no_signal(Saves.get_or_return("settings", "auto_scroll", true))
@@ -44,6 +41,7 @@ func sent_chat_message(message: String, target: int = 0, private: bool = false) 
 func add_chat_message(sender: int, target: int, content: String, private: bool, save: bool = true) -> void:
 	if (latest_message != null 
 	and latest_message is HBoxContainer
+	and latest_message.get_child(0).text.begins_with(SteamLobbies.get_lobby_member_name(sender))
 	):
 		var message_text: String
 		if private:
@@ -54,10 +52,11 @@ func add_chat_message(sender: int, target: int, content: String, private: bool, 
 			else:
 				message_text = "You" + ": " + content
 		latest_message.get_child(0).text = latest_message.get_child(0).text + "\n" + message_text
+		Ui.chat_log_add({"type": "chat_message", "sender": sender, "target": target, "content": content, "private": private})
 	else:
-		var message: HBoxContainer = create_chat_message(sender, target, content, private, save)
+		var message: RichTextLabel = create_chat_message(sender, target, content, private, save)
 		if Ui.chat_box != null and Ui.chat_box.is_inside_tree():
-			Ui.chat_box.add_chat_hbox(message)
+			Ui.chat_box.add_chat_label(message)
 			if save:
 				print(content)
 				Ui.chat_log_add({"type": "chat_message", "sender": sender, "target": target, "content": content, "private": private})
@@ -65,34 +64,22 @@ func add_chat_message(sender: int, target: int, content: String, private: bool, 
 				scroll_down()
 		latest_message = message
 
-func create_chat_message(sender: int, _target: int, content: String, private: bool, _save: bool = true) -> HBoxContainer:
-	var hbox: HBoxContainer = HBoxContainer.new()
-	hbox.clip_contents = true
-	var message_text: RichTextLabel = RichTextLabel.new()
+func create_chat_message(sender: int, _target: int, content: String, private: bool, _save: bool = true) -> RichTextLabel:
+	var chat_message: RichTextLabel = RichTextLabel.new()
 	if private:
-		message_text.set_text("(whisper)" + SteamLobbies.get_lobby_member_name(sender) + ": " + content)
+		chat_message.set_text("(whisper)" + SteamLobbies.get_lobby_member_name(sender) + ": " + content)
 	else:
 		if SteamWorks.running == true:
-			message_text.set_text(SteamLobbies.get_lobby_member_name(sender) + ": " + content)
+			chat_message.set_text(SteamLobbies.get_lobby_member_name(sender) + ": " + content)
 		else:
-			message_text.set_text("You" + ": " + content)
-	message_text.set_script(load("res://current/scripts/node/chat_message.gd"))
-	message_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	message_text.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	message_text.fit_content = true
-	hbox.add_child(message_text)
-	
-	var interact_button: Button = Button.new()
-	interact_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	interact_button.size_flags_stretch_ratio = .1
-	interact_button.pressed.connect(_delete_chat.bind(hbox))
-	hbox.add_child(interact_button)
-	return hbox
+			chat_message.set_text("You" + ": " + content)
+	chat_message.set_script(load("res://current/scripts/node/chat_message.gd"))
+	chat_message.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	chat_message.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	chat_message.fit_content = true
+	return chat_message
 
-func add_chat_hbox(hbox: HBoxContainer) -> void:
-	$ScrollContainer/VBoxContainer.add_child(hbox)
-
-func add_system_label(message: RichTextLabel) -> void:
+func add_chat_label(message: RichTextLabel) -> void:
 	$ScrollContainer/VBoxContainer.add_child(message)
 
 func scroll_down() -> void:
@@ -108,7 +95,7 @@ func show_system_message(content: String, color: Color = Color.DEEP_SKY_BLUE, sa
 	else:
 		var message: RichTextLabel = create_system_message(content, color, save, prefix)
 		if Ui.chat_box != null and Ui.chat_box.is_inside_tree():
-			Ui.chat_box.add_system_label(message)
+			Ui.chat_box.add_chat_label(message)
 			print(content)
 			if save:
 				Ui.chat_log_add({"type": prefix, "content": content, "color": color})
@@ -159,7 +146,8 @@ func _on_text_box_text_changed() -> void:
 		$TextBox.text = $TextBox.text.erase($TextBox.text.length()-1, 1)
 		_on_send_pressed()
 
-func _delete_chat(chat: HBoxContainer) -> void:
+func _delete_chat(chat: HBoxContainer, sender: int, target: int, content: String, private: bool, _save: bool = true) -> void:
+	Ui.erase_chat({"type": "chat_message", "sender": sender, "target": target, "content": content, "private": private})
 	chat.queue_free()
 
 func _on_auto_scroll_box_toggled(toggled_on: bool) -> void:
