@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bhq4q5k45ed0u" path="res://current/menus/settings_menu/settings_menu.gd" id="1_2vgct"]
 [ext_resource type="Script" uid="uid://vftddq4ojmo2" path="res://current/scripts/node/rich_text_label.gd" id="2_4m5my"]
-[ext_resource type="Texture2D" uid="uid://dv4n5etipadpk" path="res://current/assets/ui/btn_sized.png" id="3_5hodh"]
+[ext_resource type="Texture2D" uid="uid://cqe4eou0fn5b4" path="res://current/assets/ui/btn_sized.png" id="3_5hodh"]
 
 [node name="SettingsMenu" type="Control"]
 layout_mode = 3

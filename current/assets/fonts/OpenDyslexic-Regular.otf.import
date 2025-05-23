@@ -2,7 +2,7 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://dwdiyrixur20g"
+uid="uid://dig07dvbg0if6"
 path="res://.godot/imported/OpenDyslexic-Regular.otf-c13c15430b9f35f28d8faf5fc3da8c8d.fontdata"
 
 [deps]
@@ -22,7 +22,7 @@ msdf_size=48
 allow_system_fallback=true
 force_autohinter=false
 hinting=1
-subpixel_positioning=1
+subpixel_positioning=4
 keep_rounding_remainders=true
 oversampling=0.0
 Fallbacks=null

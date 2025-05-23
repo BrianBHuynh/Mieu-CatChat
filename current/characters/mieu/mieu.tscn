@@ -1,7 +1,7 @@
 [gd_scene load_steps=14 format=3 uid="uid://cj7jy8rdyeuvj"]
 
 [ext_resource type="Script" uid="uid://bvgqp75l2lsd3" path="res://current/characters/mieu/mieu.gd" id="1_xoutb"]
-[ext_resource type="Texture2D" uid="uid://lhikvxbnengm" path="res://current/assets/images/mieu_idle_front.png" id="2_dd5pl"]
+[ext_resource type="Texture2D" uid="uid://d2tipgh626sou" path="res://current/assets/images/mieu_idle_front.png" id="2_dd5pl"]
 [ext_resource type="Script" uid="uid://dp2gm7r6bg28d" path="res://current/scripts/node/name_tag.gd" id="3_c6knm"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_flex7"]
@@ -75,6 +75,7 @@ script = ExtResource("1_xoutb")
 
 [node name="Shadow" type="AnimatedSprite2D" parent="."]
 modulate = Color(0, 0, 0, 0.0980392)
+texture_filter = 2
 position = Vector2(0, -10)
 scale = Vector2(0.5, 0.25)
 sprite_frames = SubResource("SpriteFrames_h658l")

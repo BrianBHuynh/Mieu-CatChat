@@ -2,7 +2,7 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://ba5wu42854hbu"
+uid="uid://cq52utqnpd51m"
 path="res://.godot/imported/AtkinsonHyperlegible-Regular.ttf-30da1d89fa3d7582ba98c5ebe345a57c.fontdata"
 
 [deps]
@@ -22,7 +22,7 @@ msdf_size=48
 allow_system_fallback=true
 force_autohinter=false
 hinting=1
-subpixel_positioning=1
+subpixel_positioning=4
 keep_rounding_remainders=true
 oversampling=0.0
 Fallbacks=null

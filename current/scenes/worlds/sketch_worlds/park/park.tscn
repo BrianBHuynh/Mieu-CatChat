@@ -1,11 +1,12 @@
-[gd_scene load_steps=10 format=3 uid="uid://w7g10qhhkaf8"]
+[gd_scene load_steps=11 format=3 uid="uid://w7g10qhhkaf8"]
 
 [ext_resource type="Script" uid="uid://cee1f8kqw5s27" path="res://current/scripts/node/world.gd" id="1_7l3bo"]
 [ext_resource type="Script" uid="uid://dwtq2tmpbk1dm" path="res://current/scripts/node/minigame_window.gd" id="2_8r8d5"]
-[ext_resource type="Texture2D" uid="uid://uod8fskpcut6" path="res://current/assets/images/bg-2.jpg" id="3_8d3qt"]
+[ext_resource type="Texture2D" uid="uid://dc40dxl2mmtgt" path="res://current/assets/images/bg-2.jpg" id="3_8d3qt"]
 [ext_resource type="PackedScene" uid="uid://cj7jy8rdyeuvj" path="res://current/characters/mieu/mieu.tscn" id="4_5hbkt"]
 [ext_resource type="Script" uid="uid://bd3c3vv2lpyte" path="res://current/scripts/node/door.gd" id="4_7l3bo"]
 [ext_resource type="PackedScene" uid="uid://cbajq0dylq2p2" path="res://current/ui/vpet_gui/vpet_gui.tscn" id="5_6gi8m"]
+[ext_resource type="Script" uid="uid://da01k61r2rdrs" path="res://current/scenes/worlds/scene_template/camera.gd" id="6_i1b0a"]
 [ext_resource type="PackedScene" uid="uid://w7p53meqohhf" path="res://current/ui/chat/chat_box.tscn" id="6_org83"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i62hu"]
@@ -75,16 +76,22 @@ position = Vector2(923, 690)
 
 [node name="Foreground" type="Node2D" parent="."]
 
-[node name="Control" type="Control" parent="."]
+[node name="MainCamera" type="Camera2D" parent="."]
+position = Vector2(960, 540)
+script = ExtResource("6_i1b0a")
+
+[node name="Control" type="Control" parent="MainCamera"]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = -960.0
+offset_top = -540.0
+offset_right = -920.0
+offset_bottom = -500.0
 
-[node name="VpetGui" parent="Control" instance=ExtResource("5_6gi8m")]
+[node name="VpetGui" parent="MainCamera/Control" instance=ExtResource("5_6gi8m")]
 layout_mode = 1
 
-[node name="ChatBox" parent="Control" instance=ExtResource("6_org83")]
+[node name="ChatBox" parent="MainCamera/Control" instance=ExtResource("6_org83")]
 layout_mode = 1
 
 [connection signal="body_entered" from="Middleground/DoorC" to="." method="_on_door_c_body_entered"]
