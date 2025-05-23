@@ -39,7 +39,8 @@ func sent_chat_message(message: String, target: int = 0, private: bool = false) 
 	add_chat_message(SteamWorks.steam_id, target, message, private)
 
 func add_chat_message(sender: int, target: int, content: String, private: bool, save: bool = true) -> void:
-	if (latest_message != null 
+	if (
+	latest_message != null 
 	and latest_message is HBoxContainer
 	and latest_message.get_child(0).text.begins_with(SteamLobbies.get_lobby_member_name(sender))
 	):
@@ -87,7 +88,8 @@ func scroll_down() -> void:
 	create_tween().tween_property($ScrollContainer.get_v_scroll_bar(), "value", $ScrollContainer.get_v_scroll_bar().max_value, 1.0)
 
 func show_system_message(content: String, color: Color = Color.DEEP_SKY_BLUE, save: bool = true, prefix: String = "SYSTEM") -> void:
-	if (latest_message != null 
+	if (
+	latest_message != null 
 	and latest_message is RichTextLabel
 	and latest_message.get_theme_color("default_color") == color
 	):

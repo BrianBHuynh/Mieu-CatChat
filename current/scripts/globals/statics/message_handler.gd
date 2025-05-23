@@ -3,7 +3,8 @@ class_name MessageHandler
 
 
 static func data(message: Dictionary) -> void:
-	if (Helper.dict_type_check(message["payload"], "x", "float")
+	if (
+		Helper.dict_type_check(message["payload"], "x", "float")
 		and Helper.dict_type_check(message["payload"], "y", "float")
 		and Helper.dict_type_check(message["payload"], "sprite_y", "float")
 		and Helper.dict_type_check(message["payload"], "movement_id", "int")
@@ -63,11 +64,15 @@ static func kick(message: Dictionary) -> void:
 			Ui.show_system_message("Reason provided: " + str(message["payload"]["reason"]))
 
 static func kick_announce(message: Dictionary) -> void:
-	if message.identity == Steam.getLobbyOwner(SteamLobbies.lobby_id) and Helper.dict_type_check(message["payload"], "kicked_player", "int"):
+	if (
+	message.identity == Steam.getLobbyOwner(SteamLobbies.lobby_id) 
+	and Helper.dict_type_check(message["payload"], "kicked_player", "int")
+	):
 		Ui.show_system_message("The lobby owner " + SteamLobbies.get_host_name() + "has kicked " + SteamLobbies.get_lobby_member_name(message["payload"]["kicked_player"]))
 
 static func world_info(message: Dictionary) -> void:
-	if (Helper.dict_type_check(message["payload"], "world_name", "String")
+	if (
+	Helper.dict_type_check(message["payload"], "world_name", "String")
 	and Helper.dict_type_check(message["payload"], "instance_id", "int")
 	):
 		WorldManager.add_to_world(message.identity, message["payload"]["world_name"], message["payload"]["instance_id"])
@@ -75,18 +80,22 @@ static func world_info(message: Dictionary) -> void:
 			GlobalVars.mieu.send_location(Steam.NETWORKING_SEND_RELIABLE_NO_NAGLE)
 
 static func minigame_info(message: Dictionary) -> void:
-	if (Helper.dict_type_check(message["payload"], "minigame_name", "String")
-	and Helper.dict_type_check(message["payload"], "minigame_instance_id", "int")):
+	if (
+	Helper.dict_type_check(message["payload"], "minigame_name", "String")
+	and Helper.dict_type_check(message["payload"], "minigame_instance_id", "int")
+	):
 		MinigameManager.add_to_minigame(message.identity, message["payload"]["minigame_name"], message["payload"]["minigame_instance_id"])
 
 static func encrypted_message(message: Dictionary) -> void:
-	if (Helper.dict_type_check(message["payload"], "message_id", "int")
+	if (
+	Helper.dict_type_check(message["payload"], "message_id", "int")
 	and Helper.dict_type_check(message["payload"], "encrypted_payload", "PackedByteArray")
 	):
 		Cryptography.save_message(message.identity, message["payload"]["message_id"], message["payload"]["encrypted_payload"])
 
 static func encrypted_key(message: Dictionary) -> void:
-	if (Helper.dict_type_check(message["payload"], "message_id", "int")
+	if (
+	Helper.dict_type_check(message["payload"], "message_id", "int")
 	and Helper.dict_type_check(message["payload"], "key", "String")
 	):
 		Cryptography.decode_message(message.identity, message["payload"]["message_id"], message["payload"]["key"])

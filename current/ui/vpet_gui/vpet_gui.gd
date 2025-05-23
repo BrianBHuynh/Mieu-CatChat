@@ -13,6 +13,5 @@ func load_finished() -> void:
 func _physics_process(_delta: float) -> void:
 	$FoodBar.value = Status.get_stat("food")
 
-
 func _on_feed_button_pressed() -> void:
 	Status.change_stat("food", 20)
