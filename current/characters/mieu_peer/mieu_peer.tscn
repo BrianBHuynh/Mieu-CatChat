@@ -1,6 +1,6 @@
 [gd_scene load_steps=20 format=3 uid="uid://ccppo6wmem00o"]
 
-[ext_resource type="Texture2D" uid="uid://lhikvxbnengm" path="res://current/assets/images/mieu_idle_front.png" id="1_6gnlj"]
+[ext_resource type="Texture2D" uid="uid://cbjwmchpjkkp5" path="res://current/assets/images/mieu_idle_front.png" id="1_6gnlj"]
 [ext_resource type="Script" uid="uid://domwpnd10yqiu" path="res://current/characters/mieu_peer/mieu_peer.gd" id="2_gb511"]
 [ext_resource type="Script" uid="uid://dp2gm7r6bg28d" path="res://current/scripts/node/name_tag.gd" id="3_qf47w"]
 

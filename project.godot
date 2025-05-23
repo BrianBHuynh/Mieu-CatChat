@@ -15,7 +15,7 @@ run/main_scene="uid://cghgofk26acco"
 config/use_custom_user_dir=true
 config/features=PackedStringArray("4.4", "GL Compatibility")
 boot_splash/bg_color=Color(0, 0, 0, 1)
-boot_splash/image="uid://d2wsv05a3y641"
+boot_splash/image="uid://c17dstkh32eag"
 config/icon="res://current/assets/images/mieu_splash.png"
 boot_splash/minimum_display_time=1250
 
@@ -56,7 +56,7 @@ window/size/viewport_height=1080
 window/subwindows/embed_subwindows=false
 window/stretch/mode="viewport"
 window/per_pixel_transparency/allowed=true
-mouse_cursor/custom_image="uid://c6t75745hligc"
+mouse_cursor/custom_image="uid://dbao1jaxf8ckk"
 
 [gui]
 

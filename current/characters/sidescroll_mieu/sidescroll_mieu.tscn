@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=3 uid="uid://cm40xnuc8mogi"]
 
 [ext_resource type="Script" uid="uid://2gdlpfnb05k4" path="res://current/characters/sidescroll_mieu/sidescroll_mieu.gd" id="1_uiwn2"]
-[ext_resource type="Texture2D" uid="uid://lhikvxbnengm" path="res://current/assets/images/mieu_idle_front.png" id="2_76dns"]
+[ext_resource type="Texture2D" uid="uid://cbjwmchpjkkp5" path="res://current/assets/images/mieu_idle_front.png" id="2_76dns"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_flex7"]
 atlas = ExtResource("2_76dns")

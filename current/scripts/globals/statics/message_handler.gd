@@ -13,7 +13,7 @@ static func data(message: Dictionary) -> void:
 			message["payload"]["frame"] = -1
 		if SteamP2P.kitties.has(message.identity) :
 			if WorldManager.has(message.identity):
-				if Helper.dict_type_check(SteamP2P.kitties, message.identity, "Node2D"):
+				if Helper.dict_type_check(SteamP2P.kitties, message.identity, "Object"):
 					SteamP2P.kitties[message.identity].move_to(Vector2(message["payload"]["x"], message["payload"]["y"]), message["payload"]["sprite_y"], message["payload"]["movement_id"], message["payload"]["frame"])
 				else:
 					SteamP2P.spawn_kitty(message)
