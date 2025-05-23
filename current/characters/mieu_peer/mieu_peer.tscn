@@ -119,7 +119,7 @@ animations = [{
 }]
 
 [node name="MieuPeerRoot2D" type="Node2D"]
-modulate = Color(0.294118, 0.294118, 0.294118, 1)
+modulate = Color(0.29219, 0.29219, 0.29219, 1)
 script = ExtResource("2_gb511")
 
 [node name="Shadow" type="AnimatedSprite2D" parent="."]

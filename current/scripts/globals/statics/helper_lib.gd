@@ -30,14 +30,11 @@ static func get_font(font_path: String) -> Font:
 static func get_string_from_txt(location: String) -> String:
 	return FileAccess.get_file_as_string(location)
 
-static func dict_type_check(dict: Dictionary, key: Variant, type: String) -> bool:
+static func dict_type_check(dict: Dictionary, key: Variant, type: Variant) -> bool:
 	if dict.has(key) and dict[key] != null:
-		return type == get_type(dict[key])
+		return is_instance_of(dict[key], type)
 	else:
 		return false
-
-static func get_type(variable: Variant) -> String:
-	return type_string(typeof(variable))
 
 static func create_button(callable: Callable) -> Button:
 	var button: Button = Button.new()
