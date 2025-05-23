@@ -83,4 +83,4 @@ position = Vector2(923, 690)
 position = Vector2(960, 540)
 script = ExtResource("6_jmjhi")
 following = true
-camera_zoom = 1.5
+camera_zoom = 1.15

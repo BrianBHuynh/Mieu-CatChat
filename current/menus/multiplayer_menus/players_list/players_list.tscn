@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bkb2qnl7jc0pw"]
 
-[ext_resource type="Script" uid="uid://s0kd5ru30f5m" path="res://current/menus/tab_list/tab_list.gd" id="1_p4v51"]
+[ext_resource type="Script" uid="uid://dq860g5n8mkv8" path="res://current/menus/multiplayer_menus/players_list/players_list.gd" id="1_p3l0c"]
 [ext_resource type="Script" uid="uid://vftddq4ojmo2" path="res://current/scripts/node/rich_text_label.gd" id="2_lm1xg"]
 
 [node name="Players" type="Control"]
@@ -10,7 +10,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_p4v51")
+script = ExtResource("1_p3l0c")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 0

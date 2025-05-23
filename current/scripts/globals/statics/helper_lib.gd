@@ -38,3 +38,10 @@ static func dict_type_check(dict: Dictionary, key: Variant, type: String) -> boo
 
 static func get_type(variable: Variant) -> String:
 	return type_string(typeof(variable))
+
+static func create_button(callable: Callable) -> Button:
+	var button: Button = Button.new()
+	button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	button.size_flags_stretch_ratio = .1
+	button.pressed.connect(callable)
+	return button

@@ -18,17 +18,10 @@ func populate_player_list() -> void:
 		player_info.fit_content = true
 		hbox.add_child(player_info)
 		if player_id != SteamLobbies.host() and SteamLobbies.is_host():
-			hbox.add_child(create_button(Moderation.ban_player_temp.bind(player_id)))
-			hbox.add_child(create_button(Moderation.ban_player_persist.bind(player_id)))
-			hbox.add_child(create_button(Moderation.block_player.bind(player_id)))
+			hbox.add_child(Helper.create_button(Moderation.ban_player_temp.bind(player_id)))
+			hbox.add_child(Helper.create_button(Moderation.ban_player_persist.bind(player_id)))
+			hbox.add_child(Helper.create_button(Moderation.block_player.bind(player_id)))
 		$ScrollContainer/VBoxContainer.add_child(hbox)
 
 func _on_filter_pressed() -> void:
 	Ui.open_menu("res://current/menus/multiplayer_menus/chat_filter/chat_filter_menu.tscn")
-
-func create_button(callable: Callable) -> Button:
-	var button: Button = Button.new()
-	button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	button.size_flags_stretch_ratio = .1
-	button.pressed.connect(callable)
-	return button
