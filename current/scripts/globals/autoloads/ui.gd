@@ -2,6 +2,7 @@ extends Node
 
 
 var pause_menu: String = "res://current/menus/escape_menu/escape_menu.tscn"
+var canvas_layer: CanvasLayer
 var cur_menu: Control
 var lobbies: VBoxContainer
 var chat_box: Control
@@ -25,6 +26,8 @@ func _physics_process(_delta: float) -> void:
 		chat_box.release_focus()
 	elif Input.is_action_just_pressed("chat") and !is_menu_open() and chat_box != null:
 		chat_box.open_text_input()
+	elif Input.is_action_just_pressed("player_list"):
+		open_player_list()
 
 func is_menu_open() -> bool:
 	return is_instance_valid(cur_menu)
@@ -57,14 +60,23 @@ func sent_chat_message(message: String, target: int = 0, private: bool = false) 
 func open_menu(menu_path: String) -> void:
 	var old_menu: Control = cur_menu
 	var new_menu: Control = load(menu_path).instantiate()
-	get_tree().root.add_child(new_menu)
+	while canvas_layer == null or !is_instance_valid(canvas_layer):
+		await get_tree().process_frame
+	canvas_layer.add_child(new_menu)
 	cur_menu = new_menu
 	if old_menu != null and is_instance_valid(old_menu):
 		old_menu.queue_free()
 
+func open_player_list() -> void:
+	var tab_menu: Control = load("res://current/menus/tab_list/tab_list.tscn").instantiate()
+	while canvas_layer == null or !is_instance_valid(canvas_layer):
+		await get_tree().process_frame
+	canvas_layer.add_child(tab_menu)
+	
+
 func close_menu() -> void:
-	if cur_menu:
-		get_tree().root.remove_child(cur_menu)
+	if cur_menu and canvas_layer != null and is_instance_valid(canvas_layer):
+		canvas_layer.remove_child(cur_menu)
 		if cur_menu.has_method("close"):
 			cur_menu.close()
 		cur_menu.queue_free()

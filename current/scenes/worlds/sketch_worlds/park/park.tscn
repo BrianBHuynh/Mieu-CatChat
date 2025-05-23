@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://w7g10qhhkaf8"]
+[gd_scene load_steps=12 format=3 uid="uid://w7g10qhhkaf8"]
 
 [ext_resource type="Script" uid="uid://cee1f8kqw5s27" path="res://current/scripts/node/world.gd" id="1_7l3bo"]
 [ext_resource type="Script" uid="uid://dwtq2tmpbk1dm" path="res://current/scripts/node/minigame_window.gd" id="2_8r8d5"]
+[ext_resource type="Script" uid="uid://s6x5closh44w" path="res://current/scripts/canvas_layer.gd" id="3_6vxux"]
 [ext_resource type="Texture2D" uid="uid://bvuros8tkmx4v" path="res://current/assets/images/bg-2.jpg" id="3_8d3qt"]
 [ext_resource type="PackedScene" uid="uid://cj7jy8rdyeuvj" path="res://current/characters/mieu/mieu.tscn" id="4_5hbkt"]
 [ext_resource type="Script" uid="uid://bd3c3vv2lpyte" path="res://current/scripts/node/door.gd" id="4_7l3bo"]
@@ -27,6 +28,21 @@ size = Vector2i(1920, 1080)
 visible = false
 keep_title_visible = true
 script = ExtResource("2_8r8d5")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+script = ExtResource("3_6vxux")
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="VpetGui" parent="CanvasLayer/Control" instance=ExtResource("5_6gi8m")]
+layout_mode = 1
+
+[node name="ChatBox" parent="CanvasLayer/Control" instance=ExtResource("6_org83")]
+layout_mode = 1
 
 [node name="Background" type="Node2D" parent="."]
 
@@ -79,19 +95,5 @@ position = Vector2(923, 690)
 [node name="MainCamera" type="Camera2D" parent="."]
 position = Vector2(960, 540)
 script = ExtResource("6_i1b0a")
-
-[node name="Control" type="Control" parent="MainCamera"]
-layout_mode = 3
-anchors_preset = 0
-offset_left = -960.0
-offset_top = -540.0
-offset_right = -920.0
-offset_bottom = -500.0
-
-[node name="VpetGui" parent="MainCamera/Control" instance=ExtResource("5_6gi8m")]
-layout_mode = 1
-
-[node name="ChatBox" parent="MainCamera/Control" instance=ExtResource("6_org83")]
-layout_mode = 1
 
 [connection signal="body_entered" from="Middleground/DoorC" to="." method="_on_door_c_body_entered"]

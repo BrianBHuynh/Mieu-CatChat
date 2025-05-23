@@ -1,0 +1,42 @@
+[gd_scene load_steps=3 format=3 uid="uid://d1famvjayyjsn"]
+
+[ext_resource type="Script" uid="uid://s0kd5ru30f5m" path="res://current/menus/tab_list/tab_list.gd" id="1_116yi"]
+[ext_resource type="Script" uid="uid://vftddq4ojmo2" path="res://current/scripts/node/rich_text_label.gd" id="2_jjl5x"]
+
+[node name="Players" type="Control"]
+top_level = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_116yi")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 448.0
+offset_bottom = 768.0
+color = Color(0.0980392, 0.0980392, 0.0980392, 1)
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 0
+offset_right = 448.0
+offset_bottom = 768.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+clip_contents = true
+layout_mode = 2
+
+[node name="Name" type="RichTextLabel" parent="ScrollContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Players:"
+fit_content = true
+script = ExtResource("2_jjl5x")

@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://b2ucgueqa6np1"]
+[gd_scene load_steps=11 format=3 uid="uid://b2ucgueqa6np1"]
 
 [ext_resource type="Script" uid="uid://cee1f8kqw5s27" path="res://current/scripts/node/world.gd" id="1_8fl6u"]
 [ext_resource type="Script" uid="uid://dwtq2tmpbk1dm" path="res://current/scripts/node/minigame_window.gd" id="2_4xxgr"]
 [ext_resource type="Texture2D" uid="uid://rs6brg1ct86n" path="res://current/assets/images/bg-3.png" id="3_8fl6u"]
+[ext_resource type="Script" uid="uid://s6x5closh44w" path="res://current/scripts/canvas_layer.gd" id="3_75p6d"]
 [ext_resource type="Script" uid="uid://bd3c3vv2lpyte" path="res://current/scripts/node/door.gd" id="4_8fl6u"]
 [ext_resource type="PackedScene" uid="uid://cj7jy8rdyeuvj" path="res://current/characters/mieu/mieu.tscn" id="4_8op36"]
 [ext_resource type="PackedScene" uid="uid://cbajq0dylq2p2" path="res://current/ui/vpet_gui/vpet_gui.tscn" id="5_nmlgq"]
@@ -24,6 +25,21 @@ size = Vector2i(1920, 1080)
 visible = false
 keep_title_visible = true
 script = ExtResource("2_4xxgr")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+script = ExtResource("3_75p6d")
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="VpetGui" parent="CanvasLayer/Control" instance=ExtResource("5_nmlgq")]
+layout_mode = 1
+
+[node name="ChatBox" parent="CanvasLayer/Control" instance=ExtResource("6_gcixn")]
+layout_mode = 1
 
 [node name="Background" type="Node2D" parent="."]
 
@@ -54,17 +70,3 @@ position = Vector2(923, 690)
 [node name="MainCamera" type="Camera2D" parent="."]
 position = Vector2(960, 540)
 script = ExtResource("6_n47hb")
-
-[node name="Control" type="Control" parent="MainCamera"]
-layout_mode = 3
-anchors_preset = 0
-offset_left = -960.0
-offset_top = -540.0
-offset_right = -920.0
-offset_bottom = -500.0
-
-[node name="VpetGui" parent="MainCamera/Control" instance=ExtResource("5_nmlgq")]
-layout_mode = 1
-
-[node name="ChatBox" parent="MainCamera/Control" instance=ExtResource("6_gcixn")]
-layout_mode = 1
