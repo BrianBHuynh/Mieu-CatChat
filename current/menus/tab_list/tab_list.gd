@@ -1,13 +1,17 @@
 extends Control
+
+
 var player_list: Array = []
 
 
 func _ready() -> void:
 	populate_player_list()
 
+
 func _process(_delta: float) -> void:
 	if !Input.is_action_pressed("player_list"):
 		queue_free()
+
 
 func populate_player_list() -> void:
 	SteamLobbies.get_lobby_members()
@@ -25,4 +29,5 @@ func populate_player_list() -> void:
 			hbox.add_child(Helper.create_button(Moderation.ban_player_temp.bind(player_id)))
 			hbox.add_child(Helper.create_button(Moderation.ban_player_persist.bind(player_id)))
 			hbox.add_child(Helper.create_button(Moderation.block_player.bind(player_id)))
+		
 		$ScrollContainer/VBoxContainer.add_child(hbox)

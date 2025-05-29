@@ -11,6 +11,7 @@ func _ready() -> void:
 		add_theme_color_override("font_outline_color", get_theme_color("default_color").inverted())
 	texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 
+
 func update_font() -> void:
 	await get_tree().create_timer(1.0/60.0).timeout
 	var font_path: String = Saves.get_or_return("settings", "font", "res://current/assets/fonts/AtkinsonHyperlegible-Regular.ttf")

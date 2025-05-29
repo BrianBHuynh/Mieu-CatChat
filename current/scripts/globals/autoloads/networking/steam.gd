@@ -5,6 +5,7 @@ var running: bool = false
 var steam_id: int = 0
 var steam_username: String = "Player"
 
+
 func _ready() -> void:
 	Steam.steamInit()
 	#Makes sure the game is owned and the user is running steam while logged in.
@@ -20,10 +21,12 @@ func _ready() -> void:
 	else:
 		Ui.show_system_warning("Steam is not running right now, online features may not work correctly!")
 
+
 func _physics_process(delta: float) -> void:
 	if running:
 		Steam.run_callbacks()
 		SteamP2P.process(delta)
+
 
 func check_command_line() -> void:
 	#Not fully implemented, test later.

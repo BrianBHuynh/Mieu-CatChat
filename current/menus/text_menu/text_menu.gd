@@ -15,23 +15,28 @@ func _ready() -> void:
 	for font: String in fonts_temp:
 		fonts.append("user://fonts/" + font)
 
+
 func _font_changed() -> void:
 	var tempfont: String = fonts.pop_front()
 	fonts.append(tempfont)
 	Saves.set_value("settings", "font", tempfont)
 	SignalBus.settings_updated.emit()
 
+
 func _on_text_size_slider_value_changed(value: float) -> void:
 	Saves.set_value("settings", "font_size", value)
 	SignalBus.settings_updated.emit()
+
 
 func _on_chat_text_size_slider_value_changed(value: float) -> void:
 	Saves.set_value("settings", "chat_font_size", value)
 	SignalBus.settings_updated.emit()
 
+
 func _on_name_tag_size_slider_value_changed(value: float) -> void:
 	Saves.set_value("settings", "name_tag_size", value)
 	SignalBus.settings_updated.emit()
+
 
 func _on_outline_invert_toggled(toggled_on: bool) -> void:
 	Saves.set_value("settings", "invert_outline", toggled_on)

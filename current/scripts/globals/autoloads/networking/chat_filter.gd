@@ -6,7 +6,6 @@ func filter(message: Dictionary) -> Dictionary:
 	for word: String in chat_filter:
 		if message["payload"]["text"].contains(word):
 			message["payload"]["text"] = message["payload"]["text"].replace(word, chat_filter[word]["replacement_word"])
-			
 			if chat_filter[word]["ban"]:
 				Moderation.ban_player_persist(message.identity)
 			elif chat_filter[word]["block"]:
@@ -16,4 +15,5 @@ func filter(message: Dictionary) -> Dictionary:
 			
 			if chat_filter[word]["delete"]:
 				message["payload"]["text"] = "Deleted by filter"
+	
 	return message

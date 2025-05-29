@@ -1,7 +1,9 @@
 extends Control
 
+
 func _ready() -> void:
 	populate_from_file()
+
 
 func _on_save_filter_button_pressed() -> void:
 	var filtered_words: Dictionary = {}
@@ -20,7 +22,9 @@ func _on_save_filter_button_pressed() -> void:
 				new_dict["kick"] = Fields.pop_front().button_pressed
 				new_dict["delete"] = Fields.pop_front().button_pressed
 				filtered_words[FilteredText] = new_dict
+	
 	Saves.set_value("networking", "chat_filter", filtered_words)
+
 
 func create_empty_entry() -> void:
 	var hbox: HBoxContainer = HBoxContainer.new()
@@ -34,6 +38,7 @@ func create_empty_entry() -> void:
 	hbox.add_child(create_blank_check_button())
 	$ScrollContainer/VBoxContainer.add_child(hbox)
 	$ScrollContainer/VBoxContainer.move_child(hbox, 1)
+
 
 func populate_from_file() -> void:
 	var filtered_words: Dictionary = Saves.get_or_add("networking", "chat_filter", {})
@@ -49,6 +54,7 @@ func populate_from_file() -> void:
 		hbox.add_child(create_check_button(word, "delete", filtered_words))
 		$ScrollContainer/VBoxContainer.add_child(hbox)
 
+
 func clear_entries() -> void:
 	var first: bool = true
 	for hbox: HBoxContainer in $ScrollContainer/VBoxContainer.get_children():
@@ -57,8 +63,10 @@ func clear_entries() -> void:
 		else:
 			hbox.queue_free()
 
+
 func _on_add_entry_pressed() -> void:
 	create_empty_entry()
+
 
 func create_text_edit(word: String, key: String, filter: Dictionary) -> TextEdit:
 	var text_edit: TextEdit = TextEdit.new()
@@ -68,6 +76,7 @@ func create_text_edit(word: String, key: String, filter: Dictionary) -> TextEdit
 	text_edit.size_flags_stretch_ratio = 1.0
 	return text_edit
 
+
 func create_check_button(word: String, key: String, filter: Dictionary) -> Button:
 	var button: CheckBox = CheckBox.new()
 	button.button_pressed = filter[word][key]
@@ -75,11 +84,13 @@ func create_check_button(word: String, key: String, filter: Dictionary) -> Butto
 	button.size_flags_stretch_ratio = .2
 	return button
 
+
 func create_blank_check_button() -> Button:
 	var button: CheckBox = CheckBox.new()
 	button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	button.size_flags_stretch_ratio = .2
 	return button
+
 
 func create_blank_text_edit(placeholder_text: String, text: String) -> TextEdit:
 	var text_edit: TextEdit = TextEdit.new()

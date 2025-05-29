@@ -8,6 +8,7 @@ var since_last_synced: int = 0
 var moving: bool = false
 var scene_changing: bool = false
 
+
 func _ready() -> void:
 	GlobalVars.movement_id = GlobalVars.movement_id + 1
 	GlobalVars.mieu = self
@@ -16,10 +17,10 @@ func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	$Sprite/RichTextLabel.text = "[center]" + SteamWorks.steam_username + "[/center]"
 
+
 func _physics_process(delta: float) -> void:
 	movement_logic()
 	jumping_logic(delta)
-	
 	global_position = global_position.clamp(Vector2(0.0,0.0), Vector2(1920.0, 1080.0))
 	if Input.is_action_pressed("jump") and !jumping and GlobalVars.is_player_interactive():
 		jumping = true
@@ -27,6 +28,7 @@ func _physics_process(delta: float) -> void:
 		send_location(Steam.NETWORKING_SEND_UNRELIABLE_NO_DELAY, get_frame())
 	elif moving:
 		send_location()
+
 
 func send_location(send_method: int = Steam.NETWORKING_SEND_UNRELIABLE_NO_DELAY, frame: int = -1) -> void:
 	if SteamLobbies.lobby_id != 0 and is_visible_in_tree() and GlobalVars.is_debug_sendable():
@@ -36,9 +38,9 @@ func send_location(send_method: int = Steam.NETWORKING_SEND_UNRELIABLE_NO_DELAY,
 			SteamP2P.send_message_to_user({"type": "data", "x": global_position.x, "y": global_position.y, "sprite_y": $Sprite.position.y, "movement_id": GlobalVars.movement_id, "frame": frame}, 0, send_method)
 		last_pos = $Sprite.global_position
 
+
 func movement_logic() -> void:
 	var input_dir: Vector2 = Vector2(0, 0)
-	
 	if GlobalVars.is_player_interactive():
 		if Input.is_action_pressed("move_left"):
 			input_dir.x = -1
@@ -49,7 +51,6 @@ func movement_logic() -> void:
 		elif Input.is_action_pressed("move_backwards"):
 			input_dir.y = input_dir.y + 1
 	input_dir = input_dir.normalized()
-	
 	if moving:
 		if input_dir == Vector2(0,0) and !jumping:
 			GlobalVars.movement_id = GlobalVars.movement_id + 1
@@ -88,6 +89,7 @@ func movement_logic() -> void:
 	
 	move_and_slide()
 
+
 func jumping_logic(delta: float) -> void:
 	if jumping:
 		if $Sprite.position.y <= GlobalVars.sprite_offset.y:
@@ -100,8 +102,10 @@ func jumping_logic(delta: float) -> void:
 			total_delta = 0.0
 			jumping = false
 
+
 func get_frame() -> int:
 	return $Sprite.frame
+
 
 func set_frame(frame: int) -> void:
 	$Sprite.frame = frame

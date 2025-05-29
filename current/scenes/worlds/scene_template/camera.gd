@@ -4,8 +4,10 @@ extends Camera2D
 @export var following: bool = false
 @export var camera_zoom: float = 1.0
 
+
 func _ready() -> void:
 	zoom = Vector2(camera_zoom, camera_zoom)
+
 
 func _process(_delta: float) -> void:
 	if following:

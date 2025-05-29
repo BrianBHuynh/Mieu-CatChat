@@ -16,9 +16,11 @@ var fadeout_time: float = .5
 var transition_time: float = .25
 var fadein_time: float = 1
 
+
 func _ready() -> void:
 	_load_finished()
 	SignalBus.load_finished.connect(_load_finished)
+
 
 func _load_finished() -> void:
 	set_stretch_aspect(Saves.get_or_return("settings", "stretch_aspect", 1))
@@ -26,10 +28,12 @@ func _load_finished() -> void:
 	set_borderless(Saves.get_or_return("settings", "borderless", false))
 	get_window().size = Vector2(Saves.get_or_return("settings", "width", DisplayServer.screen_get_size().x), Saves.get_or_add("settings", "height", DisplayServer.screen_get_size().y))
 
+
 func set_resolution(width: int, height: int) -> void:
 	Saves.set_value("settings", "width", width)
 	Saves.set_value("settings", "height", height)
 	Window.size = Vector2(width, height)
+
 
 func set_stretch_aspect(aspect: int) -> void:
 	match aspect:
@@ -43,7 +47,9 @@ func set_stretch_aspect(aspect: int) -> void:
 			get_tree().root.content_scale_aspect = Window.CONTENT_SCALE_ASPECT_KEEP_HEIGHT
 		4:
 			get_tree().root.content_scale_aspect = Window.CONTENT_SCALE_ASPECT_EXPAND
+	
 	Saves.set_value("settings", "stretch_aspect", aspect)
+
 
 func set_window_mode(mode: int) -> void:
 	match mode:
@@ -58,14 +64,18 @@ func set_window_mode(mode: int) -> void:
 			get_window().set_mode(Window.MODE_FULLSCREEN)
 		4:
 			get_window().set_mode(Window.MODE_EXCLUSIVE_FULLSCREEN)
+	
 	Saves.set_value("settings", "window_mode", mode)
+
 
 func set_borderless(toggled: bool) -> void:
 	get_window().set_flag(Window.FLAG_BORDERLESS, toggled)
 	Saves.set_value("settings", "borderless", toggled)
 
+
 func is_player_interactive() -> bool:
 	return not (Ui.is_menu_open() or MinigameManager.minigame_display.has_focus() or Ui.chat_box.is_text_box_focused())
+
 
 func is_debug_sendable() -> bool:
 	if gap_num >= gap and RandomNumberGenerator.new().randi_range(1, chance) == 1:

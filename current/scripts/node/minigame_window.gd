@@ -8,8 +8,10 @@ func _ready() -> void:
 	focus_exited.connect(pause)
 	focus_entered.connect(play)
 
+
 func pause() -> void:
 	process_mode = Node.PROCESS_MODE_DISABLED
+
 
 func play() -> void:
 	process_mode = Node.PROCESS_MODE_INHERIT

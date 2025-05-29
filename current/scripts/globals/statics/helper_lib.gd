@@ -27,14 +27,17 @@ static func get_font(font_path: String) -> Font:
 		Ui.show_system_warning("Invalid font format at: " + font_path)
 		return load("res://current/assets/fonts/AtkinsonHyperlegible-Regular.ttf")
 
+
 static func get_string_from_txt(location: String) -> String:
 	return FileAccess.get_file_as_string(location)
+
 
 static func dict_type_check(dict: Dictionary, key: Variant, type: Variant) -> bool:
 	if dict.has(key) and dict[key] != null:
 		return is_instance_of(dict[key], type)
 	else:
 		return false
+
 
 static func create_button(callable: Callable) -> Button:
 	var button: Button = Button.new()
