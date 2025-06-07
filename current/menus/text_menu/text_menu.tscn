@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b30708qpwiu2y" path="res://current/menus/text_menu/text_menu.gd" id="1_5ah6d"]
 [ext_resource type="Script" uid="uid://vftddq4ojmo2" path="res://current/scripts/node/rich_text_label.gd" id="2_we7n5"]
-[ext_resource type="Texture2D" uid="uid://dv4n5etipadpk" path="res://current/assets/ui/btn_sized.png" id="3_pgb34"]
+[ext_resource type="Texture2D" uid="uid://d3oshdwj6j7v8" path="res://current/assets/ui/btn_sized.png" id="3_pgb34"]
 
 [node name="DebugMenu" type="Control"]
 layout_mode = 3
@@ -143,6 +143,9 @@ layout_mode = 2
 size_flags_horizontal = 3
 texture_normal = ExtResource("3_pgb34")
 stretch_mode = 5
+
+[node name="OptionButton" type="OptionButton" parent="ScrollContainer/VBoxContainer/FontChange"]
+layout_mode = 2
 
 [node name="OutlineInvert" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
 clip_contents = true

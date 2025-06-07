@@ -14,6 +14,8 @@ func _ready() -> void:
 	var fonts_temp: PackedStringArray = DirAccess.get_files_at("user://fonts/")
 	for font: String in fonts_temp:
 		fonts.append("user://fonts/" + font)
+	for font: String in fonts:
+		$ScrollContainer/VBoxContainer/FontChange/OptionButton.add_item(font)
 
 
 func _font_changed() -> void:
