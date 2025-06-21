@@ -7,9 +7,11 @@ func _ready() -> void:
 	Steam.network_messages_session_request.connect(_on_network_messages_session_request)
 	Steam.network_messages_session_failed.connect(_on_p2p_session_connect_fail)
 
+
 func process(_delta: float) -> void:
 	if SteamLobbies.lobby_id > 0:
 		read_p2p_messages()
+
 
 func _on_network_messages_session_request(remote_id: int) -> void:
 	if Moderation.is_allowed(remote_id):
@@ -17,11 +19,13 @@ func _on_network_messages_session_request(remote_id: int) -> void:
 		WorldManager.send_world(remote_id)
 		SteamP2P.send_message_to_user({"type": "handshake"}, remote_id)
 
+
 func read_p2p_messages() -> void:
 	var messages: Array = Steam.receiveMessagesOnChannel(0, 1000)
 	if messages.size() != 0:
 		for message: Dictionary in messages:
 			process_message(message)
+
 
 func process_message(message: Dictionary) -> void:
 	if message.is_empty() or message == null:
@@ -59,8 +63,10 @@ func process_message(message: Dictionary) -> void:
 				"encrypted_key":
 					MessageHandler.encrypted_key(message)
 
+
 func send_message_to_user(payload: Dictionary, this_target: int = 0, send_type: int = Steam.NETWORKING_SEND_RELIABLE, channel: int = 0, encrypted: bool = false) -> void:
 	Multithreading.add_task(_send_message_to_user_task.bind(payload, this_target, send_type, channel, encrypted))
+
 
 func _send_message_to_user_task(payload: Dictionary, this_target: int = 0, send_type: int = Steam.NETWORKING_SEND_RELIABLE, channel: int = 0, encrypted: bool = false) -> void:
 	if SteamLobbies.lobby_members.size() > 1:
@@ -69,6 +75,7 @@ func _send_message_to_user_task(payload: Dictionary, this_target: int = 0, send_
 			this_data.append_array(Cryptography.encrypted_messages_sent[Cryptography.encode_payload(payload)]["payload"])
 		else:
 			this_data.append_array(var_to_bytes(payload))
+		
 		this_data = this_data.compress(FileAccess.COMPRESSION_GZIP)
 		if this_target == 0:
 			match payload["type"]:
@@ -91,8 +98,10 @@ func _send_message_to_user_task(payload: Dictionary, this_target: int = 0, send_
 					if Moderation.is_allowed(this_target):
 						Steam.sendMessageToUser(this_target, this_data, send_type, channel)
 
+
 func send_chat_message(message: String, this_target: int = 0, private: bool = false, channel: int = 0) -> void:
 	Multithreading.add_task(_send_chat_message_task.bind(message, this_target, private, channel))
+
 
 func _send_chat_message_task(message: String, this_target: int = 0, private: bool = false, channel: int = 0) -> void:
 	if SteamLobbies.lobby_members.size() > 1:
@@ -111,8 +120,10 @@ func _send_chat_message_task(message: String, this_target: int = 0, private: boo
 				Ui.show_system_warning("Target is either blocked or banned!")
 	Ui.sent_chat_message.call_deferred(message, this_target, private)
 
+
 func send_lobby_data(this_target: int = 0, _reason: String = "No reason provided", channel: int = 0) -> void:
 	Multithreading.add_task(_send_lobby_data_task.bind(this_target, _reason, channel))
+
 
 func _send_lobby_data_task(this_target: int = 0, _reason: String = "No reason provided", channel: int = 0) -> void:
 	if SteamLobbies.is_host() and SteamLobbies.lobby_members.size() > 1:
@@ -128,19 +139,23 @@ func _send_lobby_data_task(this_target: int = 0, _reason: String = "No reason pr
 			if this_target != SteamWorks.steam_id and Moderation.is_allowed(this_target):
 					Steam.sendMessageToUser(this_target, this_data, send_type, channel)
 
+
 func send_kick(this_target: int = 0, reason: String = "no reason provided") -> void:
 	if SteamLobbies.is_host() and SteamLobbies.lobby_members.size() > 1:
 		send_message_to_user({"type": "kick", "reason": reason}, this_target)
 		send_message_to_user({"type": "kick_announce", "kicked_player": this_target}, 0)
+
 
 func send_ban(this_target: int = 0, reason: String = "no reason provided") -> void:
 	if SteamLobbies.is_host() and SteamLobbies.lobby_members.size() > 1:
 		send_message_to_user({"type": "ban", "reason": reason}, this_target)
 		send_message_to_user({"type": "ban_announce", "banned_player": this_target}, 0)
 
+
 func _on_p2p_session_connect_fail(steam_id: int, _session_error: int, _state: int, debug_msg: String) -> void:
 	Ui.show_system_warning("P2p session connection failed! Reason: " + debug_msg)
 	remove_kitty(steam_id)
+
 
 func spawn_kitty(message: Dictionary) -> void:
 	while !WorldManager.middleground:
@@ -154,11 +169,13 @@ func spawn_kitty(message: Dictionary) -> void:
 	Ui.show_system_debug("creating")
 	kit.show()
 
+
 func remove_kitties() -> void:
 	for cat_id: int in SteamP2P.kitties:
 		if kitties[cat_id] != null and is_instance_valid(kitties[cat_id]):
 			kitties[cat_id].remove()
 	kitties.clear()
+
 
 func remove_kitty(pid: int = 0) -> void:
 	if kitties.has(pid) and kitties[pid] != null:

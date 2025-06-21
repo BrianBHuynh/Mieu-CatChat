@@ -7,6 +7,7 @@ var lobby_members_max: int = 10
 var lobby_vote_kick: bool = false
 var failcount: int = 0
 
+
 func _ready() -> void:
 	Steam.join_requested.connect(_on_lobby_join_requested)
 	Steam.lobby_chat_update.connect(_on_lobby_chat_update)
@@ -14,6 +15,7 @@ func _ready() -> void:
 	Steam.lobby_joined.connect(_on_lobby_joined)
 	Steam.lobby_match_list.connect(_on_lobby_match_list)
 	Steam.persona_state_change.connect(_on_persona_change)
+
 
 func create_lobby(type: int = Steam.LOBBY_TYPE_PUBLIC, max_players: int = 250) -> void:
 	if lobby_id == 0:
@@ -24,6 +26,7 @@ func create_lobby(type: int = Steam.LOBBY_TYPE_PUBLIC, max_players: int = 250) -
 		Ui.show_system_message("You are currently already in a lobby!")
 		Steam.requestLobbyList()
 
+
 func _on_lobby_created(_connected: int, this_lobby_id: int) -> void:
 	lobby_id = this_lobby_id
 	Ui.show_system_message("Created a lobby: " + str(lobby_id))
@@ -31,19 +34,23 @@ func _on_lobby_created(_connected: int, this_lobby_id: int) -> void:
 	Steam.setLobbyData(lobby_id, "name", SteamWorks.steam_username + "'s Lobby")
 	Steam.setLobbyData(lobby_id, "mode", "Multiplayer Lobby")
 
+
 func _on_open_lobby_list_pressed() -> void:
 	Steam.addRequestLobbyListDistanceFilter(Steam.LOBBY_DISTANCE_FILTER_WORLDWIDE)
 	Steam.requestLobbyList()
+
 
 func _on_lobby_match_list(these_lobbies: Array) -> void:
 	if Ui.lobbies != null:
 		var lobby_buttons: Array = Ui.lobbies.get_children()
 		Multithreading.add_task(fill_lobbies.bind(these_lobbies, lobby_buttons))
 
+
 func fill_lobbies(these_lobbies: Array, lobby_buttons: Array) -> void:
 	for button: Button in lobby_buttons:
 		button.queue_free()
 		lobby_buttons.erase(button)
+	
 	for this_lobby: int in these_lobbies:
 		var lobby_name: String = Steam.getLobbyData(this_lobby, "name")
 		var lobby_mode: String = Steam.getLobbyData(this_lobby, "mode")
@@ -55,10 +62,12 @@ func fill_lobbies(these_lobbies: Array, lobby_buttons: Array) -> void:
 		lobby_button.connect("pressed", join_lobby.bind(this_lobby))
 		Ui.lobbies.add_child.call_deferred(lobby_button)
 
+
 func join_lobby(this_lobby_id: int) -> void:
 	Ui.show_system_message("Attempting to join lobby " + str(lobby_id))
 	lobby_members.clear()
 	Steam.joinLobby(this_lobby_id)
+
 
 func _on_lobby_joined(this_lobby_id: int, _permissions: int, _locked: bool, response: int) -> void:
 	if response == Steam.CHAT_ROOM_ENTER_RESPONSE_SUCCESS:
@@ -79,6 +88,7 @@ func _on_lobby_joined(this_lobby_id: int, _permissions: int, _locked: bool, resp
 			Steam.CHAT_ROOM_ENTER_RESPONSE_COMMUNITY_BAN: fail_reason = "This lobby is community locked."
 			Steam.CHAT_ROOM_ENTER_RESPONSE_MEMBER_BLOCKED_YOU: fail_reason = "A user in the lobby has blocked you from joining."
 			Steam.CHAT_ROOM_ENTER_RESPONSE_YOU_BLOCKED_MEMBER: fail_reason = "A user you have blocked is in the lobby."
+		
 		Ui.show_system_warning("Failed to join this chat room: %s" % fail_reason)
 		_on_open_lobby_list_pressed()
 		failcount = failcount + 1
@@ -89,13 +99,16 @@ func _on_lobby_joined(this_lobby_id: int, _permissions: int, _locked: bool, resp
 		else:
 			failcount = 0
 
+
 func _on_lobby_join_requested(this_lobby_id: int, friend_id: int) -> void:
 	var owner_name: String = get_lobby_member_name(friend_id)
 	Ui.show_system_message("Joining %s's lobby..." % owner_name)
 	join_lobby(this_lobby_id)
 
+
 func get_lobby_member_name(id: int) -> String:
 	return lobby_members.get_or_add(id, {}).get_or_add("steam_name", Steam.getFriendPersonaName(id))
+
 
 func get_lobby_members() -> void:
 	lobby_members.clear()
@@ -104,11 +117,13 @@ func get_lobby_members() -> void:
 		var member_steam_id: int = Steam.getLobbyMemberByIndex(lobby_id, this_member)
 		var member_steam_name: String = get_lobby_member_name(member_steam_id)
 		lobby_members[member_steam_id] = {"steam_name": member_steam_name}
-	
+
+
 func _on_persona_change(this_steam_id: int, _flag: int) -> void:
 	if lobby_id > 0:
 		Ui.show_system_debug("A user (%s) had information change, update the lobby list" % this_steam_id)
 		get_lobby_members()
+
 
 func _on_lobby_chat_update(_this_lobby_id: int, change_id: int, _making_change_id: int, chat_state: int) -> void:
 	if Moderation.is_allowed(change_id):
@@ -127,6 +142,7 @@ func _on_lobby_chat_update(_this_lobby_id: int, change_id: int, _making_change_i
 			Ui.show_system_message("%s did... something." % changer_name)
 		get_lobby_members()
 
+
 func leave_lobby() -> void:
 	if lobby_id != 0:
 		Steam.leaveLobby(lobby_id)
@@ -134,15 +150,19 @@ func leave_lobby() -> void:
 		for this_member: int in lobby_members:
 			if this_member != SteamWorks.steam_id:
 				Steam.closeSessionWithUser(this_member)
+		
 		SteamP2P.remove_kitties()
 		lobby_members.clear()
 		WorldManager.clear_worlds()
 
+
 func is_host() -> bool:
 	return host() == SteamWorks.steam_id
 
+
 func host() -> int:
 	return Steam.getLobbyOwner(lobby_id)
+
 
 func get_host_name() -> String:
 	return lobby_members[host()]["steam_name"]

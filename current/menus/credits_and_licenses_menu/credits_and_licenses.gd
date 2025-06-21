@@ -16,10 +16,12 @@ func _ready() -> void:
 	
 	get_next()
 
+
 func get_next() -> void:
 	var next_path: String = file_paths.pop_front()
 	file_paths.push_back(next_path)
 	$ScrollContainer/HBoxContainer/CreditsOrLicense.text = Helper.get_string_from_txt(next_path)
+
 
 func get_previous() -> void:
 	var last_path: String = file_paths.pop_back()

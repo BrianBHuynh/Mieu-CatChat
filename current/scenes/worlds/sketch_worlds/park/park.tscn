@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cee1f8kqw5s27" path="res://current/scripts/node/world.gd" id="1_7l3bo"]
 [ext_resource type="Script" uid="uid://dwtq2tmpbk1dm" path="res://current/scripts/node/minigame_window.gd" id="2_8r8d5"]
-[ext_resource type="Script" uid="uid://s6x5closh44w" path="res://current/scripts/canvas_layer.gd" id="3_6vxux"]
+[ext_resource type="Script" uid="uid://s6x5closh44w" path="res://current/scripts/node/canvas_layer.gd" id="3_6vxux"]
 [ext_resource type="Texture2D" uid="uid://bvuros8tkmx4v" path="res://current/assets/images/bg-2.jpg" id="3_8d3qt"]
 [ext_resource type="PackedScene" uid="uid://cj7jy8rdyeuvj" path="res://current/characters/mieu/mieu.tscn" id="4_5hbkt"]
 [ext_resource type="Script" uid="uid://bd3c3vv2lpyte" path="res://current/scripts/node/door.gd" id="4_7l3bo"]

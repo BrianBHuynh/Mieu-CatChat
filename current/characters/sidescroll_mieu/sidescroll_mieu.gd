@@ -18,12 +18,15 @@ func _physics_process(delta: float) -> void:
 	else:
 		velocity.x = move_toward(velocity.x, 0, GlobalVars.move_speed)
 	
+	
 	if not is_on_floor():
 		velocity += get_gravity() * delta
+	
 	
 	# Handle jump.
 	if Input.is_action_just_pressed("jump") and is_on_floor() and !GlobalVars.is_player_interactive():
 		velocity.y += Jump_velocity
+	
 	
 	move_and_slide()
 	if SteamLobbies.lobby_id != 0:

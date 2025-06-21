@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://cee1f8kqw5s27" path="res://current/scripts/node/world.gd" id="1_opql4"]
 [ext_resource type="Script" uid="uid://dwtq2tmpbk1dm" path="res://current/scripts/node/minigame_window.gd" id="2_ls7y5"]
 [ext_resource type="Texture2D" uid="uid://clsgrjrhqiu61" path="res://current/assets/images/mieu.png" id="3_axu2p"]
-[ext_resource type="Script" uid="uid://s6x5closh44w" path="res://current/scripts/canvas_layer.gd" id="3_evdjc"]
+[ext_resource type="Script" uid="uid://s6x5closh44w" path="res://current/scripts/node/canvas_layer.gd" id="3_evdjc"]
 [ext_resource type="PackedScene" uid="uid://cj7jy8rdyeuvj" path="res://current/characters/mieu/mieu.tscn" id="3_qlkip"]
 [ext_resource type="PackedScene" uid="uid://cbajq0dylq2p2" path="res://current/ui/vpet_gui/vpet_gui.tscn" id="4_j3brf"]
 [ext_resource type="Script" uid="uid://bd3c3vv2lpyte" path="res://current/scripts/node/door.gd" id="4_opql4"]
