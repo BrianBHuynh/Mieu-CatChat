@@ -6,14 +6,12 @@ func _on_settings_btn_pressed() -> void:
 
 
 func _on_multiplayer_pressed() -> void:
-	if Steam.isSteamRunning():
+	if Saves.save_loaded:
 		Ui.open_menu("res://current/menus/multiplayer_menus/lobbies_menu/lobbies_menu.tscn")
-	else:
-		Ui.show_system_message("Steam is not currently open!")
-
 
 func _on_save_pressed() -> void:
-	Saves.save_game()
+	if Saves.save_loaded:
+		Saves.save_game()
 
 
 func _on_credit_btn_pressed() -> void:

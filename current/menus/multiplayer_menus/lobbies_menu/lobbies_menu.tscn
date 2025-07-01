@@ -37,69 +37,88 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Button Text" type="VBoxContainer" parent="ScrollContainer/HBoxContainer"]
+[node name="LeftSide" type="VBoxContainer" parent="ScrollContainer/HBoxContainer"]
 clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="CreateLobbyText" type="RichTextLabel" parent="ScrollContainer/HBoxContainer/Button Text"]
+[node name="CreateHBox" type="HBoxContainer" parent="ScrollContainer/HBoxContainer/LeftSide"]
+clip_contents = true
 layout_mode = 2
+size_flags_vertical = 3
+
+[node name="CreateLobbyText" type="RichTextLabel" parent="ScrollContainer/HBoxContainer/LeftSide/CreateHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Create a lobby"
 fit_content = true
 script = ExtResource("2_uk5a2")
 
-[node name="RefreshLobbiesText" type="RichTextLabel" parent="ScrollContainer/HBoxContainer/Button Text"]
+[node name="CreateLobby" type="TextureButton" parent="ScrollContainer/HBoxContainer/LeftSide/CreateHBox"]
+modulate = Color(0.797768, 0.553362, 0.848338, 1)
+texture_filter = 1
+clip_contents = true
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture_normal = ExtResource("3_i2ca0")
+stretch_mode = 5
+
+[node name="RefreshHBox" type="HBoxContainer" parent="ScrollContainer/HBoxContainer/LeftSide"]
+clip_contents = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="RefreshLobbiesText" type="RichTextLabel" parent="ScrollContainer/HBoxContainer/LeftSide/RefreshHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Refresh Lobbies"
 script = ExtResource("2_uk5a2")
 
-[node name="SendTestDataText" type="RichTextLabel" parent="ScrollContainer/HBoxContainer/Button Text"]
+[node name="RefreshLobbies" type="TextureButton" parent="ScrollContainer/HBoxContainer/LeftSide/RefreshHBox"]
+modulate = Color(0.869535, 0.382748, 0.676443, 1)
+texture_filter = 1
+clip_contents = true
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture_normal = ExtResource("3_i2ca0")
+stretch_mode = 5
+
+[node name="LeaveHBox" type="HBoxContainer" parent="ScrollContainer/HBoxContainer/LeftSide"]
+clip_contents = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="LeaveLobbyText" type="RichTextLabel" parent="ScrollContainer/HBoxContainer/LeftSide/LeaveHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Leave Lobby"
 fit_content = true
 script = ExtResource("2_uk5a2")
 
-[node name="Buttons" type="VBoxContainer" parent="ScrollContainer/HBoxContainer"]
-clip_contents = true
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="CreateLobby" type="TextureButton" parent="ScrollContainer/HBoxContainer/Buttons"]
-modulate = Color(0.797768, 0.553362, 0.848338, 1)
-texture_filter = 1
-clip_contents = true
-layout_mode = 2
-size_flags_vertical = 3
-texture_normal = ExtResource("3_i2ca0")
-stretch_mode = 5
-
-[node name="RefreshLobbies" type="TextureButton" parent="ScrollContainer/HBoxContainer/Buttons"]
-modulate = Color(0.869535, 0.382748, 0.676443, 1)
-texture_filter = 1
-clip_contents = true
-layout_mode = 2
-size_flags_vertical = 3
-texture_normal = ExtResource("3_i2ca0")
-stretch_mode = 5
-
-[node name="LeaveLobby" type="TextureButton" parent="ScrollContainer/HBoxContainer/Buttons"]
+[node name="LeaveLobby" type="TextureButton" parent="ScrollContainer/HBoxContainer/LeftSide/LeaveHBox"]
 modulate = Color(0.917703, 0.403097, 0.384092, 1)
 texture_filter = 1
 clip_contents = true
 layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 3
 texture_normal = ExtResource("3_i2ca0")
 stretch_mode = 5
+
+[node name="UUID" type="RichTextLabel" parent="ScrollContainer/HBoxContainer/LeftSide"]
+layout_mode = 2
+text = "Networking UUID:"
+fit_content = true
 
 [node name="LobbiesList" type="VBoxContainer" parent="ScrollContainer/HBoxContainer"]
 clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_stretch_ratio = 2.0
 script = ExtResource("4_uoaqa")
 
 [node name="MultiplayerSettings" type="TextureButton" parent="."]
@@ -111,7 +130,7 @@ offset_right = 384.0
 offset_bottom = 1024.0
 texture_normal = ExtResource("5_f0eko")
 
-[connection signal="pressed" from="ScrollContainer/HBoxContainer/Buttons/CreateLobby" to="." method="_on_create_lobby_btn_pressed"]
-[connection signal="pressed" from="ScrollContainer/HBoxContainer/Buttons/RefreshLobbies" to="." method="refresh_lobbies"]
-[connection signal="pressed" from="ScrollContainer/HBoxContainer/Buttons/LeaveLobby" to="." method="_on_leave_lobby_pressed"]
+[connection signal="pressed" from="ScrollContainer/HBoxContainer/LeftSide/CreateHBox/CreateLobby" to="." method="_on_create_lobby_btn_pressed"]
+[connection signal="pressed" from="ScrollContainer/HBoxContainer/LeftSide/RefreshHBox/RefreshLobbies" to="." method="refresh_lobbies"]
+[connection signal="pressed" from="ScrollContainer/HBoxContainer/LeftSide/LeaveHBox/LeaveLobby" to="." method="_on_leave_lobby_pressed"]
 [connection signal="pressed" from="MultiplayerSettings" to="." method="_on_multiplayer_settings_pressed"]

@@ -2,16 +2,20 @@ extends Control
 
 
 func _ready() -> void:
-	Steam.addRequestLobbyListDistanceFilter(Steam.LOBBY_DISTANCE_FILTER_WORLDWIDE)
-	refresh_lobbies()
+	if SteamWorks.running:
+		Steam.addRequestLobbyListDistanceFilter(Steam.LOBBY_DISTANCE_FILTER_WORLDWIDE)
+		refresh_lobbies()
+	$ScrollContainer/HBoxContainer/LeftSide/UUID.text = "Networking UUID: " + str(Saves.get_or_add("networking", "UUID", randi()))
 
 
 func _on_create_lobby_btn_pressed() -> void:
-	SteamLobbies.create_lobby()
+	if SteamWorks.running:
+		SteamLobbies.create_lobby()
 
 
 func refresh_lobbies() -> void:
-	Steam.requestLobbyList()
+	if SteamWorks.running:
+		Steam.requestLobbyList()
 
 
 func _on_multiplayer_settings_pressed() -> void:
@@ -19,4 +23,5 @@ func _on_multiplayer_settings_pressed() -> void:
 
 
 func _on_leave_lobby_pressed() -> void:
-	SteamLobbies.leave_lobby()
+	if SteamWorks.running:
+		SteamLobbies.leave_lobby()
