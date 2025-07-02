@@ -12,16 +12,16 @@ static func data(message: Dictionary) -> void:
 		if !Helper.dict_type_check(message["payload"], "frame", TYPE_INT):
 			message["payload"]["frame"] = -1
 		
-		if SteamP2P.kitties.has(message.identity) :
+		if P2P.kitties.has(message.identity) :
 			if WorldManager.has(message.identity):
-				if Helper.dict_type_check(SteamP2P.kitties, message.identity, Node2D):
-					SteamP2P.kitties[message.identity].move_to(Vector2(message["payload"]["x"], message["payload"]["y"]), message["payload"]["sprite_y"], message["payload"]["movement_id"], message["payload"]["frame"])
+				if Helper.dict_type_check(P2P.kitties, message.identity, Node2D):
+					P2P.kitties[message.identity].move_to(Vector2(message["payload"]["x"], message["payload"]["y"]), message["payload"]["sprite_y"], message["payload"]["movement_id"], message["payload"]["frame"])
 				else:
-					SteamP2P.spawn_kitty(message)
+					P2P.spawn_kitty(message)
 			else:
-				SteamP2P.remove_kitty(message.identity)
+				P2P.remove_kitty(message.identity)
 		elif WorldManager.has(message.identity):
-			SteamP2P.spawn_kitty(message)
+			P2P.spawn_kitty(message)
 
 
 static func minigame_data(message: Dictionary) -> void:
@@ -42,8 +42,8 @@ static func lobby_data(message: Dictionary) -> void:
 	):
 		Moderation.banned_players = message["payload"]["lobby_data"]["banned_players"]
 		for player_id: int in Moderation.banned_players:
-			if SteamLobbies.lobby_members.has(player_id) or SteamP2P.kitties.has(player_id):
-				SteamP2P.remove_kitty(player_id)
+			if SteamLobbies.lobby_members.has(player_id) or P2P.kitties.has(player_id):
+				P2P.remove_kitty(player_id)
 				Steam.closeSessionWithUser(player_id)
 				SteamLobbies.lobby_members.erase(player_id)
 

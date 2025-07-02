@@ -74,7 +74,7 @@ func _on_lobby_joined(this_lobby_id: int, _permissions: int, _locked: bool, resp
 		lobby_id = this_lobby_id
 		get_lobby_members()
 		WorldManager.send_world()
-		SteamP2P.send_message_to_user({"type": "handshake"})
+		P2P.send_message_to_user({"type": "handshake"})
 		failcount = 0
 	else:
 		var fail_reason: String
@@ -130,13 +130,13 @@ func _on_lobby_chat_update(_this_lobby_id: int, change_id: int, _making_change_i
 		var changer_name: String = get_lobby_member_name(change_id)
 		if chat_state == Steam.CHAT_MEMBER_STATE_CHANGE_ENTERED:
 			Ui.show_system_message("%s has joined the lobby." % changer_name)
-			SteamP2P.send_lobby_data(change_id, "lobby_join")
+			P2P.send_lobby_data(change_id, "lobby_join")
 			WorldManager.send_world(change_id)
 			if GlobalVars.mieu != null:
 				GlobalVars.mieu.send_location()
 		elif chat_state == Steam.CHAT_MEMBER_STATE_CHANGE_LEFT:
 			Ui.show_system_message("%s has left the lobby." % changer_name)
-			SteamP2P.remove_kitty(change_id)
+			P2P.remove_kitty(change_id)
 			WorldManager.remove_from_worlds(change_id)
 		else:
 			Ui.show_system_message("%s did... something." % changer_name)
@@ -151,7 +151,7 @@ func leave_lobby() -> void:
 			if this_member != SteamWorks.steam_id:
 				Steam.closeSessionWithUser(this_member)
 		
-		SteamP2P.remove_kitties()
+		P2P.remove_kitties()
 		lobby_members.clear()
 		WorldManager.clear_worlds()
 

@@ -25,11 +25,11 @@ func ban_player_persist(steam_id: int, reason: String = "No reason provided") ->
 		if not Saves.get_or_add("networking", "persist_banned", {}).has(steam_id):
 			Saves.get_or_add("networking", "persist_banned", {})[steam_id] = SteamLobbies.lobby_members[steam_id]["steam_name"]
 		
-		if SteamLobbies.lobby_members.has(steam_id) and SteamP2P.kitties.has(steam_id):
-			SteamP2P.remove_kitty(steam_id)
+		if SteamLobbies.lobby_members.has(steam_id) and P2P.kitties.has(steam_id):
+			P2P.remove_kitty(steam_id)
 		
-		SteamP2P.send_lobby_data()
-		SteamP2P.send_ban(steam_id, reason)
+		P2P.send_lobby_data()
+		P2P.send_ban(steam_id, reason)
 
 
 func ban_player_temp(steam_id: int, reason: String = "No reason provided") -> void:
@@ -37,16 +37,16 @@ func ban_player_temp(steam_id: int, reason: String = "No reason provided") -> vo
 		if not banned_players.has(steam_id):
 			banned_players[steam_id] = SteamLobbies.lobby_members[steam_id]["steam_name"]
 		
-		if SteamLobbies.lobby_members.has(steam_id) and SteamP2P.kitties.has(steam_id):
-			SteamP2P.remove_kitty(steam_id)
+		if SteamLobbies.lobby_members.has(steam_id) and P2P.kitties.has(steam_id):
+			P2P.remove_kitty(steam_id)
 		
-		SteamP2P.send_lobby_data()
-		SteamP2P.send_ban(steam_id, reason)
+		P2P.send_lobby_data()
+		P2P.send_ban(steam_id, reason)
 
 
 func kick(steam_id: int, reason: String) -> void:
 	if SteamLobbies.is_host():
-		SteamP2P.send_kick(steam_id, reason)
+		P2P.send_kick(steam_id, reason)
 
 
 func block_player(steam_id: int) -> void:

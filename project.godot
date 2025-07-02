@@ -37,7 +37,7 @@ MinigameManager="*res://current/scripts/globals/autoloads/minigame_manager.gd"
 Cryptography="*res://current/scripts/globals/autoloads/networking/cryptography.gd"
 StabilityMitigator="*res://current/scripts/globals/autoloads/networking/stability_mitigator.gd"
 InputHandler="*res://current/scripts/globals/autoloads/input_handler.gd"
-P2PManager="*res://current/scripts/globals/autoloads/networking/p2p.gd"
+P2P="*res://current/scripts/globals/autoloads/networking/p2p.gd"
 
 [compression]
 

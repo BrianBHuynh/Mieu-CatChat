@@ -26,7 +26,7 @@ func add_to_world(pid: int, world: String = current_world_name, instance_id: int
 	
 	worlds[world][instance_id][pid] = SteamLobbies.lobby_members[pid]["steam_name"]
 	if world != current_world_name or instance_id != current_instance_id:
-		SteamP2P.remove_kitty(pid)
+		P2P.remove_kitty(pid)
 
 
 func set_door(door: Variant, door_name: String = "Door") -> void:
@@ -154,7 +154,7 @@ func update_world(world: Variant) -> void:
 
 
 func send_world(pid: int = 0) -> void:
-	SteamP2P.send_message_to_user({"type": "world_info", "world_name": current_world_name, "instance_id": current_instance_id}, pid)
+	P2P.send_message_to_user({"type": "world_info", "world_name": current_world_name, "instance_id": current_instance_id}, pid)
 
 
 func clear_worlds() -> void:

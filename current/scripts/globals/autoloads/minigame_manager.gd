@@ -50,7 +50,7 @@ func accept_minigame_data(message: Dictionary) -> void:
 
 
 func send_minigame_info(pid: int = 0) -> void:
-	SteamP2P.send_message_to_user({"type": "minigame_info", "minigame_name": current_minigame, "minigame_instance_id": current_minigame_instance_id}, pid)
+	P2P.send_message_to_user({"type": "minigame_info", "minigame_name": current_minigame, "minigame_instance_id": current_minigame_instance_id}, pid)
 
 
 func add_to_minigame(pid: int, minigame: String = current_minigame_name, minigame_instance_id: int = -1) -> void:

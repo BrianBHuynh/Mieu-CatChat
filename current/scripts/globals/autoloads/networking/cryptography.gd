@@ -15,7 +15,7 @@ func save_message(sender_identity: int, message_id: int, payload: PackedByteArra
 
 
 func send_key(ID: int, this_target: int = 0) -> void:
-	SteamP2P.send_message_to_user({"type": "encrypted_key", "message_id": ID, "key": encrypted_messages_sent[ID]["key"].save_to_string()}, this_target)
+	P2P.send_message_to_user({"type": "encrypted_key", "message_id": ID, "key": encrypted_messages_sent[ID]["key"].save_to_string()}, this_target)
 
 
 func decode_message(sender_identity: int, message_id: int, key: String) -> void:
@@ -24,7 +24,7 @@ func decode_message(sender_identity: int, message_id: int, key: String) -> void:
 		crypto_key.load_from_string(key)
 		var decrypted_byte_array: PackedByteArray = crypto.decrypt(crypto_key, encrypted_messages_recieved[sender_identity][message_id])
 		var decrypted_message: Dictionary = {"identity": sender_identity, "payload": decrypted_byte_array}
-		SteamP2P.process_message(decrypted_message)
+		P2P.process_message(decrypted_message)
 
 
 func encode_payload(payload: Dictionary) -> int:

@@ -1,8 +1,6 @@
 extends Node
 
 
-var kitties: Dictionary = {}
-
 func _ready() -> void:
 	Steam.network_messages_session_request.connect(_on_network_messages_session_request)
 	Steam.network_messages_session_failed.connect(_on_p2p_session_connect_fail)
@@ -17,7 +15,7 @@ func _on_network_messages_session_request(remote_id: int) -> void:
 	if Moderation.is_allowed(remote_id):
 		Steam.acceptSessionWithUser(remote_id)
 		WorldManager.send_world(remote_id)
-		SteamP2P.send_message_to_user({"type": "handshake"}, remote_id)
+		P2P.send_message_to_user({"type": "handshake"}, remote_id)
 
 
 func read_p2p_messages() -> void:
@@ -33,7 +31,7 @@ func process_message(message: Dictionary) -> void:
 	elif !Moderation.is_allowed(message.identity):
 		Ui.show_system_debug("Message from blocked or banned player")
 		Steam.closeSessionWithUser(message.identity)
-		PlayersManager.remove_kitty(message.identity)
+		P2P.remove_kitty(message.identity)
 	else:
 		message.payload = bytes_to_var(message.payload.decompress_dynamic(-1, FileAccess.COMPRESSION_GZIP))
 		if message.payload is Dictionary:
@@ -154,4 +152,4 @@ func send_ban(this_target: int = 0, reason: String = "no reason provided") -> vo
 
 func _on_p2p_session_connect_fail(steam_id: int, _session_error: int, _state: int, debug_msg: String) -> void:
 	Ui.show_system_warning("P2p session connection failed! Reason: " + debug_msg)
-	PlayersManager.remove_kitty(steam_id)
+	P2P.remove_kitty(steam_id)

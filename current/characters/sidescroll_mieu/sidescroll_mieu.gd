@@ -30,4 +30,4 @@ func _physics_process(delta: float) -> void:
 	
 	move_and_slide()
 	if SteamLobbies.lobby_id != 0:
-		SteamP2P.send_message_to_user({"type": "minigame_data","x": global_position.x, "y": global_position.y}, 0, Steam.NETWORKING_SEND_UNRELIABLE_NO_DELAY)
+		P2P.send_message_to_user({"type": "minigame_data","x": global_position.x, "y": global_position.y}, 0, Steam.NETWORKING_SEND_UNRELIABLE_NO_DELAY)
