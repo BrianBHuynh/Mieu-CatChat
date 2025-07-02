@@ -33,7 +33,7 @@ func process_message(message: Dictionary) -> void:
 	elif !Moderation.is_allowed(message.identity):
 		Ui.show_system_debug("Message from blocked or banned player")
 		Steam.closeSessionWithUser(message.identity)
-		remove_kitty(message.identity)
+		PlayersManager.remove_kitty(message.identity)
 	else:
 		message.payload = bytes_to_var(message.payload.decompress_dynamic(-1, FileAccess.COMPRESSION_GZIP))
 		if message.payload is Dictionary:
@@ -154,30 +154,4 @@ func send_ban(this_target: int = 0, reason: String = "no reason provided") -> vo
 
 func _on_p2p_session_connect_fail(steam_id: int, _session_error: int, _state: int, debug_msg: String) -> void:
 	Ui.show_system_warning("P2p session connection failed! Reason: " + debug_msg)
-	remove_kitty(steam_id)
-
-
-func spawn_kitty(message: Dictionary) -> void:
-	while !WorldManager.middleground:
-		await get_tree().process_frame
-	var file: Resource = load("res://current/characters/mieu_peer/mieu_peer.tscn")
-	var kit: Node2D = file.instantiate()
-	WorldManager.middleground.add_child(kit)
-	kit.global_position = Vector2(message.payload.x, message.payload.y)
-	kit.sign_adoption(message["identity"])
-	SteamP2P.kitties[message["identity"]] = kit
-	Ui.show_system_debug("creating")
-	kit.show()
-
-
-func remove_kitties() -> void:
-	for cat_id: int in SteamP2P.kitties:
-		if kitties[cat_id] != null and is_instance_valid(kitties[cat_id]):
-			kitties[cat_id].remove()
-	kitties.clear()
-
-
-func remove_kitty(pid: int = 0) -> void:
-	if kitties.has(pid) and kitties[pid] != null:
-		kitties[pid].remove()
-		kitties.erase(pid)
+	PlayersManager.remove_kitty(steam_id)
