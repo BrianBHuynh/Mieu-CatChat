@@ -36,7 +36,7 @@ func remove_kitties() -> void:
 	kitties.clear()
 
 
-func remove_kitty(pid: int = 0) -> void:
+func remove_kitty(pid: String = "0") -> void:
 	if kitties.has(pid) and kitties[pid] != null:
 		kitties[pid].remove()
 		kitties.erase(pid)
