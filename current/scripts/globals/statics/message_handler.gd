@@ -41,10 +41,11 @@ static func lobby_data(message: Dictionary) -> void:
 	and Helper.dict_type_check(message["payload"]["lobby_data"], "banned_players", TYPE_DICTIONARY)
 	):
 		Moderation.banned_players = message["payload"]["lobby_data"]["banned_players"]
-		for player_id: int in Moderation.banned_players:
+		for player_id: String in Moderation.banned_players:
 			if SteamLobbies.lobby_members.has(player_id) or P2P.kitties.has(player_id):
 				P2P.remove_kitty(player_id)
-				Steam.closeSessionWithUser(player_id)
+				if player_id.begins_with("Steam"):
+					Steam.closeSessionWithUser(int(player_id))
 				SteamLobbies.lobby_members.erase(player_id)
 
 

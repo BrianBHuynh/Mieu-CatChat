@@ -2,7 +2,7 @@ extends Node
 
 
 var running: bool = false
-var steam_id: int = 0
+var steam_id: String = "0"
 var steam_username: String = "Player"
 
 
@@ -14,7 +14,7 @@ func _ready() -> void:
 		Multithreading.add_task(Steam.initAuthentication)
 		Ui.show_system_debug("Steam is running!")
 		Ui.show_system_debug("User is " + SteamLobbies.get_lobby_member_name(Steam.getSteamID()))
-		steam_id = Steam.getSteamID()
+		steam_id = IntToSteamID(Steam.getSteamID())
 		steam_username = SteamLobbies.get_lobby_member_name(Steam.getSteamID())
 		running = true
 		check_command_line()

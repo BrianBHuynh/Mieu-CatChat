@@ -55,7 +55,6 @@ script = ExtResource("4_k88ro")
 path = "sketch_worlds/park/park.tscn"
 target_door = "B"
 door = "A"
-instance_id = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Middleground/DoorA"]
 position = Vector2(1, 894)
@@ -66,7 +65,6 @@ script = ExtResource("4_k88ro")
 path = "scene_template/scene_template.tscn"
 target_door = "A"
 door = "B"
-instance_id = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Middleground/DoorB"]
 position = Vector2(1919, 894)

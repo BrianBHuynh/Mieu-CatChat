@@ -4,7 +4,7 @@ extends Node
 var worlds: Dictionary = {}
 var current_world_name: String = "default"
 var current_world: Variant = null
-var current_instance_id: int = -1
+var current_instance_id: String = "-1"
 var middleground: Node2D
 var first_world_started: bool = false
 var door_cooldown: bool = false
@@ -12,7 +12,7 @@ var doors: Dictionary[String, Variant] = {}
 var door_position: Vector2 = Vector2(0,0)
 
 
-func add_to_world(pid: String, world: String = current_world_name, instance_id: int = -1) -> void:
+func add_to_world(pid: String, world: String = current_world_name, instance_id: String = "-1") -> void:
 	if !worlds.has(world):
 		worlds[world] = {}
 		worlds[world][instance_id] = {}
@@ -39,7 +39,7 @@ func remove_from_worlds(pid: int) -> void:
 			worlds[world][world_instance].erase(pid)
 
 
-func has(pid: int, world: String = current_world_name, instance_id: int = current_instance_id) -> bool:
+func has(pid: int, world: String = current_world_name, instance_id: String = current_instance_id) -> bool:
 	if !worlds.has(world):
 		return false
 	elif !worlds[world].has(instance_id):
@@ -57,7 +57,7 @@ func get_same_world() -> Dictionary:
 		return worlds[current_world_name][current_instance_id]
 
 
-func change_world(world_path: String, instance_id: int = -1) -> void:
+func change_world(world_path: String, instance_id: String = "-1") -> void:
 	if MinigameManager.current_minigame != null:
 		MinigameManager.minigame_display.remove_child(MinigameManager.current_minigame)
 	
@@ -88,12 +88,12 @@ func change_world(world_path: String, instance_id: int = -1) -> void:
 		Ui.show_system_debug("The world that you tried to load was not found")
 
 
-func door_teleport(body: Variant, world_path: String, door: String = "", door_offset: Vector2 = Vector2(0,0), instance_id: int = -1, door_pos: Vector2 = Vector2(0,0)) -> void:
+func door_teleport(body: Variant, world_path: String, door: String = "", door_offset: Vector2 = Vector2(0,0), instance_id: String = "-1", door_pos: Vector2 = Vector2(0,0)) -> void:
 	if body == GlobalVars.mieu:
 		WorldManager.change_world_door(world_path, door, door_offset, body.get_frame(), instance_id, door_pos)
 
 
-func change_world_door(world_path: String, door: String = "", door_offset: Vector2 = Vector2(0,0), frame: int = 0, instance_id: int = -1, door_pos: Vector2 = Vector2(0,0)) -> void:
+func change_world_door(world_path: String, door: String = "", door_offset: Vector2 = Vector2(0,0), frame: int = 0, instance_id: String = "-1", door_pos: Vector2 = Vector2(0,0)) -> void:
 	if !door_cooldown:
 		StabilityMitigator.reset_movement_ids()
 		if MinigameManager.current_minigame != null:
@@ -148,12 +148,12 @@ func initialize_pos(door: String = "", door_offset: Vector2 = Vector2(0,0), fram
 
 func update_world(world: Variant) -> void:
 	current_world = world
-	if world.instanced and current_instance_id == -1:
+	if world.instanced and current_instance_id == "-1":
 		current_instance_id = SteamWorks.steam_id
-		send_world()
+	send_world()
 
 
-func send_world(pid: int = 0) -> void:
+func send_world(pid: String = "0") -> void:
 	P2P.send_message_to_user({"type": "world_info", "world_name": current_world_name, "instance_id": current_instance_id}, pid)
 
 

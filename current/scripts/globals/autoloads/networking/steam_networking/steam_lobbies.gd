@@ -130,8 +130,8 @@ func _on_lobby_chat_update(_this_lobby_id: int, change_id: int, _making_change_i
 		var changer_name: String = get_lobby_member_name(change_id)
 		if chat_state == Steam.CHAT_MEMBER_STATE_CHANGE_ENTERED:
 			Ui.show_system_message("%s has joined the lobby." % changer_name)
-			P2P.send_lobby_data(change_id, "lobby_join")
-			WorldManager.send_world(change_id)
+			P2P.send_lobby_data(SteamWorks.IntToSteamID(change_id), "lobby_join")
+			WorldManager.send_world(SteamWorks.IntToSteamID(change_id))
 			if GlobalVars.mieu != null:
 				GlobalVars.mieu.send_location()
 		elif chat_state == Steam.CHAT_MEMBER_STATE_CHANGE_LEFT:
@@ -147,9 +147,9 @@ func leave_lobby() -> void:
 	if lobby_id != 0:
 		Steam.leaveLobby(lobby_id)
 		lobby_id = 0
-		for this_member: int in lobby_members:
-			if this_member != SteamWorks.steam_id:
-				Steam.closeSessionWithUser(this_member)
+		for this_member: String in lobby_members:
+			if this_member.begins_with("Steam") and this_member != SteamWorks.steam_id:
+				Steam.closeSessionWithUser(int(this_member))
 		
 		P2P.remove_kitties()
 		lobby_members.clear()
@@ -160,8 +160,8 @@ func is_host() -> bool:
 	return host() == SteamWorks.steam_id
 
 
-func host() -> int:
-	return Steam.getLobbyOwner(lobby_id)
+func host() -> String:
+	return "Steam" + str(Steam.getLobbyOwner(lobby_id))
 
 
 func get_host_name() -> String:

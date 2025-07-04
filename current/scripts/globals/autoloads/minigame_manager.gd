@@ -49,7 +49,7 @@ func accept_minigame_data(message: Dictionary) -> void:
 		current_minigame.accept_minigame_data(message)
 
 
-func send_minigame_info(pid: int = 0) -> void:
+func send_minigame_info(pid: String = "0") -> void:
 	P2P.send_message_to_user({"type": "minigame_info", "minigame_name": current_minigame, "minigame_instance_id": current_minigame_instance_id}, pid)
 
 

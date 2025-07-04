@@ -14,7 +14,7 @@ func save_message(sender_identity: int, message_id: int, payload: PackedByteArra
 	encrypted_messages_recieved[sender_identity][message_id] = payload
 
 
-func send_key(ID: int, this_target: int = 0) -> void:
+func send_key(ID: int, this_target: String = "0") -> void:
 	P2P.send_message_to_user({"type": "encrypted_key", "message_id": ID, "key": encrypted_messages_sent[ID]["key"].save_to_string()}, this_target)
 
 

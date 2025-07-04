@@ -4,7 +4,7 @@ extends Area2D
 @export var path: String
 @export var target_door: String
 @export var door: String
-@export var instance_id: int = -1
+@export var instance_id: String = "-1"
 
 
 func _ready() -> void:
