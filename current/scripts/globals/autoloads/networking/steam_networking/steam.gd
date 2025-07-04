@@ -34,3 +34,7 @@ func check_command_line() -> void:
 	if command_line.size() > 0 && command_line[0] == "+connect_lobby" && command_line[1] > 0:
 		Ui.show_system_message("Joining lobby: " + command_line[1])
 		SteamLobbies.join_lobby(int(command_line[1]))
+
+
+func IntToSteamID(ID: int) -> String:
+	return "Steam" + str(ID)

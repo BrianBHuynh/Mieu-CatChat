@@ -1,7 +1,7 @@
 extends Node2D
 
 
-var id: int
+var id: String
 var player_name: String
 var since_last_frame: float = 0
 
@@ -16,7 +16,7 @@ func _physics_process(_delta: float) -> void:
 		$MieuPeer/RichTextLabel.text = "[center]" + player_name + "[/center]\n Networking tween value: " + str(StabilityMitigator.get_mitigation(id))
 
 
-func sign_adoption(identity: int) -> void:
+func sign_adoption(identity: String) -> void:
 	id = identity
 	player_name = SteamLobbies.lobby_members[id]["steam_name"]
 	$MieuPeer/RichTextLabel.text = "[center]" + player_name + "[/center]"

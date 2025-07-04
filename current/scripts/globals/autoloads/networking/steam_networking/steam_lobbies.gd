@@ -126,7 +126,7 @@ func _on_persona_change(this_steam_id: int, _flag: int) -> void:
 
 
 func _on_lobby_chat_update(_this_lobby_id: int, change_id: int, _making_change_id: int, chat_state: int) -> void:
-	if Moderation.is_allowed(change_id):
+	if Moderation.is_allowed(SteamWorks.IntToSteamID(change_id)):
 		var changer_name: String = get_lobby_member_name(change_id)
 		if chat_state == Steam.CHAT_MEMBER_STATE_CHANGE_ENTERED:
 			Ui.show_system_message("%s has joined the lobby." % changer_name)
@@ -136,7 +136,7 @@ func _on_lobby_chat_update(_this_lobby_id: int, change_id: int, _making_change_i
 				GlobalVars.mieu.send_location()
 		elif chat_state == Steam.CHAT_MEMBER_STATE_CHANGE_LEFT:
 			Ui.show_system_message("%s has left the lobby." % changer_name)
-			P2P.remove_kitty(change_id)
+			P2P.remove_kitty(SteamWorks.IntToSteamID(change_id))
 			WorldManager.remove_from_worlds(change_id)
 		else:
 			Ui.show_system_message("%s did... something." % changer_name)

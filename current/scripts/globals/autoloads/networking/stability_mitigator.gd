@@ -4,7 +4,7 @@ extends Node
 var players: Dictionary = {}
 
 
-func add_mitigation_data(pid: int, movement_id: int, frame_latency: float) -> void:
+func add_mitigation_data(pid: String, movement_id: int, frame_latency: float) -> void:
 	if !players.has(pid):
 		players[pid] = {"movement_id": -1.0, "total": 0.0, "frame_latencies": [], "mitigation_val": 5.0}
 	
@@ -29,7 +29,7 @@ func add_mitigation_data(pid: int, movement_id: int, frame_latency: float) -> vo
 		players[pid]["mitigation_val"] = (average-2.0) * 4.60517018599 + 2
 
 
-func get_mitigation(pid: int) -> float:
+func get_mitigation(pid: String) -> float:
 	if players.has(pid):
 		return players[pid]["mitigation_val"]
 	else:
@@ -37,5 +37,5 @@ func get_mitigation(pid: int) -> float:
 
 
 func reset_movement_ids() -> void:
-	for player: int in players:
+	for player: String in players:
 		players[player]["movement_id"] = -1

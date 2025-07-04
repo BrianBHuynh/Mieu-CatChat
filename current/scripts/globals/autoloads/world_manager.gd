@@ -12,7 +12,7 @@ var doors: Dictionary[String, Variant] = {}
 var door_position: Vector2 = Vector2(0,0)
 
 
-func add_to_world(pid: int, world: String = current_world_name, instance_id: int = -1) -> void:
+func add_to_world(pid: String, world: String = current_world_name, instance_id: int = -1) -> void:
 	if !worlds.has(world):
 		worlds[world] = {}
 		worlds[world][instance_id] = {}
