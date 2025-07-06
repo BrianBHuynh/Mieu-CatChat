@@ -7,16 +7,25 @@ var kitties: Dictionary = {}
 func connected_to_multiplayer() -> bool:
 	return SteamLobbies.lobby_id != 0 or IpLobbies.direct_connections.size() != 0
 
+
 func send_message_to_user(payload: Dictionary, this_target: String = "0", send_type: int = Steam.NETWORKING_SEND_RELIABLE, channel: int = 0, encrypted: bool = false) -> void:
-	pass
+	if this_target.begins_with("Steam") or this_target == "0":
+		SteamP2P.send_message_to_user(payload, int(this_target), send_type, channel, encrypted)
+	if this_target.begins_with("Ip") or this_target == "0":
+		IpP2P.send_message_to_user(payload, int(this_target), send_type, channel, encrypted)
 
 
 func send_chat_message(message: String, this_target: String = "0", private: bool = false, channel: int = 0) -> void:
-	pass
-
+	if this_target.begins_with("Steam") or this_target == "0":
+		SteamP2P.send_chat_message(message, int(this_target), private, channel)
+	if this_target.begins_with("Ip") or this_target == "0":
+		IpP2P.send_chat_message(payload, int(this_target), private, channel)
 
 func send_lobby_data(this_target: String = "0", _reason: String = "No reason provided", channel: int = 0) -> void:
-	pass
+	if this_target.begins_with("Steam") or this_target == "0":
+		SteamP2P.send_lobby_data(int(this_target), _reason, channel)
+	if this_target.begins_with("Ip") or this_target == "0":
+		IpP2P.send_lobby_data(int(this_target), _reason, channel)
 
 
 func spawn_kitty(message: Dictionary) -> void:
