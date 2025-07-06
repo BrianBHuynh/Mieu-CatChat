@@ -8,6 +8,7 @@ static func data(message: Dictionary) -> void:
 		and Helper.dict_type_check(message["payload"], "y", TYPE_FLOAT)
 		and Helper.dict_type_check(message["payload"], "sprite_y", TYPE_FLOAT)
 		and Helper.dict_type_check(message["payload"], "movement_id", TYPE_INT)
+		and Helper.dict_type_check(message["payload"], "name", TYPE_STRING)
 		):
 		if !Helper.dict_type_check(message["payload"], "frame", TYPE_INT):
 			message["payload"]["frame"] = -1

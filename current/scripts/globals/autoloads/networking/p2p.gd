@@ -4,6 +4,9 @@ extends Node
 var kitties: Dictionary = {}
 
 
+func connected_to_multiplayer() -> bool:
+	return SteamLobbies.lobby_id != 0 or IpLobbies.direct_connections.size() != 0
+
 func send_message_to_user(payload: Dictionary, this_target: String = "0", send_type: int = Steam.NETWORKING_SEND_RELIABLE, channel: int = 0, encrypted: bool = false) -> void:
 	pass
 
@@ -23,7 +26,7 @@ func spawn_kitty(message: Dictionary) -> void:
 	var kit: Node2D = file.instantiate()
 	WorldManager.middleground.add_child(kit)
 	kit.global_position = Vector2(message.payload.x, message.payload.y)
-	kit.sign_adoption(message["identity"])
+	kit.sign_adoption(message["identity"], message["name"])
 	kitties[message["identity"]] = kit
 	Ui.show_system_debug("creating")
 	kit.show()

@@ -16,9 +16,9 @@ func _physics_process(_delta: float) -> void:
 		$MieuPeer/RichTextLabel.text = "[center]" + player_name + "[/center]\n Networking tween value: " + str(StabilityMitigator.get_mitigation(id))
 
 
-func sign_adoption(identity: String) -> void:
+func sign_adoption(identity: String, name: String) -> void:
 	id = identity
-	player_name = SteamLobbies.lobby_members[id]["steam_name"]
+	player_name = name
 	$MieuPeer/RichTextLabel.text = "[center]" + player_name + "[/center]"
 
 

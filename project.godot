@@ -38,6 +38,7 @@ Cryptography="*res://current/scripts/globals/autoloads/networking/cryptography.g
 StabilityMitigator="*res://current/scripts/globals/autoloads/networking/stability_mitigator.gd"
 InputHandler="*res://current/scripts/globals/autoloads/input_handler.gd"
 P2P="*res://current/scripts/globals/autoloads/networking/p2p.gd"
+IpLobbies="*res://current/scripts/globals/autoloads/networking/ip_networking/ip_lobbies.gd"
 
 [compression]
 
