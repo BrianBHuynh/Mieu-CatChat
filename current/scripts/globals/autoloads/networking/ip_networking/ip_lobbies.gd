@@ -5,4 +5,7 @@ extends Node
 #This prevents ip addresses from being leaked between untrusted users.
 var direct_connections: Dictionary = {}
 var jump_connections: Dictionary = {}
-var paths: Dictionary = {}
+
+
+func find_shortest_path() -> Array:
+	

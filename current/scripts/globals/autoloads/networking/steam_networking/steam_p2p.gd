@@ -79,7 +79,7 @@ func _send_message_to_user_task(payload: Dictionary, this_target: int = 0, send_
 			match payload["type"]:
 				"data":
 					for this_member: String in WorldManager.get_same_world():
-						if Moderation.is_allowed(this_member):
+						if this_member.begins_with("Steam") and Moderation.is_allowed(this_member):
 							Steam.sendMessageToUser(int(this_member), this_data, send_type, channel)
 				_:
 					for this_member: String in SteamLobbies.lobby_members:
