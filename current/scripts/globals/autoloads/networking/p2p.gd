@@ -19,7 +19,7 @@ func send_chat_message(message: String, this_target: String = "0", private: bool
 	if this_target.begins_with("Steam") or this_target == "0":
 		SteamP2P.send_chat_message(message, int(this_target), private, channel)
 	if this_target.begins_with("Ip") or this_target == "0":
-		IpP2P.send_chat_message(payload, int(this_target), private, channel)
+		IpP2P.send_chat_message(message, int(this_target), private, channel)
 
 func send_lobby_data(this_target: String = "0", _reason: String = "No reason provided", channel: int = 0) -> void:
 	if this_target.begins_with("Steam") or this_target == "0":
@@ -52,3 +52,40 @@ func remove_kitty(pid: String = "0") -> void:
 	if kitties.has(pid) and kitties[pid] != null:
 		kitties[pid].remove()
 		kitties.erase(pid)
+
+
+func process_message(message: Dictionary, sender: String) -> void:
+	if message.is_empty() or message == null:
+		Ui.show_system_debug("WARNING: read an empty packet with non-zero size!")
+	elif !Moderation.is_allowed(message.identity):
+		Ui.show_system_debug("Message from blocked or banned player")
+		Steam.closeSessionWithUser(message.identity)
+		P2P.remove_kitty(SteamWorks.IntToSteamID(message.identity))
+	else:
+		message.payload = bytes_to_var(message.payload.decompress_dynamic(-1, FileAccess.COMPRESSION_GZIP))
+		if message.payload is Dictionary:
+			match message["payload"]["type"]:
+				"data":
+					MessageHandler.data(message)
+				"minigame_data":
+					MessageHandler.minigame_data(message)
+				"chat":
+					MessageHandler.chat(message)
+				"lobby_data":
+					MessageHandler.lobby_data(message)
+				"ban":
+					MessageHandler.ban(message)
+				"ban_announce":
+					MessageHandler.ban_announce(message)
+				"kick":
+					MessageHandler.kick(message)
+				"kick_announce":
+					MessageHandler.kick_announce(message)
+				"world_info":
+					MessageHandler.world_info(message)
+				"minigame_info":
+					MessageHandler.minigame_info(message)
+				"encrypted_message":
+					MessageHandler.encrypted_message(message)
+				"encrypted_key":
+					MessageHandler.encrypted_key(message)

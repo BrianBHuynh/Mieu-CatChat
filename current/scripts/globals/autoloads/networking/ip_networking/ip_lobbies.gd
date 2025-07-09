@@ -8,4 +8,8 @@ var jump_connections: Dictionary = {}
 
 
 func find_shortest_path() -> Array:
-	
+	return []
+
+
+func add_direct_connection(id: String, ip: String) -> void:
+	direct_connections[id] = WebSocketPeer.new()
