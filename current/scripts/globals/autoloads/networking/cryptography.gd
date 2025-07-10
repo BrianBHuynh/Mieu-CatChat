@@ -24,7 +24,7 @@ func decode_message(sender_identity: int, message_id: int, key: String) -> void:
 		crypto_key.load_from_string(key)
 		var decrypted_byte_array: PackedByteArray = crypto.decrypt(crypto_key, encrypted_messages_recieved[sender_identity][message_id])
 		var decrypted_message: Dictionary = {"identity": sender_identity, "payload": decrypted_byte_array}
-		P2P.process_message(decrypted_message)
+		#P2P.process_message(decrypted_message)
 
 
 func encode_payload(payload: Dictionary) -> int:
