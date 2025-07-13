@@ -61,7 +61,7 @@ func process_message(message: Dictionary, sender: String) -> void:
 		#Ui.show_system_debug("Message from blocked or banned player")
 		if message.identity.begins_with("Steam"):
 			Steam.closeSessionWithUser(message.identity)
-		P2P.remove_kitty(SteamWorks.IntToSteamID(message.identity))
+		P2P.remove_kitty(message.identity)
 	else:
 		message.payload = bytes_to_var(message.payload.decompress_dynamic(-1, FileAccess.COMPRESSION_GZIP))
 		if message.payload is Dictionary:

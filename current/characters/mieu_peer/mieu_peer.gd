@@ -2,8 +2,8 @@ extends Node2D
 
 
 var id: String
-var player_name: String
-var since_last_frame: float = 0
+var player_name: String = "Remote Mieu"
+var since_last_frame: float = 0.0
 
 
 func _ready() -> void:

@@ -18,6 +18,7 @@ func _process(delta) -> void:
 				pass
 				#to get packet --> socket.get_packet()
 		WebSocketPeer.STATE_CLOSED:
-			queue_free()
+			if opened:
+				queue_free()
 		_:
 			pass
