@@ -2,8 +2,12 @@ extends Node
 class_name DirectConnection
 
 
-var socket: WebSocketPeer = WebSocketPeer.new()
+var socket: WebSocketMultiplayerPeer = WebSocketMultiplayerPeer.new()
 var opened: bool = false
+
+
+func _ready() -> void:
+	socket.create_server(48, "*", null)
 
 
 func set_socket(ip: String) -> void:
