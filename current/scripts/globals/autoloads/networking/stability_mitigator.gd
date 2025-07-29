@@ -39,3 +39,29 @@ func get_mitigation(pid: String) -> float:
 func reset_movement_ids() -> void:
 	for player: String in players:
 		players[player]["movement_id"] = -1
+
+
+func ping(this_target: String = "0") -> void:
+	Multithreading.add_task(_ping.bind(this_target))
+
+
+func _ping(this_target: String = "0") -> void:
+	if SteamLobbies.lobby_members.size() > 1:
+		var send_type: int = Steam.NETWORKING_SEND_RELIABLE
+		var this_data: PackedByteArray
+		this_data.append_array(var_to_bytes({"type": "ping"}))
+		this_data = this_data.compress(FileAccess.COMPRESSION_GZIP)
+		if this_target == "0":
+			for this_member: String in SteamLobbies.lobby_members:
+				if this_member != SteamWorks.steam_id and Moderation.is_allowed(this_member):
+					P2P.sendMessageToUser(this_member, this_data, send_type, 0)
+		else:
+			if Moderation.is_allowed(this_target):
+				P2P.sendMessageToUser(this_target, this_data, send_type, 0)
+			else:
+				Ui.show_system_warning("Target is either blocked or banned!")
+
+
+func pong(id: String) -> void:
+	pass
+	#response of getting a ping

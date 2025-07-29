@@ -13,13 +13,3 @@ func find_shortest_path() -> Array:
 
 func add_direct_connection(id: String, ip: String) -> void:
 	direct_connections[id] = WebSocketPeer.new()
-
-
-func ping(id: String) -> void:
-	pass
-	#This should send a ping over the network, a "pong" should be returned by another player
-
-
-func pong(id: String) -> void:
-	pass
-	#response of getting a ping
