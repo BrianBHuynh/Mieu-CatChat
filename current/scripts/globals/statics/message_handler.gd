@@ -113,3 +113,14 @@ static func encrypted_key(message: Dictionary) -> void:
 	and Helper.dict_type_check(message["payload"], "key", TYPE_STRING)
 	):
 		Cryptography.decode_message(message.identity, message["payload"]["message_id"], message["payload"]["key"])
+
+
+static func ping(message: Dictionary) -> void:
+	StabilityMitigator.pong(message.identity)
+
+
+static func pong(message: Dictionary) -> void:
+	pass
+
+
+#Message handler will need to be rewritten as messages may have message.identity or not depending on if they're from steam or not. This will require a full rewrite of this section of code which will begin soon.
