@@ -31,11 +31,10 @@ func _send_message_to_user_task(payload: Dictionary, this_target: int = 0, send_
 			match payload["type"]:
 				"ban", "kick":
 					pass
-					#if SteamWorks.IntToSteamID(this_target) != SteamWorks.steam_id and SteamLobbies.is_host():
-					#	Steam.sendMessageToUser(this_target, this_data, send_type, channel)
-					#	await get_tree().create_timer(1).timeout
-					#	Steam.closeSessionWithUser(this_target)
+					if SteamWorks.IntToSteamID(this_target) != SteamWorks.steam_id and SteamLobbies.is_host():
+						Steam.sendMessageToUser(this_target, this_data, send_type, channel)
+						await get_tree().create_timer(1).timeout
+						Steam.closeSessionWithUser(this_target)
 				_:
-					pass
-					#if Moderation.is_allowed(SteamWorks.IntToSteamID(this_target)):
-					#	Steam.sendMessageToUser(this_target, this_data, send_type, channel)
+					if Moderation.is_allowed(SteamWorks.IntToSteamID(this_target)):
+						Steam.sendMessageToUser(this_target, this_data, send_type, channel)
