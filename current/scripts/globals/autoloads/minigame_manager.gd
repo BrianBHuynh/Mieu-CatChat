@@ -50,7 +50,8 @@ func accept_minigame_data(message: Dictionary) -> void:
 
 
 func send_minigame_info(pid: String = "0") -> void:
-	P2P.send_message_to_user({"type": "minigame_info", "minigame_name": current_minigame, "minigame_instance_id": current_minigame_instance_id}, pid)
+	pass
+	#Networking.send_message_to_user({"type": "minigame_info", "minigame_name": current_minigame, "minigame_instance_id": current_minigame_instance_id}, pid)
 
 
 func add_to_minigame(pid: int, minigame: String = current_minigame_name, minigame_instance_id: int = -1) -> void:
@@ -64,7 +65,7 @@ func add_to_minigame(pid: int, minigame: String = current_minigame_name, minigam
 		for minigame_instance: int in minigames[minigame_array]:
 			minigames[minigame_array][minigame_instance].erase(pid)
 	
-	minigames[minigame][minigame_instance_id][pid] = SteamLobbies.lobby_members[pid]["steam_name"]
+	#minigames[minigame][minigame_instance_id][pid] = Networking.lobby_members[pid]["name"]
 
 
 func has(pid: int, minigame: String = current_minigame_name, minigame_instance_id: int = -1) -> bool:

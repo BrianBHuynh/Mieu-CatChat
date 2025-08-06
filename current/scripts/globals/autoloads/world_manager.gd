@@ -24,9 +24,10 @@ func add_to_world(pid: String, world: String = current_world_name, instance_id: 
 		for world_instance: int in worlds[world_array]:
 			worlds[world_array][world_instance].erase(pid)
 	
-	worlds[world][instance_id][pid] = SteamLobbies.lobby_members[pid]["steam_name"]
+	#worlds[world][instance_id][pid] = Networking.lobby_members[pid]["steam_name"]
 	if world != current_world_name or instance_id != current_instance_id:
-		P2P.remove_kitty(pid)
+		pass
+		#Networking.remove_kitty(pid)
 
 
 func set_door(door: Variant, door_name: String = "Door") -> void:
@@ -65,7 +66,7 @@ func change_world(world_path: String, instance_id: String = "-1") -> void:
 	Ui.close_menu()
 	var world_packed: PackedScene = load("res://current/scenes/worlds/" + world_path)
 	if world_packed != null:
-		StabilityMitigator.reset_movement_ids()
+		#StabilityMitigator.reset_movement_ids()
 		current_world_name = world_packed.get_state().get_node_name(0)
 		current_instance_id = instance_id
 		get_tree().change_scene_to_packed(world_packed)
@@ -95,7 +96,7 @@ func door_teleport(body: Variant, world_path: String, door: String = "", door_of
 
 func change_world_door(world_path: String, door: String = "", door_offset: Vector2 = Vector2(0,0), frame: int = 0, instance_id: String = "-1", door_pos: Vector2 = Vector2(0,0)) -> void:
 	if !door_cooldown:
-		StabilityMitigator.reset_movement_ids()
+		#StabilityMitigator.reset_movement_ids()
 		if MinigameManager.current_minigame != null:
 			MinigameManager.minigame_display.remove_child(MinigameManager.current_minigame)
 		
@@ -148,13 +149,14 @@ func initialize_pos(door: String = "", door_offset: Vector2 = Vector2(0,0), fram
 
 func update_world(world: Variant) -> void:
 	current_world = world
-	if world.instanced and current_instance_id == "-1":
-		current_instance_id = SteamWorks.steam_id
+	#if world.instanced and current_instance_id == "-1":
+		#current_instance_id = SteamWorks.steam_id
 	send_world()
 
 
 func send_world(pid: String = "0") -> void:
-	P2P.send_message_to_user({"type": "world_info", "world_name": current_world_name, "instance_id": current_instance_id}, pid)
+	pass
+	#Networking.send_message_to_user({"type": "world_info", "world_name": current_world_name, "instance_id": current_instance_id}, pid)
 
 
 func clear_worlds() -> void:

@@ -114,7 +114,7 @@ func chat_log_add(chat_message: Dictionary) -> void:
 		and last_message["sender"] == chat_message["sender"] 
 		and last_message["target"] == chat_message["target"]
 		):
-			last_message["content"] = last_message["content"] + "\n" + SteamLobbies.get_lobby_member_name(chat_message["sender"]) + ": " + chat_message["content"]
+			#last_message["content"] = last_message["content"] + "\n" + Networking.get_lobby_member_name(chat_message["sender"]) + ": " + chat_message["content"]
 			chat_log.append(last_message)
 		else:
 			chat_log.append(last_message)
@@ -125,6 +125,7 @@ func chat_log_add(chat_message: Dictionary) -> void:
 	if chat_log.size() > max_log_size and max_log_size != -1:
 		var new_archive: Dictionary = chat_log.pop_front()
 		if new_archive["type"] == "chat_message":
-			chat_archive = chat_archive + "\n" + SteamLobbies.get_lobby_member_name(new_archive["sender"]) + ": " + new_archive["content"]
+			pass
+			#chat_archive = chat_archive + "\n" + Networking.get_lobby_member_name(new_archive["sender"]) + ": " + new_archive["content"]
 		else:
 			chat_archive = chat_archive + "\n" + new_archive["type"] + ": " + new_archive["content"]
