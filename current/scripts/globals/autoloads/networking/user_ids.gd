@@ -40,3 +40,11 @@ func is_steam_id(id: String) -> bool:
 
 func is_ip_id(id: String) -> bool:
 	return id.begins_with("Ip")
+
+
+func id_to_steam_id(id: int) -> String:
+	return "Steam" + str(id)
+
+
+func id_to_ip_id(id: String) -> String:
+	return "Ip" + id
