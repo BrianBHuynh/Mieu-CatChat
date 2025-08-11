@@ -9,10 +9,7 @@ func connected_to_multiplayer() -> bool:
 
 
 func send_message_to_user(payload: Dictionary, this_target: String = "0", send_type: int = Steam.NETWORKING_SEND_RELIABLE, channel: int = 0, encrypted: bool = false) -> void:
-	if this_target.begins_with("Steam") or this_target == "0":
-		SteamP2P.send_message_to_user(payload, int(this_target), send_type, channel, encrypted)
-	if this_target.begins_with("Ip") or this_target == "0":
-		IpP2P.send_message_to_user(payload, int(this_target), send_type, channel, encrypted)
+	SteamP2P.send_message_to_user(payload, int(this_target), send_type, channel, encrypted)
 
 
 func send_chat_message(message: String, this_target: String = "0", private: bool = false, channel: int = 0) -> void:

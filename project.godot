@@ -30,6 +30,8 @@ Multithreading="*res://current/scripts/globals/autoloads/multithreading.gd"
 WorldManager="*res://current/scripts/globals/autoloads/world_manager.gd"
 MinigameManager="*res://current/scripts/globals/autoloads/minigame_manager.gd"
 InputHandler="*res://current/scripts/globals/autoloads/input_handler.gd"
+SteamLobbies="*res://current/scripts/globals/autoloads/networking/Steam/steam_lobbies.gd"
+SteamWorks="*res://current/scripts/globals/autoloads/networking/Steam/steam.gd"
 
 [compression]
 
