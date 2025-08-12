@@ -25,7 +25,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if running:
 		Steam.run_callbacks()
-		SteamP2P.process(delta)
+		#SteamP2P.process(delta)
 
 
 func check_command_line() -> void:
