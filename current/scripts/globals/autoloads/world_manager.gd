@@ -34,13 +34,13 @@ func set_door(door: Variant, door_name: String = "Door") -> void:
 	doors[door_name] = door
 
 
-func remove_from_worlds(pid: int) -> void:
+func remove_from_worlds(pid: String) -> void:
 	for world: String in worlds:
 		for world_instance: int in worlds[world]:
 			worlds[world][world_instance].erase(pid)
 
 
-func has(pid: int, world: String = current_world_name, instance_id: String = current_instance_id) -> bool:
+func has(pid: String, world: String = current_world_name, instance_id: String = current_instance_id) -> bool:
 	if !worlds.has(world):
 		return false
 	elif !worlds[world].has(instance_id):
@@ -155,8 +155,7 @@ func update_world(world: Variant) -> void:
 
 
 func send_world(pid: String = "0") -> void:
-	pass
-	#Networking.send_message_to_user({"type": "world_info", "world_name": current_world_name, "instance_id": current_instance_id}, pid)
+	Networking.send_message_to_user({"type": "world_info", "world_name": current_world_name, "instance_id": current_instance_id}, pid)
 
 
 func clear_worlds() -> void:

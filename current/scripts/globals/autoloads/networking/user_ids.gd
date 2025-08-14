@@ -48,3 +48,11 @@ func id_to_steam_id(id: int) -> String:
 
 func id_to_ip_id(id: String) -> String:
 	return "Ip" + id
+
+
+func steam_id_to_id(id: String) -> int:
+	return int(id)
+
+
+func ip_id_to_id(id: String) -> int:
+	return int(id)

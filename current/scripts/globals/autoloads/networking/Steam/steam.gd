@@ -14,7 +14,7 @@ func _ready() -> void:
 		Multithreading.add_task(Steam.initAuthentication)
 		Ui.show_system_debug("Steam is running!")
 		Ui.show_system_debug("User is " + SteamLobbies.get_lobby_member_name(Steam.getSteamID()))
-		steam_id = IntToSteamID(Steam.getSteamID())
+		steam_id = UserIds.id_to_steam_id(Steam.getSteamID())
 		steam_username = SteamLobbies.get_lobby_member_name(Steam.getSteamID())
 		running = true
 		check_command_line()
@@ -34,7 +34,3 @@ func check_command_line() -> void:
 	if command_line.size() > 0 && command_line[0] == "+connect_lobby" && command_line[1] > 0:
 		Ui.show_system_message("Joining lobby: " + command_line[1])
 		SteamLobbies.join_lobby(int(command_line[1]))
-
-
-func IntToSteamID(ID: int) -> String:
-	return "Steam" + str(ID)

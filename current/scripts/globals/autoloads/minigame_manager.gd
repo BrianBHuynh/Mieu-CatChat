@@ -54,7 +54,7 @@ func send_minigame_info(pid: String = "0") -> void:
 	#Networking.send_message_to_user({"type": "minigame_info", "minigame_name": current_minigame, "minigame_instance_id": current_minigame_instance_id}, pid)
 
 
-func add_to_minigame(pid: int, minigame: String = current_minigame_name, minigame_instance_id: int = -1) -> void:
+func add_to_minigame(pid: String, minigame: String = current_minigame_name, minigame_instance_id: int = -1) -> void:
 	if !minigames.has(minigame):
 		minigames[minigame] = {}
 		minigames[minigame][minigame_instance_id] = {}
@@ -68,7 +68,7 @@ func add_to_minigame(pid: int, minigame: String = current_minigame_name, minigam
 	#minigames[minigame][minigame_instance_id][pid] = Networking.lobby_members[pid]["name"]
 
 
-func has(pid: int, minigame: String = current_minigame_name, minigame_instance_id: int = -1) -> bool:
+func has(pid: String, minigame: String = current_minigame_name, minigame_instance_id: int = -1) -> bool:
 	if not (minigames.has(minigame) or minigames[minigame].has(minigame_instance_id)):
 		return false
 	else:

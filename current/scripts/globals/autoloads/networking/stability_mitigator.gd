@@ -54,10 +54,10 @@ func _ping(this_target: String = "0") -> void:
 		if this_target == "0":
 			for this_member: String in SteamLobbies.lobby_members:
 				if this_member != SteamWorks.steam_id and Moderation.is_allowed(this_member):
-					P2P.sendMessageToUser(this_member, this_data, send_type, 0)
+					Networking.sendMessageToUser(this_member, this_data, send_type, 0)
 		else:
 			if Moderation.is_allowed(this_target):
-				P2P.sendMessageToUser(this_target, this_data, send_type, 0)
+				Networking.sendMessageToUser(this_target, this_data, send_type, 0)
 			else:
 				Ui.show_system_warning("Target is either blocked or banned!")
 
@@ -75,9 +75,9 @@ func _pong(this_target: String = "0") -> void:
 		if this_target == "0":
 			for this_member: String in SteamLobbies.lobby_members:
 				if this_member != SteamWorks.steam_id and Moderation.is_allowed(this_member):
-					P2P.sendMessageToUser(this_member, this_data, send_type, 0)
+					Networking.sendMessageToUser(this_member, this_data, send_type, 0)
 		else:
 			if Moderation.is_allowed(this_target):
-				P2P.sendMessageToUser(this_target, this_data, send_type, 0)
+				Networking.sendMessageToUser(this_target, this_data, send_type, 0)
 			else:
 				Ui.show_system_warning("Target is either blocked or banned!")

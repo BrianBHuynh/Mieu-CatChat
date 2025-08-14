@@ -33,6 +33,11 @@ InputHandler="*res://current/scripts/globals/autoloads/input_handler.gd"
 SteamLobbies="*res://current/scripts/globals/autoloads/networking/Steam/steam_lobbies.gd"
 SteamWorks="*res://current/scripts/globals/autoloads/networking/Steam/steam.gd"
 Moderation="*res://current/scripts/globals/autoloads/networking/moderation.gd"
+Networking="*res://current/scripts/globals/autoloads/networking/networking.gd"
+ChatFilter="*res://current/scripts/globals/autoloads/networking/chat_filter.gd"
+Cryptography="*res://current/scripts/globals/autoloads/networking/cryptography.gd"
+StabilityMitigator="*res://current/scripts/globals/autoloads/networking/stability_mitigator.gd"
+UserIds="*res://current/scripts/globals/autoloads/networking/user_ids.gd"
 
 [compression]
 

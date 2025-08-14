@@ -131,13 +131,13 @@ func _on_lobby_chat_update(_this_lobby_id: int, change_id: int, _making_change_i
 		if chat_state == Steam.CHAT_MEMBER_STATE_CHANGE_ENTERED:
 			Ui.show_system_message("%s has joined the lobby." % changer_name)
 			#P2P.send_lobby_data(SteamWorks.IntToSteamID(change_id), "lobby_join")
-			WorldManager.send_world(SteamWorks.IntToSteamID(change_id))
+			WorldManager.send_world(UserIds.id_to_steam_id(change_id))
 			if GlobalVars.mieu != null:
 				GlobalVars.mieu.send_location()
 		elif chat_state == Steam.CHAT_MEMBER_STATE_CHANGE_LEFT:
 			Ui.show_system_message("%s has left the lobby." % changer_name)
 			#P2P.remove_kitty(SteamWorks.IntToSteamID(change_id))
-			WorldManager.remove_from_worlds(change_id)
+			WorldManager.remove_from_worlds(UserIds.id_to_steam_id(change_id))
 		else:
 			Ui.show_system_message("%s did... something." % changer_name)
 		get_lobby_members()

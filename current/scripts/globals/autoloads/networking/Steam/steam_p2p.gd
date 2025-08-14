@@ -15,14 +15,14 @@ func _on_network_messages_session_request(remote_id: int) -> void:
 	if Moderation.is_allowed(SteamWorks.IntTOSteamID(remote_id)):
 		Steam.acceptSessionWithUser(remote_id)
 		WorldManager.send_world(SteamWorks.IntToSteamID(remote_id))
-		P2P.send_message_to_user({"type": "handshake"}, SteamWorks.IntToSteamID(remote_id))
+		send_message_to_user({"type": "handshake"}, remote_id)
 
 
 func read_p2p_messages() -> void:
 	var messages: Array = Steam.receiveMessagesOnChannel(0, 1000)
 	if messages.size() != 0:
 		for message: Dictionary in messages:
-			P2P.process_message(message, message.identity)
+			Networking.process_message(message, message.identity)
 
 
 func send_message_to_user(payload: Dictionary, this_target: int = 0, send_type: int = Steam.NETWORKING_SEND_RELIABLE, channel: int = 0, encrypted: bool = false) -> void:
@@ -115,4 +115,4 @@ func send_ban(this_target: int = 0, reason: String = "no reason provided") -> vo
 
 func _on_p2p_session_connect_fail(steam_id: int, _session_error: int, _state: int, debug_msg: String) -> void:
 	Ui.show_system_warning("P2P session connection failed! Reason: " + debug_msg)
-	P2P.remove_kitty(SteamWorks.IntToSteamID(steam_id))
+	Networking.remove_kitty(SteamWorks.IntToSteamID(steam_id))
