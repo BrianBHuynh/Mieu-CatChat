@@ -15,7 +15,7 @@ func _ready() -> void:
 	GlobalVars.sprite_offset = $Sprite.position
 	GlobalVars.reset_position = global_position
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-	#$Sprite/RichTextLabel.text = "[center]" + Networking.username + "[/center]"
+	$Sprite/RichTextLabel.text = "[center]" + SteamWorks.steam_username + "[/center]"
 
 
 func _physics_process(delta: float) -> void:
