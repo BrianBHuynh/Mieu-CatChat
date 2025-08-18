@@ -31,13 +31,15 @@ WorldManager="*res://current/scripts/globals/autoloads/world_manager.gd"
 MinigameManager="*res://current/scripts/globals/autoloads/minigame_manager.gd"
 InputHandler="*res://current/scripts/globals/autoloads/input_handler.gd"
 SteamLobbies="*res://current/scripts/globals/autoloads/networking/Steam/steam_lobbies.gd"
-SteamWorks="*res://current/scripts/globals/autoloads/networking/Steam/steam.gd"
+SteamNetworking="*res://current/scripts/globals/autoloads/networking/Steam/steam.gd"
 Moderation="*res://current/scripts/globals/autoloads/networking/moderation.gd"
 Networking="*res://current/scripts/globals/autoloads/networking/networking.gd"
 ChatFilter="*res://current/scripts/globals/autoloads/networking/chat_filter.gd"
 Cryptography="*res://current/scripts/globals/autoloads/networking/cryptography.gd"
 StabilityMitigator="*res://current/scripts/globals/autoloads/networking/stability_mitigator.gd"
 UserIds="*res://current/scripts/globals/autoloads/networking/user_ids.gd"
+IpNetworking="*res://current/scripts/globals/autoloads/networking/Ip/ip.gd"
+SteamP2P="*res://current/scripts/globals/autoloads/networking/Steam/steam_p2p.gd"
 
 [compression]
 

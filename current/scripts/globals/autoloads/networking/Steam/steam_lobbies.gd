@@ -31,7 +31,7 @@ func _on_lobby_created(_connected: int, this_lobby_id: int) -> void:
 	lobby_id = this_lobby_id
 	Ui.show_system_message("Created a lobby: " + str(lobby_id))
 	Steam.setLobbyJoinable(lobby_id, true)
-	Steam.setLobbyData(lobby_id, "name", SteamWorks.steam_username + "'s Lobby")
+	Steam.setLobbyData(lobby_id, "name", SteamNetworking.steam_username + "'s Lobby")
 	Steam.setLobbyData(lobby_id, "mode", "Multiplayer Lobby")
 
 
@@ -126,17 +126,17 @@ func _on_persona_change(this_steam_id: int, _flag: int) -> void:
 
 
 func _on_lobby_chat_update(_this_lobby_id: int, change_id: int, _making_change_id: int, chat_state: int) -> void:
-	if Moderation.is_allowed(SteamWorks.IntToSteamID(change_id)):
+	if Moderation.is_allowed(SteamNetworking.IntToSteamID(change_id)):
 		var changer_name: String = get_lobby_member_name(change_id)
 		if chat_state == Steam.CHAT_MEMBER_STATE_CHANGE_ENTERED:
 			Ui.show_system_message("%s has joined the lobby." % changer_name)
-			#P2P.send_lobby_data(SteamWorks.IntToSteamID(change_id), "lobby_join")
+			#P2P.send_lobby_data(SteamNetworking.IntToSteamID(change_id), "lobby_join")
 			WorldManager.send_world(UserIds.id_to_steam_id(change_id))
 			if GlobalVars.mieu != null:
 				GlobalVars.mieu.send_location()
 		elif chat_state == Steam.CHAT_MEMBER_STATE_CHANGE_LEFT:
 			Ui.show_system_message("%s has left the lobby." % changer_name)
-			#P2P.remove_kitty(SteamWorks.IntToSteamID(change_id))
+			#P2P.remove_kitty(SteamNetworking.IntToSteamID(change_id))
 			WorldManager.remove_from_worlds(UserIds.id_to_steam_id(change_id))
 		else:
 			Ui.show_system_message("%s did... something." % changer_name)
@@ -148,7 +148,7 @@ func leave_lobby() -> void:
 		Steam.leaveLobby(lobby_id)
 		lobby_id = 0
 		for this_member: String in lobby_members:
-			if this_member.begins_with("Steam") and this_member != SteamWorks.steam_id:
+			if this_member.begins_with("Steam") and this_member != SteamNetworking.steam_id:
 				Steam.closeSessionWithUser(int(this_member))
 		
 		#P2P.remove_kitties()
@@ -157,7 +157,7 @@ func leave_lobby() -> void:
 
 
 func is_host() -> bool:
-	return host() == SteamWorks.steam_id
+	return host() == SteamNetworking.steam_id
 
 
 func host() -> String:

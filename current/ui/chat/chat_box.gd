@@ -40,12 +40,12 @@ func load_finished() -> void:
 
 func show_chat_message(message: Dictionary) -> void:
 	pass
-	#add_chat_message(message.identity, SteamWorks.steam_id, message["payload"]["text"], message["payload"]["private"])
+	#add_chat_message(message.identity, SteamNetworking.steam_id, message["payload"]["text"], message["payload"]["private"])
 
 
 func sent_chat_message(message: String, target: String = "0", private: bool = false) -> void:
 	pass
-	#add_chat_message(SteamWorks.steam_id, target, message, private)
+	#add_chat_message(SteamNetworking.steam_id, target, message, private)
 
 
 func add_chat_message(sender: String, target: String, content: String, private: bool, save: bool = true) -> void:
@@ -60,7 +60,7 @@ func add_chat_message(sender: String, target: String, content: String, private: 
 			#message_text = "(whisper)" + SteamLobbies.get_lobby_member_name(int(sender)) + ": " + content
 		else:
 			pass
-			#if SteamWorks.running == true:
+			#if SteamNetworking.running == true:
 				#message_text = SteamLobbies.get_lobby_member_name(int(sender)) + ": " + content
 			#else:
 				#message_text = "You" + ": " + content
@@ -88,7 +88,7 @@ func create_chat_message(sender: String, _target: String, content: String, priva
 		#chat_message.set_text("(whisper)" + SteamLobbies.get_lobby_member_name(int(sender)) + ": " + content)
 	else:
 		pass
-		#if SteamWorks.running == true:
+		#if SteamNetworking.running == true:
 		#	chat_message.set_text(SteamLobbies.get_lobby_member_name(int(sender)) + ": " + content)
 		#else:
 		#	chat_message.set_text("You" + ": " + content)

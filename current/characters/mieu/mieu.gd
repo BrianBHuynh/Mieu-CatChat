@@ -15,7 +15,7 @@ func _ready() -> void:
 	GlobalVars.sprite_offset = $Sprite.position
 	GlobalVars.reset_position = global_position
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-	$Sprite/RichTextLabel.text = "[center]" + SteamWorks.steam_username + "[/center]"
+	$Sprite/RichTextLabel.text = "[center]" + SteamNetworking.steam_username + "[/center]"
 
 
 func _physics_process(delta: float) -> void:
@@ -31,13 +31,12 @@ func _physics_process(delta: float) -> void:
 
 
 func send_location(send_method: int = Steam.NETWORKING_SEND_UNRELIABLE_NO_DELAY, frame: int = -1) -> void:
-	pass
-	#if P2P.connected_to_multiplayer() and is_visible_in_tree() and GlobalVars.is_debug_sendable():
-	#	if frame == -1:
-	#		P2P.send_message_to_user({"type": "data", "x": global_position.x, "y": global_position.y, "sprite_y": $Sprite.position.y, "movement_id": GlobalVars.movement_id, "name": "TempName"}, "0", send_method)
-	#	else:
-	#		P2P.send_message_to_user({"type": "data", "x": global_position.x, "y": global_position.y, "sprite_y": $Sprite.position.y, "movement_id": GlobalVars.movement_id, "name": "TempName", "frame": frame}, "0", send_method)
-	#	last_pos = $Sprite.global_position
+	if Networking.connected_to_multiplayer() and is_visible_in_tree() and GlobalVars.is_debug_sendable():
+		if frame == -1:
+			Networking.send_message_to_user({"type": "data", "x": global_position.x, "y": global_position.y, "sprite_y": $Sprite.position.y, "movement_id": GlobalVars.movement_id, "name": "TempName"}, "0", send_method)
+		else:
+			Networking.send_message_to_user({"type": "data", "x": global_position.x, "y": global_position.y, "sprite_y": $Sprite.position.y, "movement_id": GlobalVars.movement_id, "name": "TempName", "frame": frame}, "0", send_method)
+		last_pos = $Sprite.global_position
 
 
 func movement_logic() -> void:

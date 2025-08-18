@@ -12,9 +12,9 @@ func process(_delta: float) -> void:
 
 
 func _on_network_messages_session_request(remote_id: int) -> void:
-	if Moderation.is_allowed(SteamWorks.IntTOSteamID(remote_id)):
+	if Moderation.is_allowed(SteamNetworking.IntTOSteamID(remote_id)):
 		Steam.acceptSessionWithUser(remote_id)
-		WorldManager.send_world(SteamWorks.IntToSteamID(remote_id))
+		WorldManager.send_world(SteamNetworking.IntToSteamID(remote_id))
 		send_message_to_user({"type": "handshake"}, remote_id)
 
 
@@ -46,17 +46,17 @@ func _send_message_to_user_task(payload: Dictionary, this_target: int = 0, send_
 							Steam.sendMessageToUser(int(this_member), this_data, send_type, channel)
 				_:
 					for this_member: String in SteamLobbies.lobby_members:
-						if this_member.begins_with("Steam") and this_member != SteamWorks.steam_id and Moderation.is_allowed(this_member):
+						if this_member.begins_with("Steam") and this_member != SteamNetworking.steam_id and Moderation.is_allowed(this_member):
 								Steam.sendMessageToUser(int(this_member), this_data, send_type, channel)
 		else:
 			match payload["type"]:
 				"ban", "kick":
-					if SteamWorks.IntToSteamID(this_target) != SteamWorks.steam_id and SteamLobbies.is_host():
+					if SteamNetworking.IntToSteamID(this_target) != SteamNetworking.steam_id and SteamLobbies.is_host():
 						Steam.sendMessageToUser(this_target, this_data, send_type, channel)
 						await get_tree().create_timer(1).timeout
 						Steam.closeSessionWithUser(this_target)
 				_:
-					if Moderation.is_allowed(SteamWorks.IntToSteamID(this_target)):
+					if Moderation.is_allowed(SteamNetworking.IntToSteamID(this_target)):
 						Steam.sendMessageToUser(this_target, this_data, send_type, channel)
 
 
@@ -72,10 +72,10 @@ func _send_chat_message_task(message: String, this_target: int = 0, private: boo
 		this_data = this_data.compress(FileAccess.COMPRESSION_GZIP)
 		if this_target == 0:
 			for this_member: String in SteamLobbies.lobby_members:
-				if this_member != SteamWorks.steam_id and Moderation.is_allowed(this_member):
+				if this_member != SteamNetworking.steam_id and Moderation.is_allowed(this_member):
 					Steam.sendMessageToUser(int(this_member), this_data, send_type, channel)
 		else:
-			if Moderation.is_allowed(SteamWorks.IntToSteamID(this_target)):
+			if Moderation.is_allowed(SteamNetworking.IntToSteamID(this_target)):
 				Steam.sendMessageToUser(this_target, this_data, send_type, channel)
 			else:
 				Ui.show_system_warning("Target is either blocked or banned!")
@@ -94,10 +94,10 @@ func _send_lobby_data_task(this_target: int = 0, _reason: String = "No reason pr
 		this_data = this_data.compress(FileAccess.COMPRESSION_GZIP)
 		if this_target == 0:
 			for this_member: String in SteamLobbies.lobby_members:
-				if this_member.begins_with("Steam") and this_member != SteamWorks.steam_id and Moderation.is_allowed(this_member):
+				if this_member.begins_with("Steam") and this_member != SteamNetworking.steam_id and Moderation.is_allowed(this_member):
 					Steam.sendMessageToUser(int(this_member), this_data, send_type, channel)
 		else:
-			if SteamWorks.IntToSteamID(this_target) != SteamWorks.steam_id and Moderation.is_allowed(SteamWorks.IntToSteamID(this_target)):
+			if SteamNetworking.IntToSteamID(this_target) != SteamNetworking.steam_id and Moderation.is_allowed(SteamNetworking.IntToSteamID(this_target)):
 					Steam.sendMessageToUser(this_target, this_data, send_type, channel)
 
 
@@ -115,4 +115,4 @@ func send_ban(this_target: int = 0, reason: String = "no reason provided") -> vo
 
 func _on_p2p_session_connect_fail(steam_id: int, _session_error: int, _state: int, debug_msg: String) -> void:
 	Ui.show_system_warning("P2P session connection failed! Reason: " + debug_msg)
-	Networking.remove_kitty(SteamWorks.IntToSteamID(steam_id))
+	Networking.remove_kitty(SteamNetworking.IntToSteamID(steam_id))

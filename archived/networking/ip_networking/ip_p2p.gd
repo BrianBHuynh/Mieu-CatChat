@@ -25,16 +25,16 @@ func _send_message_to_user_task(payload: Dictionary, this_target: int = 0, send_
 							pass#Logic to send to a user through socket.send_text, must work for sending to direct and jump connections
 				_:
 					for this_member: String in SteamLobbies.lobby_members:
-						if this_member.begins_with("Ip") and this_member != SteamWorks.steam_id and Moderation.is_allowed(this_member):
+						if this_member.begins_with("Ip") and this_member != SteamNetworking.steam_id and Moderation.is_allowed(this_member):
 								pass#Steam.sendMessageToUser(int(this_member), this_data, send_type, channel)
 		else:
 			match payload["type"]:
 				"ban", "kick":
 					pass
-					if SteamWorks.IntToSteamID(this_target) != SteamWorks.steam_id and SteamLobbies.is_host():
+					if SteamNetworking.IntToSteamID(this_target) != SteamNetworking.steam_id and SteamLobbies.is_host():
 						Steam.sendMessageToUser(this_target, this_data, send_type, channel)
 						await get_tree().create_timer(1).timeout
 						Steam.closeSessionWithUser(this_target)
 				_:
-					if Moderation.is_allowed(SteamWorks.IntToSteamID(this_target)):
+					if Moderation.is_allowed(SteamNetworking.IntToSteamID(this_target)):
 						Steam.sendMessageToUser(this_target, this_data, send_type, channel)

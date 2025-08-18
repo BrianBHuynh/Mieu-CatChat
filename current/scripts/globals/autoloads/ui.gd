@@ -125,7 +125,6 @@ func chat_log_add(chat_message: Dictionary) -> void:
 	if chat_log.size() > max_log_size and max_log_size != -1:
 		var new_archive: Dictionary = chat_log.pop_front()
 		if new_archive["type"] == "chat_message":
-			pass
-			#chat_archive = chat_archive + "\n" + Networking.get_lobby_member_name(new_archive["sender"]) + ": " + new_archive["content"]
+			chat_archive = chat_archive + "\n" + Networking.get_lobby_member_name(new_archive["sender"]) + ": " + new_archive["content"]
 		else:
 			chat_archive = chat_archive + "\n" + new_archive["type"] + ": " + new_archive["content"]

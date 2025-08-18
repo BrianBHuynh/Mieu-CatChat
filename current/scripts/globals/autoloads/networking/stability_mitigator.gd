@@ -53,7 +53,7 @@ func _ping(this_target: String = "0") -> void:
 		this_data = this_data.compress(FileAccess.COMPRESSION_GZIP)
 		if this_target == "0":
 			for this_member: String in SteamLobbies.lobby_members:
-				if this_member != SteamWorks.steam_id and Moderation.is_allowed(this_member):
+				if this_member != SteamNetworking.steam_id and Moderation.is_allowed(this_member):
 					Networking.sendMessageToUser(this_member, this_data, send_type, 0)
 		else:
 			if Moderation.is_allowed(this_target):
@@ -74,7 +74,7 @@ func _pong(this_target: String = "0") -> void:
 		this_data = this_data.compress(FileAccess.COMPRESSION_GZIP)
 		if this_target == "0":
 			for this_member: String in SteamLobbies.lobby_members:
-				if this_member != SteamWorks.steam_id and Moderation.is_allowed(this_member):
+				if this_member != SteamNetworking.steam_id and Moderation.is_allowed(this_member):
 					Networking.sendMessageToUser(this_member, this_data, send_type, 0)
 		else:
 			if Moderation.is_allowed(this_target):

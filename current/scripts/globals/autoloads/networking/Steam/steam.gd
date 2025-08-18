@@ -25,7 +25,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if running:
 		Steam.run_callbacks()
-		#SteamP2P.process(delta)
+		SteamP2P.process(delta)
 
 
 func check_command_line() -> void:
@@ -34,3 +34,14 @@ func check_command_line() -> void:
 	if command_line.size() > 0 && command_line[0] == "+connect_lobby" && command_line[1] > 0:
 		Ui.show_system_message("Joining lobby: " + command_line[1])
 		SteamLobbies.join_lobby(int(command_line[1]))
+
+
+func connected_to_multiplayer() -> bool:
+	if SteamLobbies.lobby_id != 0:
+		return true
+	else:
+		return false
+
+
+func send_message_to_user(payload: Dictionary, this_target: int = 0, send_type: int = Steam.NETWORKING_SEND_RELIABLE, channel: int = 0, encrypted: bool = false) -> void:
+	SteamP2P.send_message_to_user(payload, this_target, send_type, channel, encrypted)
