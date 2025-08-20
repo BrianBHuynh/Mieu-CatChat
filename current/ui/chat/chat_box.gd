@@ -39,31 +39,29 @@ func load_finished() -> void:
 
 
 func show_chat_message(message: Dictionary) -> void:
-	pass
-	#add_chat_message(message.identity, SteamNetworking.steam_id, message["payload"]["text"], message["payload"]["private"])
+	add_chat_message(message.identity, SteamNetworking.steam_id, message["payload"]["text"], message["payload"]["private"])
 
 
 func sent_chat_message(message: String, target: String = "0", private: bool = false) -> void:
-	pass
-	#add_chat_message(SteamNetworking.steam_id, target, message, private)
+	add_chat_message(SteamNetworking.steam_id, target, message, private)
 
 
 func add_chat_message(sender: String, target: String, content: String, private: bool, save: bool = true) -> void:
 	if (
 	latest_message != null 
 	and latest_message is HBoxContainer
-	#and latest_message.get_child(0).text.begins_with(SteamLobbies.get_lobby_member_name(int(sender)))
+	and latest_message.get_child(0).text.begins_with(SteamLobbies.get_lobby_member_name(int(sender)))
 	):
 		var message_text: String
 		if private:
 			pass
-			#message_text = "(whisper)" + SteamLobbies.get_lobby_member_name(int(sender)) + ": " + content
+			message_text = "(whisper)" + SteamLobbies.get_lobby_member_name(int(sender)) + ": " + content
 		else:
 			pass
-			#if SteamNetworking.running == true:
-				#message_text = SteamLobbies.get_lobby_member_name(int(sender)) + ": " + content
-			#else:
-				#message_text = "You" + ": " + content
+			if SteamNetworking.running == true:
+				message_text = SteamLobbies.get_lobby_member_name(int(sender)) + ": " + content
+			else:
+				message_text = "You" + ": " + content
 		
 		latest_message.get_child(0).text = latest_message.get_child(0).text + "\n" + message_text
 		Ui.chat_log_add({"type": "chat_message", "sender": sender, "target": target, "content": content, "private": private})
@@ -84,14 +82,12 @@ func add_chat_message(sender: String, target: String, content: String, private: 
 func create_chat_message(sender: String, _target: String, content: String, private: bool, _save: bool = true) -> RichTextLabel:
 	var chat_message: RichTextLabel = RichTextLabel.new()
 	if private:
-		pass
-		#chat_message.set_text("(whisper)" + SteamLobbies.get_lobby_member_name(int(sender)) + ": " + content)
+		chat_message.set_text("(whisper)" + SteamLobbies.get_lobby_member_name(int(sender)) + ": " + content)
 	else:
-		pass
-		#if SteamNetworking.running == true:
-		#	chat_message.set_text(SteamLobbies.get_lobby_member_name(int(sender)) + ": " + content)
-		#else:
-		#	chat_message.set_text("You" + ": " + content)
+		if SteamNetworking.running == true:
+			chat_message.set_text(SteamLobbies.get_lobby_member_name(int(sender)) + ": " + content)
+		else:
+			chat_message.set_text("You" + ": " + content)
 	
 	chat_message.set_script(load("res://current/scripts/node/chat_message.gd"))
 	chat_message.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART

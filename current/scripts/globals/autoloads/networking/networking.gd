@@ -6,14 +6,22 @@ var kitties: Dictionary = {}
 
 func send_message_to_user(payload: Dictionary, this_target: String = "0", send_type: int = Steam.NETWORKING_SEND_RELIABLE, channel: int = 0, encrypted: bool = false) -> void:
 	if this_target == "0":
-		#sendtoSteamNetworking, also send to ip
+		#send to Steam Networking, also send to ip
 		SteamNetworking.send_message_to_user(payload, UserIds.steam_id_to_id(this_target), send_type, channel, encrypted)
 	elif this_target.begins_with("Steam"):
 		SteamNetworking.send_message_to_user(payload, UserIds.steam_id_to_id(this_target), send_type, channel, encrypted)
+	elif this_target.begins_with("Ip"):
+		pass
 
 
 func send_chat_message(message: String, this_target: String = "0", private: bool = false, channel: int = 0) -> void:
-	pass
+	if this_target == "0":
+		#send to Steam Networking and also ip
+		SteamNetworking.send_chat_message(message, int(this_target), private, channel)
+	elif this_target.begins_with("Steam"):
+		SteamNetworking.send_chat_message(message, int(this_target), private, channel)
+	elif this_target.begins_with("Ip"):
+		pass
 
 
 func process_message(message: Dictionary, sender: String) -> void:
