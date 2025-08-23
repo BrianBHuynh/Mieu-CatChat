@@ -43,15 +43,15 @@ func process_message(message: Dictionary, sender: String) -> void:
 				"chat":
 					MessageHandler.chat(sender, message)
 				"lobby_data":
-					MessageHandler.lobby_data(sender, message)
+					SteamMessageHandler.lobby_data(sender, message)
 				"ban":
-					MessageHandler.ban(sender, message)
+					SteamMessageHandler.ban(sender, message)
 				"ban_announce":
-					MessageHandler.ban_announce(sender, message)
+					SteamMessageHandler.ban_announce(sender, message)
 				"kick":
-					MessageHandler.kick(sender, message)
+					SteamMessageHandler.kick(sender, message)
 				"kick_announce":
-					MessageHandler.kick_announce(sender, message)
+					SteamMessageHandler.kick_announce(sender, message)
 				"world_info":
 					MessageHandler.world_info(sender, message)
 				"minigame_info":
@@ -82,7 +82,7 @@ func remove_kitties() -> void:
 	kitties.clear()
 
 
-func remove_kitty(pid: String = "0") -> void:
+func remove_kitty(pid: String) -> void:
 	if kitties.has(pid) and kitties[pid] != null:
 		kitties[pid].remove()
 		kitties.erase(pid)
