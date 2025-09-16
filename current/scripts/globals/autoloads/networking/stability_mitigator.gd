@@ -2,6 +2,7 @@ extends Node
 
 
 var players: Dictionary = {}
+var pings: Dictionary = {}
 
 
 func add_mitigation_data(pid: String, movement_id: int, frame_latency: float) -> void:
@@ -58,6 +59,7 @@ func _ping(this_target: String = "0") -> void:
 		else:
 			if Moderation.is_allowed(this_target):
 				Networking.sendMessageToUser(this_target, this_data, send_type, 0)
+				pings[this_target] = Time.get_unix_time_from_system()
 			else:
 				Ui.show_system_warning("Target is either blocked or banned!")
 
@@ -81,3 +83,9 @@ func _pong(this_target: String = "0") -> void:
 				Networking.sendMessageToUser(this_target, this_data, send_type, 0)
 			else:
 				Ui.show_system_warning("Target is either blocked or banned!")
+
+
+func pong_recieved(this_target: String = "0") -> void:
+	if pings.has(this_target):
+		Ui.show_system_debug(String(pings[this_target] - Time.get_unix_time_from_system()))
+		pings[this_target] = null
