@@ -36,38 +36,36 @@ static func chat(sender: String, message: Dictionary) -> void:
 
 
 static func ban(sender: String, message: Dictionary) -> void:
-	pass
-	#if sender == Steam.getLobbyOwner(SteamLobbies.lobby_id):
-		#SteamLobbies.leave_lobby()
-		#Ui.show_system_message("You were banned from the lobby")
-		#Ui.show_system_message("Reason provided: " + str(message["payload"]["reason"]))
+	if sender.begins_with("steam") and sender == UserIds.id_to_steam_id(Steam.getLobbyOwner(SteamLobbies.lobby_id)):
+		SteamLobbies.leave_lobby()
+		Ui.show_system_message("You were banned from the lobby")
+		Ui.show_system_message("Reason provided: " + str(message["payload"]["reason"]))
 
 
 static func ban_announce(sender: String, message: Dictionary) -> void:
-	pass
-	#if (
-	#sender == Steam.getLobbyOwner(SteamLobbies.lobby_id)
-	#and Helper.dict_type_check(message["payload"], "banned_player", TYPE_INT)
-	#):
-		#Ui.show_system_message("The lobby owner " + SteamLobbies.get_host_name() + "has banned " + SteamLobbies.get_lobby_member_name(message["payload"]["banned_player"]))
+	if (
+	sender.begins_with("steam")
+	and sender == UserIds.id_to_steam_id(Steam.getLobbyOwner(SteamLobbies.lobby_id))
+	and Helper.dict_type_check(message["payload"], "banned_player", TYPE_INT)
+	):
+		Ui.show_system_message("The lobby owner " + SteamLobbies.get_host_name() + "has banned " + SteamLobbies.get_lobby_member_name(message["payload"]["banned_player"]))
 
 
 static func kick(sender: String, message: Dictionary) -> void:
-	pass
-	#if sender == Steam.getLobbyOwner(SteamLobbies.lobby_id):
-		#SteamLobbies.leave_lobby()
-		#Ui.show_system_message("You were kicked from the lobby")
-		#if Helper.dict_type_check(message["payload"], "reason", TYPE_STRING):
-			#Ui.show_system_message("Reason provided: " + str(message["payload"]["reason"]))
+	if sender.begins_with("steam") and sender == UserIds.id_to_steam_id(Steam.getLobbyOwner(SteamLobbies.lobby_id)):
+		SteamLobbies.leave_lobby()
+		Ui.show_system_message("You were kicked from the lobby")
+		if Helper.dict_type_check(message["payload"], "reason", TYPE_STRING):
+			Ui.show_system_message("Reason provided: " + str(message["payload"]["reason"]))
 
 
 static func kick_announce(sender: String, message: Dictionary) -> void:
-	pass
-	#if (
-	#sender == Steam.getLobbyOwner(SteamLobbies.lobby_id) 
-	#and Helper.dict_type_check(message["payload"], "kicked_player", TYPE_INT)
-	#):
-		#Ui.show_system_message("The lobby owner " + SteamLobbies.get_host_name() + "has kicked " + SteamLobbies.get_lobby_member_name(message["payload"]["kicked_player"]))
+	if (
+	sender.begins_with("steam")
+	and sender == UserIds.id_to_steam_id(Steam.getLobbyOwner(SteamLobbies.lobby_id))
+	and Helper.dict_type_check(message["payload"], "kicked_player", TYPE_INT)
+	):
+		Ui.show_system_message("The lobby owner " + SteamLobbies.get_host_name() + "has kicked " + SteamLobbies.get_lobby_member_name(message["payload"]["kicked_player"]))
 
 
 static func world_info(sender: String, message: Dictionary) -> void:
