@@ -30,7 +30,7 @@ func send_message_to_user(payload: Dictionary, this_target: int = 0, send_type: 
 
 
 func _send_message_to_user_task(payload: Dictionary, this_target: int = 0, send_type: int = Steam.NETWORKING_SEND_RELIABLE, channel: int = 0, encrypted: bool = false) -> void:
-	if SteamLobbies.lobby_members.size() > 1:
+	if SteamNetworking.connected_to_multiplayer():
 		var this_data: PackedByteArray
 		if encrypted:
 			this_data.append_array(Cryptography.encrypted_messages_sent[Cryptography.encode_payload(payload)]["payload"])
@@ -65,7 +65,7 @@ func send_chat_message(message: String, this_target: int = 0, private: bool = fa
 
 
 func _send_chat_message_task(message: String, this_target: int = 0, private: bool = false, channel: int = 0) -> void:
-	if SteamLobbies.lobby_members.size() > 1:
+	if SteamNetworking.connected_to_multiplayer():
 		var send_type: int = Steam.NETWORKING_SEND_RELIABLE
 		var this_data: PackedByteArray
 		this_data.append_array(var_to_bytes({"type": "chat", "text": message, "private": private}))
@@ -87,7 +87,7 @@ func send_lobby_data(this_target: int = 0, _reason: String = "No reason provided
 
 
 func _send_lobby_data_task(this_target: int = 0, _reason: String = "No reason provided", channel: int = 0) -> void:
-	if SteamLobbies.is_host() and SteamLobbies.lobby_members.size() > 1:
+	if SteamLobbies.is_host() and SteamNetworking.connected_to_multiplayer():
 		var send_type: int = Steam.NETWORKING_SEND_RELIABLE
 		var this_data: PackedByteArray
 		this_data.append_array(var_to_bytes({"type": "lobby_data", "lobby_data": {"banned_players": Moderation.banned_players}}))
@@ -102,13 +102,13 @@ func _send_lobby_data_task(this_target: int = 0, _reason: String = "No reason pr
 
 
 func send_kick(this_target: int = 0, reason: String = "no reason provided") -> void:
-	if SteamLobbies.is_host() and SteamLobbies.lobby_members.size() > 1:
+	if SteamLobbies.is_host() and SteamNetworking.connected_to_multiplayer():
 		send_message_to_user({"type": "kick", "reason": reason}, this_target)
 		send_message_to_user({"type": "kick_announce", "kicked_player": this_target}, 0)
 
 
 func send_ban(this_target: int = 0, reason: String = "no reason provided") -> void:
-	if SteamLobbies.is_host() and SteamLobbies.lobby_members.size() > 1:
+	if SteamLobbies.is_host() and SteamNetworking.connected_to_multiplayer():
 		send_message_to_user({"type": "ban", "reason": reason}, this_target)
 		send_message_to_user({"type": "ban_announce", "banned_player": this_target}, 0)
 

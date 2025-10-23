@@ -37,10 +37,7 @@ func check_command_line() -> void:
 
 
 func connected_to_multiplayer() -> bool:
-	if SteamLobbies.lobby_id != 0:
-		return true
-	else:
-		return false
+	return SteamLobbies.lobby_id != 0
 
 
 func send_message_to_user(payload: Dictionary, this_target: int = 0, send_type: int = Steam.NETWORKING_SEND_RELIABLE, channel: int = 0, encrypted: bool = false) -> void:

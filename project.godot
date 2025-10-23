@@ -40,6 +40,7 @@ StabilityMitigator="*res://current/scripts/globals/autoloads/networking/stabilit
 UserIds="*res://current/scripts/globals/autoloads/networking/user_ids.gd"
 IpNetworking="*res://current/scripts/globals/autoloads/networking/Ip/ip.gd"
 SteamP2P="*res://current/scripts/globals/autoloads/networking/Steam/steam_p2p.gd"
+IpConnections="*res://current/scripts/globals/autoloads/networking/Ip/ip_connections.gd"
 
 [compression]
 
