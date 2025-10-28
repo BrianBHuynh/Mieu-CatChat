@@ -2,7 +2,7 @@ extends Node
 
 
 func connected_to_multiplayer() -> bool:
-	return IpConnections.connections.size() != 0
+	return IpLobbies.direct_connections.size() != 0
 
 
 func send_message_to_user(payload: Dictionary, this_target: int = 0, send_type: int = Steam.NETWORKING_SEND_RELIABLE, channel: int = 0, encrypted: bool = false) -> void:
