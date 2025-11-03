@@ -126,7 +126,7 @@ func _on_persona_change(this_steam_id: int, _flag: int) -> void:
 
 
 func _on_lobby_chat_update(_this_lobby_id: int, change_id: int, _making_change_id: int, chat_state: int) -> void:
-	if Moderation.is_allowed(SteamNetworking.IntToSteamID(change_id)):
+	if Moderation.is_allowed(UserIds.id_to_steam_id(change_id)):
 		var changer_name: String = get_lobby_member_name(change_id)
 		if chat_state == Steam.CHAT_MEMBER_STATE_CHANGE_ENTERED:
 			Ui.show_system_message("%s has joined the lobby." % changer_name)
