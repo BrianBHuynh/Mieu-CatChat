@@ -22,6 +22,7 @@ func read_p2p_messages() -> void:
 	var messages: Array = Steam.receiveMessagesOnChannel(0, 1000)
 	if messages.size() != 0:
 		for message: Dictionary in messages:
+			message.identity = UserIds.id_to_steam_id(message.identity)
 			Networking.process_message(message, UserIds.id_to_steam_id(message.identity))
 
 
