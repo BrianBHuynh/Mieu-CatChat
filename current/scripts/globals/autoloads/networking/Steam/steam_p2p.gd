@@ -45,7 +45,7 @@ func _send_message_to_user_task(payload: Dictionary, this_target: int = 0, send_
 						if this_member.begins_with("Steam") and Moderation.is_allowed(this_member):
 							Steam.sendMessageToUser(int(this_member), this_data, send_type, channel)
 				_:
-					for this_member: String in SteamLobbies.lobby_members:
+					for this_member: String in Networking.get_lobby_members():
 						if this_member.begins_with("Steam") and this_member != SteamNetworking.steam_id and Moderation.is_allowed(this_member):
 								Steam.sendMessageToUser(int(this_member), this_data, send_type, channel)
 		else:

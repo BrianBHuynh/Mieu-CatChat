@@ -72,7 +72,7 @@ func join_lobby(this_lobby_id: int) -> void:
 func _on_lobby_joined(this_lobby_id: int, _permissions: int, _locked: bool, response: int) -> void:
 	if response == Steam.CHAT_ROOM_ENTER_RESPONSE_SUCCESS:
 		lobby_id = this_lobby_id
-		get_lobby_members()
+		update_lobby_members()
 		WorldManager.send_world()
 		#P2P.send_message_to_user({"type": "handshake"})
 		failcount = 0
@@ -110,7 +110,7 @@ func get_lobby_member_name(id: int) -> String:
 	return lobby_members.get_or_add(id, {}).get_or_add("steam_name", Steam.getFriendPersonaName(id))
 
 
-func get_lobby_members() -> void:
+func update_lobby_members() -> void:
 	lobby_members.clear()
 	var num_of_members: int = Steam.getNumLobbyMembers(lobby_id)
 	for this_member: int in range(0, num_of_members):
@@ -122,7 +122,7 @@ func get_lobby_members() -> void:
 func _on_persona_change(this_steam_id: int, _flag: int) -> void:
 	if lobby_id > 0:
 		Ui.show_system_debug("A user (%s) had information change, update the lobby list" % this_steam_id)
-		get_lobby_members()
+		update_lobby_members()
 
 
 func _on_lobby_chat_update(_this_lobby_id: int, change_id: int, _making_change_id: int, chat_state: int) -> void:
@@ -140,7 +140,7 @@ func _on_lobby_chat_update(_this_lobby_id: int, change_id: int, _making_change_i
 			WorldManager.remove_from_worlds(UserIds.id_to_steam_id(change_id))
 		else:
 			Ui.show_system_message("%s did... something." % changer_name)
-		get_lobby_members()
+		update_lobby_members()
 
 
 func leave_lobby() -> void:

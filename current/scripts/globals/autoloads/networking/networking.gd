@@ -90,3 +90,10 @@ func remove_kitty(pid: String) -> void:
 
 func connected_to_multiplayer() -> bool:
 	return SteamNetworking.connected_to_multiplayer() or IpNetworking.connected_to_multiplayer()
+
+
+func get_lobby_members() -> Dictionary:
+	var lobby_members: Dictionary = {}
+	for member: int in SteamLobbies.lobby_members.keys():
+		lobby_members[UserIds.id_to_steam_id(member)] = SteamLobbies.lobby_members[member]
+	return lobby_members
