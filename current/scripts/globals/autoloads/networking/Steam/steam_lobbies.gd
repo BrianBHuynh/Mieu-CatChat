@@ -65,8 +65,11 @@ func fill_lobbies(these_lobbies: Array, lobby_buttons: Array) -> void:
 
 func join_lobby(this_lobby_id: int) -> void:
 	Ui.show_system_message("Attempting to join lobby " + str(lobby_id))
-	lobby_members.clear()
-	Steam.joinLobby(this_lobby_id)
+	if lobby_id != this_lobby_id:
+		lobby_members.clear()
+		Steam.joinLobby(this_lobby_id)
+	else:
+		Ui.show_system_message("You're already in this lobby!")
 
 
 func _on_lobby_joined(this_lobby_id: int, _permissions: int, _locked: bool, response: int) -> void:

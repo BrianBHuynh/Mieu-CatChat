@@ -30,7 +30,7 @@ static func minigame_data(sender: String, message: Dictionary) -> void:
 		MinigameManager.accept_minigame_data(message)
 
 
-static func chat(sender: String, message: Dictionary) -> void:
+static func chat(_sender: String, message: Dictionary) -> void:
 	if Helper.dict_type_check(message["payload"], "text", TYPE_STRING):
 		Ui.show_chat_message(ChatFilter.filter(message))
 
