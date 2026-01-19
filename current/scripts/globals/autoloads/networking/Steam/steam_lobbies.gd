@@ -97,7 +97,10 @@ func _on_lobby_joined(this_lobby_id: int, _permissions: int, _locked: bool, resp
 		failcount = failcount + 1
 		if failcount <= 2 and response == Steam.CHAT_ROOM_ENTER_RESPONSE_ERROR:
 			Ui.show_system_warning("trying to rejoin in... 5")
-			await get_tree().create_timer(5).timeout
+			var secs_remaining: int = 5
+			while(secs_remaining > 0):
+				secs_remaining = secs_remaining - 1
+				Ui.show_system_warning(str(secs_remaining) + "...")
 			Steam.joinLobby(this_lobby_id)
 		else:
 			failcount = 0
