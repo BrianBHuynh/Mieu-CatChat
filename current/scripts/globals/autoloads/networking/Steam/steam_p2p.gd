@@ -23,7 +23,7 @@ func read_p2p_messages() -> void:
 	if messages.size() != 0:
 		for message: Dictionary in messages:
 			message.identity = UserIds.id_to_steam_id(message.identity)
-			Networking.process_message(message, UserIds.id_to_steam_id(message.identity))
+			Networking.process_message(message, message.identity)
 
 
 func send_message_to_user(payload: Dictionary, this_target: int = 0, send_type: int = Steam.NETWORKING_SEND_RELIABLE, channel: int = 0, encrypted: bool = false) -> void:

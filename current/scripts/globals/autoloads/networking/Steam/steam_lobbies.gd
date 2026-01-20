@@ -77,7 +77,7 @@ func _on_lobby_joined(this_lobby_id: int, _permissions: int, _locked: bool, resp
 		lobby_id = this_lobby_id
 		update_lobby_members()
 		WorldManager.send_world()
-		#P2P.send_message_to_user({"type": "handshake"})
+		SteamP2P.send_message_to_user({"type": "handshake"}, 0)
 		failcount = 0
 	else:
 		var fail_reason: String

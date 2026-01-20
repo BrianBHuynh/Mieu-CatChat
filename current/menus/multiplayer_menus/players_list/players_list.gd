@@ -7,7 +7,7 @@ func _ready() -> void:
 
 
 func populate_player_list() -> void:
-	SteamLobbies.get_lobby_members()
+	Networking.get_lobby_members()
 	for player_id: int in SteamLobbies.lobby_members:
 		var hbox: HBoxContainer = HBoxContainer.new()
 		hbox.clip_contents = true

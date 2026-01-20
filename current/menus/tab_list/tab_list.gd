@@ -14,7 +14,7 @@ func _process(_delta: float) -> void:
 
 
 func populate_player_list() -> void:
-	SteamLobbies.get_lobby_members()
+	Networking.get_lobby_members()
 	for player_id: int in SteamLobbies.lobby_members:
 		var hbox: HBoxContainer = HBoxContainer.new()
 		hbox.clip_contents = true
@@ -25,7 +25,8 @@ func populate_player_list() -> void:
 		player_info.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		player_info.fit_content = true
 		hbox.add_child(player_info)
-		if player_id != SteamLobbies.host() and SteamLobbies.is_host():
+		#todo
+		if player_id != int(SteamLobbies.host()) and SteamLobbies.is_host():
 			hbox.add_child(Helper.create_button(Moderation.ban_player_temp.bind(player_id)))
 			hbox.add_child(Helper.create_button(Moderation.ban_player_persist.bind(player_id)))
 			hbox.add_child(Helper.create_button(Moderation.block_player.bind(player_id)))
