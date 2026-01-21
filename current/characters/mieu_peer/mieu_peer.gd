@@ -47,8 +47,8 @@ func set_frame(frame: int) -> void:
 func remove() -> void:
 	if StabilityMitigator.players.has(id):
 		StabilityMitigator.players[id]["movement_id"] = -1
-	if P2P.kitties.has(id):
-		P2P.kitties[id] = null
+	if Networking.kitties.has(id):
+		Networking.kitties[id] = null
 	var tween: Tween = create_tween()
 	tween.tween_property(self, "modulate", Color(1, 1, 1, 0), 0.15).set_ease(Tween.EASE_OUT)
 	await tween.finished

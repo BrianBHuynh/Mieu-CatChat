@@ -34,7 +34,6 @@ func process_message(message: Dictionary, sender: String) -> void:
 		remove_kitty(message.identity)
 	else:
 		message.payload = bytes_to_var(message.payload.decompress_dynamic(-1, FileAccess.COMPRESSION_GZIP))
-		print(str(message))
 		if message.payload is Dictionary:
 			match message["payload"]["type"]:
 				"data":

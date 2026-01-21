@@ -70,7 +70,6 @@ func add_chat_message(sender: String, target: String, content: String, private: 
 		if Ui.chat_box != null and Ui.chat_box.is_inside_tree():
 			Ui.chat_box.add_chat_label(message)
 			if save:
-				print(content)
 				Ui.chat_log_add({"type": "chat_message", "sender": sender, "target": target, "content": content, "private": private})
 			
 			if Saves.get_or_add("settings", "auto_scroll", true):
@@ -116,7 +115,6 @@ func show_system_message(content: String, color: Color = Color.DEEP_SKY_BLUE, sa
 		var message: RichTextLabel = create_system_message(content, color, save, prefix)
 		if Ui.chat_box != null and Ui.chat_box.is_inside_tree():
 			Ui.chat_box.add_chat_label(message)
-			print(content)
 			if save:
 				Ui.chat_log_add({"type": prefix, "content": content, "color": color})
 			if Saves.get_or_add("settings", "auto_scroll", true) and WorldManager.first_world_started:
