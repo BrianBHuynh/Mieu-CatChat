@@ -9,6 +9,7 @@ var steam_username: String = "Player"
 func _ready() -> void:
 	Steam.steamInit()
 	#Makes sure the game is owned and the user is running steam while logged in.
+	#The game will work normally even without steam just without steam features.
 	if Steam.isSteamRunning() and Steam.loggedOn() and Steam.isSubscribed():
 		Multithreading.add_task(Steam.initRelayNetworkAccess)
 		Multithreading.add_task(Steam.initAuthentication)
@@ -42,3 +43,7 @@ func connected_to_multiplayer() -> bool:
 
 func send_message_to_user(payload: Dictionary, this_target: int = 0, send_type: int = Steam.NETWORKING_SEND_RELIABLE, channel: int = 0, encrypted: bool = false) -> void:
 	SteamP2P.send_message_to_user(payload, this_target, send_type, channel, encrypted)
+
+
+func send_chat_message(message: String, this_target: int = 0, private: bool = false, channel: int = 0) -> void:
+	SteamP2P.send_chat_message(message, this_target, private, channel)

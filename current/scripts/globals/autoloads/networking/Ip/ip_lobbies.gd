@@ -11,5 +11,13 @@ func find_shortest_path() -> Array:
 	return []
 
 
-func add_direct_connection(id: String, _ip: String) -> void:
-	direct_connections[id] = WebSocketPeer.new()
+func add_direct_connection(id: String, ip: String) -> void:
+	if not direct_connections.has(id):
+		direct_connections[id] = WebSocketPeer.new()
+
+
+func add_indirect_connection(id: String, connection: String) -> void:
+	if not jump_connections.has(connection):
+		jump_connections[connection] = {}
+	if not jump_connections[connection].has(id):
+		jump_connections[connection][id] = {} 

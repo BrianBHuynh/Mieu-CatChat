@@ -24,7 +24,7 @@ func add_to_world(pid: String, world: String = current_world_name, instance_id: 
 		for world_instance: int in worlds[world_array]:
 			worlds[world_array][world_instance].erase(pid)
 	
-	#Dubious
+	#Not yet updated for IP
 	worlds[world][instance_id][pid] = Networking.lobby_members[pid]["steam_name"]
 	if world != current_world_name or instance_id != current_instance_id:
 		Networking.remove_kitty(pid)
@@ -66,7 +66,6 @@ func change_world(world_path: String, instance_id: String = "-1") -> void:
 	Ui.close_menu()
 	var world_packed: PackedScene = load("res://current/scenes/worlds/" + world_path)
 	if world_packed != null:
-		#StabilityMitigator.reset_movement_ids()
 		current_world_name = world_packed.get_state().get_node_name(0)
 		current_instance_id = instance_id
 		get_tree().change_scene_to_packed(world_packed)
@@ -96,7 +95,6 @@ func door_teleport(body: Variant, world_path: String, door: String = "", door_of
 
 func change_world_door(world_path: String, door: String = "", door_offset: Vector2 = Vector2(0,0), frame: int = 0, instance_id: String = "-1", door_pos: Vector2 = Vector2(0,0)) -> void:
 	if !door_cooldown:
-		#StabilityMitigator.reset_movement_ids()
 		if MinigameManager.current_minigame != null:
 			MinigameManager.minigame_display.remove_child(MinigameManager.current_minigame)
 		

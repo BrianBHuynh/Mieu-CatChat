@@ -25,7 +25,6 @@ func populate_player_list() -> void:
 		player_info.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		player_info.fit_content = true
 		hbox.add_child(player_info)
-		#todo
 		if player_id != int(SteamLobbies.host()) and SteamLobbies.is_host():
 			hbox.add_child(Helper.create_button(Moderation.ban_player_temp.bind(player_id)))
 			hbox.add_child(Helper.create_button(Moderation.ban_player_persist.bind(player_id)))

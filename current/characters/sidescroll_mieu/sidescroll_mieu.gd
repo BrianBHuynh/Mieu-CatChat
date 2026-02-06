@@ -3,6 +3,7 @@ extends CharacterBody2D
 
 const Speed: float = 300.0
 const Jump_velocity: float = -400.0
+var last_position: Vector2 = Vector2(0, 0)
 
 
 func _physics_process(delta: float) -> void:
@@ -23,12 +24,11 @@ func _physics_process(delta: float) -> void:
 		velocity += get_gravity() * delta
 	
 	
-	# Handle jump.
+	#Handle jump.
 	if Input.is_action_just_pressed("jump") and is_on_floor() and !GlobalVars.is_player_interactive():
 		velocity.y += Jump_velocity
 	
 	
 	move_and_slide()
-	if SteamLobbies.lobby_id != 0:
-		#Dubious
+	if SteamLobbies.lobby_id != 0 and global_position != last_position:
 		Networking.send_message_to_user({"type": "minigame_data","x": global_position.x, "y": global_position.y}, "0", Steam.NETWORKING_SEND_UNRELIABLE_NO_DELAY)

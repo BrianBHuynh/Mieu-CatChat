@@ -166,8 +166,7 @@ func is_text_box_focused() -> bool:
 func _on_send_pressed() -> void:
 	release_input_focus()
 	if !$TextBox.text == "":
-		pass
-		#P2P.send_chat_message($TextBox.text)
+		Networking.send_chat_message($TextBox.text)
 	
 	$TextBox.clear()
 
