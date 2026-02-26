@@ -7,13 +7,19 @@ var direct_connections: Dictionary = {}
 var jump_connections: Dictionary = {}
 
 
-func find_shortest_path() -> Array:
+func find_shortest_path(id: String) -> Array:
+	var paths: Dictionary = {}
+	for connection in jump_connections:
+		if jump_connections[connection].has(id):
+			pass
+			#Ping jump connection to see how long ping is on this jump connection.
 	return []
 
 
 func add_direct_connection(id: String, ip: String) -> void:
 	if not direct_connections.has(id):
 		direct_connections[id] = WebSocketPeer.new()
+		direct_connections[id].connect_to_url("ip")
 
 
 func add_indirect_connection(id: String, connection: String) -> void:

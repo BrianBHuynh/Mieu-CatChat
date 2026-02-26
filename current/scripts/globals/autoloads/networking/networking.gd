@@ -97,3 +97,13 @@ func get_lobby_members() -> Dictionary:
 	for member: int in SteamLobbies.lobby_members.keys():
 		lobby_members[UserIds.id_to_steam_id(member)] = SteamLobbies.lobby_members[member]
 	return lobby_members
+
+
+func send_lobby_data(this_target: String = "0", reason: String = "No reason provided", channel: int = 0) -> void:
+	if UserIds.is_steam_id(this_target):
+		SteamP2P.send_lobby_data(UserIds.steam_id_to_id(this_target), reason, channel)
+	elif UserIds.is_ip_id(this_target):
+		#todo send IP
+		pass
+	else:
+		pass
